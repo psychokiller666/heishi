@@ -1,6 +1,6 @@
 'use strict';
 // 手淘 flexble布局
-require('../../bower_components/lib-flexible/src/flexible.js');
+require('../modules/components/flexible/flexible.js');
 // Zepto
 require('../../node_modules/zepto/zepto.min.js');
 var $ = window.Zepto;
