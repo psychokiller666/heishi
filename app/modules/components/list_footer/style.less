@@ -1,0 +1,58 @@
+@import "../../less/common.less";
+// 通用底部
+footer {
+    &.hs-footer {
+        width: 10rem;
+        overflow: hidden;
+        position: fixed;
+        z-index: 100;
+        bottom: 0;
+        background-color: #1b181f;
+        color: #5d5c61;
+        ul {
+            padding-left: 0.266667rem;
+            padding-right: 0.266667rem;
+            .hs-cf;
+            li {
+                float: left;
+                width: 20%;
+                text-align: center;
+                a {
+                    display: block;
+                    &.active span {
+                        color: #58d894;
+                        opacity: 1;
+                    }
+                    span {
+                        display: block;
+                        color: #fff;
+                        opacity: 0.3;
+                        &.text {
+                            .font-dpr(12px);
+                            padding-bottom: 0.054rem;
+                        }
+                        &.hs-icon {
+                            .font-dpr(30px);
+                            padding-top: 0.054rem;
+                            &.home:before {
+                                content: "\e602";
+                            }
+                            &.culture:before {
+                                content: "\e600";
+                            }
+                            &.add:before {
+                                content: "\e603";
+                            }
+                            &.me:before {
+                                content: "\e604";
+                            }
+                            &.messages:before {
+                                content: "\e601";
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

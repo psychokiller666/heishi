@@ -1,0 +1,102 @@
+/* lib-flexble 手淘flexble布局方案 */
+@import "../../bower_components/lib-flexible/assets/flexible.less";
+
+/* 通用 */
+html {
+  height: 100%;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  body {
+    background-color: #333;
+    -webkit-tap-highlight-color: transparent;
+    .container {
+      width: 10rem;
+      margin: 0 auto;
+      background-color: #fff;
+      position: relative;
+    }
+  }
+  a {
+    text-decoration: none;
+  }
+  a:link {
+    text-decoration: none;
+  }
+  .hs-main {
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+
+/* iconfont */
+@font-face {
+  font-family: "iconfont";
+  src: url('../font/iconfont.eot');
+  src: url('../font/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('../font/iconfont.woff') format('woff'), /* chrome, firefox */
+  url('../font/iconfont.ttf') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('../font/iconfont.svg#iconfont') format('svg');
+}
+.hs-icon {
+  font-family: "iconfont" !important;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 包含 */
+@import "../modules/less/common.less";
+@import "../modules/components/btn/style.less";
+
+/* 头部 */
+@import "../modules/components/list_header/style.less";
+
+/* 底部 */
+@import "../modules/components/list_footer/style.less";
+
+/* 发布商品 */
+/* 法律提示 */
+@import "../modules/components/notice/style.less";
+/* 商品发布 */
+@import "../modules/components/add/style.less";
+
+/* 文化 */
+/* 文化列表 */
+@import "../modules/components/culture_list/style.less";
+
+/* 商品 */
+/* 商品列表 */
+@import "../modules/components/store_list/style.less";
+/* 商品内容 */
+@import "../modules/components/store_show/style.less";
+/* 打赏对话框 */
+@import "../modules/components/dialog_reward/style.less";
+/* 评论框 */
+@import "../modules/components/dialog_comment/style.less";
+
+/* 用户 */
+/* 提现 */
+@import "../modules/components/user_withdraw/style.less";
+/* 发货 */
+/* 头部 */
+@import "../modules/components/already_header/style.less";
+/* 未发货 */
+@import "../modules/components/already_list/style.less";
+/* 填写快递 */
+@import "../modules/components/deliver/style.less";
+
+/* 聊天 */
+/* 头部 */
+@import "../modules/components/chat_header/style.less";
+/* 底部 */
+@import "../modules/components/chat_footer/style.less";
+/* 聊天列表 */
+@import "../modules/components/chat_list/style.less";
+
+/* 用户 */
+/* 别人的用户中心 */
+@import "../modules/components/user_index_header/style.less";
+/* 我的用户中心 */
+@import "../modules/components/user_index/style.less";

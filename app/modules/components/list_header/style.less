@@ -1,0 +1,44 @@
+@import "../../less/common.less";
+// 通用头部
+header {
+    &.hs-header {
+        width: 10rem;
+        overflow: hidden;
+        z-index: 100;
+        position: fixed;
+        background-color: #1b181f;
+        color: #5d5c61;
+        margin: 0;
+        padding: 0;
+        ul {
+            padding: 0 1.133333rem;
+            .hs-cf;
+            li {
+                float: left;
+                width: 33.333333%;
+                text-align: center;
+                position: relative;
+            }
+            li a {
+                display: block;
+                padding: 0.373333rem 0;
+                color: #fff;
+                opacity: 0.3;
+                .font-dpr(16px);
+            }
+            li a.active {
+                color: #68be8c;
+                opacity: 1;
+            }
+            li a.active:after {
+                content: "";
+                display: block;
+                height: 8px;
+                width: 100%;
+                position: absolute;
+                bottom: 0rem;
+                background-color: #68be8c;
+            }
+        }
+    }
+}

@@ -1,0 +1,130 @@
+@charset "UTF-8";
+/**
+ * 弹窗类
+ */
+ .ui-dialog {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  -webkit-box-orient: horizontal;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  background: rgba(0, 0, 0, 0.4);
+  display: none;
+  &.show {
+    display: -webkit-box;
+  }
+  .ui-dialog-cnt {
+    width: 7.653333rem;
+    background-color: #fefeff;
+    border-radius: 10px;
+    position: relative;
+    header {
+      .ui-dialog-close {
+        position: absolute;
+        left: -0.226667rem;
+        top: -0.133333rem;
+        border:3px solid #fff;
+        border-radius: 100%;
+        display: block;
+        background-color: #000;
+        box-shadow:1px 1px 3px #333333;
+        height: 0.8rem;
+        width: 0.8rem;
+        i {
+          display: block;
+          font-style: normal;
+          .font-dpr(16px);
+          color: #fff;
+          &:before {
+            content: "\e602";
+          }
+        }
+      }
+    }
+    .ui-dialog-bd {
+      .avatar {
+        width: 1.573333rem;
+        height: 1.573333rem;
+        margin: 0 auto;
+        margin-top: 0.4rem;
+      }
+      .username {
+        text-align: center;
+        margin-top: 0.24rem;
+        .font-dpr(16px);
+        color: #454343;
+      }
+      .title {
+        .font-dpr(14px);
+        color: #8f8e8e;
+        padding-left: 0.986667rem;
+        padding-right: 0.986667rem;
+        max-width: 100%;
+        display: -webkit-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        -webkit-box-flex: 1;
+        height: inherit;
+        margin-top: 0.346667rem;
+        position: relative;
+        &:before{
+          position: absolute;
+          content: "“";
+          top: 0;
+          left: 0.666667rem;
+        }
+        &:after{
+          content: "”";
+          position: absolute;
+          top: 0;
+          right: 0.666667rem;
+        }
+      }
+    }
+    .ui-dialog-ft {
+      width: 6.5rem;
+      margin: 0 auto;
+      margin-top: 0.48rem;
+      margin-bottom: 0.693333rem;
+      form {
+        border:1px solid #eee;
+        border-radius: 5px;
+        height: 0.92rem;
+        line-height: 0.92rem;
+        input {
+          border:none;
+          border-right: 1px solid #eee;
+          line-height: 0.92rem;
+          width: 3.95rem;
+          padding:0 0.36rem;
+          color: #121212;
+          .font-dpr(13px);
+        }
+        button {
+          width: 1.6rem;
+          line-height: 0.92rem;
+          border:none;
+          background-color: #fff;
+          i{
+            font-style: normal;
+            background-color: #ea8010;
+            color: #fff;
+            display:block;
+            width: 0.653333rem;
+            height: 0.653333rem;
+            border-radius: 0.653333rem;
+            line-height: 0.653333rem;
+            font-size: 0.4rem;
+            margin: 0 auto;
+          }
+        }
+      }
+    }
+  }
+}
