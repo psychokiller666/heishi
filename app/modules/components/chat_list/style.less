@@ -1,0 +1,73 @@
+// 聊天
+.hs-main {
+  background-color: #ededed;
+  padding-top:1.066667rem;
+  padding-bottom: 1.173333rem;
+  .chat_list {
+    ul {
+      padding: 0 0.4rem;
+      .hs-cf();
+      li {
+        padding-top: 0.293333rem;
+        width: 100%;
+        .hs-cf();
+        &.others {
+          .avatar {
+            float: left;
+          }
+          .content {
+            background-color: #fff;
+            float: left;
+            margin-left: 0.333333rem;
+            color: #111;
+            &:after {
+              left: -0.213333rem;
+              top: 0;
+              background-color: #fff;
+            }
+          }
+        }
+        &.me {
+          .avatar {
+            float:right;
+          }
+          .content {
+            background-color: #68be8d;
+            float:right;
+            margin-right: 0.333333rem;
+            color: #fff;
+            &:after {
+              right: -0.213333rem;
+              top: 0;
+              background-color: #68be8d;
+            }
+          }
+        }
+        .date{
+          text-align: center;
+          .font-dpr(12px);
+          color: #9a9a9a;
+          display: block;
+        }
+        .avatar {
+          width: 0.906667rem;
+          height: 0.906667rem;
+        }
+        .content {
+          .font-dpr(14px);
+          max-width: 5.973333rem;
+          padding: 0.266667rem 0.333333rem;
+          border-radius: 0.066667rem;
+          margin-top: 0.213333rem;
+          position: relative;
+          &:after {
+            position: absolute;
+            content: '';
+            width: 0.213333rem;
+            height: 0.186667rem;
+          }
+        }
+      }
+    }
+  }
+}
