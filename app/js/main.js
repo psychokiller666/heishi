@@ -2,8 +2,10 @@
 // 手淘 flexble布局
 require('../modules/components/flexible/flexible.js');
 // Zepto
-require('../../node_modules/zepto/zepto.min.js');
-var $ = window.Zepto;
+require('../../bower_components/zepto/src/zepto.js').$;
+require('../../bower_components/zepto/src/event.js');
+require('../../bower_components/zepto/src/touch.js');
+require('../../bower_components/zepto/src/fx.js');
 // frozenUI
 require('../../node_modules/frozenui/js/frozen.js');
 // 图片延时加载
@@ -35,4 +37,5 @@ require('../modules/components/dialog_comment/dialog_comment.js');
 // 用户
 // 提现
 require('../modules/components/user_withdraw/user_withdraw.js');
-
+// 私信列表
+require('../modules/components/chat_list_group/chat_list_group.js');
