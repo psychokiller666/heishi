@@ -2,7 +2,8 @@
 // 手淘 flexble布局
 require('../modules/components/flexible/flexible.js');
 // Zepto
-require('../../bower_components/zepto/src/zepto.js').$;
+require('../../bower_components/zepto/src/zepto.js');
+var $ = window.Zepto;
 require('../../bower_components/zepto/src/event.js');
 require('../../bower_components/zepto/src/touch.js');
 require('../../bower_components/zepto/src/fx.js');
