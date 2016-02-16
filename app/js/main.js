@@ -34,6 +34,8 @@ if (showList.length) {
 require('../modules/components/store_show/store_show.js');
 // 评论
 require('../modules/components/dialog_comment/dialog_comment.js');
+// 生成订单
+require('../modules/components/orderform/orderform.js');
 
 // 用户
 // 提现
