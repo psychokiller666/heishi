@@ -3,6 +3,7 @@
 .show {
     .hs-main {
         padding-top: 1.213333rem;
+        background-color: #fff;
     }
     .hs-show-header {
         position: fixed;
@@ -217,14 +218,12 @@
         .header {
             color: #878787;
             height: 1.173333rem;
-            line-height: 1.173333rem;
             position: relative;
-            margin: 0 0.333333rem 0 0.413333rem;
-            text-align: center;
+            margin: 0 0.333333rem;
             &:after {
                 position: absolute;
                 width: 100%;
-                height: 0.013333rem;
+                height: 1px;
                 top: 50%;
                 left: 0;
                 content: "";
@@ -234,11 +233,25 @@
                 .font-dpr(16px);
                 z-index: 10;
                 color: #878787;
+                position: absolute;
+                display: block;
+                background-color: #fff;
+                .hs-cf;
+                width: 4.4rem;
+                line-height: 1.15rem;
+                height: 1.15rem;
+                left: 50%;
+                padding: 0 .4rem;
+                margin-left: -2.6rem;
+                top: 1px;
+                text-align: center;
             }
         }
         /* 点赞列表 */
         ul {
             padding-left: 0.346667rem;
+            height: 2.64rem;
+            overflow: hidden;
             .hs-cf;
             li {
                 width: 1.106667rem;
