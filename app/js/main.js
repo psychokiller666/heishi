@@ -30,6 +30,7 @@ htmlheight100('.center');
 htmlheight100('.notice');
 htmlheight100('.chat_list_group');
 htmlheight100('.pay_reward');
+htmlheight100('.orderform');
 
 
 
