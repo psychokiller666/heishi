@@ -2,11 +2,18 @@
 .show {
     height: 100%;
     .hs-main {
-        padding-top: 1.213333rem;
         background-color: #fff;
+        position: absolute;
+        top: 1.213333rem;
+        bottom: 1.3rem;
+        overflow-y: scroll;
+        .hs-cf;
     }
     .hs-show-header {
         position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
         height: 1.213333rem;
         line-height: 1.28rem;
         border-bottom: 0.066667rem solid #eee;
@@ -49,6 +56,8 @@
         overflow: hidden;
         position: fixed;
         z-index: 100;
+        left: 0;
+        right: 0;
         bottom: 0;
         .footer_nav{
             .hs-cf;
@@ -319,6 +328,10 @@
                         padding:0.186667rem 0.32rem;
                         margin-top: 0.28rem;
                         li {
+                            :active {
+                                opacity: .5;
+                            }
+                            .hs-cf;
                             border: none;
                             padding: 0 0 0.16rem 0;
                             &:last-child {
@@ -331,13 +344,14 @@
                                     margin-right: 0.16rem;
                                     color: #b8b8b8
                                 }
+                                .date {
+                                    .hs-cf;
+                                    .font-dpr(11px);
+                                    margin-top: 0.1rem;
+                                    color: #b8b8b8
+                                }
                             }
-                            .date {
-                                .hs-cf;
-                                .font-dpr(11px);
-                                margin-top: 0.05rem;
-                                color: #b8b8b8
-                            }
+
                         }
                     }
                 }
