@@ -1,36 +1,51 @@
-.dialog_comment {
-  z-index: 100;
-  .hs-cf();
-  padding: .2rem 0 .2rem .2rem;
-  background-color: #fff;
-  button,input{
-    float: left;
-  }
-  input {
-    width: 6.573333rem;
-    padding:0 0.2rem;
-    height: 0.88rem;
-    border:1px solid #dfdfdf;
-    color: #747474;
-    .font-dpr(14px);
-    border-radius: 0.066667rem;
-    margin:0 0.2rem;
-  }
-  .update_img_btn {
-    width: 0.72rem;
-    line-height: 0.88rem;
-    color: #747474;
-    .font-dpr(16px);
-    border: none;
+.dialog_comment.ui-dialog {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  -webkit-box-orient: horizontal;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  display: none;
+  background: rgba(0, 0, 0, 0.4);
+  .ui-dialog-cnt {
+    width: 10rem;
+    margin:auto;
     background-color: #fff;
-  }
-  .submit {
-    border-radius: 0.066667rem;
-    border : 1px solid #dde0d9;
-    color: #fff;
-    background-color: #68be8d;
-    .font-dpr(16px);
-    line-height: 0.88rem;
-    width: 1.533333rem;
+    .ui-dialog-bd {
+      padding: 0.28rem 0.306667rem;
+      textarea {
+        border: none;
+        .font-dpr(16px);
+        width: 100%;
+      }
+    }
+    .ui-dialog-ft {
+      padding: 0.28rem 0.306667rem;
+      .hs-cf;
+      .image {
+        float: left;
+      }
+      .btns {
+        float: right;
+        button {
+          padding: 0.293333rem 0.44rem;
+          border: 1px solid #dedede;
+          .font-dpr(14px);
+        }
+        .submit {
+          background-color: #68be8c;
+          color: #fff;
+          border-radius: 3px;
+        }
+        .cancel {
+          background: none;
+          border-color: #fff;
+          color: #9d9d9d
+        }
+      }
+    }
   }
 }
