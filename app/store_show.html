@@ -11,16 +11,16 @@
 </head>
 
 <body>
-    <div class="container show">
-        <header class="hs-show-header">
+    <div class="container store-show">
+        <header class="hs-store-show-header">
             <a class="portrait">
                 <span class="avatar" style="background-image:url(http://placeholder.qiniudn.com/108x108)"></span>
             </a>
             <a class="username">不要被吊打</a>
             <button class="attention-btn"><i>+</i>关注</button>
         </header>
-        <footer class="hs-show-footer">
-            <div class="footer_nav hs-hide">
+        <footer class="hs-store-show-footer">
+            <div class="footer_nav">
                 <ul>
                     <li>
                         <a href="#">
@@ -49,9 +49,6 @@
                 </ul>
                 <button type="button" class="comment-btn" id="comment-btn">写评论</button>
             </div>
-
-            @@include('dialog_comment/index');
-
         </footer>
         <main class="hs-main">
             <div class="frontcover">
@@ -188,7 +185,7 @@
                             </ul>
                         </div>
                     </li>
-                    <li class="father">
+                    <li class="father" data-id="23">
                         <span class="avatar" style="background-image:url(http://media.firebox.com/i/home/feature/2x2/bb8-desert2.jpg)"></span>
                         <div class="username">
                             <span class="hs-fl">不想被吊打</span>
@@ -196,7 +193,7 @@
                         </div>
                         <div class="comment-content">哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</div>
                     </li>
-                    <li class="father">
+                    <li class="father" data-id="24">
                         <span class="avatar" style="background-image:url(http://media.firebox.com/i/home/feature/2x2/bb8-desert2.jpg)"></span>
                         <div class="username">
                             <span class="hs-fl">不想被吊打</span>
@@ -204,7 +201,7 @@
                         </div>
                         <div class="comment-content">哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</div>
                     </li>
-                    <li class="father">
+                    <li class="father" data-id="25">
                         <span class="avatar" style="background-image:url(http://media.firebox.com/i/home/feature/2x2/bb8-desert2.jpg)"></span>
                         <div class="username">
                             <span class="hs-fl">不想被吊打</span>
@@ -212,129 +209,16 @@
                         </div>
                         <div class="comment-content">哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</div>
                     </li>
-                    <li class="father" data-id="19">
-                        <span class="avatar" style="background-image:url(http://media.firebox.com/i/home/feature/2x2/bb8-desert2.jpg)"></span>
-                        <div class="username">
-                            <span class="hs-fl">不想被吊打</span>
-                            <span class="hs-fr date">1月4日</span>
-                        </div>
-                        <div class="comment-content">哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈
-                            <ul class="reply">
-                                <li class="son" data-id="11">
-                                    <div class="reply-content">
-                                        <span>不想被吊打</span>哈哈哈哈哈
-                                        <div class="date">2个小时前</div>
-                                    </div>
-                                </li>
-                                <li class="son" data-id="12">
-                                    <div class="reply-content">
-                                        <span>不想被吊打</span>哈哈哈哈哈
-                                        <div class="date">2个小时前</div>
-                                    </div>
-                                </li>
-                                <li class="son" data-id="13">
-                                    <div class="reply-content">
-                                        <span>不想被吊打</span>哈哈哈哈哈
-                                        <div class="date">2个小时前</div>
-                                    </div>
-                                </li>
-                                <li class="son" data-id="14">
-                                    <div class="reply-content">
-                                        <span>不想被吊打</span>哈哈哈哈哈
-                                        <div class="date">2个小时前</div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="father">
-                        <span class="avatar" style="background-image:url(http://media.firebox.com/i/home/feature/2x2/bb8-desert2.jpg)"></span>
-                        <div class="username">
-                            <span class="hs-fl">不想被吊打</span>
-                            <span class="hs-fr date">1月4日</span>
-                        </div>
-                        <div class="comment-content">哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</div>
-                    </li>
-                    <li class="father">
-                        <span class="avatar" style="background-image:url(http://media.firebox.com/i/home/feature/2x2/bb8-desert2.jpg)"></span>
-                        <div class="username">
-                            <span class="hs-fl">不想被吊打</span>
-                            <span class="hs-fr date">1月4日</span>
-                        </div>
-                        <div class="comment-content">哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</div>
-                    </li>
-                    <li class="father">
-                        <span class="avatar" style="background-image:url(http://media.firebox.com/i/home/feature/2x2/bb8-desert2.jpg)"></span>
-                        <div class="username">
-                            <span class="hs-fl">不想被吊打</span>
-                            <span class="hs-fr date">1月4日</span>
-                        </div>
-                        <div class="comment-content">啊锕锕锕锕锕锕锕锕锕锕锕锕锕锕锕锕锕锕锕锕锕锕锕锕锕锕锕</div>
-                    </li><li class="father" data-id="19">
-                    <span class="avatar" style="background-image:url(http://media.firebox.com/i/home/feature/2x2/bb8-desert2.jpg)"></span>
-                    <div class="username">
-                        <span class="hs-fl">不想被吊打</span>
-                        <span class="hs-fr date">1月4日</span>
-                    </div>
-                    <div class="comment-content">哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈
-                        <ul class="reply">
-                            <li class="son" data-id="11">
-                                <div class="reply-content">
-                                    <span>不想被吊打</span>哈哈哈哈哈
-                                    <div class="date">2个小时前</div>
-                                </div>
-                            </li>
-                            <li class="son" data-id="12">
-                                <div class="reply-content">
-                                    <span>不想被吊打</span>哈哈哈哈哈
-                                    <div class="date">2个小时前</div>
-                                </div>
-                            </li>
-                            <li class="son" data-id="13">
-                                <div class="reply-content">
-                                    <span>不想被吊打</span>哈哈哈哈哈
-                                    <div class="date">2个小时前</div>
-                                </div>
-                            </li>
-                            <li class="son" data-id="14">
-                                <div class="reply-content">
-                                    <span>不想被吊打</span>哈哈哈哈哈
-                                    <div class="date">2个小时前</div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="father">
-                    <span class="avatar" style="background-image:url(http://media.firebox.com/i/home/feature/2x2/bb8-desert2.jpg)"></span>
-                    <div class="username">
-                        <span class="hs-fl">不想被吊打</span>
-                        <span class="hs-fr date">1月4日</span>
-                    </div>
-                    <div class="comment-content">哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</div>
-                </li>
-                <li class="father">
-                    <span class="avatar" style="background-image:url(http://media.firebox.com/i/home/feature/2x2/bb8-desert2.jpg)"></span>
-                    <div class="username">
-                        <span class="hs-fl">不想被吊打</span>
-                        <span class="hs-fr date">1月4日</span>
-                    </div>
-                    <div class="comment-content">哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</div>
-                </li>
-                <li class="father">
-                    <span class="avatar" style="background-image:url(http://media.firebox.com/i/home/feature/2x2/bb8-desert2.jpg)"></span>
-                    <div class="username">
-                        <span class="hs-fl">不想被吊打</span>
-                        <span class="hs-fr date">1月4日</span>
-                    </div>
-                    <div class="comment-content">哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</div>
-                </li>
-            </ul>
-        </div>
-    </main>
-</div>
-@@include('dialog_reward/index');
-<script src="js/main.js"></script>
+
+                </ul>
+            </div>
+        </main>
+    </div>
+    <!-- 打赏框 -->
+    @@include('dialog_reward/index');
+    <!-- 评论框 -->
+    @@include('dialog_comment/index');
+    <script src="js/main.js"></script>
 </body>
 
 </html>
