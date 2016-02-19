@@ -4,13 +4,31 @@ var footer_nav = $('.footer_nav');
 var dialog_comment = $('.dialog_comment');
 var father_comment = $('.father');
 var son_comment = $('.son');
+// 百度上传组件
+var WebUploader = require('../../../../bower_components/webuploader/dist/webuploader.min.js');
+
+
+// 弹出提示框
+function prompt(text){
+  var prompt = $('.prompt');
+  prompt.find('.text').text(text);
+  prompt.dialog('show');
+  setTimeout(function(){
+    prompt.dialog('hide');
+  },1500);
+}
 // 弹出回复框
-function comment_box(id,username) {
+function comment_box(id,username,ispic) {
   dialog_comment.dialog("show");
+  // 判断是否是回复
   if (username) {
     $('#comment_input').attr('placeholder','回复：'+username);
   }
   $('#comment_input').focus();
+  // 控制是否上传图片
+  if (ispic) {
+    dialog_comment.find('.image').hide();
+  }
   // 禁止滑动
   dialog_comment.on('touchmove',function(e){
     e.stopPropagation();
@@ -22,9 +40,55 @@ function comment_box(id,username) {
   // 提交评论
   dialog_comment.find('.submit').on('click',function(){
     dialog_comment.find('button').attr('disabled','disabled');
+
+    dialog_comment.dialog('hide');
+    prompt('😄 评论成功');
+    // 重置按钮及对话框
+    $('#comment_input').val('');
+    dialog_comment.find('button').removeAttr('disabled');
   });
 
   // 上传图片
+  var uploader = WebUploader.create({
+    fileNumLimit: 1,
+    // 自动上传。
+    auto: true,
+    // 文件接收服务端。
+    server: 'http://hstest.ontheroadstore.com/index.php?g=api&m=HsFileupload&a=upload',
+    // 二进制上传
+    sendAsBinary: true,
+    // 只允许选择文件，可选。
+    accept: {
+      title: 'Images',
+      extensions: 'gif,jpg,jpeg,bmp,png,webp',
+      mimeTypes: 'image/*'
+    }
+  });
+  // 监听input file是否有文件添加进来
+  dialog_comment.find('.updata_image_btn input').on("change", function(e) {
+    uploader.addFiles(e.target.files);
+    uploader.upload();
+  });
+  // 图片列队
+  uploader.onFileQueued = function(file) {
+    console.log(file);
+  }
+  // 上传成功
+  uploader.onuploadSuccess = function(file,response) {
+    console.log(file,response);
+  }
+  // 控制进度条
+  uploader.onuploadProgress = function(file,percentage) {
+    console.log(file,percentage);
+  }
+  // 上传出错
+  uploader.onuploadError = function(file,reason) {
+    console.log(file,reason);
+  }
+  // 选择时文件出错
+  uploader.onerror = function(type) {
+    console.log(type);
+  }
 
 }
 
@@ -47,5 +111,5 @@ father_comment.on('click',function(){
 son_comment.on('click',function(){
   var comment_id = $(this).data('id');
   var username = $(this).find('.span').text();
-  comment_box(comment_id,username);
+  comment_box(comment_id,username,'1');
 })
