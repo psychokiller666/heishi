@@ -2,17 +2,34 @@
   height: 100%;
   .hs-main {
     padding:0;
+
     background-color: #fff;
     .chat_list_group_bd {
       ul {
+        .hs-cf;
         li {
           position: relative;
-          height: 1.12rem;
-          margin: 0.24rem 0;
-          padding: 0.24rem 0;
+          display: block;
+          overflow: hidden;
           .hs-cf;
           &:last-child {
             margin-bottom: 0;
+          }
+          &.new {
+            .avatar {
+              overflow: inherit;
+            }
+            .avatar:before {
+              content: "";
+              display: block;
+              width: 0.28rem;
+              height: 0.28rem;
+              position: absolute;
+              background-color: red;
+              border-radius: 0.28rem;
+              right: 0;
+              border: 0.04rem solid #fff;
+            }
           }
           &.active {
             a {
@@ -23,30 +40,36 @@
             .delete {
               position: absolute;
               right: 0;
-              top: 0rem;
-              width: 1.92rem;
-              height: 1.84rem;
+              top: 0;
               background-color: #fe0000;
-              border: none;
               .font-dpr(16px);
               color: #fff;
+              padding: 0 .8rem;
+              border:none;
+              display: none;
+            }
+            .info {
+              .date {
+                margin-right: 1.6rem !important;
+              }
             }
           }
           a {
             display: block;
             width: 10rem;
+            padding-top: .26rem;
             .hs-cf();
             .avatar {
               width: 1.12rem;
               height: 1.12rem;
               float:left;
               margin-left: 0.386667rem;
+              position: relative;
             }
             .info {
               .hs-cf();
               float: right;
               width: 8.08rem;
-              padding-bottom: 0.34rem;
               border-bottom: 1px solid #eee;
               .username {
                .hs-cf();
@@ -63,9 +86,9 @@
               }
             }
             .des {
-              margin-top: 0.306667rem;
               .font-dpr(14px);
               color: #979797;
+              padding: 0.29rem 0;
             }
           }
         }

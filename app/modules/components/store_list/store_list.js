@@ -3,7 +3,6 @@ var dropload = require('../../../../bower_components/dropload/dist/dropload.min.
 
 if($('.store_list').length){
   var store_list = $('.store_list');
-  console.log('sdd');
   store_list.dropload({
     domDown : {
       domClass : 'dropload-down',
@@ -13,10 +12,8 @@ if($('.store_list').length){
     },
     scrollArea : store_list,
     loadDownFn : function(e){
-      console.log('sddddddddd');
       e.noData();
       e.resetload();
-
     }
   })
 
