@@ -20,10 +20,11 @@ var Layzr = require('../../node_modules/layzr.js/dist/layzr.js');
 // 百度上传组建
 
 // 通用
-// .hs-main 漂浮位置
-$('.hs-main').css('padding-top',$('.hs-header').height());
-$('.hs-main').css('padding-bottom',$('.hs-footer').height());
-
+window.onload = function(){
+  // .hs-main 漂浮位置
+  $('.hs-main').css('padding-top',$('.hs-header').height());
+  $('.hs-main').css('padding-bottom',$('.hs-footer').height());
+};
 // css高度补丁咯
 function htmlheight100(classname) {
   if($(classname).length){

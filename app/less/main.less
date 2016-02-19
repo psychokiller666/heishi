@@ -47,20 +47,17 @@ html {
 /* dropload */
 .dropload-up,.dropload-down{
   position: relative;
-  height: 0;
-  overflow: hidden;
   .font-dpr(14px);
+  overflow: hidden;
   /* 开启硬件加速 */
   -webkit-transform:translateZ(0);
   transform:translateZ(0);
 }
 .dropload-down{
-  height: .8rem;
-  border-top: .4rem solid #eee;
+  height: 1rem;
+  line-height: 1rem;
 }
 .dropload-refresh,.dropload-update,.dropload-load,.dropload-noData{
-  height: .8rem;
-  line-height: .8rem;
   text-align: center;
 }
 .dropload-load .loading{
@@ -101,6 +98,7 @@ html {
 /* 包含 */
 @import "../modules/less/common.less";
 @import "../modules/components/btn/style.less";
+@import "../modules/components/welcome/style.less";
 
 /* 头部 */
 @import "../modules/components/list_header/style.less";
