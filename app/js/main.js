@@ -36,10 +36,6 @@ htmlheight100('.chat_list_group');
 htmlheight100('.pay_reward');
 htmlheight100('.orderform');
 
-
-
-
-
 // 图片加载
 new Layzr({
   threshold: 50
@@ -50,12 +46,18 @@ var showList = $('.show-list .hs-main ');
 if (showList.length) {
 }
 // 商品
+// 列表页
+require('../modules/components/store_list/store_list.js');
 // 内容页
 require('../modules/components/store_show/store_show.js');
 // 评论
 require('../modules/components/dialog_comment/dialog_comment.js');
 // 生成订单
 require('../modules/components/orderform/orderform.js');
+
+// 文化
+// 列表页
+require('../modules/components/culture_list/culture_list.js');
 
 // 用户
 // 提现
