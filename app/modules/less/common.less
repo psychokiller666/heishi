@@ -63,6 +63,15 @@
         font-size: @font-size * 3;
     }
 }
+.font-line-height(@font-size) {
+    line-height: @font-size;
+    [data-dpr="2"] & {
+        line-height: @font-size * 2;
+    }
+    [data-dpr="3"] & {
+        line-height: @font-size * 3;
+    }
+}
 
 // 解决
 .input-fixfixed {
