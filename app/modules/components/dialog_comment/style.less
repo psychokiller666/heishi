@@ -1,3 +1,35 @@
+.prompt.ui-dialog {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  -webkit-box-orient: horizontal;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  display: none;
+  .ui-dialog-cnt {
+    width: 10rem;
+    margin:auto;
+    .ui-dialog-bd {
+      width: 2.8rem;
+      background: rgba(0,0,0,.8);
+      padding: .8rem .5rem;
+      border-radius: 10px;
+      text-align: center;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-left: -1.5rem;
+      margin-top: -2rem;
+      .text {
+        .font-dpr(18px);
+        color: #fff
+      }
+    }
+  }
+}
 .dialog_comment.ui-dialog {
   position: absolute;
   top: 0px;
@@ -27,6 +59,61 @@
       .hs-cf;
       .image {
         float: left;
+        .image_list {
+          position: relative;
+          width: 1rem;
+          img {
+            width: 1rem;
+            max-height: 1.4rem;
+          }
+          .close {
+            position: absolute;
+            right: -0.1rem;
+            top: -0.1rem;
+          }
+          .progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            overflow: hidden;
+            width: 100%;
+            height: 0.16rem;
+            background-color: #e2e2e2;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            span {
+              display: block;
+              width: 0;
+              background: #65d521;
+              height: 100%;
+              font-size: 0;
+            }
+          }
+        }
+        .updata_image_btn {
+          position: relative;
+          .hs-cf;
+          button {
+            padding: 0.293333rem 0;
+            .font-dpr(14px);
+            background: none;
+            border:none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+          }
+          input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            padding: 0.293333rem 0;
+            width: 2rem;
+            opacity: 0;
+          }
+
+        }
       }
       .btns {
         float: right;
