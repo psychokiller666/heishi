@@ -1,5 +1,8 @@
 // 百度上传组件
 var WebUploader = require('../../../../node_modules/tb-webuploader/dist/webuploader.min.js');
+// 过滤关键词
+var esc = require('../../../../node_modules/chn-escape/escape.js');
+
 if ($('.comment').length){
   // 添加评论
   var comment_btn = $('#comment-btn');
@@ -38,10 +41,25 @@ if ($('.comment').length){
     });
     // 提交评论
     dialog_comment.find('.submit').on('click',function(){
-      dialog_comment.find('button').attr('disabled','disabled');
 
-      dialog_comment.dialog('hide');
-      prompt('😄 评论成功');
+      dialog_comment.find('button').attr('disabled','disabled');
+      // 过滤关键词
+      var text_list = [
+      '燃料',
+      '大麻',
+      '叶子',
+      '淘宝',
+      'taobao.com',
+      '共产党'
+      ];
+      esc.init(text_list);
+      if (esc.find($('#comment_input').val()).length) {
+        dialog_comment.dialog('hide');
+        prompt('🚔 我要报警了');
+      } else {
+        dialog_comment.dialog('hide');
+        prompt('😄 评论成功');
+      }
       // 重置按钮及对话框
       $('#comment_input').val('');
       dialog_comment.find('button').removeAttr('disabled');
