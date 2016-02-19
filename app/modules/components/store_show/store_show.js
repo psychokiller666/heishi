@@ -21,25 +21,25 @@ $('.images ul li').tap(function(){
 // 更多按钮
 var praise_more_tpl = '<li><button type="button" class="praise_more">更多</button></li>';
 
-$('.show .praise ul li').each(function(index,item){
+$('.store-show .praise ul li').each(function(index,item){
   if(index <= 7) {
-    $('.show .praise ul').height('1.14rem');
+    $('.store-show .praise ul').height('1.14rem');
   } else if (index >= 16){
-    $('.show .praise ul li').eq(15).before(praise_more_tpl);
+    $('.store-show .praise ul li').eq(15).before(praise_more_tpl);
   } else {
-    $('.show .praise ul').height('2.64rem');
+    $('.store-show .praise ul').height('2.62rem');
   }
 });
 
 $('.praise_more').live('click',function(){
   if($(this).hasClass('active')) {
     $(this).parent().remove();
-    $('.show .praise ul li').eq(15).before(praise_more_tpl);
-    $('.show .praise ul').height('2.64rem');
+    $('.store-show .praise ul li').eq(15).before(praise_more_tpl);
+    $('.store-show .praise ul').height('2.64rem');
   } else {
     $(this).parent().remove();
-    $('.show .praise ul').height('auto');
-    $('.show .praise ul').append(praise_more_tpl);
+    $('.store-show .praise ul').height('auto');
+    $('.store-show .praise ul').append(praise_more_tpl);
     $('.praise_more').addClass('active');
     $('.praise_more').text('回收');
   }

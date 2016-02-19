@@ -7,6 +7,10 @@ var $ = window.Zepto;
 require('../../bower_components/zepto/src/event.js');
 require('../../bower_components/zepto/src/touch.js');
 require('../../bower_components/zepto/src/fx.js');
+require('../../bower_components/zepto/src/deferred.js');
+require('../../bower_components/zepto/src/callbacks.js');
+require('../../bower_components/zepto/src/ajax.js');
+
 // frozenUI
 require('../../node_modules/frozenui/js/frozen.js');
 // 图片延时加载
