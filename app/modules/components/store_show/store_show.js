@@ -1,6 +1,11 @@
 // 微信jssdk
 var wx = require('weixin-js-sdk');
+// 下拉加载
 var dropload = require('../../../../bower_components/dropload/dist/dropload.min.js');
+// handlebars
+var handlebars = require('../../../../node_modules/handlebars/dist/handlebars.min.js');
+// 测试
+var prompt = require('../prompt/prompt.js');
 
 if($('.store-show').length) {
   // 微信预览图片
@@ -18,6 +23,9 @@ if($('.store-show').length) {
   })
 
   // 点赞
+  $('.praise_btn').on('click',function(){
+
+  })
   // 更多点赞列表
 
   // 更多按钮

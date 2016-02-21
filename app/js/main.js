@@ -42,10 +42,9 @@ new Layzr({
   threshold: 50
 });
 
-// 商品列表
-var showList = $('.show-list .hs-main ');
-if (showList.length) {
-}
+// 提示框
+require('../modules/components/prompt/prompt.js');
+
 // 商品
 // 列表页
 require('../modules/components/store_list/store_list.js');
