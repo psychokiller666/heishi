@@ -12,15 +12,16 @@ if ($('.comment').length){
   var dialog_comment = $('.dialog_comment');
   var father_comment = $('.father');
   var son_comment = $('.son');
+  var comment_input = $('#comment_input');
 
   // 弹出回复框
   function comment_box(id,username,ispic) {
     dialog_comment.dialog("show");
     // 判断是否是回复
     if (username) {
-      $('#comment_input').attr('placeholder','回复：'+username);
+      comment_input.attr('placeholder','回复：'+username);
     }
-    $('#comment_input').focus();
+    comment_input.focus();
     // 控制是否上传图片
     if (ispic) {
       dialog_comment.find('.image').hide();
@@ -48,7 +49,9 @@ if ($('.comment').length){
       '共产党'
       ];
       esc.init(text_list);
-      if (esc.find($('#comment_input').val()).length) {
+      if(!comment_input.val().length){
+        comment_input.attr('placeholder','😒 评论不能为空');
+      } else if (esc.find(comment_input.val()).length) {
         dialog_comment.dialog('hide');
         prompt('🚔 我要报警了');
       } else {
@@ -56,7 +59,7 @@ if ($('.comment').length){
         prompt('😄 评论成功');
       }
       // 重置按钮及对话框
-      $('#comment_input').val('');
+      comment_input.val('').attr('placeholder','随便说点什么');
       dialog_comment.find('button').removeAttr('disabled');
     });
 
