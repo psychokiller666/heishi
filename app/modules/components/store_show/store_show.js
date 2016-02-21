@@ -65,7 +65,6 @@ comment.dropload({
   },
   scrollArea : comment,
   loadDownFn : function(e){
-    console.log('sddddddddd');
     e.noData();
     e.resetload();
 

@@ -21,9 +21,6 @@ var prompt = function prompt(text){
         setTimeout(function(){
             $('.prompt').hide();
         },1500);
-
-        console.log(htmltpl);
-        // htmltpl.appendTo('body').show();
     }
 
     return init();
