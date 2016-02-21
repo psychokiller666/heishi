@@ -50,9 +50,11 @@ if ($('.comment').length){
       if (esc.find($('#comment_input').val()).length) {
         dialog_comment.dialog('hide');
         prompt('🚔 我要报警了');
+        console.log('应该显示 🚔 我要报警了');
       } else {
         dialog_comment.dialog('hide');
         prompt('😄 评论成功');
+        console.log('应该显示 😄 评论成功');
       }
       // 重置按钮及对话框
       $('#comment_input').val('');
