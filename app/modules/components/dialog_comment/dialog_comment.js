@@ -2,6 +2,8 @@
 var WebUploader = require('../../../../node_modules/tb-webuploader/dist/webuploader.min.js');
 // 过滤关键词
 var esc = require('../../../../node_modules/chn-escape/escape.js');
+// 提示框
+var prompt = require('../prompt/prompt.js');
 
 if ($('.comment').length){
   // 添加评论
@@ -10,15 +12,7 @@ if ($('.comment').length){
   var dialog_comment = $('.dialog_comment');
   var father_comment = $('.father');
   var son_comment = $('.son');
-  // 弹出提示框
-  function prompt(text){
-    var prompt = $('.prompt');
-    prompt.find('.text').text(text);
-    prompt.dialog('show');
-    setTimeout(function(){
-      prompt.dialog('hide');
-    },1500);
-  }
+
   // 弹出回复框
   function comment_box(id,username,ispic) {
     dialog_comment.dialog("show");
