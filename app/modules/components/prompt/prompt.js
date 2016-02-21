@@ -8,13 +8,10 @@ var _prompttpl = '<div class="prompt ui-dialog">'+
 '</div>'+
 '</div>';
 
-
-
 var prompt = function prompt(text){
 
-    var htmltpl = $($.tpl(_prompttpl,{text:text}));
-
     function init(){
+        var htmltpl = $($.tpl(_prompttpl,{text:text}));
         if($('.prompt').length){
             $('.prompt').remove();
             htmltpl.appendTo('body').show();
@@ -25,6 +22,7 @@ var prompt = function prompt(text){
             $('.prompt').hide();
         },1500);
 
+        console.log(htmltpl);
         // htmltpl.appendTo('body').show();
     }
 
