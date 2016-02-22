@@ -20,11 +20,12 @@ var Layzr = require('../../node_modules/layzr.js/dist/layzr.js');
 // 百度上传组建
 
 // 通用
-window.onload = function(){
-  // .hs-main 漂浮位置
-  $('.hs-main').css('padding-top',$('.hs-header').height());
-  $('.hs-main').css('padding-bottom',$('.hs-footer').height());
-};
+
+// .hs-main 漂浮位置
+$('.hs-main').css('top',$('.hs-header').height());
+$('.hs-main').css('bottom',$('.hs-footer').height());
+// alert(lib.flexible.dpr);
+
 // css高度补丁咯
 function htmlheight100(classname) {
   if($(classname).length){

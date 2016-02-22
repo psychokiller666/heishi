@@ -1,12 +1,13 @@
-// 通用底部
-footer {
+ // 通用底部
+ footer {
     &.hs-footer {
         width: 10rem;
-        overflow: hidden;
+        // overflow: hidden;
         position: fixed;
         z-index: 100;
         bottom: 0;
         background-color: #1b181f;
+        opacity: .99;
         color: #5d5c61;
         ul {
             padding-left: 0.266667rem;
@@ -16,8 +17,11 @@ footer {
                 float: left;
                 width: 20%;
                 text-align: center;
+                margin: 0.16rem 0;
+                overflow: hidden;
                 a {
                     display: block;
+
                     &.active span {
                         color: #58d894;
                         opacity: 1;
@@ -26,13 +30,33 @@ footer {
                         display: block;
                         color: #fff;
                         opacity: 0.3;
+                        text-align: center;
                         &.text {
-                            .font-dpr(12px);
-                            padding-bottom: 0.054rem;
+                            bottom: 0;
+                            font-size: 12px;
+                            line-height: 12px;
+                            [data-dpr="2"] & {
+                                font-size: 24px;
+                                line-height: 24px;
+                            }
+                            [data-dpr="3"] & {
+                                font-size: 36px;
+                                line-height: 36px;
+                            }
                         }
                         &.hs-icon {
-                            .font-dpr(30px);
-                            padding-top: 0.054rem;
+                            top: 0;
+                            font-size: 30px;
+                            line-height: 22px;
+                            padding-bottom: 0.16rem;
+                            [data-dpr="2"] & {
+                                font-size: 60px;
+                                line-height: 44px;
+                            }
+                            [data-dpr="3"] & {
+                                font-size: 90px;
+                                line-height: 66px;
+                            }
                             &.home:before {
                                 content: "\e602";
                             }
