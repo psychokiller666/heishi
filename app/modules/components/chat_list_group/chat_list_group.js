@@ -31,6 +31,12 @@ if($('.chat_list_group').length){
   // 下拉加载更多
   var chat_list_group_bd = $('.chat_list_group_bd');
   chat_list_group_bd.dropload({
+    domUp : {
+      domClass : 'dropload-up',
+      domRefresh : '<div class="dropload-refresh">🌚 往下拉。</div>',
+      domUpdate : '<div class="dropload-update">😒 松手就加载。</div>',
+      domLoad : '<div class="dropload-load">😏 我要加载拉。</div>'
+    },
     domDown : {
       domClass : 'dropload-down',
       domRefresh: '<div class="dropload-refresh">🌚 往上拉。</div>',
@@ -38,6 +44,10 @@ if($('.chat_list_group').length){
       domNoData : '<div class="dropload-noData">😢 没有咯。</div>'
     },
     scrollArea : chat_list_group_bd,
+    loadUpFn : function(e){
+      e.resetload();
+      location.reload();
+    },
     loadDownFn : function(e){
 
       e.noData();

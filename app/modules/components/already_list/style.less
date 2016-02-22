@@ -1,7 +1,7 @@
 /* 未发货 */
 .already {
   .hs-main {
-    padding: 0 !important;
+
     .already_list {
       ul {
         padding: 0.213333rem 0.24rem;
@@ -9,7 +9,7 @@
           padding: 0.16rem;
           border-left: 1px solid #f1f1f1;
           border-right: 1px solid #f1f1f1;
-          box-shadow: 0px 10px 10px #d6d6d6;
+          box-shadow: 0px 5px 5px #d6d6d6;
           margin-bottom: 0.266667rem;
           background-color: #fff;
           .header {
@@ -25,13 +25,14 @@
               float: left;
             }
             .title {
-              width: 7.24rem;
+              width: 6.9rem;
               height: 1.72rem;
               float: right;
               position: relative;
-              h2 {
+              a {
                 .font-dpr(14px);
-                display: -webkit-box;
+                .font-line-height(14px);
+                color: #000;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 -webkit-box-orient: vertical;
@@ -40,22 +41,25 @@
               .total {
                 position: absolute;
                 .font-dpr(15px);
-                bottom: 0.32rem;
+                .font-line-height(15px);
+                bottom: 0;
                 left: 0;
                 color: #FB0E0E;
               }
               .date {
                 position: absolute;
                 right: 0;
-                top: 0.906667rem;
-                .font-dpr(13px);
+                bottom: .4rem;
+                .font-dpr(11px);
+                .font-line-height(11px);
                 color: #aaa;
               }
               .number {
                position: absolute;
                right: 0;
                bottom: 0;
-               .font-dpr(13px);
+               .font-dpr(12px);
+               .font-line-height(12px);
                color: #aaa;
              }
            }
@@ -64,7 +68,7 @@
           .hs-cf();
           padding-top: 0.08rem;
           .username {
-            width: 4.2rem;
+            width: 4rem;
             float: left;
             .font-dpr(14px);
             margin-top: 0.2rem;
@@ -77,14 +81,15 @@
             height: inherit;
           }
           .office {
-            float: right;
+            float:right;
             button {
-              .font-dpr(14px);
-              border:0.026667rem solid #5bd69d;
+              width: 2.3rem;
+              .font-dpr(13px);
+              border:2px solid #5bd69d;
               background-color: #fff;
-              padding: 0.16rem 0.266667rem;
+              padding: 0.16rem 0.26rem;
               color: #5bd69d;
-              border-radius: 0.053333rem;
+              border-radius: 4px;
               margin-left: 0.2rem;
               &:first-child {
                 margin-left: 0;

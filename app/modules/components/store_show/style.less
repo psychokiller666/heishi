@@ -1,16 +1,12 @@
 // 商品内容页
 .store-show {
-    height: 100%;
+
     .hs-main {
         background-color: #fff;
-        position: absolute;
-        top: 1.213333rem;
-        bottom: 1.3rem;
-        overflow-y: scroll;
         .hs-cf;
     }
     .hs-store-show-header {
-        position: fixed;
+        position: absolute;
         top: 0;
         height: 1.213333rem;
         line-height: 1.28rem;
@@ -52,7 +48,7 @@
         height: 1.3rem;
         width: 10rem;
         overflow: hidden;
-        position: fixed;
+        position: absolute;
         z-index: 100;
         bottom: 0;
         .footer_nav{
@@ -103,8 +99,8 @@
             left: 0;
             width: 100%;
             height: inherit;
+            background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 0.8)), color-stop(0.2, rgba(0, 0, 0, 0)));
             background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0.8) 100%);
-            background: -webkit-gradient(linear, 0% 0%, 20% 20%, from(#FF0000), to(#F9F900));
             z-index: 10;
         }
         .image {
@@ -300,7 +296,7 @@
         ul {
             li {
                 position: relative;
-                border-top: 0.013333rem solid #eee;
+                border-top: 1px solid rgba(211, 211, 211, .8);
                 padding: 0.28rem 0 0.373333rem 0;
                 .hs-cf;
                 .avatar {

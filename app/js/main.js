@@ -20,10 +20,21 @@ var Layzr = require('../../node_modules/layzr.js/dist/layzr.js');
 // 百度上传组建
 
 // 通用
-
 // .hs-main 漂浮位置
-$('.hs-main').css('top',$('.hs-header').height());
-$('.hs-main').css('bottom',$('.hs-footer').height());
+Zepto(function($){
+  if($('.hs-page').length){
+    if($('header').length){
+      $('.hs-main').css('top',$('header').height());
+    } else {
+      $('.hs-main').css('top','0');
+    }
+    if($('footer').length){
+      $('.hs-main').css('bottom',$('footer').height());
+    } else {
+      $('.hs-main').css('bottom','0');
+    }
+  }
+})
 // alert(lib.flexible.dpr);
 
 // css高度补丁咯
@@ -65,3 +76,5 @@ require('../modules/components/culture_list/culture_list.js');
 require('../modules/components/user_withdraw/user_withdraw.js');
 // 私信列表
 require('../modules/components/chat_list_group/chat_list_group.js');
+// 私信聊天
+require('../modules/components/chat_list/chat_list.js');
