@@ -1,22 +1,48 @@
 .chat-header {
   width: 10rem;
-  overflow: hidden;
   z-index: 100;
-  position: fixed;
+  position: absolute;
   background-color: #fff;
-  .box {
+  .chat-header-bd {
     background-color: #fff;
-    padding:0 0.373333rem;
+    padding:0.36rem 0.373333rem;
     position: relative;
-    height: 1.066667rem;
-    line-height: 1.066667rem;
     .hs-cf();
     .title {
       .font-dpr(14px);
       float: left;
     }
-    button {
+    .recent_btn {
       float: right;
+    }
+    .recent_box {
+      padding: 0.31rem 0.48rem;
+      background-color: #fff;
+      position: absolute;
+      width: 9.04rem;
+      left: 0;
+      display: none;
+      .hs-cf;
+      .image {
+        width: 1.746667rem;
+        height: 1.693333rem;
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        float: left;
+      }
+      .info {
+        float: right;
+        width: 7rem;
+        p {
+          .font-dpr(13px);
+          .font-line-height(13px);
+          margin-bottom: 0.24rem;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+      }
     }
   }
 }

@@ -2,8 +2,6 @@
 .chat {
   .hs-main {
     background-color: #ededed;
-    padding-top:1.066667rem;
-    padding-bottom: 1.173333rem;
     .chat_list {
       ul {
         padding: 0 0.4rem;
@@ -12,6 +10,9 @@
           padding-top: 0.293333rem;
           width: 100%;
           .hs-cf();
+          &:last-child {
+            padding-bottom: 0.293333rem;
+          }
           &.others {
             .avatar {
               float: left;
@@ -22,9 +23,13 @@
               margin-left: 0.333333rem;
               color: #111;
               &:after {
-                left: -0.213333rem;
+                left: -0.22rem;
                 top: 0;
-                background-color: #fff;
+                width: 0;
+                height: 0;
+                border-top: 0 solid transparent;
+                border-right: 0.24rem solid #fff;
+                border-bottom: 0.16rem solid transparent;
               }
             }
           }
@@ -38,9 +43,10 @@
               margin-right: 0.333333rem;
               color: #fff;
               &:after {
-                right: -0.213333rem;
+                right: -0.22rem;
                 top: 0;
-                background-color: #68be8d;
+                border-top: 0.16rem solid #68be8d;
+                border-right: 0.24rem solid transparent;
               }
             }
           }

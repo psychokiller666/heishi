@@ -4,6 +4,8 @@ var wx = require('weixin-js-sdk');
 var dropload = require('../../../../bower_components/dropload/dist/dropload.min.js');
 // 提示框
 var prompt = require('../prompt/prompt.js');
+// 打赏框
+require('../dialog_reward/dialog_reward.js');
 
 if($('.store-show').length) {
   // 微信预览图片

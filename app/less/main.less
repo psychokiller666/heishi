@@ -32,7 +32,8 @@ html {
   .hs-page {
     height: 100%;
     position: absolute;
-    overflow-x: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
     width: 10rem;
   }
 }
@@ -64,11 +65,12 @@ html {
   transform:translateZ(0);
 }
 .dropload-down{
-  height: 1rem;
-  line-height: 1rem;
+
 }
 .dropload-refresh,.dropload-update,.dropload-load,.dropload-noData{
   text-align: center;
+  height: 1rem;
+  line-height: 1rem;
 }
 .dropload-load .loading{
   display: inline-block;
