@@ -2,9 +2,7 @@
 var wx = require('weixin-js-sdk');
 // 下拉加载
 var dropload = require('../../../../bower_components/dropload/dist/dropload.min.js');
-// handlebars
-var handlebars = require('../../../../node_modules/handlebars/dist/handlebars.min.js');
-// 测试
+// 提示框
 var prompt = require('../prompt/prompt.js');
 
 if($('.store-show').length) {
@@ -21,7 +19,10 @@ if($('.store-show').length) {
       urls: preview_list // 需要预览的图片http链接列表
     });
   })
-
+  // 打赏行为
+  $('.buy button').on('click',function(){
+    $('.dialog_reward').dialog('show');
+  })
   // 点赞
   $('.praise_btn').on('click',function(){
 

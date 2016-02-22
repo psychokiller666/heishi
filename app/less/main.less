@@ -10,8 +10,12 @@ html {
     -webkit-tap-highlight-color: transparent;
     .container {
       width: 10rem;
-      margin: 0 auto;
       background-color: #fff;
+      position: absolute;
+      left: 50%;
+      margin-left: -5rem;
+      height: 100%;
+      overflow: hidden;
     }
   }
   a {
@@ -21,8 +25,14 @@ html {
     text-decoration: none;
   }
   .hs-main {
-    overflow: hidden;
     -webkit-overflow-scrolling: touch;
+    width: 10rem;
+    position: absolute;
+  }
+  .hs-page {
+    height: 100%;
+    position: absolute;
+    overflow-x: scroll;
     width: 10rem;
   }
 }

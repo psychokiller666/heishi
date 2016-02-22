@@ -1,6 +1,5 @@
 // 商品列表
 .store_list {
-    overflow: hidden;
     ul {
         li {
             border-bottom: 0.4rem solid #eee;
@@ -21,11 +20,11 @@
                     .classify {
                         background-color: #6ac18e;
                         color: #fff;
-                        padding:0.146667rem 0.16rem;
+                        padding:0.11rem 0.16rem;
                         display: block;
                         float: left;
                         .font-dpr(14px);
-                        border-radius: 2px;
+                        border-radius: 3px;
                     }
                     .tags {
                         float: right;
@@ -42,7 +41,13 @@
                     font-weight: bold;
                     position: relative;
                     margin: 0 0.346667rem 0.36rem 0.346667rem;
-                    min-height: 1.0rem;
+                    min-height: .9rem;
+                    [data-dpr="2"] & {
+                        min-height: 1.1rem;
+                    }
+                    [data-dpr="3"] & {
+                        min-height: 1.1rem;
+                    }
                     .font-line-height(24px);
                     .date {
                         position: absolute;
