@@ -80,6 +80,8 @@ require('../modules/components/user_withdraw/user_withdraw.js');
 require('../modules/components/chat_list_group/chat_list_group.js');
 // 私信聊天
 require('../modules/components/chat_list/chat_list.js');
+// 卖家动态
+require('../modules/components/seller_list/seller_list.js');
 
 // 发布页
 require('../modules/components/add/add.js');
