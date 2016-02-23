@@ -1,0 +1,40 @@
+.fans_list {
+
+  .fans_list_bd {
+    background-color: #f3f3f3;
+    ul {
+      padding: 0.24rem 0.32rem;
+      li {
+        margin-bottom: 0.4rem;
+        position: relative;
+        &:after {
+          content: ">";
+          position: absolute;
+          right: 0;
+          top: 0;
+          .font-dpr(22px);
+          color: #6ac18e;
+          line-height: 1.12rem;
+        }
+        a {
+          display: block;
+          .hs-cf;
+          .avatar {
+            width: 1.12rem;
+            height: 1.12rem;
+            display: block;
+            float: left;
+          }
+          .username {
+            display: block;
+            float: left;
+            margin-left: 0.48rem;
+            line-height: 1.12rem;
+            .font-dpr(16px);
+            color: #111;
+          }
+        }
+      }
+    }
+  }
+}
