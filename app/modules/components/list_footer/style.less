@@ -13,15 +13,50 @@
             padding-left: 0.266667rem;
             padding-right: 0.266667rem;
             .hs-cf;
+            .notice_box {
+                position: absolute;
+                left: 0;
+                height: 1.32rem;
+                padding: 0.36rem 0 0.4rem 0;
+                width: 10rem;
+                background-color: #222;
+                overflow: hidden;
+                display: none;
+                a {
+                    width: 4.9rem;
+                    display: block;
+                    float: left;
+                    text-align: center;
+                    color: #dedede;
+                    border-right: 1px solid #393939;
+                    &:last-child {
+                        border:none;
+                    }
+                    span {
+                        display: block;
+                        &.text {
+                            .font-dpr(18px);
+                            .font-line-height(18px);
+                            margin-top: 0.24rem;
+                        }
+                    }
+                }
+            }
             li {
                 float: left;
                 width: 20%;
                 text-align: center;
                 margin: 0.16rem 0;
                 overflow: hidden;
+                &.notice_btn {
+
+                }
+
                 a {
                     display: block;
-
+                    &:hover {
+                        text-decoration:none;
+                    }
                     &.active span {
                         color: #58d894;
                         opacity: 1;

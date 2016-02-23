@@ -21,33 +21,33 @@ var Layzr = require('../../node_modules/layzr.js/dist/layzr.js');
 
 // 通用
 // .hs-main 漂浮位置
-Zepto(function($){
-  if($('.hs-page').length){
-    if($('header').length){
-      $('.hs-main').css('top',$('header').height());
-    } else {
-      $('.hs-main').css('top','0');
-    }
-    if($('footer').length){
-      $('.hs-main').css('bottom',$('footer').height());
-    } else {
-      $('.hs-main').css('bottom','0');
-    }
+
+if($('.hs-page').length){
+  if($('header').length){
+    $('.hs-main').css('top',$('header').height());
+  } else {
+    $('.hs-main').css('top','0');
   }
-})
+  if($('footer').length){
+    $('.hs-main').css('bottom',$('footer').height());
+  } else {
+    $('.hs-main').css('bottom','0');
+  }
+}
+
 // alert(lib.flexible.dpr);
 
 // css高度补丁咯
-function htmlheight100(classname) {
-  if($(classname).length){
-    $('html').css('height','100%');
-  }
-}
-htmlheight100('.center');
-htmlheight100('.notice');
-htmlheight100('.chat_list_group');
-htmlheight100('.pay_reward');
-htmlheight100('.orderform');
+// function htmlheight100(classname) {
+//   if($(classname).length){
+//     $('html').css('height','100%');
+//   }
+// }
+// htmlheight100('.center');
+// htmlheight100('.notice');
+// htmlheight100('.chat_list_group');
+// htmlheight100('.pay_reward');
+// htmlheight100('.orderform');
 
 // 图片加载
 new Layzr({
@@ -56,14 +56,16 @@ new Layzr({
 
 // 提示框
 require('../modules/components/prompt/prompt.js');
+// 底部通用导航
+require('../modules/components/list_footer/list_footer.js');
 
 // 商品
 // 列表页
 require('../modules/components/store_list/store_list.js');
 // 内容页
-require('../modules/components/store_show/store_show.js');
+// require('../modules/components/store_show/store_show.js');
 // 评论
-require('../modules/components/dialog_comment/dialog_comment.js');
+// require('../modules/components/dialog_comment/dialog_comment.js');
 // 生成订单
 require('../modules/components/orderform/orderform.js');
 
@@ -78,3 +80,6 @@ require('../modules/components/user_withdraw/user_withdraw.js');
 require('../modules/components/chat_list_group/chat_list_group.js');
 // 私信聊天
 require('../modules/components/chat_list/chat_list.js');
+
+// 发布页
+require('../modules/components/add/add.js');

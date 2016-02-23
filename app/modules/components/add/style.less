@@ -1,9 +1,10 @@
 // 发布
 .add {
+
   .hs-footer {
-    .btn {
+    .submit {
       color: #fff;
-      background-color: #000;
+      background-color: #68be8c;
       border:none;
       .font-dpr(16px);
       width: 100%;
@@ -12,4 +13,140 @@
       padding: 0.466667rem 0;
     }
   }
+  .add_bd {
+    padding: 0.44rem;
+    .item {
+      &.title {
+        padding-bottom: 0.36rem;
+        border-bottom: 0.013333rem solid rgba(211, 211, 211, .5);
+        .hs-cf;
+      }
+      &.input {
+        label {
+          .font-dpr(16px);
+          color: #383838;
+          width: 1.02rem;
+          display:block;
+          float: left;
+        }
+        input {
+          width: 8.1rem;
+          border:none;
+          .font-dpr(16px);
+          float: left;
+          color: #383838;
+        }
+      }
+      &.description {
+        padding:0.44rem 0;
+        textarea {
+          .font-dpr(16px);
+          width: 100%;
+          color: #383838;
+          border:none;
+        }
+      }
+      &.images {
+       padding-bottom: 0.36rem;
+       &:after {
+        content: "";
+        width: 10rem;
+        left: 0;
+        position: absolute;
+        border-bottom: 0.16rem solid rgba(211, 211, 211, .5);
+        padding-bottom: 0.2rem;
+      }
+      ul {
+        .hs-cf;
+        li {
+          width: 2.11rem;
+          height: 2.08rem;
+          float: left;
+          border: 0.04rem solid rgba(211, 211, 211, .5);
+          border-radius: 4px;
+          margin-right: 0.12rem;
+          margin-bottom: 0.12rem;
+          color: #eee;
+          text-align: center;
+          &.cover {
+            position: relative;
+            &:before {
+              position: absolute;
+              .font-dpr(10px);
+              .font-line-height(10px);
+              content: "封面";
+              top: 0.15rem;
+              left: 0;
+              color: #68be8c;
+              -ms-transform:rotate(-45deg); /* IE 9 */
+              -moz-transform:rotate(-45deg); /* Firefox */
+              -webkit-transform:rotate(-45deg); /* Safari and Chrome */
+              -o-transform:rotate(-45deg); /* Opera */
+              transform:rotate(-45deg);
+            }
+            &:after {
+              content: "图";
+              line-height: 2.08rem;
+              .font-dpr(60px);
+            }
+          }
+          &:after {
+            content: "+";
+            line-height: 2.08rem;
+            .font-dpr(60px);
+          }
+
+          &:nth-child(4){
+            margin-right: 0;
+          }
+          &:nth-child(8){
+            margin-right: 0;
+          }
+          &:nth-child(12){
+            margin-right: 0;
+          }
+          &:nth-child(16){
+            margin-right: 0;
+          }
+        }
+      }
+    }
+    &.price,&.postage,&.number{
+      padding: 0.36rem 0;
+      border-bottom: 0.013333rem solid rgba(211, 211, 211, .5);
+      .hs-cf;
+      position: relative;
+    }
+    &.price:before,&.postage:before {
+      content: "¥";
+      position: absolute;
+      right: 0;
+      .font-dpr(22px);
+      color: #afafaf;
+    }
+    &.number {
+      border-bottom: none;
+    }
+    &.tags {
+      button {
+       .font-dpr(16px);
+       border:none;
+       background-color: #dcdcdc;
+       color: #fff;
+       border-radius: 2px;
+       padding: 0.16rem 0.12rem;
+       margin-right: 0.16rem;
+       margin-bottom: 0.2rem;
+       &.active {
+        background-color: #68be8c;
+       }
+     }
+     label {
+      display: block;
+      .font-dpr(16px);
+      color: #c0c0c0;
+     }
+   }
+ }
+}
 }
