@@ -2,7 +2,7 @@ var dropload = require('../../../../bower_components/dropload/dist/dropload.min.
 
 if($('.seller_list').length){
   var seller_list_bd = $('.seller_list_bd');
-
+  seller_list_bd.scrollTop(seller_list_bd.height());
   seller_list_bd.dropload({
     domDown : {
       domClass : 'dropload-down',
