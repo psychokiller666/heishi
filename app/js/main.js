@@ -16,43 +16,29 @@ require('../../node_modules/frozenui/js/frozen.js');
 // 图片延时加载
 var Layzr = require('../../node_modules/layzr.js/dist/layzr.js');
 
-// 上拉加载更多
-// 百度上传组建
-
 // 通用
-// .hs-main 漂浮位置
-
-if($('.hs-page').length){
-  if($('header').length){
-    $('.hs-main').css('top',$('header').height());
-  } else {
-    $('.hs-main').css('top','0');
-  }
-  if($('footer').length){
-    $('.hs-main').css('bottom',$('footer').height());
-  } else {
-    $('.hs-main').css('bottom','0');
-  }
-}
-
 // alert(lib.flexible.dpr);
-
-// css高度补丁咯
-// function htmlheight100(classname) {
-//   if($(classname).length){
-//     $('html').css('height','100%');
-//   }
-// }
-// htmlheight100('.center');
-// htmlheight100('.notice');
-// htmlheight100('.chat_list_group');
-// htmlheight100('.pay_reward');
-// htmlheight100('.orderform');
-
-// 图片加载
-new Layzr({
-  threshold: 50
+$(window).on('load',function(e){
+  // .hs-main 漂浮位置
+  if($('.hs-page').length){
+    if($('header').length){
+      $('.hs-main').css('top',$('header').height());
+    } else {
+      $('.hs-main').css('top','0');
+    }
+    if($('footer').length){
+      $('.hs-main').css('bottom',$('footer').height());
+    } else {
+      $('.hs-main').css('bottom','0');
+    }
+  }
+  // 图片加载
+  new Layzr({
+    threshold: 50,
+    bgAttr: 'data-layzr-bg'
+  });
 });
+
 
 // 提示框
 require('../modules/components/prompt/prompt.js');
@@ -63,9 +49,9 @@ require('../modules/components/list_footer/list_footer.js');
 // 列表页
 require('../modules/components/store_list/store_list.js');
 // 内容页
-// require('../modules/components/store_show/store_show.js');
+require('../modules/components/store_show/store_show.js');
 // 评论
-// require('../modules/components/dialog_comment/dialog_comment.js');
+require('../modules/components/dialog_comment/dialog_comment.js');
 // 生成订单
 require('../modules/components/orderform/orderform.js');
 
