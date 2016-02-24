@@ -51,7 +51,7 @@ require('../modules/components/store_list/store_list.js');
 // 内容页
 require('../modules/components/store_show/store_show.js');
 // 评论
-require('../modules/components/dialog_comment/dialog_comment.js');
+// require('../modules/components/dialog_comment/dialog_comment.js');
 // 生成订单
 require('../modules/components/orderform/orderform.js');
 
@@ -68,6 +68,8 @@ require('../modules/components/chat_list_group/chat_list_group.js');
 require('../modules/components/chat_list/chat_list.js');
 // 卖家动态
 require('../modules/components/seller_list/seller_list.js');
+// 已发布
+require('../modules/components/posts/posts.js');
 
 // 发布页
 require('../modules/components/add/add.js');
