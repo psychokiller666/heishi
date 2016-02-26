@@ -12,10 +12,12 @@ html {
       width: 10rem;
       background-color: #fff;
       position: absolute;
+      top: 0;
       left: 50%;
       margin-left: -5rem;
       height: 100%;
       overflow: hidden;
+      font-size: 12px;
     }
   }
   a {
@@ -29,7 +31,7 @@ html {
     width: 10rem;
     position: absolute;
   }
-  .hs-page {
+  .content {
     height: 100%;
     position: absolute;
     overflow-y: scroll;
@@ -37,84 +39,9 @@ html {
     width: 10rem;
   }
 }
-
-
-/* iconfont */
-@font-face {
-  font-family: "iconfont";
-  src: url('../font/iconfont.eot');
-  src: url('../font/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('../font/iconfont.woff') format('woff'), /* chrome, firefox */
-  url('../font/iconfont.ttf') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('../font/iconfont.svg#iconfont') format('svg');
-}
-.hs-icon {
-  font-family: "iconfont" !important;
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  -webkit-text-stroke-width: 0.2px;
-  -moz-osx-font-smoothing: grayscale;
-}
-/* dropload */
-.dropload-up,.dropload-down{
-  position: relative;
-  .font-dpr(14px);
-  overflow: hidden;
-  /* 开启硬件加速 */
-  -webkit-transform:translateZ(0);
-  transform:translateZ(0);
-}
-.dropload-down{
-
-}
-.dropload-refresh,.dropload-update,.dropload-load,.dropload-noData{
-  text-align: center;
-  height: 1rem;
-  line-height: 1rem;
-}
-.dropload-load .loading{
-  display: inline-block;
-  height: 0.2rem;
-  width: 0.2rem;
-  border-radius: 100%;
-  margin: 0.08rem;
-  border: 2px solid #666;
-  border-bottom-color: transparent;
-  vertical-align: middle;
-  -webkit-animation: rotate 0.75s linear infinite;
-  animation: rotate 0.75s linear infinite;
-}
-@-webkit-keyframes rotate {
-  0% {
-    -webkit-transform: rotate(0deg);
-  }
-  50% {
-    -webkit-transform: rotate(180deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-  }
-}
-@keyframes rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  50% {
-    transform: rotate(180deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.data-layzr-bg {
-  background-color: #000;
-}
-
 /* 包含 */
 @import "../modules/less/common.less";
 @import "../modules/components/btn/style.less";
-@import "../modules/components/prompt/style.less";
 
 /* 头部 */
 @import "../modules/components/list_header/style.less";

@@ -13,18 +13,18 @@
   -webkit-box-align: center;
   background: rgba(0, 0, 0, 0.4);
   display: none;
-  &.show {
-    display: -webkit-box;
-  }
   .ui-dialog-cnt {
-    width: 7.653333rem;
+    width: 7.65rem;
     background-color: #fefeff;
     border-radius: 0.28rem;
     position: relative;
     margin:0 auto;
-    margin-top: 2.4rem;
-    padding: 0.4rem 0;
+    margin-top: 4.4rem;
+    padding:0.4rem 0;
+    .hs-cf;
     header {
+      position: absolute;
+      top: 0;
       .ui-dialog-close {
         position: absolute;
         left: -0.226667rem;
@@ -52,7 +52,6 @@
         width: 1.573333rem;
         height: 1.573333rem;
         margin: 0 auto;
-        margin-top: 0.4rem;
       }
       .username {
         text-align: center;
@@ -93,26 +92,33 @@
       width: 6.5rem;
       margin: 0 auto;
       margin-top: 0.48rem;
-      margin-bottom: 0.693333rem;
+      margin-bottom: 0.05rem;
       form {
         border:0.013333rem solid rgba(211, 211, 211, .5);
-        border-radius: 5px;
+        border-radius: 0.12rem;
         height: 0.92rem;
         line-height: 0.92rem;
+        .hs-cf;
         input {
           border:none;
           border-right: 0.013333rem solid rgba(211, 211, 211, .5);
-          line-height: 0.92rem;
+          line-height: 0.68rem;
           width: 3.95rem;
-          padding:0 0.36rem;
+          padding:0.12rem 0.36rem;
           color: #121212;
           .font-dpr(13px);
+          float: left;
+          background-color: transparent;
         }
         button {
-          width: 1.6rem;
+          width: 1.76rem;
           line-height: 0.92rem;
+          height: 0.92rem;
           border:none;
           background-color: #fff;
+          float: right;
+          text-align: center;
+          background-color: transparent;
           i{
             font-style: normal;
             background-color: #ea8010;

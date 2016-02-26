@@ -1,13 +1,13 @@
+// 商品内容页
 // 微信jssdk
 var wx = require('weixin-js-sdk');
-// 下拉加载
-var dropload = require('../../../../bower_components/dropload/dist/dropload.min.js');
-// 提示框
-var prompt = require('../prompt/prompt.js');
 // 打赏框
 require('../dialog_reward/dialog_reward.js');
+// handlebars
+var handlebars = require('../../../../node_modules/handlebars/dist/handlebars.min.js');
 
-if($('.store-show').length) {
+
+
   // 微信预览图片
   // 微信jssdk 预览图片
   // http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html#.E9.A2.84.E8.A7.88.E5.9B.BE.E7.89.87.E6.8E.A5.E5.8F.A3
@@ -59,18 +59,71 @@ if($('.store-show').length) {
   })
 // 评论加载更多
 var comment = $('.comment');
-comment.dropload({
-  domDown : {
-    domClass : 'dropload-down',
-    domRefresh: '<div class="dropload-refresh">🌚 往上拉。</div>',
-    domLoad : '<div class="dropload-load">😏 加载呢。</div>',
-    domNoData : '<div class="dropload-noData">😢 没有咯。</div>'
+  // 测试数据
+  var comment_data = [{
+    object_id: "10",
+    term_id: "1",
+    listorder: "0",
+    post_author: "11",
+    post_keywords: "点击选择...",
+    post_date: "2015-08-14 13:03:30",
+    post_title: "fff",
+    post_excerpt: "屎",
+    post_status: "1",
+    post_modified: "08-14",
+    post_type: "1",
+    comment_count: "8",
+    post_hits: "60",
+    post_like: "5",
+    filepath: "upload/150814/4b43e6d450e19f59c090e41ba6b92937.jpg",
+    bgcolor: 2,
+    type_name: "摆摊d"
   },
-  scrollArea : comment,
-  loadDownFn : function(e){
-    e.noData();
-    e.resetload();
+  {
+    object_id: "11",
+    term_id: "1",
+    listorder: "0",
+    post_author: "12",
+    post_keywords: "点击选择...",
+    post_date: "2015-08-14 13:07:20",
+    post_title: "李根最牛逼的黑胖子",
+    post_excerpt: "我的描述就是屎 就是屎 就是屎 ",
+    post_status: "1",
+    post_modified: "08-14",
+    post_type: "1",
+    comment_count: "39",
+    post_hits: "53",
+    post_like: "8",
+    filepath: "upload/150814/c20554a0acd1ce5999c3e4e16d44bb67.jpg",
+    bgcolor: 3,
+    type_name: "摆摊"
+  }];
 
-  }
-})
-}
+  var loading = false;
+    // 初始化下拉
+    var page_size = 2;
+    var pages = 1;
+    page.on('infinite', function() {
+      // 如果正在加载，则退出
+      if (loading) return;
+      // 设置flag
+      loading = true;
+      // 模拟1s的加载过程
+      setTimeout(function() {
+        // 重置加载flag
+        loading = false;
+        if (pages >= page_size) {
+          // 加载完毕，则注销无限加载事件，以防不必要的加载
+          $.detachInfiniteScroll($('.infinite-scroll'));
+          // 删除加载提示符
+          $('.infinite-scroll-preloader').remove();
+          $.toast('😒 没有了');
+          return;
+        }
+        var comment_tpl = handlebars.compile($("#comment_tpl").html());
+        comment.find('.comment_bd').append(comment_tpl(comment_data));
+        // 更新最后加载的序号
+        pages++;
+        $.refreshScroller();
+      }, 1000);
+    });

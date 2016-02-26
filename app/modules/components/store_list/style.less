@@ -2,7 +2,7 @@
 .store_list {
     ul {
         li {
-            border-bottom: 0.4rem solid rgba(211, 211, 211, .5);
+            border-bottom: 0.4rem solid rgba(241, 241, 241, 1);
             a {
                 display: block;
                 color: #212121;
@@ -16,7 +16,7 @@
                 }
                 .info {
                     .hs-cf;
-                    padding: 0.186667rem 0.346667rem;
+                    padding: 0.17rem 0.34rem 0.1rem 0.34rem;
                     .classify {
                         background-color: #6ac18e;
                         color: #fff;
@@ -28,7 +28,7 @@
                     }
                     .tags {
                         float: right;
-                        padding:0.146667rem 0;
+                        padding:0.14rem 0;
                         span {
                             color: #6ac18e;
                             .font-dpr(14px);
@@ -38,34 +38,34 @@
                 }
                 .title {
                     .font-dpr(18px);
-                    font-weight: bold;
-                    position: relative;
-                    margin: 0 0.346667rem 0.36rem 0.346667rem;
-                    min-height: .9rem;
-                    [data-dpr="2"] & {
-                        min-height: 1.1rem;
-                    }
-                    [data-dpr="3"] & {
-                        min-height: 1.1rem;
-                    }
                     .font-line-height(24px);
-                    .date {
-                        position: absolute;
-                        bottom: 0;
-                        right: 0;
-                        .font-dpr(12px);
-                        font-weight: none;
-                        .font-line-height(18px);
-                        span {
-                            margin-left: 0.36rem;
-                            i {
-                                margin-right: 0.24rem;
-                            }
+                    font-weight: bold;
+                    padding: 0 0.34rem;
+                }
+                .date {
+                    .font-dpr(14px);
+                    .font-line-height(14px);
+                    padding: 0.14rem 0.34rem 0.2rem 0.34rem;
+
+                    color: #b7b7b7;
+                    .hs-cf;
+                    .time {
+                        float: left;
+                    }
+                    .icon {
+                       float: right;
+                       span {
+                           .font-dpr(13px);
+                           text-align: left;
+                           margin-left: 0.28rem;
+                           i {
+                            margin-right: 0.14rem;
+                            font-style: normal;
                         }
                     }
                 }
-
             }
         }
     }
+}
 }

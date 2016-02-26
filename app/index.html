@@ -9,16 +9,18 @@
     <link rel="stylesheet" href="css/main.min.css">
 </head>
 <body>
-    <div class="container show-list">
-        <header class="hs-header">
-            @@include('list_header/index');
-        </header>
-        <footer class="hs-footer">
-            @@include('list_footer/index');
-        </footer>
-        <main class="hs-main">
-            @@include('store_list/index');
-        </main>
+    <div class="page-group">
+        <div class="container show-list page">
+            <header class="hs-header">
+                @@include('list_header/index');
+            </header>
+            <footer class="hs-footer">
+                @@include('list_footer/index');
+            </footer>
+            <main class="hs-main">
+                @@include('store_list/index');
+            </main>
+        </div>
     </div>
     <script src="js/main.min.js"></script>
 </body>
