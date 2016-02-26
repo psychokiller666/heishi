@@ -2,8 +2,6 @@
 var WebUploader = require('../../../../node_modules/tb-webuploader/dist/webuploader.min.js');
 // 过滤关键词
 var esc = require('../../../../node_modules/chn-escape/escape.js');
-// 提示框
-var prompt = require('../prompt/prompt.js');
 
 if ($('.comment').length){
   // 添加评论
@@ -16,7 +14,7 @@ if ($('.comment').length){
 
   // 弹出回复框
   function comment_box(id,username,ispic) {
-    dialog_comment.dialog("show");
+    dialog_comment.show();
     // 判断是否是回复
     if (username) {
       comment_input.attr('placeholder','回复：'+username);
@@ -32,7 +30,7 @@ if ($('.comment').length){
     });
     // 控制关闭
     dialog_comment.find('.cancel').on('click',function(){
-      dialog_comment.dialog("hide");
+      dialog_comment.hide();
     });
     // 提交评论
     dialog_comment.find('.submit').on('click',function(){
@@ -52,11 +50,11 @@ if ($('.comment').length){
       if(!comment_input.val().length){
         comment_input.attr('placeholder','😒 评论不能为空');
       } else if (esc.find(comment_input.val()).length) {
-        dialog_comment.dialog('hide');
-        prompt('🚔 我要报警了');
+        dialog_comment.hide();
+        $.toast('🚔 我要报警了');
       } else {
-        dialog_comment.dialog('hide');
-        prompt('😄 评论成功');
+        dialog_comment.hide();
+        $.toast('😄 评论成功');
       }
       // 重置按钮及对话框
       comment_input.val('').attr('placeholder','随便说点什么');

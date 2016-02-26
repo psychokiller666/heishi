@@ -55,9 +55,11 @@
   .bd {
     ul {
       &.attention {
-        height: 1.493333rem;
         border-bottom: 0.133333rem solid rgba(211, 211, 211, .5);
         background-color: #fff;
+        padding-top: 0.32rem;
+        padding-bottom: 0.37rem;
+        .hs-cf;
         li {
           float: left;
           width: 33.333333%;
@@ -71,13 +73,12 @@
               display: block;
               &.num {
                 .font-dpr(14px);
-                line-height: 0;
-                margin-top: 0.48rem;
+                .font-line-height(14px);
               }
               &.text {
                 .font-dpr(15px);
-                line-height: 0;
-                margin-top: 0.6rem;
+                .font-line-height(15px);
+                padding-top: 0.28rem;
               }
             }
           }
@@ -89,7 +90,7 @@
         background-color: #fff;
         li {
           border-bottom: 0.026667rem solid rgba(211, 211, 211, .5);
-          line-height: 1.066667rem;
+          padding:0.4rem 0;
           a {
             .font-dpr(15px);
             display: block;
