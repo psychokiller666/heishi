@@ -1,4 +1,4 @@
-<div class="hs-page culture_list">
+<div class="hs-page culture_list infinite-scroll content">
     <ul>
         <li>
             <a href="#">
@@ -67,4 +67,23 @@
             </a>
         </li>
     </ul>
+    <!-- 加载提示 -->
+    <div class="infinite-scroll-preloader">
+      <div class="preloader"></div>
+  </div>
+  <script id="culture_list_tpl" type="text/x-handlebars-template">
+    {{#each this}}
+    <li>
+        <a href="#">
+            <div class="img">
+                <img src="http://placeholder.qiniudn.com/108x108" />
+            </div>
+            <div class="text">
+                <h2>对印度贫民窟的人来说，自制毒品是为了更好的工作与自娱自乐</h2>
+            </div>
+            <div class="info"><span><i>赞</i>102</span><span><i>赞</i>102</span><span><i>赞</i>102</span></div>
+        </a>
+    </li>
+    {{/each}}
+</script>
 </div>

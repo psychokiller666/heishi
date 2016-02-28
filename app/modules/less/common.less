@@ -62,14 +62,18 @@
         line-height: @font-size * 3;
     }
 }
+@import "fonts.less";
 // SUI
 @import "../../../bower_components/SUI-Mobile/less/mixins.less";
 @import "../../../bower_components/SUI-Mobile/less/variables.less";
+@import "pull-to-refresh.less";
 @import "../../../bower_components/SUI-Mobile/less/pages.less";
 @import "infinite.less";
 @import "../../../bower_components/SUI-Mobile/less/preloader.less";
+
 @import "modal.less";
+
 /* sui补丁 */
-.page {
+.page,.page-group {
   background-color: #333;
 }
