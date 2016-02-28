@@ -1,7 +1,6 @@
 // 发布页
-var prompt = require('../prompt/prompt.js');
 
-if($('.add').length){
+$(document).on('pageInit','.add', function (e, id, page) {
   // 选择标签
   var tags = $('.tags');
   var tags_num = tags.find('button.active').length;
@@ -19,7 +18,7 @@ if($('.add').length){
         $(this).removeClass('active');
         tags_num--;
       } else {
-        prompt('🙂 标签最多选2个');
+        $.toast("😕 标签最多选2个");
       }
     } else {
       if(!$(this).hasClass('active')){
@@ -36,5 +35,7 @@ if($('.add').length){
   $('.submit').on('click',function(){
     console.log(get_tags());
   })
-}
+
+});
+$.init();
 

@@ -1,14 +1,15 @@
 // 商品列表 和 商品内容页逻辑
-// handlebars
-var handlebars = require('../../../../node_modules/handlebars/dist/handlebars.min.js');
 // 图片延时加载
 var Layzr = require('../../../../node_modules/layzr.js/dist/layzr.js');
 // 百度上传组件
 var WebUploader = require('../../../../node_modules/tb-webuploader/dist/webuploader.min.js');
 // 过滤关键词
 var esc = require('../../../../node_modules/chn-escape/escape.js');
+// handlebars
+var handlebars = require('../../../../node_modules/handlebars/dist/handlebars.min.js');
 
 $(document).on("pageInit", function (e, id, page) {
+
   // 控制.hs-main高度
   if($('.hs-page').length){
     if($('header').length){
@@ -67,120 +68,121 @@ $(document).on("pageInit", function (e, id, page) {
   }];
   // 商品列表页
   if($('.show-list').length) {
-      // 测试数据
-      var store_list = $('.store_list');
-      // 下拉加载更多
-      var loading = false;
-      // 初始化下拉
-      var page_size = 2;
-      var pages = 1;
-      page.on('infinite', function() {
-      // 如果正在加载，则退出
-      if (loading) return;
-      // 设置flag
-      loading = true;
-      // 模拟1s的加载过程
-      setTimeout(function() {
-        // 重置加载flag
-        loading = false;
-        if (pages >= page_size) {
-          // 加载完毕，则注销无限加载事件，以防不必要的加载
-          $.detachInfiniteScroll($('.infinite-scroll'));
-          // 删除加载提示符
-          $('.infinite-scroll-preloader').remove();
-          $.toast('😒 没有了');
-          return;
-        }
-        var store_list_tpl = handlebars.compile($("#store_list_tpl").html());
-        store_list.find('ul').append(store_list_tpl(data));
-        // 更新最后加载的序号
-        pages++;
-        $.refreshScroller();
-      }, 1000);
-    });
-    }
+    console.log(e,id,page);
+    var store_list = $('.store_list');
+    // 下拉加载更多
+    var loading = false;
+    // 初始化下拉
+    var page_size = 2;
+    var pages = 1;
+    var store_list_tpl = handlebars.compile($("#store_list_tpl").html());
+    page.on('infinite', function() {
+    // 如果正在加载，则退出
+    if (loading) return;
+    // 设置flag
+    loading = true;
+    // 模拟1s的加载过程
+    setTimeout(function() {
+      // 重置加载flag
+      loading = false;
+      if (pages >= page_size) {
+        // 加载完毕，则注销无限加载事件，以防不必要的加载
+        $.detachInfiniteScroll($('.infinite-scroll'));
+        // 删除加载提示符
+        $('.infinite-scroll-preloader').remove();
+        $.toast('😒 没有了');
+        return;
+      }
+      store_list.find('ul').append(store_list_tpl(data));
+      // 更新最后加载的序号
+      pages++;
+      $.refreshScroller();
+    }, 1000);
+  });
+  }
 
-    // 商品内容页
-    if($('.store-show').length) {
-      // 加关注
-      var attention_btn = $('.attention-btn');
-      attention_btn.on('click',function(){
-        if($(this).hasClass('active')){
-          $(this).removeClass('active');
-          $.toast('已取消关注');
-        } else {
-          $(this).addClass('active');
-          $.toast('关注成功');
-        }
+  // 商品内容页
+  if($('.store-show').length) {
+    console.log(e,id,page);
+    // 加关注
+    var attention_btn = $('.attention-btn');
+    attention_btn.on('click',function(){
+      if($(this).hasClass('active')){
+        $(this).removeClass('active');
+        $.toast('已取消关注');
+      } else {
+        $(this).addClass('active');
+        $.toast('关注成功');
+      }
+    });
+    // 微信预览图片
+    $('.images ul li').tap(function(){
+      var preview_list = [];
+      $.each($('.images ul li'),function(index,item){
+        preview_list.push($('.images ul li').eq(index).data('preview'));
       });
-      // 微信预览图片
-      $('.images ul li').tap(function(){
-        var preview_list = [];
-        $.each($('.images ul li'),function(index,item){
-          preview_list.push($('.images ul li').eq(index).data('preview'));
-        });
-        wx.previewImage({
-          current: $(this).data('preview'),
-          urls: preview_list
-        });
+      wx.previewImage({
+        current: $(this).data('preview'),
+        urls: preview_list
       });
-      // 打赏
-      var dialog_reward = $('.dialog_reward');
-      $('.buy button').on('click',function(){
-        dialog_reward.find('input').val('');
-        dialog_reward.show();
-      });
-      // 打赏框
-      dialog_reward.find('.ui-dialog-close').on('click',function(){
+    });
+    // 打赏
+    var dialog_reward = $('.dialog_reward');
+    $('.buy button').on('click',function(){
+      dialog_reward.find('input').val('');
+      dialog_reward.show();
+    });
+    // 打赏框
+    dialog_reward.find('.ui-dialog-close').on('click',function(){
+      dialog_reward.hide();
+    });
+    dialog_reward.find('.ui-dialog-ft button').on('click',function(){
+      if(dialog_reward.find('input').val() >= 1){
+        $.toast('🌚 谢谢哥');
         dialog_reward.hide();
-      });
-      dialog_reward.find('.ui-dialog-ft button').on('click',function(){
-        if(dialog_reward.find('input').val() >= 1){
-          $.toast('🌚 谢谢哥');
-          dialog_reward.hide();
-        } else {
-          $.toast('😐 必须是整数');
-          dialog_reward.find('input').trigger('focus');
-        }
-      });
-      // 点赞
-      $('.praise_btn').on('click',function(){
-        $.toast('🌚 点赞成功');
-      });
-      // 更多按钮
-      var praise_more_tpl = '<li><button type="button" class="praise_more">更多</button></li>';
-      $('.store-show .praise ul li').each(function(index,item){
-        if(index <= 7) {
-          $('.store-show .praise ul').height('1.14rem');
-        } else if (index >= 16){
-          $('.store-show .praise ul li').eq(15).before(praise_more_tpl);
-        } else {
-          $('.store-show .praise ul').height('2.62rem');
-        }
-      });
-      $('.praise_more').live('click',function(){
-        $('.praise_more').parent().remove();
-        if($(this).hasClass('active')) {
-          $(this).parent().remove();
-          $('.store-show .praise ul li').eq(15).before(praise_more_tpl);
-          $('.store-show .praise ul').height('2.64rem');
-        } else {
-          $(this).parent().remove();
-          $('.store-show .praise ul').height('auto');
-          $('.store-show .praise ul').append(praise_more_tpl);
-          $('.praise_more').addClass('active');
-          $('.praise_more').text('回收');
-        }
-      });
-      // 评论加载更多
-      var comment = $('.comment');
-      var loading = false;
-      // 初始化下拉
-      var page_size = 2;
-      var pages = 1;
-      page.on('infinite', function() {
-      // 如果正在加载，则退出
-      if (loading) return;
+      } else {
+        $.toast('😐 必须是整数');
+        dialog_reward.find('input').trigger('focus');
+      }
+    });
+    // 点赞
+    $('.praise_btn').on('click',function(){
+      $.toast('🌚 点赞成功');
+    });
+    // 更多按钮
+    var praise_more_tpl = '<li><button type="button" class="praise_more">更多</button></li>';
+    $('.store-show .praise ul li').each(function(index,item){
+      if(index <= 7) {
+        $('.store-show .praise ul').height('1.14rem');
+      } else if (index >= 16){
+        $('.store-show .praise ul li').eq(15).before(praise_more_tpl);
+      } else {
+        $('.store-show .praise ul').height('2.62rem');
+      }
+    });
+    $('.praise_more').live('click',function(){
+      $('.praise_more').parent().remove();
+      if($(this).hasClass('active')) {
+        $(this).parent().remove();
+        $('.store-show .praise ul li').eq(15).before(praise_more_tpl);
+        $('.store-show .praise ul').height('2.64rem');
+      } else {
+        $(this).parent().remove();
+        $('.store-show .praise ul').height('auto');
+        $('.store-show .praise ul').append(praise_more_tpl);
+        $('.praise_more').addClass('active');
+        $('.praise_more').text('回收');
+      }
+    });
+    // 评论加载更多
+    var comment = $('.comment');
+    var loading = false;
+    // 初始化下拉
+    var page_size = 2;
+    var pages = 1;
+    page.on('infinite', function() {
+    // 如果正在加载，则退出
+    if (loading) return;
       // 设置flag
       loading = true;
       // 模拟1s的加载过程
@@ -202,21 +204,21 @@ $(document).on("pageInit", function (e, id, page) {
         $.refreshScroller();
       }, 1000);
     });
-    }
+  }
 
-    // 添加评论
-    var comment_btn = $('#comment-btn');
-    var footer_nav = $('.footer_nav');
-    var dialog_comment = $('.dialog_comment');
-    var comment_bd = $('.comment_bd');
-    var father_comment = $('.father');
-    var son_comment = $('.son');
-    var comment_input = $('#comment_input');
-    var reply_tpl = handlebars.compile($("#reply_tpl").html());
+  // 添加评论
+  var comment_btn = $('#comment-btn');
+  var footer_nav = $('.footer_nav');
+  var dialog_comment = $('.dialog_comment');
+  var comment_bd = $('.comment_bd');
+  var father_comment = $('.father');
+  var son_comment = $('.son');
+  var comment_input = $('#comment_input');
+  var reply_tpl = handlebars.compile($("#reply_tpl").html());
 
-    // 弹出回复框
-    function comment_box(id,ispic,username,element,is_father) {
-      dialog_comment.show();
+  // 弹出回复框
+  function comment_box(id,ispic,username,element,is_father) {
+    dialog_comment.show();
       // 判断是否是回复
       if (username.length) {
         comment_input.attr('placeholder','回复：'+username);

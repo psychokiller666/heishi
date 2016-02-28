@@ -1,21 +1,26 @@
 // 商品列表
 // handlebars
 var handlebars = require('../../../../node_modules/handlebars/dist/handlebars.min.js');
-if($('.hs-page').length){
-  if($('header').length){
-    $('.hs-main').css('top',$('header').height());
-  } else {
-    $('.hs-main').css('top','0');
-  }
-  if($('footer').length){
-    $('.hs-main').css('bottom',$('footer').height());
-  } else {
-    $('.hs-main').css('bottom','0');
-  }
-}
-$(document).on("pageInit", function (e, id, page) {
+// 初始化
+var common = require('../common/common.js');
 
-  if($('.store_list').length){
+$(document).on('pageInit','.show-list', function (e, id, page) {
+  var init = new common(page);
+  // 列表首页_通用底部发布
+  var notice_btn = $('.notice_btn');
+  var notice_box = $('.notice_box');
+
+  notice_btn.on('click',function(e) {
+    if(!notice_btn.hasClass('active')){
+      $(this).addClass('active');
+      notice_box.show();
+      notice_box.css('bottom',$('.hs-footer').height()-2);
+    } else {
+      $(this).removeClass('active');
+      notice_box.hide();
+    }
+  })
+
   // 测试数据
   var data = [{
     object_id: "10",
@@ -56,36 +61,37 @@ $(document).on("pageInit", function (e, id, page) {
     type_name: "摆摊"
   }];
 
+
   var store_list = $('.store_list');
   // 下拉加载更多
-
   var loading = false;
-    // 初始化下拉
-    var page_size = 2;
-    var pages = 1;
-    page.on('infinite', function() {
-      // 如果正在加载，则退出
-      if (loading) return;
-      // 设置flag
-      loading = true;
-      // 模拟1s的加载过程
-      setTimeout(function() {
-        // 重置加载flag
-        loading = false;
-        if (pages >= page_size) {
-          // 加载完毕，则注销无限加载事件，以防不必要的加载
-          $.detachInfiniteScroll($('.infinite-scroll'));
-          // 删除加载提示符
-          $('.infinite-scroll-preloader').remove();
-          $.toast('😒 没有了');
-          return;
-        }
-        var store_list_tpl = handlebars.compile($("#store_list_tpl").html());
-        store_list.find('ul').append(store_list_tpl(data));
-        // 更新最后加载的序号
-        pages++;
-        $.refreshScroller();
-      }, 1000);
-    });
-  }
+  // 初始化下拉
+  var page_size = 2;
+  var pages = 1;
+  var store_list_tpl = handlebars.compile($("#store_list_tpl").html());
+
+  page.on('infinite', function() {
+    // 如果正在加载，则退出
+    if (loading) return;
+    // 设置flag
+    loading = true;
+    // 模拟1s的加载过程
+    setTimeout(function() {
+      // 重置加载flag
+      loading = false;
+      if (pages >= page_size) {
+        // 加载完毕，则注销无限加载事件，以防不必要的加载
+        $.detachInfiniteScroll($('.infinite-scroll'));
+        // 删除加载提示符
+        $('.infinite-scroll-preloader').remove();
+        $.toast('😒 没有了');
+        return;
+      }
+      store_list.find('ul').append(store_list_tpl(data));
+      // 更新最后加载的序号
+      pages++;
+      init.loadimg();
+      $.refreshScroller();
+    }, 1000);
+  });
 });

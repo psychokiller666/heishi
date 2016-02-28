@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="zh-CN">
-
 <head>
     <meta charset="utf-8">
     <meta content="yes" name="apple-mobile-web-app-capable">
@@ -9,9 +8,8 @@
     <title>黑市</title>
     <link rel="stylesheet" href="css/main.min.css">
 </head>
-
 <body>
-    <div class="container user center">
+    <div class="container user center page">
         <footer class="hs-footer">
            @@include('list_footer/index');
        </footer>
@@ -20,38 +18,37 @@
             <span class="avatar" style="background-image:url(http://placeholder.qiniudn.com/108x108)"></span>
             <div class="username">不想被吊打</div>
             <div class="money">余额0元</div>
-            <a class="withdraw-btn" href="user_withdraw.html"><i>¥</i>我要提现</a>
+            <a class="withdraw-btn" href="user_withdraw.html" class="external"><i>¥</i>我要提现</a>
         </div>
         <div class="bd">
             <ul class="attention">
                 <li>
-                    <a href="fans_list.html">
+                    <a href="fans_list.html" class="external">
                         <span class="num">0</span>
                         <span class="text">关注</span>
                     </a>
                 </li>
                 <li>
-                    <a href="fans_list.html">
+                    <a href="fans_list.html" class="external">
                         <span class="num">0</span>
                         <span class="text">粉丝</span>
                     </a>
                 </li>
                 <li>
-                    <a href="posts.html">
+                    <a href="posts.html" class="external">
                         <span class="num">0</span>
                         <span class="text">已发布</span>
                     </a>
                 </li>
             </ul>
             <ul class="list">
-                <li><a href="seller_list.html"><i>ICON</i>卖家动态</a></li>
-                <li><a href="bought.html"><i>ICON</i>买过的东西</a></li>
-                <li><a href="already.html"><i>ICON</i>卖过的东西</a></li>
+                <li><a href="seller_list.html" class="external"><i>ICON</i>卖家动态</a></li>
+                <li><a href="bought.html" class="external"><i>ICON</i>买过的东西</a></li>
+                <li><a href="already.html" class="external"><i>ICON</i>卖过的东西</a></li>
             </ul>
         </div>
     </main>
 </div>
 <script src="js/main.min.js"></script>
 </body>
-
 </html>
