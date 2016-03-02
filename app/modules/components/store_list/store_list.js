@@ -19,67 +19,59 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
       $(this).removeClass('active');
       notice_box.hide();
     }
-  })
-
-  // 测试数据
-  var data = [{
-    object_id: "10",
-    term_id: "1",
-    listorder: "0",
-    post_author: "11",
-    post_keywords: "点击选择...",
-    post_date: "2015-08-14 13:03:30",
-    post_title: "fff",
-    post_excerpt: "屎",
-    post_status: "1",
-    post_modified: "08-14",
-    post_type: "1",
-    comment_count: "8",
-    post_hits: "60",
-    post_like: "5",
-    filepath: "upload/150814/4b43e6d450e19f59c090e41ba6b92937.jpg",
-    bgcolor: 2,
-    type_name: "摆摊d"
-  },
-  {
-    object_id: "11",
-    term_id: "1",
-    listorder: "0",
-    post_author: "12",
-    post_keywords: "点击选择...",
-    post_date: "2015-08-14 13:07:20",
-    post_title: "李根最牛逼的黑胖子",
-    post_excerpt: "我的描述就是屎 就是屎 就是屎 ",
-    post_status: "1",
-    post_modified: "08-14",
-    post_type: "1",
-    comment_count: "39",
-    post_hits: "53",
-    post_like: "8",
-    filepath: "upload/150814/c20554a0acd1ce5999c3e4e16d44bb67.jpg",
-    bgcolor: 3,
-    type_name: "摆摊"
-  }];
-
+  });
 
   var store_list = $('.store_list');
   // 下拉加载更多
   var loading = false;
   // 初始化下拉
+  var page_num = 2;
   var page_size = 2;
-  var pages = 1;
+  var pages;
+  var ctype = 1;
+  if($('.showall').length){
+    ctype = 3;
+  }
   var store_list_tpl = handlebars.compile($("#store_list_tpl").html());
+  function add_data(page_size,page) {
+    if (page.selector == '.page'){
+      return false;
+    }
 
+    $.ajax({
+      type: 'POST',
+      url: '/index.php?g=restful&m=HsArticle&a=ajax_index_list',
+      data: {
+        page:page_num,
+        page_size:page_size,
+        ctype:ctype
+      },
+      dataType: 'json',
+      timeout: 4000,
+      success: function(data){
+        if(data.status == 1){
+          store_list.find('ul').append(store_list_tpl(data.data));
+          // 更新最后加载的序号
+          pages = data.pages;
+          page_num++;
+          init.loadimg();
+        } else {
+          $.toast('请求错误');
+        }
+      },
+      error: function(xhr, type){
+        $.toast('网络错误 code:'+type);
+      }
+    });
+  }
   page.on('infinite', function() {
     // 如果正在加载，则退出
     if (loading) return;
     // 设置flag
     loading = true;
-    // 模拟1s的加载过程
     setTimeout(function() {
-      // 重置加载flag
       loading = false;
-      if (pages >= page_size) {
+      if (page_num >= pages+1) {
         // 加载完毕，则注销无限加载事件，以防不必要的加载
         $.detachInfiniteScroll($('.infinite-scroll'));
         // 删除加载提示符
@@ -87,11 +79,9 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
         $.toast('😒 没有了');
         return;
       }
-      store_list.find('ul').append(store_list_tpl(data));
-      // 更新最后加载的序号
-      pages++;
-      init.loadimg();
-      $.refreshScroller();
-    }, 1000);
+      // 请求数据
+      add_data(page_size,page);
+    },500);
+    $.refreshScroller();
   });
 });

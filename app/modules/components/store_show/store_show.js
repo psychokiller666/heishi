@@ -11,48 +11,10 @@ var esc = require('../../../../node_modules/chn-escape/escape.js');
 var common = require('../common/common.js');
 
 $(document).on('pageInit','.store-show', function (e, id, page) {
-
-  new common(page);
-
-  // 测试数据
-  var data = [{
-    object_id: "10",
-    term_id: "1",
-    listorder: "0",
-    post_author: "11",
-    post_keywords: "点击选择...",
-    post_date: "2015-08-14 13:03:30",
-    post_title: "fff",
-    post_excerpt: "屎",
-    post_status: "1",
-    post_modified: "08-14",
-    post_type: "1",
-    comment_count: "8",
-    post_hits: "60",
-    post_like: "5",
-    filepath: "upload/150814/4b43e6d450e19f59c090e41ba6b92937.jpg",
-    bgcolor: 2,
-    type_name: "摆摊d"
-  },
-  {
-    object_id: "11",
-    term_id: "1",
-    listorder: "0",
-    post_author: "12",
-    post_keywords: "点击选择...",
-    post_date: "2015-08-14 13:07:20",
-    post_title: "李根最牛逼的黑胖子",
-    post_excerpt: "我的描述就是屎 就是屎 就是屎 ",
-    post_status: "1",
-    post_modified: "08-14",
-    post_type: "1",
-    comment_count: "39",
-    post_hits: "53",
-    post_like: "8",
-    filepath: "upload/150814/c20554a0acd1ce5999c3e4e16d44bb67.jpg",
-    bgcolor: 3,
-    type_name: "摆摊"
-  }];
+  if (page.selector == '.page'){
+    return false;
+  }
+  var init = new common(page);
 
   // 加关注
   var attention_btn = $('.attention-btn');
@@ -103,11 +65,11 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   var praise_more_tpl = '<li><button type="button" class="praise_more">更多</button></li>';
   $('.store-show .praise ul li').each(function(index,item){
     if(index <= 7) {
-      $('.store-show .praise ul').height('1.14rem');
+      $('.store-show .praise ul').height('1.32rem');
     } else if (index >= 16){
       $('.store-show .praise ul li').eq(15).before(praise_more_tpl);
     } else {
-      $('.store-show .praise ul').height('2.62rem');
+      $('.store-show .praise ul').height('2.64rem');
     }
   });
   $('.praise_more').live('click',function(){
@@ -126,10 +88,50 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   });
   // 评论加载更多
   var comment = $('.comment');
+  var comment_bd = $('.comment_bd');
   var loading = false;
   // 初始化下拉
-  var page_size = 2;
-  var pages = 1;
+  var post_id = comment.data('id');
+  var cur_cid;
+  var is_load = false;
+  var comment_list_tpl = handlebars.compile($("#comment_list_tpl").html());
+  // 增加模板引擎判断
+  handlebars.registerHelper('eq', function(v1, v2, options) {
+    if(v1 == v2){
+      return options.fn(this);
+    } else {
+      return options.inverse(this);
+    }
+  });
+  function add_data() {
+    if (page.selector == '.page'){
+      return false;
+    }
+    $.ajax({
+      type: 'GET',
+      url: '/index.php?g=Comment&m=Widget&a=ajax_more&table=posts',
+      data: {
+        post_id:post_id,
+        cur_cid:cur_cid
+      },
+      dataType: 'json',
+      timeout: 4000,
+      success: function(data){
+        if(data.status == 1){
+          // 添加继续
+          comment_bd.append(comment_list_tpl(data));
+          cur_cid = comment_bd.find('li').last().data('id');
+          init.loadimg();
+        } else if(data.status == 0) {
+          // 没有数据，不继续加载
+          is_load = true;
+        }
+      },
+      error: function(xhr, type){
+        $.toast('网络错误 code:'+type);
+      }
+    });
+  }
   page.on('infinite', function(){
   // 如果正在加载，则退出
   if (loading) return;
@@ -139,7 +141,8 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     setTimeout(function() {
       // 重置加载flag
       loading = false;
-      if (pages >= page_size) {
+      add_data();
+      if (is_load) {
         // 加载完毕，则注销无限加载事件，以防不必要的加载
         $.detachInfiniteScroll($('.infinite-scroll'));
         // 删除加载提示符
@@ -147,45 +150,40 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         $.toast('😒 没有了');
         return;
       }
-      var comment_tpl = handlebars.compile($("#comment_tpl").html());
-      comment.find('.comment_bd').append(comment_tpl(data));
-        // 更新最后加载的序号
-        pages++;
-        $.refreshScroller();
-      }, 1000);
+      $.refreshScroller();
+    }, 500);
   });
-
 
   // 添加评论
   var comment_btn = $('#comment-btn');
   var footer_nav = $('.footer_nav');
-  var dialog_comment = $('.dialog_comment');
   var comment_bd = $('.comment_bd');
+  var dialog_comment = $('.dialog_comment');
   var father_comment = $('.father');
   var son_comment = $('.son');
   var comment_input = $('#comment_input');
   var reply_tpl = handlebars.compile($("#reply_tpl").html());
 
   // 弹出回复框
-  function comment_box(id,ispic,username,element,is_father) {
+  function comment_box(id,ispic,username,element,is_father,is_comment) {
+    comment_bd.on('click','.comment_image',function(){
+      comment_bd.off('click','.comment_image');
+      console.log('aaaaaa');
+      return false;
+    })
+    if(!is_comment){
 
-    this.id = id;
-    this.ispic = ispic;
-    this.username = username;
-    this.element = element;
-    this.is_father = is_father;
-    // 初始化
-    comment_input.val('').attr('placeholder','随便说点什么');
-    dialog_comment.find('button').removeAttr('disabled');
-
-    dialog_comment.show();
+    } else {
+      // 初始化
+      comment_input.val('').attr('placeholder','随便说点什么');
+      dialog_comment.find('button').removeAttr('disabled');
+      dialog_comment.show();
       // 判断是否是回复
       if (username.length) {
         comment_input.attr('placeholder','回复：'+username);
       } else {
         comment_input.attr('placeholder','随便说点什么');
       }
-      comment_input.focus();
       // 控制是否上传图片
       if (ispic) {
         dialog_comment.find('.image').show();
@@ -197,8 +195,8 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         e.stopPropagation();
       });
       // 提交评论
-      page.on("click", dialog_comment.find('.submit'), function() {
-        $(this).off('click');
+      dialog_comment.on('click','.submit', function() {
+        dialog_comment.off('click','.submit');
         dialog_comment.hide();
         dialog_comment.find('button').attr('disabled','disabled');
         // 过滤关键词
@@ -218,35 +216,88 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
           dialog_comment.hide();
           $.toast('🚔 我要报警了');
         } else {
-          // 成功评论
-          dialog_comment.hide();
-          $.toast('😄 评论成功');
-          var reply_data = {
-            is_father:is_father,
-            comment:comment_input.val()
-          }
-          // 添加dom
           if(is_father) {
-            $('.comment_bd').append(reply_tpl(reply_data));
+            var post_data = {
+              content:comment_input.val(),
+              post_table:comment.data('table'),
+              post_id:comment.data('id'),
+              to_uid:0,
+              parentid:0,
+              type:0,
+              url:window.location.href
+            }
           } else {
-            if(element.hasClass('father')){
-              // 二级回复
-              if(!element.find('.comment-content ul').length){
-                element.find('.comment-content').append('<ul class="reply"></ul>');
-              }
-              element.find('.comment-content ul').append(reply_tpl(reply_data));
-            } else {
-              element.parent().append(reply_tpl(reply_data));
+            var post_data = {
+              content:comment_input.val(),
+              post_table:comment.data('table'),
+              post_id:comment.data('id'),
+              to_uid:element.data('uid'),
+              parentid:element.data('id'),
+              type:0,
+              url:window.location.href
             }
           }
+          $.ajax({
+            type: 'POST',
+            url: '/index.php?g=comment&m=comment&a=post',
+            data: post_data,
+            dataType: 'json',
+            timeout: 4000,
+            success: function(data){
+              if(data.status == 1){
+                // 成功评论
+                dialog_comment.hide();
+                $.toast('😄 评论成功');
+                // 添加评论dom
+                if(is_father) {
+                  // 回复直接添加底部
+                  var reply_data = {
+                   is_father:true,
+                   comment:comment_input.val(),
+                   username:comment.data('username'),
+                   avatar:comment.data('avatar'),
+                   uid:comment.data('uid'),
+                   id:data.data.id};
+                   comment_bd.append(reply_tpl(reply_data));
+                 } else {
+                  var reply_data = {
+                   is_father:false,
+                   comment:comment_input.val(),
+                   username:comment.data('username'),
+                   parent_full_name:element.data('username'),
+                   uid:comment.data('uid'),
+                   id:data.data.id};
+                   if(element.hasClass('father')){
+                    // 二级回复
+                    if(!element.find('.comment-content .reply').length){
+                      element.find('.comment-content').append('<ul class="reply"> </ul>');
+                      element.find('.comment-content .reply').append(reply_tpl(reply_data));
+                    }
+                  } else {
+                    //一级回复
+                    element.parent('.reply').append(reply_tpl(reply_data));
+                  }
+                }
+              } else {
+                $.toast(data.info);
+              }
+              $.refreshScroller();
+            },
+            error: function(xhr, type){
+              $.toast('网络错误 code:'+xhr);
+            }
+          });
         }
       });
-    // 关闭按钮
-    page.on("click", dialog_comment.find('.cancel'), function() {
-      $(this).off('click');
-      console.log('cancel：'+id);
-      dialog_comment.hide();
-    });
+      // 关闭按钮
+      dialog_comment.on('click','.cancel', function() {
+        dialog_comment.off('click','.cancel');
+        dialog_comment.hide();
+      });
+    }
+  }
+
+
     // 上传图片
     // var uploader = WebUploader.create({
     //   fileNumLimit: 1,
@@ -288,20 +339,17 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     // uploader.onerror = function(type) {
     //   console.log(type);
     // }
-  }
 
-  // 点击评论回复
-  comment_bd.find('li').on('click',function(){
+  // 点击回复框
+  $('.comment_bd').on('click','li',function(e){
     var comment_id = $(this).data('id');
     var username = $(this).data('username');
-    new comment_box(comment_id,false,username,$(this),false);
-    return false;
-
+    comment_box(comment_id,false,username,$(this),false,true);
   });
-  // 点击写评论
+
   comment_btn.on('click',function(){
     var comment_id = $(this).data('id');
-    new comment_box(comment_id,true,'',$(this),true);
-    return false;
-  })
+    comment_box(comment_id,true,'',$(this),true,true);
+  });
+
 });
