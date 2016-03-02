@@ -16,7 +16,8 @@
                 position: absolute;
                 left: 0;
                 height: 1.32rem;
-                padding: 0.36rem 0 0.4rem 0;
+                // padding: 0.36rem 0;
+                bottom: 0rem;
                 width: 10rem;
                 background-color: #222;
                 overflow: hidden;
@@ -34,9 +35,19 @@
                     span {
                         display: block;
                         &.text {
-                            .font-dpr(18px);
-                            .font-line-height(18px);
-                            margin-top: 0.24rem;
+                            .font-dpr(14px);
+                            .font-line-height(14px);
+                            // margin-top: 0.12rem;
+                        }
+                        &.hs-icon {
+                            .font-dpr(38px);
+                            .font-line-height(38px);
+                            &.culture:before {
+                                content: "\e607";
+                            }
+                            &.store:before {
+                                content: "\e606";
+                            }
                         }
                     }
                 }
@@ -45,7 +56,7 @@
                 float: left;
                 width: 20%;
                 text-align: center;
-                margin: 0.16rem 0;
+                padding: .16rem 0;
                 overflow: hidden;
                 &.notice_btn {
 
@@ -66,45 +77,39 @@
                         opacity: 0.3;
                         text-align: center;
                         &.text {
-                            bottom: 0;
-                            font-size: 12px;
-                            line-height: 12px;
+                            .font-dpr(12px);
                             [data-dpr="2"] & {
-                                font-size: 24px;
-                                line-height: 24px;
+                                line-height: 12 * 2px;
                             }
                             [data-dpr="3"] & {
-                                font-size: 36px;
-                                line-height: 36px;
+                                line-height: 10 * 3px;
                             }
                         }
                         &.hs-icon {
-                            top: 0;
-                            font-size: 30px;
-                            line-height: 22px;
-                            padding-bottom: 0.16rem;
+                            font-size: 32px;
+                            line-height: 32px;
                             [data-dpr="2"] & {
-                                font-size: 60px;
-                                line-height: 44px;
+                                font-size: 28 * 2px;
+                                line-height: 26 * 2px;
                             }
                             [data-dpr="3"] & {
-                                font-size: 90px;
-                                line-height: 66px;
+                                font-size: 28 * 3px;
+                                line-height: 28 * 3px;
                             }
                             &.home:before {
-                                content: "\e602";
+                                content: "\e612";
                             }
                             &.culture:before {
-                                content: "\e600";
+                                content: "\e614";
                             }
                             &.add:before {
                                 content: "\e603";
                             }
                             &.me:before {
-                                content: "\e604";
+                                content: "\e611";
                             }
                             &.messages:before {
-                                content: "\e601";
+                                content: "\e613";
                             }
                         }
                     }

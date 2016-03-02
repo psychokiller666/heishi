@@ -45,7 +45,6 @@
         }
     }
     .hs-store-show-footer {
-        height: 1.3rem;
         width: 10rem;
         overflow: hidden;
         position: absolute;
@@ -55,32 +54,66 @@
             .hs-cf;
             background-color: #313035;
             color: #5d5c61;
+            position: relative;
             ul {
                 width: 6.26rem;
                 float: left;
                 li {
                     float: left;
                     width: 25%;
-                    text-align: center;
-                    a span {
+                    padding: .16rem 0;
+                    a {
                         display: block;
-                        color: #fff;
-                        opacity: 0.18;
-                    }
-                    a.active span {
-                        color: #58d894;
-                        opacity: 1;
-                    }
-                    a span.text {
-                        font-size: 20px;
+                        span {
+                            display: block;
+                            color: #fff;
+                            opacity: 0.3;
+                            width: 100%;
+                            text-align: center;
+                            &.text {
+                                .font-dpr(12px);
+                                [data-dpr="2"] & {
+                                    line-height: 12 * 2px;
+                                }
+                                [data-dpr="3"] & {
+                                    line-height: 10 * 3px;
+                                }
+                            }
+                            &.hs-icon {
+                                font-size: 32px;
+                                line-height: 32px;
+                                [data-dpr="2"] & {
+                                    font-size: 28 * 2px;
+                                    line-height: 26 * 2px;
+                                }
+                                [data-dpr="3"] & {
+                                    font-size: 28 * 3px;
+                                    line-height: 26 * 3px;
+                                }
+                                &.home:before {
+                                    content: "\e612";
+                                }
+                                &.chat:before {
+                                    content: "\e613";
+                                }
+                                &.reward:before {
+                                    content: "\e60a";
+                                }
+                                &.user:before {
+                                    content: "\e611";
+                                }
+                            }
+                        }
                     }
                 }
             }
             .comment-btn {
                 display: block;
                 width: 3.74rem;
-                line-height: 1.306667rem;
-                float: right;
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                height: 100%;
                 background-color: #63b083;
                 color: #fff;
                 border: none;
@@ -149,6 +182,12 @@
                 .font-dpr(12px);
                 i {
                     margin-right: 0.16rem;
+                    &.views:before {
+                        content: "\e60f";
+                    }
+                    &.date:before {
+                        content: "\e602";
+                    }
                 }
             }
         }
@@ -172,7 +211,25 @@
                 -webkit-background-size: cover;
                 margin-right: 0.18rem;
                 margin-bottom: 0.213333rem;
-                &.no {
+                &:nth-child(3) {
+                    margin-right: 0;
+                }
+                &:nth-child(6) {
+                    margin-right: 0;
+                }
+                &:nth-child(9) {
+                    margin-right: 0;
+                }
+                &:nth-child(12) {
+                    margin-right: 0;
+                }
+                &:nth-child(15) {
+                    margin-right: 0;
+                }
+                &:nth-child(18) {
+                    margin-right: 0;
+                }
+                &:nth-child(21) {
                     margin-right: 0;
                 }
             }
@@ -333,6 +390,11 @@
                     padding-left: 0.88rem;
                     .font-dpr(15px);
                     .hs-cf;
+                    .hs-fl {
+                        width: 70%;
+                        overflow: hidden;
+                        white-space: nowrap;
+                    }
                     .date {
                         color: #a0a0a0;
                         .font-dpr(14px);
@@ -343,6 +405,20 @@
                     padding-top: 0.2rem;
                     .font-dpr(15px);
                     color: #494949;
+                    .color_2 {
+                        color: red;
+                    }
+                    .color_3 {
+                        color: blue;
+                    }
+                    .comment_image {
+                        width: 2.62rem;
+                        height: 2.62rem;
+                        background-image: url('../img/index_loading.gif');
+                        background-position: 50% 50%;
+                        background-repeat: no-repeat;
+                        background-size: cover;
+                    }
                     .reply {
                         background-color: #f8f8f8;
                         padding:0.186667rem 0.32rem;
@@ -360,9 +436,18 @@
                             .reply-content {
                                 padding-left: 0;
                                 .font-dpr(12px);
+                                .font-line-height(14px);
+                                .comment_image {
+                                    width: 1.36rem;
+                                    height: 1.36rem;
+                                    margin-top: 0.1rem;
+                                }
                                 span {
                                     margin-right: 0.16rem;
                                     color: #b8b8b8
+                                }
+                                strong {
+                                    margin-right: 0.16rem;
                                 }
                                 .date {
                                     .hs-cf;
@@ -371,7 +456,6 @@
                                     color: #b8b8b8
                                 }
                             }
-
                         }
                     }
                 }
