@@ -15,20 +15,60 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     return false;
   }
   var init = new common(page);
-
+  var share_data = {
+    title: page.find('.frontcover .title').text(),
+    desc: page.find('.content_bd').text(),
+    link: GV.HOST+location.pathname,
+    img: page.find('.frontcover .image').data('share')
+  };
+  init.wx_share(share_data);
   // 加关注
+  // 检查用户关系
   var attention_btn = $('.attention-btn');
+  $.post('/index.php?g=user&m=HsFellows&a=ajax_relations',{
+    my_uid:attention_btn.data('myuid'),
+    other_uid:attention_btn.data('otheruid')
+  },function(data){
+    if(data.relations == '2' || data.relations == '3') {
+      attention_btn.addClass('active');
+      attention_btn.text('取消关注');
+    } else if(data.relations == '1' || data.relations == '0') {
+      attention_btn.removeClass('active');
+      attention_btn.html('<i>+</i>关注');
+    }
+  });
   attention_btn.on('click',function(){
     if($(this).hasClass('active')){
-      $(this).removeClass('active');
-      $.toast('已取消关注');
+      // 取消关注
+      $.post('/index.php?g=user&m=HsFellows&a=ajax_cancel',{
+        uid:$(this).data('otheruid')
+      },function(data){
+        if(data.status == '1') {
+          attention_btn.html('<i>+</i>关注');
+          attention_btn.removeClass('active');
+          $.toast(data.info);
+        } else {
+          $.toast(data.info);
+        }
+      });
     } else {
-      $(this).addClass('active');
-      $.toast('关注成功');
+      // 关注
+      $.post('/index.php?g=user&m=HsFellows&a=ajax_add',{
+        uid:$(this).data('otheruid')
+      },function(data){
+        if(data.status == '1') {
+          attention_btn.text('取消关注');
+          attention_btn.addClass('active');
+          $.toast(data.info);
+        } else {
+          $.toast(data.info);
+        }
+      });
     }
   });
   // 微信预览图片
-  $('.images ul li').tap(function(){
+  var images = $('.images');
+  images.on('click','li',function(){
     var preview_list = [];
     $.each($('.images ul li'),function(index,item){
       preview_list.push($('.images ul li').eq(index).data('preview'));
@@ -40,26 +80,97 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   });
   // 打赏
   var dialog_reward = $('.dialog_reward');
-  $('.buy button').on('click',function(){
+  var reward_btn = $('.reward_btn');
+  $('.reward_btn').on('click',function(){
     dialog_reward.find('input').val('');
     dialog_reward.show();
   });
   // 打赏框
-  dialog_reward.find('.ui-dialog-close').on('click',function(){
+  dialog_reward.on('click','.ui-dialog-close',function(){
     dialog_reward.hide();
   });
-  dialog_reward.find('.ui-dialog-ft button').on('click',function(){
+  dialog_reward.on('click','.submit',function(){
+
+    var reward_data = {
+      id:$(this).data('id'),
+      uid:$(this).data('uid'),
+      title:$(this).data('title'),
+      total_fee:parseInt(dialog_reward.find('input').val()),
+      type:$(this).data('type'),
+      username:$(this).data('username')
+    };
     if(dialog_reward.find('input').val() >= 1){
-      $.toast('🌚 谢谢哥');
-      dialog_reward.hide();
+      $.ajax({
+        type: 'POST',
+        url: '/index.php?g=restful&m=HsOrder&a=add',
+        data: {
+          'order[object_id]': reward_data.id,
+          'order[object_owner_id]': reward_data.uid,
+          'order[object_title]': reward_data.title,
+          'order[counts]': 1,
+          'order[price]': reward_data.total_fee,
+          'order[total_fee]': reward_data.total_fee,
+          'order[type]': 0,
+          'order[payment_type]': 0,
+          'order[attach]': '打赏'
+        },
+        dataType: 'json',
+        timeout: 4000,
+        success: function(data){
+          if (data.status == '1') {
+            dialog_reward.hide();
+            $.showPreloader();
+            var ok_url = GV.pay_url+'hsadmire.php?order_number=' + data.order_number +
+            '&total_fee=' + reward_data.total_feey +
+            '&object_id=' + reward_data.id +
+            '&goods_type=' + reward_data.type +
+            '&seller_username=' + reward_data.username;;
+            setTimeout(function() {
+              $.hidePreloader();
+              window.location.href = ok_url;
+            }, 2000);
+          } else if(data.status == '0'){
+            $.toast(data.info);
+          }
+        },
+        error: function(xhr, type){
+          $.toast('网络错误 code:'+xhr);
+        }
+      });
     } else {
       $.toast('😐 必须是整数');
       dialog_reward.find('input').trigger('focus');
     }
   });
   // 点赞
-  $('.praise_btn').on('click',function(){
-    $.toast('🌚 点赞成功');
+  var praise = $('.praise');
+  var praise_list_tpl = handlebars.compile($("#praise_list_tpl").html());
+  praise.on('click','.praise_btn',function(){
+    var btn_data = [{
+      uid:$(this).data('uid'),
+      username:$(this).data('username'),
+      avatar:$(this).data('avatar')
+    }];
+    $.ajax({
+      type: 'POST',
+      url: '/index.php?m=HsArticle&a=do_like',
+      data: {
+        id:$(this).data('id')
+      },
+      dataType: 'json',
+      timeout: 4000,
+      success: function(data){
+        if(data.status == 1){
+          $.toast(data.info);
+          praise.find('li').eq(1).after(praise_list_tpl(btn_data));
+        } else {
+          $.toast(data.info);
+        }
+      },
+      error: function(xhr, type){
+        $.toast('网络错误 code:'+xhr);
+      }
+    });
   });
   // 更多按钮
   var praise_more_tpl = '<li><button type="button" class="praise_more">更多</button></li>';
@@ -93,7 +204,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   // 初始化下拉
   var post_id = comment.data('id');
   var cur_cid;
-  var is_load = false;
+  var is_load = true;
   var comment_list_tpl = handlebars.compile($("#comment_list_tpl").html());
   // 增加模板引擎判断
   handlebars.registerHelper('eq', function(v1, v2, options) {
@@ -104,9 +215,6 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
   });
   function add_data() {
-    if (page.selector == '.page'){
-      return false;
-    }
     $.ajax({
       type: 'GET',
       url: '/index.php?g=Comment&m=Widget&a=ajax_more&table=posts',
@@ -117,39 +225,47 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       dataType: 'json',
       timeout: 4000,
       success: function(data){
-        if(data.status == 1){
-          // 添加继续
-          comment_bd.append(comment_list_tpl(data));
-          cur_cid = comment_bd.find('li').last().data('id');
-          init.loadimg();
-        } else if(data.status == 0) {
-          // 没有数据，不继续加载
-          is_load = true;
+        if(data.state == 'success'){
+          if(data.status == '1'){
+            if(data.comments.length == 0){
+              // 加载完毕，则注销无限加载事件，以防不必要的加载
+              $.detachInfiniteScroll($('.infinite-scroll'));
+              // 删除加载提示符
+              $('.infinite-scroll-preloader').remove();
+              $.toast('😒 没有评论了');
+            } else {
+              // 添加继续
+              comment_bd.append(comment_list_tpl(data));
+              cur_cid = comment_bd.find('li').last().data('id');
+              console.log(cur_cid);
+              init.loadimg();
+            }
+          } else if(data.status == '0'){
+              // 加载完毕，则注销无限加载事件，以防不必要的加载
+              $.detachInfiniteScroll($('.infinite-scroll'));
+              // 删除加载提示符
+              $('.infinite-scroll-preloader').remove();
+              $.toast('😒 没有评论了');
+            }
+          } else {
+            $.toast(data.info);
+          }
+        },
+        error: function(xhr, type){
+          $.toast('网络错误 code:'+xhr);
         }
-      },
-      error: function(xhr, type){
-        $.toast('网络错误 code:'+type);
-      }
-    });
+      });
   }
   page.on('infinite', function(){
-  // 如果正在加载，则退出
-  if (loading) return;
+    if (loading ) return;
     // 设置flag
     loading = true;
     // 模拟1s的加载过程
     setTimeout(function() {
       // 重置加载flag
       loading = false;
+      // 请求数据
       add_data();
-      if (is_load) {
-        // 加载完毕，则注销无限加载事件，以防不必要的加载
-        $.detachInfiniteScroll($('.infinite-scroll'));
-        // 删除加载提示符
-        $('.infinite-scroll-preloader').remove();
-        $.toast('😒 没有了');
-        return;
-      }
       $.refreshScroller();
     }, 500);
   });
@@ -165,136 +281,129 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   var reply_tpl = handlebars.compile($("#reply_tpl").html());
 
   // 弹出回复框
-  function comment_box(id,ispic,username,element,is_father,is_comment) {
-    comment_bd.on('click','.comment_image',function(){
-      comment_bd.off('click','.comment_image');
-      console.log('aaaaaa');
-      return false;
-    })
-    if(!is_comment){
-
+  function comment_box(id,ispic,username,element,is_father) {
+    // 初始化
+    comment_input.val('').attr('placeholder','随便说点什么');
+    dialog_comment.find('button').removeAttr('disabled');
+    dialog_comment.show();
+    comment_input.trigger('focus');
+    // 判断是否是回复
+    if (username.length) {
+      comment_input.attr('placeholder','回复：'+username);
     } else {
-      // 初始化
-      comment_input.val('').attr('placeholder','随便说点什么');
-      dialog_comment.find('button').removeAttr('disabled');
-      dialog_comment.show();
-      // 判断是否是回复
-      if (username.length) {
-        comment_input.attr('placeholder','回复：'+username);
-      } else {
-        comment_input.attr('placeholder','随便说点什么');
-      }
-      // 控制是否上传图片
-      if (ispic) {
-        dialog_comment.find('.image').show();
-      } else {
-        dialog_comment.find('.image').hide();
-      }
-      // 禁止滑动
-      dialog_comment.on('touchmove',function(e){
-        e.stopPropagation();
-      });
-      // 提交评论
-      dialog_comment.on('click','.submit', function() {
-        dialog_comment.off('click','.submit');
-        dialog_comment.hide();
-        dialog_comment.find('button').attr('disabled','disabled');
-        // 过滤关键词
-        var text_list = [
-        '燃料',
-        '大麻',
-        '叶子',
-        '淘宝',
-        'taobao.com',
-        '共产党'
-        ];
-        esc.init(text_list);
-        // 判断是否为空并且过滤关键词
-        if(!comment_input.val().length){
-          comment_input.attr('placeholder','😒 评论不能为空');
-        } else if (esc.find(comment_input.val()).length) {
-          dialog_comment.hide();
-          $.toast('🚔 我要报警了');
-        } else {
-          if(is_father) {
-            var post_data = {
-              content:comment_input.val(),
-              post_table:comment.data('table'),
-              post_id:comment.data('id'),
-              to_uid:0,
-              parentid:0,
-              type:0,
-              url:window.location.href
-            }
-          } else {
-            var post_data = {
-              content:comment_input.val(),
-              post_table:comment.data('table'),
-              post_id:comment.data('id'),
-              to_uid:element.data('uid'),
-              parentid:element.data('id'),
-              type:0,
-              url:window.location.href
-            }
-          }
-          $.ajax({
-            type: 'POST',
-            url: '/index.php?g=comment&m=comment&a=post',
-            data: post_data,
-            dataType: 'json',
-            timeout: 4000,
-            success: function(data){
-              if(data.status == 1){
-                // 成功评论
-                dialog_comment.hide();
-                $.toast('😄 评论成功');
-                // 添加评论dom
-                if(is_father) {
-                  // 回复直接添加底部
-                  var reply_data = {
-                   is_father:true,
-                   comment:comment_input.val(),
-                   username:comment.data('username'),
-                   avatar:comment.data('avatar'),
-                   uid:comment.data('uid'),
-                   id:data.data.id};
-                   comment_bd.append(reply_tpl(reply_data));
-                 } else {
-                  var reply_data = {
-                   is_father:false,
-                   comment:comment_input.val(),
-                   username:comment.data('username'),
-                   parent_full_name:element.data('username'),
-                   uid:comment.data('uid'),
-                   id:data.data.id};
-                   if(element.hasClass('father')){
-                    // 二级回复
-                    if(!element.find('.comment-content .reply').length){
-                      element.find('.comment-content').append('<ul class="reply"> </ul>');
-                      element.find('.comment-content .reply').append(reply_tpl(reply_data));
-                    }
-                  } else {
-                    //一级回复
-                    element.parent('.reply').append(reply_tpl(reply_data));
-                  }
-                }
-              } else {
-                $.toast(data.info);
-              }
-              $.refreshScroller();
-            },
-            error: function(xhr, type){
-              $.toast('网络错误 code:'+xhr);
-            }
-          });
-        }
-      });
-      // 关闭按钮
-      dialog_comment.on('click','.cancel', function() {
-        dialog_comment.off('click','.cancel');
-        dialog_comment.hide();
-      });
+      comment_input.attr('placeholder','随便说点什么');
     }
+    // 控制是否上传图片
+    if (ispic) {
+      dialog_comment.find('.image').show();
+    } else {
+      dialog_comment.find('.image').hide();
+    }
+    // 禁止滑动
+    dialog_comment.on('touchmove',function(e){
+      e.stopPropagation();
+    });
+    // 提交评论
+    dialog_comment.on('click','.submit', function() {
+      dialog_comment.off('click','.submit');
+      dialog_comment.find('button').attr('disabled','disabled');
+      // 过滤关键词
+      var text_list = [
+      '燃料',
+      '大麻',
+      '叶子',
+      '淘宝',
+      'taobao.com',
+      '共产党'
+      ];
+      esc.init(text_list);
+      // 判断是否为空并且过滤关键词
+      if(!comment_input.val().length){
+        comment_input.attr('placeholder','😒 评论不能为空');
+      } else if (esc.find(comment_input.val()).length) {
+        dialog_comment.hide();
+        $.toast('🚔 我要报警了');
+      } else {
+        if(is_father) {
+          var post_data = {
+            content:comment_input.val(),
+            post_table:comment.data('table'),
+            post_id:comment.data('id'),
+            to_uid:0,
+            parentid:0,
+            type:0,
+            url:window.location.href
+          }
+        } else {
+          var post_data = {
+            content:comment_input.val(),
+            post_table:comment.data('table'),
+            post_id:comment.data('id'),
+            to_uid:element.data('uid'),
+            parentid:element.data('id'),
+            type:0,
+            url:window.location.href
+          }
+        }
+        $.ajax({
+          type: 'POST',
+          url: '/index.php?g=comment&m=comment&a=post',
+          data: post_data,
+          dataType: 'json',
+          timeout: 4000,
+          success: function(data){
+            if(data.status == 1){
+              // 成功评论
+              dialog_comment.hide();
+              $.toast('😄 评论成功');
+              dialog_comment.hide();
+              // 添加评论dom
+              if(is_father) {
+                // 回复直接添加底部
+                var reply_data = {
+                 is_father:true,
+                 comment:comment_input.val(),
+                 username:comment.data('username'),
+                 avatar:comment.data('avatar'),
+                 uid:comment.data('uid'),
+                 id:data.data.id};
+                 comment_bd.append(reply_tpl(reply_data));
+               } else {
+                var reply_data = {
+                 is_father:false,
+                 comment:comment_input.val(),
+                 username:comment.data('username'),
+                 parent_full_name:element.data('username'),
+                 uid:comment.data('uid'),
+                 id:data.data.id};
+                 if(element.hasClass('father')){
+                  // 二级回复
+                  if(!element.find('.comment-content .reply').length){
+                    element.find('.comment-content').append('<ul class="reply"> </ul>');
+                    element.find('.comment-content .reply').append(reply_tpl(reply_data));
+                  }
+                } else {
+                  //一级回复
+                  element.parent('.reply').append(reply_tpl(reply_data));
+                }
+              }
+            } else {
+              $.toast(data.info);
+            }
+            $.refreshScroller();
+          },
+          error: function(xhr, type){
+            $.toast('网络错误 code:'+xhr);
+            dialog_comment.hide();
+          }
+        });
+      }
+    });
+    // 关闭按钮
+    dialog_comment.on('click','.cancel', function() {
+      dialog_comment.off('click','.cancel');
+      dialog_comment.hide();
+    });
   }
 
 
@@ -344,12 +453,20 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   $('.comment_bd').on('click','li',function(e){
     var comment_id = $(this).data('id');
     var username = $(this).data('username');
-    comment_box(comment_id,false,username,$(this),false,true);
+    // 图片
+    if(e.srcElement.className == 'comment_image') {
+      // 调用微信图片
+      wx.previewImage({
+        current: $(e.srcElement).data('preview')
+      });
+    } else {
+      comment_box(comment_id,false,username,$(this),false);
+    }
   });
 
   comment_btn.on('click',function(){
     var comment_id = $(this).data('id');
-    comment_box(comment_id,true,'',$(this),true,true);
+    comment_box(comment_id,true,'',$(this),true);
   });
 
 });

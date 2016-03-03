@@ -35,7 +35,10 @@ require('../modules/components/chat_list_group/chat_list_group.js');
 // 私信页
 require('../modules/components/chat_list/chat_list.js');
 
-
+// 用户中心
+require('../modules/components/user_index/user_index.js');
+// 提现
+require('../modules/components/user_withdraw/user_withdraw.js');
 
 // 文章页
 
