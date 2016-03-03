@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="zh-CN">
-
 <head>
   <meta charset="utf-8">
   <meta content="yes" name="apple-mobile-web-app-capable">
@@ -9,20 +8,20 @@
   <title>黑市</title>
   <link rel="stylesheet" href="css/main.min.css">
 </head>
-
 <body>
-  <div class="container chat page">
-    <header class="chat-header">
-      @@include('chat_header/index');
-    </header>
-    <footer class="chat-footer">
-      @@include('chat_footer/index');
-    </footer>
-    <main class="hs-main">
-      @@include('chat_list/index');
-    </main>
+  <div class="page-group">
+    <div class="container chat page">
+      <header class="chat-header">
+        @@include('chat_header/index');
+      </header>
+      <footer class="chat-footer">
+        @@include('chat_footer/index');
+      </footer>
+      <main class="hs-main">
+        @@include('chat_list/index');
+      </main>
+    </div>
   </div>
   <script src="js/main.min.js"></script>
 </body>
-
 </html>

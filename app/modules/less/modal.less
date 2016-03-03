@@ -31,11 +31,11 @@
     z-index: 10200;
 }
 .modal {
-    width: 13.5rem;
+    width: 3.8rem;
     position: absolute;
     z-index: 11000;
     left: 50%;
-    margin-left: -6.75rem;
+    margin-left: -1.9rem;
     margin-top: 0;
     top: 50%;
     text-align: center;
@@ -58,7 +58,7 @@
     }
 }
 .modal-inner {
-    padding: 0.75rem;
+    padding: 0.5rem;
     .hairline(bottom, #b5b5b5);
     border-radius: 0.35rem 0.35rem 0 0;
     position: relative;
@@ -68,6 +68,7 @@
     font-weight: 500;
     font-size: 0.9rem;
     text-align: center;
+    .font-dpr(16px);
     +.modal-text {
         margin-top: 0.25rem;
     }
@@ -311,8 +312,8 @@ html.with-statusbar-overlay {
 
 //Preloaders modals
 .modal .preloader {
-    width: 1rem;
-    height: 1rem;
+    width: .5rem;
+    height: .5rem;
 }
 .preloader-indicator-overlay {
     visibility: visible;

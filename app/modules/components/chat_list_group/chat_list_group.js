@@ -1,51 +1,17 @@
 // 私信列表
 // handlebars
 var handlebars = require('../../../../node_modules/handlebars/dist/handlebars.min.js');
+// 初始化
 var common = require('../common/common.js');
 
 $(document).on('pageInit','.chat_list_group', function (e, id, page) {
+  if (page.selector == '.page'){
+    return false;
+  }
   var init = new common(page);
-  // 从右往左滑
-  // 测试数据
-  var data = [{
-    object_id: "10",
-    term_id: "1",
-    listorder: "0",
-    post_author: "11",
-    post_keywords: "点击选择...",
-    post_date: "2015-08-14 13:03:30",
-    post_title: "fff",
-    post_excerpt: "屎",
-    post_status: "1",
-    post_modified: "08-14",
-    post_type: "1",
-    comment_count: "8",
-    post_hits: "60",
-    post_like: "5",
-    filepath: "upload/150814/4b43e6d450e19f59c090e41ba6b92937.jpg",
-    bgcolor: 2,
-    type_name: "摆摊d"
-  },
-  {
-    object_id: "11",
-    term_id: "1",
-    listorder: "0",
-    post_author: "12",
-    post_keywords: "点击选择...",
-    post_date: "2015-08-14 13:07:20",
-    post_title: "李根最牛逼的黑胖子",
-    post_excerpt: "我的描述就是屎 就是屎 就是屎 ",
-    post_status: "1",
-    post_modified: "08-14",
-    post_type: "1",
-    comment_count: "39",
-    post_hits: "53",
-    post_like: "8",
-    filepath: "upload/150814/c20554a0acd1ce5999c3e4e16d44bb67.jpg",
-    bgcolor: 3,
-    type_name: "摆摊"
-  }];
+  init.wx_share(false);
 
+  // 从右往左滑
   $('.chat_list_group_bd ul li').height($('.chat_list_group_bd ul li').height());
   $('.chat_list_group_bd ul li').find('.delete').height($('.chat_list_group_bd ul li').height());
   $('.chat_list_group_bd ul li').swipeLeft(function(){
@@ -55,28 +21,62 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
       display: 'block'
     }, 500, 'ease-in');
     $(this).addClass('active');
-    $('.delete').on('click',function(){
-      $(this).parent().animate({
-        opacity: 0
-      }, 500, 'ease-in',function(){
-        $(this).remove();
+    // 删除聊天
+    $('.chat_list_group_bd ul li').on('click','.delete',function(){
+      $.post('/index.php?g=User&m=HsMessage&a=ajax_delete_list',{
+        mid: $(this).data('mid')
+      },function(data){
+        if(data.status == 1) {
+          $(this).parent().remove();
+          $.toast(data.info);
+        } else {
+          $.toast(data.info);
+        }
       });
-
     });
   });
   // 从左往右滑
   $('.chat_list_group_bd ul li').swipeRight(function(){
     $('.delete').hide();
-    $('.chat_list_group_bd ul li').removeClass('active');
+    $(this).removeClass('active');
   });
 
+  // 下拉加载
   var chat_list_group_bd = $('.chat_list_group_bd');
   // 下拉加载更多
   var loading = false;
   // 初始化下拉
-  var page_size = 2;
   var pages = 1;
   var chat_list_group_bd_tpl = handlebars.compile($("#chat_list_group_bd_tpl").html());
+
+  function add_data(pages){
+    $.ajax({
+      type: 'POST',
+      url: '/index.php?g=user&m=HsComment&a=ajax_lists',
+      data: {
+        page: pages
+      },
+      dataType: 'json',
+      timeout: 4000,
+      success: function(data){
+        if(pages >= data.page){
+          $.detachInfiniteScroll($('.infinite-scroll'));
+          // 删除加载提示符
+          $('.infinite-scroll-preloader').remove();
+          $.toast('😒 没有更多了');
+        } else {
+          chat_list_group_bd.find('ul').append(chat_list_group_bd_tpl(data.data));
+          pages++;
+        }
+      },
+      error: function(xhr, type){
+        $.toast('网络错误 code:'+xhr);
+      }
+    });
+  }
+
+  // 初始化加载1页
+  add_data(pages);
 
   page.on('infinite', function() {
     // 如果正在加载，则退出

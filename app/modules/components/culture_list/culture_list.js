@@ -7,8 +7,17 @@ var common = require('../common/common.js');
 require('../list_footer/list_footer.js');
 
 $(document).on('pageInit','.culture', function (e, id, page) {
+  if (page.selector == '.page'){
+    return false;
+  }
   var init = new common(page);
-
+  var share_data = {
+    title: '黑市 | 美好而操蛋的东西',
+    desc: '这里能让好事自然发生',
+    link: GV.HOST+location.pathname,
+    img: 'http://hs.ontheroadstore.com/tpl/simplebootx_mobile/Public/i/logo.png'
+  };
+  init.wx_share(share_data);
   // 测试数据
   var data = [{
     object_id: "10",
