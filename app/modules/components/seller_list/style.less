@@ -1,79 +1,83 @@
 .seller_list {
-  .seller_list_bd {
+  .hs-main {
     background-color: #eee;
-    ul {
-      li {
-        padding: 0.29rem 0.36rem;
-        &:last-child {
-          padding-top: 0;
-        }
-        .date {
-          color: #fff;
-          background-color: #cecece;
-          .font-dpr(12px);
-          .font-line-height(12px);
-          padding: 0.16rem;
-          border-radius: 4px;
-          display: block;
-          width: 2.4rem;
-          margin: 0 auto;
-          text-align: center;
-        }
-        .info {
-          margin-top: 0.32rem;
-          background-color: #fff;
-          padding: 0.32rem 0.28rem;
-          border: 0.013333rem solid #a2a2a2;
-          border-radius: 0.12rem;
-          .cover {
-            margin-bottom: 0.28rem;
-            a {
-              .image {
-                height: 4.746667rem;
-                background-image: url('../img/index_loading.gif');
-                background-position: 50% 50%;
-                background-repeat: no-repeat;
-                background-size: cover;
-                overflow: hidden;
+    .seller_list_bd {
+
+      ul {
+        padding-top:  0.29rem;
+        li {
+          padding: 0.29rem 0.36rem;
+          &:last-child {
+            padding-top: 0;
+          }
+          .date {
+            color: #fff;
+            background-color: #cecece;
+            .font-dpr(12px);
+            .font-line-height(12px);
+            padding: 0.16rem;
+            border-radius: 4px;
+            display: block;
+            width: 2.4rem;
+            margin: 0 auto;
+            text-align: center;
+          }
+          .info {
+            margin-top: 0.32rem;
+            background-color: #fff;
+            padding: 0.32rem 0.28rem;
+            border: 0.013333rem solid #a2a2a2;
+            border-radius: 0.12rem;
+            .cover {
+              margin-bottom: 0.28rem;
+              a {
+                .image {
+                  height: 4.746667rem;
+                  background-image: url('../img/index_loading.gif');
+                  background-position: 50% 50%;
+                  background-repeat: no-repeat;
+                  background-size: cover;
+                  overflow: hidden;
+                }
+                h3 {
+                  display: block;
+                  text-align: left;
+                  .font-dpr(20px);
+                  .font-line-height(26px);
+                  color: #111;
+                  padding-top: .32rem;
+                }
               }
-              h3 {
+            }
+            .single {
+              padding: 0.32rem 0;
+              border-top: 0.013333rem solid rgba(211, 211, 211, .8);
+              a {
                 display: block;
                 text-align: left;
-                .font-dpr(20px);
-                .font-line-height(26px);
-                color: #111;
-                padding-top: .32rem;
+                .hs-cf;
+                h3 {
+                  .font-dpr(16px);
+                  .font-line-height(24px);
+                  color: #111;
+                  float: left;
+                  width: 6.8rem;
+                  font-weight:normal;
+                }
+                .image {
+                  float: right;
+                  width: 1.2rem;
+                  height: 1.2rem;
+                  background-image: url('../img/index_loading.gif');
+                  background-position: 50% 50%;
+                  background-repeat: no-repeat;
+                  background-size: cover;
+                  overflow: hidden;
+                }
               }
-            }
-          }
-          .single {
-            padding: 0.32rem 0;
-            border-top: 0.013333rem solid rgba(211, 211, 211, .8);
-            a {
-              display: block;
-              text-align: left;
-              .hs-cf;
-              h3 {
-                .font-dpr(16px);
-                .font-line-height(24px);
-                color: #111;
-                float: left;
-                width: 6.8rem;
-                font-weight:normal;
+              &:last-child {
+                padding-bottom: 0;
               }
-              .image {
-                float: right;
-                width: 1.2rem;
-                height: 1.2rem;
-                background-image: url('../img/index_loading.gif');
-                background-position: 50% 50%;
-                background-repeat: no-repeat;
-                background-size: cover;
-                overflow: hidden;
-              }
-            }
-            &:last-child {
-              padding-bottom: 0;
             }
           }
         }

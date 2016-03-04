@@ -64,5 +64,27 @@
     </li>
   </ul>
   <script type="text/x-handlebars-template" id="seller_list_tpl">
+    <li>
+      <span class="date">{{first_time}}</span>
+      <div class="info">
+        {{#each data}}
+        {{#eq is_focus 1}}
+        <div class="cover">
+          <a href="/Portal/HsArticle/index/id/{{object_id}}/type/{{post_type}}.html" class="external">
+            <div class="image" data-layzr="{$picture_root_url}{{cover_pic}}@640w_1l" data-layzr-bg></div>
+            <h3>{{post_title}}</h3>
+          </a>
+        </div>
+        {{else}}
+        <div class="single">
+          <a href="/Portal/HsArticle/index/id/{{object_id}}/type/{{post_type}}.html" class="external">
+            <h3>{{post_title}}</h3>
+            <div class="image" data-layzr="{$picture_root_url}{{cover_pic}}@!320x320" data-layzr-bg></div>
+          </a>
+        </div>
+        {{/eq}}
+        {{/each}}
+      </div>
+    </li>
   </script>
 </div>
