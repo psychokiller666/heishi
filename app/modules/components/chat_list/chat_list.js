@@ -187,7 +187,7 @@ $(document).on('pageInit','.chat', function (e, id, page) {
   $.refreshScroller();
   setTimeout(function(){
     $('.content').scrollTop($('.content ul').height());
-  },500);
+  },100);
   // 监听下拉
   page.on('refresh', '.pull-to-refresh-content',function(e) {
    if (loading ) return;
