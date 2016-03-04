@@ -39,32 +39,5 @@ require('../modules/components/chat_list/chat_list.js');
 require('../modules/components/user_index/user_index.js');
 // 提现
 require('../modules/components/user_withdraw/user_withdraw.js');
-
-// 文章页
-
-    // 底部通用导航
-    // require('../modules/components/list_footer/list_footer.js');
-    // 商品列表和商品页面
-    // require('../modules/components/app/app.js');
-
-    // 生成订单
-    // require('../modules/components/orderform/orderform.js');
-
-    // // 文化
-    // // 列表页
-    // require('../modules/components/culture_list/culture_list.js');
-
-    // // 用户
-    // // 提现
-    // require('../modules/components/user_withdraw/user_withdraw.js');
-    // // 私信列表
-    // require('../modules/components/chat_list_group/chat_list_group.js');
-    // // 私信聊天
-    // require('../modules/components/chat_list/chat_list.js');
-    // // 卖家动态
-    // require('../modules/components/seller_list/seller_list.js');
-    // // 已发布
-    // require('../modules/components/posts/posts.js');
-    // // 发布页
-    // require('../modules/components/add/add.js');
-
+// 卖家动态
+require('../modules/components/seller_list/seller_list.js');

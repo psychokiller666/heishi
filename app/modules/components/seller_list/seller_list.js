@@ -1,19 +1,15 @@
-var dropload = require('../../../../bower_components/dropload/dist/dropload.min.js');
-
-if($('.seller_list').length){
-  var seller_list_bd = $('.seller_list_bd');
-  seller_list_bd.scrollTop(seller_list_bd.height());
-  seller_list_bd.dropload({
-    domDown : {
-      domClass : 'dropload-down',
-      domRefresh: '<div class="dropload-refresh">🌚 往上拉。</div>',
-      domLoad : '<div class="dropload-load">😏 加载呢。</div>',
-      domNoData : '<div class="dropload-noData">😢 没有咯。</div>'
-    },
-    scrollArea : seller_list_bd,
-    loadDownFn : function(e){
-      e.noData();
-      e.resetload();
-    }
-  })
-}
+// 商品列表
+// handlebars
+var handlebars = require('../../../../node_modules/handlebars/dist/handlebars.min.js');
+// 初始化
+var common = require('../common/common.js');
+$(document).on('pageInit','.seller_list', function(e, id, page){
+  if (page.selector == '.page'){
+    return false;
+  }
+  var init = new common(page);
+  // 调用微信分享sdk
+  init.wx_share(false);
+  // 检查是否有新的消息
+  init.msg_tip();
+});

@@ -39,18 +39,16 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
   var loading = false;
   // 初始化下拉
   var page_num = 2;
-  var page_size = 2;
+  var page_size = 20;
   var pages;
-  var ctype = 1;
+  var ctype;
   if($('.showall').length){
     ctype = 3;
+  } else {
+    ctype = 1
   }
   var store_list_tpl = handlebars.compile($("#store_list_tpl").html());
   function add_data(page_size,page) {
-    if (page.selector == '.page'){
-      return false;
-    }
-
     $.ajax({
       type: 'POST',
       url: '/index.php?g=restful&m=HsArticle&a=ajax_index_list',
@@ -77,6 +75,7 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
       }
     });
   }
+  // 监听滚动
   page.on('infinite', function() {
     // 如果正在加载，则退出
     if (loading) return;
