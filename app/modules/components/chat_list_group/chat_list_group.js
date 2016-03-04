@@ -50,6 +50,13 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
   var chat_list_group_bd_tpl = handlebars.compile($("#chat_list_group_bd_tpl").html());
 
   function add_data(pages){
+    // 如果不够10个不加载
+    if(chat_list_group_bd.find('li').length < 10){
+      $.detachInfiniteScroll($('.infinite-scroll'));
+      // 删除加载提示符
+      $('.infinite-scroll-preloader').remove();
+      return false;
+    }
     $.ajax({
       type: 'POST',
       url: '/index.php?g=user&m=HsComment&a=ajax_lists',
