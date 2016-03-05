@@ -25,18 +25,23 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   // 加关注
   // 检查用户关系
   var attention_btn = $('.attention-btn');
-  $.post('/index.php?g=user&m=HsFellows&a=ajax_relations',{
-    my_uid:attention_btn.data('myuid'),
-    other_uid:attention_btn.data('otheruid')
-  },function(data){
-    if(data.relations == '2' || data.relations == '3') {
-      attention_btn.addClass('active');
-      attention_btn.text('取消关注');
-    } else if(data.relations == '1' || data.relations == '0') {
-      attention_btn.removeClass('active');
-      attention_btn.html('<i>+</i>关注');
-    }
-  });
+
+  if(attention_btn.data('myuid') != attention_btn.data('otheruid')) {
+    $.post('/index.php?g=user&m=HsFellows&a=ajax_relations',{
+      my_uid:attention_btn.data('myuid'),
+      other_uid:attention_btn.data('otheruid')
+    },function(data){
+      if(data.relations == '2' || data.relations == '3') {
+        attention_btn.addClass('active');
+        attention_btn.text('取消关注');
+      } else if(data.relations == '1' || data.relations == '0') {
+        attention_btn.removeClass('active');
+        attention_btn.html('<i>+</i>关注');
+      }
+    });
+  } else {
+    attention_btn.hide();
+  }
   attention_btn.on('click',function(){
     if($(this).hasClass('active')){
       // 取消关注
@@ -162,7 +167,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       success: function(data){
         if(data.status == 1){
           $.toast(data.info);
-          praise.find('li').eq(1).after(praise_list_tpl(btn_data));
+          praise.find('li').eq(0).after(praise_list_tpl(btn_data));
         } else {
           $.toast(data.info);
         }
@@ -173,12 +178,13 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     });
   });
   // 更多按钮
-  var praise_more_tpl = '<li><button type="button" class="praise_more">更多</button></li>';
+  var praise_more_tpl = handlebars.compile($("#praise_more_tpl").html());
+  // var praise_more_tpl = '<li><button type="button" class="praise_more">更多</button></li>';
   $('.store-show .praise ul li').each(function(index,item){
     if(index <= 7) {
       $('.store-show .praise ul').height('1.32rem');
     } else if (index >= 16){
-      $('.store-show .praise ul li').eq(15).before(praise_more_tpl);
+      $('.store-show .praise ul li').eq(15).before(praise_more_tpl('更多'));
     } else {
       $('.store-show .praise ul').height('2.64rem');
     }
@@ -187,14 +193,14 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     $('.praise_more').parent().remove();
     if($(this).hasClass('active')) {
       $(this).parent().remove();
-      $('.store-show .praise ul li').eq(15).before(praise_more_tpl);
+      $('.store-show .praise ul li').eq(15).before(praise_more_tpl('更多'));
       $('.store-show .praise ul').height('2.64rem');
     } else {
       $(this).parent().remove();
       $('.store-show .praise ul').height('auto');
-      $('.store-show .praise ul').append(praise_more_tpl);
+      $('.store-show .praise ul').append(praise_more_tpl('回收'));
       $('.praise_more').addClass('active');
-      $('.praise_more').text('回收');
+      // $('.praise_more').text('回收');
     }
   });
   // 评论加载更多
