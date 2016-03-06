@@ -68,6 +68,18 @@
           margin-bottom: 0.12rem;
           color: #eee;
           text-align: center;
+          position:relative;
+          input[type="file"] {
+            width: 2.11rem;
+            height: 2.08rem;
+            position: absolute;
+            display: block;
+            z-index: 9999999;
+            top: 0;
+            left: 0;
+            opacity: 0;
+          }
+
           &.cover {
             position: relative;
             &:before {
@@ -139,14 +151,14 @@
        margin-bottom: 0.2rem;
        &.active {
         background-color: #68be8c;
-       }
-     }
-     label {
+      }
+    }
+    label {
       display: block;
       .font-dpr(16px);
       color: #c0c0c0;
-     }
-   }
- }
+    }
+  }
+}
 }
 }
