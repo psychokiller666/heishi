@@ -4,7 +4,7 @@ var wx = require('weixin-js-sdk');
 // handlebars
 var handlebars = require('../../../../node_modules/handlebars/dist/handlebars.min.js');
 // 百度上传组件
-// var WebUploader = require('../../../../node_modules/tb-webuploader/dist/webuploader.min.js');
+var WebUploader = require('../../../../node_modules/tb-webuploader/dist/webuploader.min.js');
 // 过滤关键词
 var esc = require('../../../../node_modules/chn-escape/escape.js');
 // 页面初始化
@@ -73,7 +73,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   });
   // 微信预览图片
   var images = $('.images');
-  images.on('click','li',function(){
+  page.on('click','.images ul li',function(){
     var preview_list = [];
     $.each($('.images ul li'),function(index,item){
       preview_list.push($('.images ul li').eq(index).data('preview'));
@@ -149,13 +149,14 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   });
   // 点赞
   var praise = $('.praise');
+  var praise_number = $('.praise .header').find('span');
   var praise_list_tpl = handlebars.compile($("#praise_list_tpl").html());
   praise.on('click','.praise_btn',function(){
-    var btn_data = [{
+    var btn_data = {
       uid:$(this).data('uid'),
       username:$(this).data('username'),
       avatar:$(this).data('avatar')
-    }];
+    };
     $.ajax({
       type: 'POST',
       url: '/index.php?m=HsArticle&a=do_like',
@@ -167,7 +168,10 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       success: function(data){
         if(data.status == 1){
           $.toast(data.info);
-          praise.find('li').eq(0).after(praise_list_tpl(btn_data));
+          $('.praise_btn').parent('li').after(praise_list_tpl(btn_data));
+          // 数字加1
+          praise_number.text(parseInt(praise_number.text())+1);
+          init.loadimg();
         } else {
           $.toast(data.info);
         }
@@ -212,6 +216,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   var cur_cid;
   var is_load = true;
   var comment_list_tpl = handlebars.compile($("#comment_list_tpl").html());
+
   // 增加模板引擎判断
   handlebars.registerHelper('eq', function(v1, v2, options) {
     if(v1 == v2){
@@ -281,8 +286,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   var footer_nav = $('.footer_nav');
   var comment_bd = $('.comment_bd');
   var dialog_comment = $('.dialog_comment');
-  var father_comment = $('.father');
-  var son_comment = $('.son');
+  var comment_count = $('.comment_count');
   var comment_input = $('#comment_input');
   var reply_tpl = handlebars.compile($("#reply_tpl").html());
 
@@ -363,6 +367,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
               dialog_comment.hide();
               $.toast('😄 评论成功');
               dialog_comment.hide();
+              comment_count.text(parseInt(comment_count.text())+1);
               // 添加评论dom
               if(is_father) {
                 // 回复直接添加底部
@@ -463,7 +468,8 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     if(e.srcElement.className == 'comment_image') {
       // 调用微信图片
       wx.previewImage({
-        current: $(e.srcElement).data('preview')
+        current: $(e.srcElement).data('preview'),
+        urls: [$(e.srcElement).data('preview')]
       });
     } else {
       comment_box(comment_id,false,username,$(this),false);
