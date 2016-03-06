@@ -41,3 +41,7 @@ require('../modules/components/user_index/user_index.js');
 require('../modules/components/user_withdraw/user_withdraw.js');
 // 卖家动态
 require('../modules/components/seller_list/seller_list.js');
+// 买过的东西
+require('../modules/components/bought/bought.js');
+// 卖过的东西
+require('../modules/components/already_list/already_list.js');

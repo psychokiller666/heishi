@@ -205,7 +205,8 @@ $(document).on('pageInit','.chat', function (e, id, page) {
   // 预览图
   page.on('click','.image',function(){
     wx.previewImage({
-      current: $(this).data('preview')
+      current: $(this).data('preview'),
+      urls: [$(this).data('preview')]
     });
   });
 });
