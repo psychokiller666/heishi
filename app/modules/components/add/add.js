@@ -12,9 +12,59 @@ $(document).on('pageInit','.add', function (e, id, page) {
   init.wx_share(false);
   // 上传图片
   var images = $('.images');
+  var submit_btn = $('.hs-footer .submit');
+  var picture_list = [];
+  // 判断
+  function get_picture_list() {
+    var result = false;
+    // 判断是否有头图
+    if(picture_list.length){
+      if(!picture_list.is_cover(1)){
+        $.toast('封面必须上传');
+      } else if(!picture_list.is_cover(0)){
+        $.toast('除了封面还需要其他图片');
+      } else {
+        result = JSON.stringify(picture_list);
+      }
+    } else {
+      $.toast('必须上传图片');
+    }
+    return result;
+  }
+  // 从数组里删除file
+  Array.prototype.remove = function(id){
+    var result;
+    var _this = this;
+    $.each(this,function(index,item){
+      if(item.id == id){
+       _this.splice(index,1);
+     }
+   })
+    return this.push.apply(this,result);
+  };
+  // 判断数组里是否有is_cover
+  Array.prototype.is_cover = function(is_cover){
+    var result;
+    var temp = [];
+    var _this = this;
+    if(_this.length){
+     $.each(_this,function(index,item){
+      temp.push(item.iscover);
+      if(temp.indexOf(is_cover) == -1) {
+        result = false;
+      } else {
+        result = true;
+      }
+    });
+   }
+   return result;
+ };
+  // 限制图片数量
+  var max_pic_number = 5;
 
+  // WebUploader 初始化
   var uploader = WebUploader.create({
-    fileNumLimit: 16,
+    fileNumLimit: max_pic_number,
     // 自动上传。
     auto: true,
     // 文件接收服务端。
@@ -30,14 +80,100 @@ $(document).on('pageInit','.add', function (e, id, page) {
   });
   // 监听input file是否有文件添加进来
   images.on('change','.webuploader-element-invisible', function(e) {
-    console.log(e.target.files);
-    console.log(e);
-    if($(this).offsetParent().className == 'cover') {
-      console.log('头图');
+    var iscover;
+    var is_add_li = true;
+    var _this = e.srcElement.parentNode;
+    var pic_number = images.find('li').length;
+
+    // 是否为头图
+    if(e.srcElement.parentNode.className == 'cover') {
+      iscover = 1;
     } else {
-      console.log('不是头图');
+      iscover = 0;
     }
+
+    // 重复上传替换
+    var this_file_id = $(e.srcElement.previousElementSibling).data('id');
+    if(this_file_id) {
+      picture_list.remove(this_file_id);
+      uploader.removeFile(uploader.getFile(this_file_id));
+      is_add_li = false;
+    }
+
+    // 当单个文件被添加进来的时候
+    uploader.onFileQueued = function(file){
+      // 生成缩略图
+      uploader.makeThumb(file,function(error,ret){
+        if(error){
+          $(_this).find('.image').text('预览错误');
+        } else {
+          $(_this).find('.image img').remove();
+          $(_this).find('.remove_btn').remove();
+          $(_this).find('.image').attr('data-id',file.id);
+          $(_this).find('.image').append('<img src="'+ret+'" />');
+        }
+      });
+      // 控制提交按钮
+      submit_btn.attr('disabled','disabled');
+    }
+    // 上传图片
     uploader.addFiles(e.target.files);
+    // 进度条
+    uploader.onUploadProgress = function(file, percentage){
+      var progress_tpl = '<div class="progress"><span></span></div>';
+      $(_this).find('.image').append(progress_tpl);
+      $(_this).find('.image .progress span').css('width', percentage * 100 + '%');
+    }
+    // 图片上传成功
+    uploader.onUploadSuccess = function(file, data){
+      if(data.status==1){
+        // 添加dom
+        var li_tpl = '<li class="no_cover"><div class="image"></div><input type="file" name="file" class="webuploader-element-invisible" accept="image/*"></li>';
+        if(!iscover && is_add_li){
+          images.find('ul').append(li_tpl);
+        }
+        // 添加删除按钮
+        var remove_button = '<button class="remove_btn hs-icon"></button>';
+        $(_this).append(remove_button);
+        // 销毁进度条
+        $(_this).find('.image .progress').remove();
+        // 添加push数组
+        picture_list.push({
+          id:file.id,
+          data:data.data,
+          iscover:iscover
+        });
+      }
+      // 控制提交按钮
+      submit_btn.removeAttr('disabled');
+    }
+    uploader.onUploadError = function(file,data){
+      $.toast(data);
+    }
+    uploader.onError = function(type){
+      if(type == 'Q_EXCEED_NUM_LIMIT'){
+        $.toast('最多可上传'+max_pic_number+'张');
+        images.find('li').last().remove();
+      } else if(type == 'Q_EXCEED_SIZE_LIMIT') {
+        $.toast('太大了，不让传');
+      } else if(type == 'Q_TYPE_DENIED') {
+        $.toast('兄弟必须是图片');
+      }
+    }
+  });
+  // 删除图片
+  images.on('click','.remove_btn',function(e){
+    images.off('click',this);
+    var id = $(this).parent().find('.image').data('id');
+    $(this).parent().find('.image img').remove();
+    $(this).parent().find('.image').removeAttr('data-id');
+    picture_list.remove(id);
+    uploader.removeFile(uploader.getFile(id));
+    if($(this).parent().hasClass('cover')) {
+      $(this).remove();
+    } else if(images.find('li.no_cover').length >= 2){
+      $(this).parent().remove();
+    }
   });
 
   // 选择标签
@@ -72,7 +208,7 @@ $(document).on('pageInit','.add', function (e, id, page) {
 
   // 提交
   $('.submit').on('click',function(){
-    console.log(get_tags());
+    console.log(get_tags(),get_picture_list());
   })
 
 });
