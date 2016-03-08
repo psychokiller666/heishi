@@ -11,16 +11,16 @@ var common = function(page){
   }
   // 页面初始化
   // 控制.hs-page高度
-  if($('.hs-page').length){
-    if($('header').length){
-      $('.hs-main').css('top',$('header').height());
+  if($(this.page).find('.hs-page').length){
+    if($(this.page).find('header').length){
+      $(this.page).find('.hs-main').css('top',$(this.page).find('header').height());
     } else {
-      $('.hs-main').css('top','0');
+      $(this.page).find('.hs-main').css('top','0');
     }
-    if($('footer').length){
-      $('.hs-main').css('bottom',$('footer').height());
+    if($(this.page).find('footer').length){
+      $(this.page).find('.hs-main').css('bottom',$(this.page).find('footer').height());
     } else {
-      $('.hs-main').css('bottom','0');
+      $(this.page).find('.hs-main').css('bottom','0');
     }
   }
   console.log(page,'页面初始化');
