@@ -45,3 +45,7 @@ require('../modules/components/seller_list/seller_list.js');
 require('../modules/components/bought/bought.js');
 // 卖过的东西
 require('../modules/components/already_list/already_list.js');
+// 发货
+require('../modules/components/deliver/deliver.js');
+// 发过的东西
+require('../modules/components/posts/posts.js');
