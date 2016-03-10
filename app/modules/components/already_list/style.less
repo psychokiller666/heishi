@@ -15,6 +15,32 @@
         box-shadow: 0px 5px 5px #d6d6d6;
         margin-bottom: 0.266667rem;
         background-color: #fff;
+        position: relative;
+        .examine_box {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: #000;
+          opacity: .8;
+          color: #fff;
+          span {
+            position: absolute;
+            text-align: center;
+            top: 50%;
+            display: block;
+            width: 100%;
+            .font-dpr(18px);
+            margin-top: -9px;
+            [data-dpr="2"] & {
+              margin-top: -9 * 2px;
+            }
+            [data-dpr="3"] & {
+              margin-top: -9 * 3px;
+            }
+          }
+        }
         .header {
           padding-bottom: 0.16rem;
           border-bottom: 0.013333rem solid rgba(211, 211, 211, .8);

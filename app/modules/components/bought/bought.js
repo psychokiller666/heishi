@@ -54,6 +54,29 @@ $(document).on('pageInit','.bought', function (e, id, page) {
       }
     });
   }
+  // 确认收货
+  already_list.on('click','.bought_btn',function(){
+    var _this = $(this);
+    var order_number = _this.data('ordernumber');
+    $.post('/index.php?g=user&m=HsOrder&a=comfirm_received',{
+      order_number:order_number
+    },function(data){
+      if(data.status == '1'){
+        $.toast('收货成功');
+        _this.remove();
+        _this.parent('.logistics').parent('.header').parent('li').find('.contact .office span').text('已收货');
+      } else {
+        $.toast(data.info);
+      }
+    })
+  });
+  if(already_list.find('li').length < 20){
+    $.detachInfiniteScroll($('.infinite-scroll'));
+    // 删除加载提示符
+    $('.infinite-scroll-preloader').remove();
+    $.refreshScroller();
+    return false;
+  };
   // 监听滚动
   page.on('infinite', function() {
     // 如果正在加载，则退出
@@ -75,22 +98,4 @@ $(document).on('pageInit','.bought', function (e, id, page) {
     },500);
     $.refreshScroller();
   });
-  // 确认收货
-  already_list.on('click','.bought_btn',function(){
-    var _this = $(this);
-    var order_number = _this.data('ordernumber');
-    $.post('/index.php?g=user&m=HsOrder&a=comfirm_received',{
-      order_number:order_number
-    },function(data){
-      if(data.status == '1'){
-        $.toast('收货成功');
-        _this.remove();
-        _this.parent('.logistics').parent('.header').parent('li').find('.contact .office span').text('已收货');
-      } else {
-        $.toast(data.info);
-      }
-    })
-  });
-
-
 })
