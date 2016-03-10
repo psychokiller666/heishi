@@ -140,7 +140,7 @@ $(document).on('pageInit','.add', function (e, id, page) {
         // 添加push数组
         picture_list.push({
           id:file.id,
-          data:data.data,
+          filepath:data.data,
           iscover:iscover
         });
       }
@@ -182,9 +182,15 @@ $(document).on('pageInit','.add', function (e, id, page) {
   // 返回选中标签
   function get_tags(tags_list){
     var tags_list = [];
-    tags.find('button.active').each(function(index,item){
-      JSON.stringify(tags_list.push($(item).text()));
-    });
+    if(tags.find('button.active').length) {
+      tags.find('button.active').each(function(index,item){
+        tags_list.push($(item).data('keyword'))
+      });
+      tags_list = JSON.stringify(tags_list);
+    } else {
+      tags_list = false;
+      $.toast("标签不能为空");
+    }
     return tags_list;
   }
   tags.find('button').on('click',function(e) {
@@ -205,10 +211,102 @@ $(document).on('pageInit','.add', function (e, id, page) {
       }
     }
   })
+  // 获取标题
+  function get_title(){
+    var title = $('.title');
+    var title_number = title.find('input').val().length;
+    var title_input;
+    // 字数限制 32个字，内容不能为空
+    if(title_number&& title_number<=32){
+      title_input = title.find('input').val();
+    } else {
+      $.toast('内容不能为空，少于32个字');
+      title.find('input').trigger('focus');
+      title_input = false;
+    }
+    return title_input;
+  }
+  // 获取描述
+  function get_excerpt(){
+    var excerpt = $('.description');
+    var excerpt_number = excerpt.find('textarea').val().length;
+    var excerpt_input;
+    // 内容不能为空
+    if(excerpt_number){
+      excerpt_input = excerpt.find('textarea').val();
+    } else {
+      $.toast('内容不能为空');
+      excerpt.find('textarea').trigger('focus');
+      excerpt_input = false;
+    }
+    return excerpt_input;
+  }
 
+  // 获取价格、邮费、数量
+  function get_number(name,nameclass){
+    var number = nameclass.find('input').val().length;
+    var input;
+    if(number){
+      input = parseInt(nameclass.find('input').val());
+    } else {
+      input = false;
+      nameclass.find('input').trigger('focus');
+      $.toast(name+'不能为空');
+    }
+    return input;
+  }
   // 提交
   $('.submit').on('click',function(){
-    console.log(get_tags(),get_picture_list());
+    var _this = $(this);
+
+    var post_data;
+    // 判断
+    if(get_title() && get_picture_list() &&get_excerpt() &&get_tags()) {
+      if(_this.data('type') == 1){
+        post_data = {
+          'post[type]':_this.data('type'),
+          'post[post_token]':_this.data('token'),
+          'post[post_pictures]':get_picture_list(),
+          'post[post_title]':get_title(),
+          'post[post_excerpt]':get_excerpt(),
+          'post[post_numbers]':get_number('数量',$('.number')),
+          'post[post_price]':get_number('价格',$('.price')),
+          'post[postage]':parseInt($('.postage').find('input').val()),
+          'post[post_keywords]':get_tags(),
+        }
+      } else {
+        post_data = {
+          'post[type]':_this.data('type'),
+          'post[post_token]':_this.data('token'),
+          'post[post_pictures]':get_picture_list(),
+          'post[post_title]':get_title(),
+          'post[post_excerpt]':get_excerpt(),
+          'post[post_keywords]':get_tags(),
+        }
+      }
+      console.log(post_data);
+      // 提交
+      $.ajax({
+        type: 'post',
+        url: _this.data('action'),
+        data: post_data,
+        dataType: 'json',
+        timeout: 5000,
+        success: function(data){
+          if(data.status == 1) {
+            $.toast(data.info+'2秒后自动跳转');
+            setTimeout(function(){
+              window.location.href = data.url;
+            },2000)
+          } else {
+            $.toast(data.info);
+          }
+        },
+        error: function(xhr, type){
+          $.toast(xhr);
+        }
+      })
+    }
   })
 
 });

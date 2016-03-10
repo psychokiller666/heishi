@@ -20,19 +20,18 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
   // 检查是否有新的消息
   init.msg_tip();
   // 列表首页_通用底部发布
-  var notice_btn = $('.notice_btn');
+  var hs_footer = $('.hs-footer');
   var notice_box = $('.notice_box');
-
-  notice_btn.on('click',function(e) {
-    if(!notice_btn.hasClass('active')){
+  hs_footer.on('click','.notice_btn',function() {
+    if(!$(this).hasClass('active')){
       $(this).addClass('active');
       notice_box.show();
-      notice_box.css('bottom',$('.hs-footer').height()-2);
+      notice_box.css('bottom',hs_footer.height()-2);
     } else {
       $(this).removeClass('active');
       notice_box.hide();
     }
-  });
+  })
 
   var store_list = $('.store_list');
   // 下拉加载更多
