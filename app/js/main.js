@@ -26,6 +26,8 @@ require('../modules/components/store_show/store_show.js');
 // 文化列表
 require('../modules/components/culture_list/culture_list.js');
 
+// 发布规则页面
+require('../modules/components/notice/notice.js');
 // 发布商品
 require('../modules/components/add/add.js');
 
