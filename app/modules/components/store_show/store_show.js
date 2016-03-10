@@ -248,7 +248,6 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
               // 添加继续
               comment_bd.append(comment_list_tpl(data));
               cur_cid = comment_bd.find('li').last().data('id');
-              console.log(cur_cid);
               init.loadimg();
             }
           } else if(data.status == '0'){
@@ -297,6 +296,24 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     dialog_comment.find('button').removeAttr('disabled');
     dialog_comment.show();
     comment_input.trigger('focus');
+    var image_list = dialog_comment.find('.image_list');
+    var image = dialog_comment.find('.image');
+    // 上传图片
+    var uploader = WebUploader.create({
+      fileNumLimit: 1,
+      // 自动上传。
+      auto: true,
+      // 文件接收服务端。
+      server: '/index.php?g=api&m=HsFileupload&a=upload',
+      // 二进制上传
+      sendAsBinary: true,
+      // 只允许选择文件，可选。
+      accept: {
+        title: 'Images',
+        extensions: 'gif,jpg,jpeg,bmp,png,webp',
+        mimeTypes: 'image/*'
+      }
+    });
     // 判断是否是回复
     if (username.length) {
       comment_input.attr('placeholder','回复：'+username);
@@ -335,16 +352,21 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         $.toast('🚔 我要报警了');
       } else {
         if(is_father) {
+          var type =0;
+          if(ispic){
+            type = 4;
+          }
           var post_data = {
             content:comment_input.val(),
             post_table:comment.data('table'),
             post_id:comment.data('id'),
             to_uid:0,
             parentid:0,
-            type:0,
+            type:type,
             url:window.location.href
           }
         } else {
+          // 二级回复
           var post_data = {
             content:comment_input.val(),
             post_table:comment.data('table'),
@@ -373,6 +395,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
                 // 回复直接添加底部
                 var reply_data = {
                  is_father:true,
+                 ispic:ispic,
                  comment:comment_input.val(),
                  username:comment.data('username'),
                  avatar:comment.data('avatar'),
@@ -382,6 +405,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
                } else {
                 var reply_data = {
                  is_father:false,
+                 ispic:ispic,
                  comment:comment_input.val(),
                  username:comment.data('username'),
                  parent_full_name:element.data('username'),
@@ -401,6 +425,8 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
             } else {
               $.toast(data.info);
             }
+            uploader.reset();
+            init.loadimg();
             $.refreshScroller();
           },
           error: function(xhr, type){
@@ -410,55 +436,84 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         });
       }
     });
+
+    // 监听input file是否有文件添加进来
+    dialog_comment.on("change",'.webuploader-element-invisible', function(e) {
+      uploader.addFiles(e.target.files);
+      uploader.upload();
+    });
+    // 图片列队
+    uploader.onFileQueued = function(file){
+      // 控制回复按钮
+      dialog_comment.find('.cancel').attr('disabled','disabled');
+      dialog_comment.find('.submit').attr('disabled','disabled');
+      // 控制回复框
+      comment_input.hide();
+      // 生成缩略图
+      uploader.makeThumb(file,function(error,ret){
+        image_list.empty();
+        if(error){
+          image_list.html('预览错误');
+        } else {
+          image_list.append('<img src="'+ret+'" />');
+        }
+      });
+    }
+    // 上传成功
+    uploader.onUploadSuccess = function(file,response) {
+      // 添加关闭按钮
+      image_list.append('<button class="close" data-id="'+file.id+'">取消</button>');
+      // 恢复提交按钮
+      dialog_comment.find('.cancel').removeAttr('disabled','disabled');
+      dialog_comment.find('.submit').removeAttr('disabled','disabled');
+      // 消除进度条
+      image_list.find('.progress').remove();
+      // 删除上传框
+      dialog_comment.find('.image .updata_image_btn').remove();
+      if(response.status == 1) {
+       comment_input.val(response.data);
+     } else {
+       $.toast(response.info);
+     }
+   }
+    // 控制进度条
+    uploader.onUploadProgress = function(file,percentage) {
+      image_list.append('<div class="progress"><span></span></div>');
+      image_list.find('.progress span').css('width', percentage * 100 + '%');
+    }
+    // 上传出错
+    uploader.onUploadError = function(file,reason) {
+     $.toast(reason);
+   }
+    // 当图片初始化
+    uploader.onReset = function(){
+      image_list.before('<div class="updata_image_btn"><button type="button">icon</button><input type="file" name="file" class="webuploader-element-invisible" accept="image/*" single></div>');
+      image.find('.image_list').empty();
+      comment_input.show();
+    }
+    // 选择时文件出错
+    uploader.onError = function(type){
+      if(type == 'Q_EXCEED_NUM_LIMIT'){
+        $.toast('最多可上传1张');
+      } else if(type == 'Q_EXCEED_SIZE_LIMIT') {
+        $.toast('太大了，不让传');
+      } else if(type == 'Q_TYPE_DENIED') {
+        $.toast('兄弟必须是图片');
+      }
+    }
+    // 删除图片按钮
+    image_list.on('click','.close',function(){
+      dialog_comment.find('#comment_input').removeAttr('disabled');
+      uploader.reset();
+    })
     // 关闭按钮
     dialog_comment.on('click','.cancel', function() {
       dialog_comment.off('click','.cancel');
       dialog_comment.hide();
+      // 上传图片初始化
+      uploader.reset();
     });
   }
-
-
-    // 上传图片
-    // var uploader = WebUploader.create({
-    //   fileNumLimit: 1,
-    //   // 自动上传。
-    //   auto: true,
-    //   // 文件接收服务端。
-    //   server: 'http://hstest.ontheroadstore.com/index.php?g=api&m=HsFileupload&a=upload',
-    //   // 二进制上传
-    //   sendAsBinary: true,
-    //   // 只允许选择文件，可选。
-    //   accept: {
-    //     title: 'Images',
-    //     extensions: 'gif,jpg,jpeg,bmp,png,webp',
-    //     mimeTypes: 'image/*'
-    //   }
-    // });
-    // 监听input file是否有文件添加进来
-    // dialog_comment.find('.updata_image_btn input').on("change", function(e) {
-    //   uploader.addFiles(e.target.files);
-    //   uploader.upload();
-    // });
-    // // 图片列队
-    // uploader.onFileQueued = function(file) {
-    //   console.log(file);
-    // }
-    // // 上传成功
-    // uploader.onuploadSuccess = function(file,response) {
-    //   console.log(file,response);
-    // }
-    // // 控制进度条
-    // uploader.onuploadProgress = function(file,percentage) {
-    //   console.log(file,percentage);
-    // }
-    // // 上传出错
-    // uploader.onuploadError = function(file,reason) {
-    //   console.log(file,reason);
-    // }
-    // // 选择时文件出错
-    // uploader.onerror = function(type) {
-    //   console.log(type);
-    // }
 
   // 点击回复框
   $('.comment_bd').on('click','li',function(e){
