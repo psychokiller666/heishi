@@ -11,6 +11,12 @@ var esc = require('../../../../node_modules/chn-escape/escape.js');
 var common = require('../common/common.js');
 
 $(document).on('pageInit','.store-show', function (e, id, page) {
+  console.log(page);
+  console.log(e);
+  if(id === 'store-show'){
+    return
+  }
+  console.log('ddd');
   if (page.selector == '.page'){
     return false;
   }
@@ -82,6 +88,17 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       current: $(this).data('preview'),
       urls: preview_list
     });
+  });
+  // 购买
+  var buy = $('.buy');
+  // 如果库存等于0，禁止购买
+  if(buy.find('.buy_btn').data('remain') < 1){
+    buy.find('.buy_btn').text('卖光了');
+    buy.find('.buy_btn').attr('disabled',true);
+  }
+  buy.on('click','.buy_btn',function(){
+    $.router.load('#orderform');
+
   });
   // 打赏
   var dialog_reward = $('.dialog_reward');
