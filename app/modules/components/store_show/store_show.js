@@ -298,6 +298,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     comment_input.trigger('focus');
     var image_list = dialog_comment.find('.image_list');
     var image = dialog_comment.find('.image');
+    var type =0;
     // 上传图片
     var uploader = WebUploader.create({
       fileNumLimit: 1,
@@ -352,10 +353,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         $.toast('🚔 我要报警了');
       } else {
         if(is_father) {
-          var type =0;
-          if(ispic){
-            type = 4;
-          }
+
           var post_data = {
             content:comment_input.val(),
             post_table:comment.data('table'),
@@ -373,7 +371,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
             post_id:comment.data('id'),
             to_uid:element.data('uid'),
             parentid:element.data('id'),
-            type:0,
+            type:type,
             url:window.location.href
           }
         }
@@ -395,7 +393,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
                 // 回复直接添加底部
                 var reply_data = {
                  is_father:true,
-                 ispic:ispic,
+                 type:type,
                  comment:comment_input.val(),
                  username:comment.data('username'),
                  avatar:comment.data('avatar'),
@@ -405,7 +403,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
                } else {
                 var reply_data = {
                  is_father:false,
-                 ispic:ispic,
+                 type:type,
                  comment:comment_input.val(),
                  username:comment.data('username'),
                  parent_full_name:element.data('username'),
@@ -470,6 +468,8 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       image_list.find('.progress').remove();
       // 删除上传框
       dialog_comment.find('.image .updata_image_btn').remove();
+      // type状态等于4
+      type = 4;
       if(response.status == 1) {
        comment_input.val(response.data);
      } else {
@@ -489,7 +489,9 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     uploader.onReset = function(){
       image_list.before('<div class="updata_image_btn"><button type="button">icon</button><input type="file" name="file" class="webuploader-element-invisible" accept="image/*" single></div>');
       image.find('.image_list').empty();
+      comment_input.val('');
       comment_input.show();
+      type = 0;
     }
     // 选择时文件出错
     uploader.onError = function(type){
