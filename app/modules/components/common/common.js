@@ -6,9 +6,9 @@ var wx = require('weixin-js-sdk');
 
 var common = function(page){
   this.page = page;
-  if (page.selector == '.page'){
-    return false;
-  }
+  // if (page.selector == '.page'){
+  //   return false;
+  // }
   // 页面初始化
   // 控制.hs-page高度
   if($(this.page).find('.hs-page').length){

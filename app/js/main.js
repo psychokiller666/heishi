@@ -22,6 +22,7 @@ require('../modules/components/store_list/store_list.js');
 
 // 商品内容页
 require('../modules/components/store_show/store_show.js');
+require('../modules/components/orderform/orderform.js');
 
 // 文化列表
 require('../modules/components/culture_list/culture_list.js');
