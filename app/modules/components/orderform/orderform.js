@@ -5,12 +5,12 @@ var wx = require('weixin-js-sdk');
 var common = require('../common/common.js');
 
 $(document).on('pageInit','#orderform', function (e, id, page) {
-  console.log(page);
   if (page.selector == '.page'){
     return false;
   }
   var init = new common(page);
   init.wx_share(false);
+
   var orderform = $('.orderform');
   var orderform_bd = $('.orderform_bd');
   // 生成订单数量操作

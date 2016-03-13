@@ -8,7 +8,7 @@ var esc = require('../../../../node_modules/chn-escape/escape.js');
 // 初始化
 var common = require('../common/common.js');
 
-$(document).on('pageInit','.chat', function (e, id, page) {
+$(document).on('pageInit','.detail', function (e, id, page) {
   if (page.selector == '.page'){
     return false;
   }
