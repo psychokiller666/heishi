@@ -1,4 +1,6 @@
 // 商品内容页
+// 页面初始化
+var common = require('../common/common.js');
 // 微信jssdk
 var wx = require('weixin-js-sdk');
 // handlebars
@@ -7,16 +9,8 @@ var handlebars = require('../../../../node_modules/handlebars/dist/handlebars.mi
 var WebUploader = require('../../../../node_modules/tb-webuploader/dist/webuploader.min.js');
 // 过滤关键词
 var esc = require('../../../../node_modules/chn-escape/escape.js');
-// 页面初始化
-var common = require('../common/common.js');
 
 $(document).on('pageInit','.store-show', function (e, id, page) {
-  console.log(page);
-  console.log(e);
-  if(id === 'store-show'){
-    return
-  }
-  console.log('ddd');
   if (page.selector == '.page'){
     return false;
   }
@@ -91,14 +85,9 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   });
   // 购买
   var buy = $('.buy');
-  // 如果库存等于0，禁止购买
-  if(buy.find('.buy_btn').data('remain') < 1){
-    buy.find('.buy_btn').text('卖光了');
-    buy.find('.buy_btn').attr('disabled',true);
-  }
-  buy.on('click','.buy_btn',function(){
-    $.router.load('#orderform');
-
+  buy.on('click','.buy_btn',function(e){
+    buy.off('click','.buy_btn');
+    $.router.load('#orderform',true);
   });
   // 打赏
   var dialog_reward = $('.dialog_reward');

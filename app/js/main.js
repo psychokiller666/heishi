@@ -20,10 +20,6 @@ require('../../bower_components/SUI-Mobile/dist/js/sm.min.js');
 // 首页(商品列表页)
 require('../modules/components/store_list/store_list.js');
 
-// 商品内容页
-require('../modules/components/store_show/store_show.js');
-require('../modules/components/orderform/orderform.js');
-
 // 文化列表
 require('../modules/components/culture_list/culture_list.js');
 
@@ -52,3 +48,7 @@ require('../modules/components/already_list/already_list.js');
 require('../modules/components/deliver/deliver.js');
 // 发过的东西
 require('../modules/components/posts/posts.js');
+
+// 商品内容页
+require('../modules/components/store_show/store_show.js');
+require('../modules/components/orderform/orderform.js');
