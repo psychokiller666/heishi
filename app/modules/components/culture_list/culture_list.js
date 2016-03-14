@@ -16,7 +16,26 @@ $(document).on('pageInit','.culture', function (e, id, page) {
     img: 'http://hs.ontheroadstore.com/tpl/simplebootx_mobile/Public/i/logo.png'
   };
   init.wx_share(share_data);
-
+  // 搜索按钮
+  var search_box = $('.search_box');
+  $('.search_btn').on('click',function(){
+    search_box.show();
+    search_box.find('input').trigger('focus');
+    search_box.on('click','button',function(){
+      search_box.off('click','button');
+      if(search_box.find('input').val().length){
+        search_box.hide();
+      } else {
+        window.location.href = '/index.php?g=portal&m=HsSearch&keyword='+serialize(search_box.find('input').val());
+      }
+    });
+    search_box.on('click',function(e){
+      $(this).off('click');
+      if(e.srcElement.className == 'search_box'){
+        search_box.hide();
+      }
+    });
+  });
   // 列表首页_通用底部发布
   var hs_footer = $('.hs-footer');
   var notice_box = $('.notice_box');
@@ -35,9 +54,17 @@ $(document).on('pageInit','.culture', function (e, id, page) {
   // 下拉加载更多
   var loading = false;
   // 初始化下拉
-  var page_num = 2;
-  var page_size = 20;
+  var page_num;
+  if(culture_list.attr('pagenum')){
+    page_num = culture_list.attr('pagenum');
+  } else {
+    page_num = 2;
+  }
   var pages;
+  if(culture_list.attr('pages')){
+    pages = culture_list.attr('pages');
+  }
+  var page_size = 20;
   var ctype;
   // 判断当前页面 推荐or全部
   if($('.culture_all').length){
@@ -65,6 +92,8 @@ $(document).on('pageInit','.culture', function (e, id, page) {
           // 更新最后加载的序号
           page_num++;
           pages = data.pages;
+          culture_list.attr('pagenum',page_num);
+          culture_list.attr('pages',data.pages);
           init.loadimg();
         } else {
           $.toast('请求错误');

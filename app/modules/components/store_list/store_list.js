@@ -19,6 +19,26 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
   init.wx_share(share_data);
   // 检查是否有新的消息
   init.msg_tip();
+  // 搜索按钮
+  var search_box = $('.search_box');
+  $('.search_btn').on('click',function(){
+    search_box.show();
+    search_box.find('input').trigger('focus');
+    search_box.on('click','button',function(){
+      search_box.off('click','button');
+      if(search_box.find('input').val().length){
+        search_box.hide();
+      } else {
+        window.location.href = '/index.php?g=portal&m=HsSearch&keyword='+serialize(search_box.find('input').val());
+      }
+    });
+    search_box.on('click',function(e){
+      $(this).off('click');
+      if(e.srcElement.className == 'search_box'){
+        search_box.hide();
+      }
+    });
+  });
   // 列表首页_通用底部发布
   var hs_footer = $('.hs-footer');
   var notice_box = $('.notice_box');
@@ -37,9 +57,17 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
   // 下拉加载更多
   var loading = false;
   // 初始化下拉
-  var page_num = 2;
-  var page_size = 20;
+  var page_num;
+  if(store_list.attr('pagenum')){
+    page_num = store_list.attr('pagenum');
+  } else {
+    page_num = 2;
+  }
   var pages;
+  if(store_list.attr('pages')){
+    pages = store_list.attr('pages');
+  }
+  var page_size = 20;
   var ctype;
   if($('.showall').length){
     ctype = 3;
@@ -64,6 +92,8 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
           // 更新最后加载的序号
           pages = data.pages;
           page_num++;
+          store_list.attr('pagenum',page_num);
+          store_list.attr('pages',data.pages);
           init.loadimg();
         } else {
           $.toast('请求错误');
@@ -82,7 +112,7 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
     loading = true;
     setTimeout(function() {
       loading = false;
-      if (page_num >= pages+1) {
+      if (page_num >= pages) {
         // 加载完毕，则注销无限加载事件，以防不必要的加载
         $.detachInfiniteScroll($('.infinite-scroll'));
         // 删除加载提示符

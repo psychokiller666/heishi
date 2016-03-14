@@ -50,6 +50,7 @@ $(document).on('pageInit','.add', function (e, id, page) {
     if(_this.length){
      $.each(_this,function(index,item){
       temp.push(item.iscover);
+      console.log(temp);
       if(temp.indexOf(is_cover) == -1) {
         result = false;
       } else {
@@ -86,7 +87,7 @@ $(document).on('pageInit','.add', function (e, id, page) {
     var pic_number = images.find('li').length;
 
     // 是否为头图
-    if(e.srcElement.parentNode.className == 'cover') {
+    if(e.srcElement.parentNode.className == 'cover hs-icon') {
       iscover = 1;
     } else {
       iscover = 0;
@@ -258,8 +259,8 @@ $(document).on('pageInit','.add', function (e, id, page) {
   // 提交
   $('.submit').on('click',function(){
     var _this = $(this);
-
     var post_data;
+
     // 判断
     if(get_title() && get_picture_list() &&get_excerpt() &&get_tags()) {
       if(_this.data('type') == 1){
@@ -284,8 +285,8 @@ $(document).on('pageInit','.add', function (e, id, page) {
           'post[post_keywords]':get_tags(),
         }
       }
-      console.log(post_data);
       // 提交
+      _this.attr('disabled','disabled');
       $.ajax({
         type: 'post',
         url: _this.data('action'),
@@ -294,7 +295,7 @@ $(document).on('pageInit','.add', function (e, id, page) {
         timeout: 5000,
         success: function(data){
           if(data.status == 1) {
-            $.toast(data.info+'2秒后自动跳转');
+            $.toast(data.info+'2秒后自动跳转，等待审核');
             setTimeout(function(){
               window.location.href = data.url;
             },2000)

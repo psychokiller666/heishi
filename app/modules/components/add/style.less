@@ -66,6 +66,7 @@
         padding-bottom: 0.2rem;
       }
       ul {
+        width: 10rem;
         .hs-cf;
         li {
           width: 2.11rem;
@@ -147,22 +148,18 @@
             position: relative;
             &:before {
               position: absolute;
-              .font-dpr(10px);
-              .font-line-height(10px);
-              content: "封面";
-              top: 0.15rem;
+              .font-dpr(42px);
+              .font-line-height(42px);
+              content: "\e618";
+              top: 0;
               left: 0;
               color: #68be8c;
               z-index: 9999;
-              -ms-transform:rotate(-45deg); /* IE 9 */
-              -moz-transform:rotate(-45deg); /* Firefox */
-              -webkit-transform:rotate(-45deg); /* Safari and Chrome */
-              -o-transform:rotate(-45deg); /* Opera */
-              transform:rotate(-45deg);
+            }
+            .image:after {
+              content: "\e617";
             }
           }
-
-
           &:nth-child(4){
             margin-right: 0;
           }
