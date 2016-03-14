@@ -83,12 +83,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       urls: preview_list
     });
   });
-  // 购买
-  var buy = $('.buy');
-  buy.on('click','.buy_btn',function(e){
-    buy.off('click','.buy_btn');
-    $.router.load('#orderform',true);
-  });
+
   // 打赏
   var dialog_reward = $('.dialog_reward');
   var reward_btn = $('.reward_btn');
@@ -493,7 +488,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
    }
     // 当图片初始化
     uploader.onReset = function(){
-      image_list.before('<div class="updata_image_btn"><button type="button">icon</button><input type="file" name="file" class="webuploader-element-invisible" accept="image/*" single></div>');
+      image_list.before('<div class="updata_image_btn"><button type="button" class="hs-icon"></button><input type="file" name="file" class="webuploader-element-invisible" accept="image/*" single></div>');
       image.find('.image_list').empty();
       comment_input.val('');
       comment_input.show();
