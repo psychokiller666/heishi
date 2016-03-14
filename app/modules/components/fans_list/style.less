@@ -1,20 +1,26 @@
 .fans_list {
-
+  background-color: #f3f3f3 !important;
   .fans_list_bd {
-    background-color: #f3f3f3;
     ul {
       padding: 0.24rem 0.32rem;
       li {
+        border-bottom: .026667rem solid rgba(211,211,211,.5);
         margin-bottom: 0.4rem;
+        padding-bottom: 0.4rem;
         position: relative;
+        &:last-child {
+          border: none;
+          margin-bottom: 0;
+        }
         &:after {
-          content: ">";
+          .hs-icon;
+          content: "\e605";
           position: absolute;
           right: 0;
           top: 0;
-          .font-dpr(22px);
-          color: #6ac18e;
+          .font-dpr(18px);
           line-height: 1.12rem;
+          color: #6ac18e;
         }
         a {
           display: block;

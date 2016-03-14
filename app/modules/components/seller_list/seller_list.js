@@ -1,4 +1,4 @@
-// 商品列表
+// 卖家动态
 // handlebars
 var handlebars = require('../../../../node_modules/handlebars/dist/handlebars.min.js');
 // 初始化
@@ -10,18 +10,25 @@ $(document).on('pageInit','.seller_list', function(e, id, page){
   var init = new common(page);
   // 调用微信分享sdk
   init.wx_share(false);
-  // 检查是否有新的消息
-  init.msg_tip();
-  $.refreshScroller();
-  setTimeout(function(){
-    $('.content').scrollTop($('.content ul').height());
-  },100);
+
+  var seller_list_bd = $('.seller_list_bd');
+  // 判断是否有数据
+  if(seller_list_bd.find('.no_data').length){
+    // 注销下拉滑动事件
+    $.destroyPullToRefresh($('.pull-to-refresh-content'));
+    $.pullToRefreshDone('.pull-to-refresh-content');
+    // 删除加载提示符
+    $('.pull-to-refresh-layer').remove();
+  } else {
+    $.refreshScroller();
+    setTimeout(function(){
+      $('.content').scrollTop($('.content ul').height());
+    },500);
+  }
 
   // 上拉加载更多
   var loading = false;
-  // 初始化下拉
   var pages = 2;
-  var seller_list_bd = $('.seller_list_bd');
   var seller_list_tpl = handlebars.compile($("#seller_list_tpl").html());
   // 加入判断方法
   handlebars.registerHelper('eq', function(v1, v2, options) {
@@ -43,7 +50,7 @@ $(document).on('pageInit','.seller_list', function(e, id, page){
       dataType: 'json',
       timeout: 4000,
       success: function(data){
-        if(pages >= data.pages  || data.info == "没有更多数据了"){
+        if(pages >= data.pages+3){
           $.toast(data.info);
           // 加载完毕，则注销无限加载事件，以防不必要的加载
           $.destroyPullToRefresh($('.pull-to-refresh-content'));
@@ -52,7 +59,6 @@ $(document).on('pageInit','.seller_list', function(e, id, page){
           $('.pull-to-refresh-layer').remove();
         } else if(data.status == 1){
           seller_list_bd.find('ul').prepend(seller_list_tpl(data));
-          console.log(seller_list_tpl(data.data));
           pages++;
           init.loadimg();
         }

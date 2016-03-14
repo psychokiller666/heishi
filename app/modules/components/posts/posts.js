@@ -13,6 +13,11 @@ $(document).on('pageInit','.posts', function (e, id, page) {
 
   var already_list = $('.already_list');
   var stock_box = $('.stock_box');
+  // 判断是否有数据
+  if(already_list.find('.no_data').length){
+    // 注销上拉
+    $.detachInfiniteScroll($('.infinite-scroll'));
+  }
 
   already_list.find('li').on('click','.office_btn',function(e) {
     var stock_number = $(this).parent().parent().find('.username span');

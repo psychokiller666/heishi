@@ -22,10 +22,20 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     img: page.find('.frontcover .image').data('share')
   };
   init.wx_share(share_data);
+  // 过滤关键词
+  var text_list = [
+  '燃料',
+  '大麻',
+  '叶子',
+  '淘宝',
+  'taobao.com',
+  '共产党'
+  ];
+  // 过滤关键词插件esc初始化
+  esc.init(text_list);
   // 加关注
   // 检查用户关系
   var attention_btn = $('.attention-btn');
-
   if(attention_btn.data('myuid') != attention_btn.data('otheruid')) {
     $.post('/index.php?g=user&m=HsFellows&a=ajax_relations',{
       my_uid:attention_btn.data('myuid'),
@@ -36,12 +46,13 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         attention_btn.text('取消关注');
       } else if(data.relations == '1' || data.relations == '0') {
         attention_btn.removeClass('active');
-        attention_btn.html('<i>+</i>关注');
+        attention_btn.html('<i class="hs-icon"></i>关注');
       }
     });
   } else {
     attention_btn.hide();
   }
+  // 操作关注 & 取消关注
   attention_btn.on('click',function(){
     if($(this).hasClass('active')){
       // 取消关注
@@ -49,7 +60,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         uid:$(this).data('otheruid')
       },function(data){
         if(data.status == '1') {
-          attention_btn.html('<i>+</i>关注');
+          attention_btn.html('<i class="hs-icon"></i>关注');
           attention_btn.removeClass('active');
           $.toast(data.info);
         } else {
@@ -96,26 +107,15 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     dialog_reward.hide();
   });
   dialog_reward.on('click','.submit',function(){
+    var _this = $(this);
 
-    var reward_data = {
-      id:$(this).data('id'),
-      uid:$(this).data('uid'),
-      title:$(this).data('title'),
-      total_fee:parseInt(dialog_reward.find('input').val()),
-      type:$(this).data('type'),
-      username:$(this).data('username')
-    };
     if(dialog_reward.find('input').val() >= 1){
       $.ajax({
         type: 'POST',
         url: '/index.php?g=restful&m=HsOrder&a=add',
         data: {
-          'order[object_id]': reward_data.id,
-          'order[object_owner_id]': reward_data.uid,
-          'order[object_title]': reward_data.title,
-          'order[counts]': 1,
-          'order[price]': reward_data.total_fee,
-          'order[total_fee]': reward_data.total_fee,
+          'order[object_id]': _this.data('id'),
+          'order[counts]': parseInt(dialog_reward.find('input').val()),
           'order[type]': 0,
           'order[payment_type]': 0,
           'order[attach]': '打赏'
@@ -127,10 +127,9 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
             dialog_reward.hide();
             $.showPreloader();
             var ok_url = GV.pay_url+'hsadmire.php?order_number=' + data.order_number +
-            '&total_fee=' + reward_data.total_feey +
-            '&object_id=' + reward_data.id +
-            '&goods_type=' + reward_data.type +
-            '&seller_username=' + reward_data.username;;
+            '&object_id=' + _this.data('id') +
+            '&quantity=' + parseInt(dialog_reward.find('input').val()) +
+            '&seller_username=' + _this.data('username');
             setTimeout(function() {
               $.hidePreloader();
               window.location.href = ok_url;
@@ -147,6 +146,40 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       $.toast('😐 必须是整数');
       dialog_reward.find('input').trigger('focus');
     }
+  });
+  // 发送私信
+  var dialog_chat = $('.dialog_chat');
+  $('.chat_btn').on('click',function(){
+    dialog_chat.find('textarea').val('');
+    dialog_chat.show();
+  });
+
+  dialog_chat.on('click','.submit',function(){
+    var _this = $(this);
+    if(!dialog_chat.find('textarea').val().length) {
+      $.toast('私信内容不能为空');
+    } else if (esc.find(dialog_chat.find('textarea').val()).length) {
+      dialog_chat.hide();
+      $.toast('🚔 我要报警了');
+    } else {
+      $.post('/index.php?g=restful&m=HsMessage&a=send',{
+        to_uid:_this.data('touid'),
+        content_type:0,
+        content:dialog_chat.find('textarea').val()
+      },function(data){
+        if(data.status == 1) {
+          dialog_chat.hide();
+          dialog_chat.find('textarea').val('');
+          $.toast('私信成功');
+        } else {
+          $.toast(data.info);
+        }
+      })
+    }
+  })
+  // 关闭按钮
+  dialog_chat.on('click','.ui-dialog-close',function(){
+    dialog_chat.hide();
   });
   // 点赞
   var praise = $('.praise');
@@ -184,7 +217,6 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   });
   // 更多按钮
   var praise_more_tpl = handlebars.compile($("#praise_more_tpl").html());
-  // var praise_more_tpl = '<li><button type="button" class="praise_more">更多</button></li>';
   $('.store-show .praise ul li').each(function(index,item){
     if(index <= 7) {
       $('.store-show .praise ul').height('1.32rem');
@@ -194,6 +226,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       $('.store-show .praise ul').height('2.64rem');
     }
   });
+  // 显示更多点赞列表
   $('.praise_more').live('click',function(){
     $('.praise_more').parent().remove();
     if($(this).hasClass('active')) {
@@ -205,7 +238,6 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       $('.store-show .praise ul').height('auto');
       $('.store-show .praise ul').append(praise_more_tpl('回收'));
       $('.praise_more').addClass('active');
-      // $('.praise_more').text('回收');
     }
   });
   // 评论加载更多
@@ -226,6 +258,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       return options.inverse(this);
     }
   });
+  // 请求加载评论方法
   function add_data() {
     $.ajax({
       type: 'GET',
@@ -267,11 +300,15 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         }
       });
   }
+  // 控制下拉加载评论
   page.on('infinite', function(){
     if (loading ) return;
     // 设置flag
     loading = true;
-    // 模拟1s的加载过程
+    // 如果当前页面加载过。直接加载最后的cid
+    if(comment_bd.find('li').length){
+      cur_cid = comment_bd.find('li').last().data('id');
+    }
     setTimeout(function() {
       // 重置加载flag
       loading = false;
@@ -336,29 +373,20 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     dialog_comment.on('click','.submit', function() {
       dialog_comment.off('click','.submit');
       dialog_comment.find('button').attr('disabled','disabled');
-      // 过滤关键词
-      var text_list = [
-      '燃料',
-      '大麻',
-      '叶子',
-      '淘宝',
-      'taobao.com',
-      '共产党'
-      ];
-      esc.init(text_list);
       // 判断是否为空并且过滤关键词
       if(!comment_input.val().length){
         comment_input.attr('placeholder','😒 评论不能为空');
       } else if (esc.find(comment_input.val()).length) {
+        // 如果为空
         dialog_comment.hide();
         $.toast('🚔 我要报警了');
       } else {
         if(is_father) {
-
+          // 一级回复
           var post_data = {
             content:comment_input.val(),
             post_table:comment.data('table'),
-            post_id:comment.data('id'),
+            post_id:id,
             to_uid:0,
             parentid:0,
             type:type,
@@ -430,6 +458,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
           },
           error: function(xhr, type){
             $.toast('网络错误 code:'+xhr);
+            uploader.reset();
             dialog_comment.hide();
           }
         });
@@ -484,8 +513,9 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
     // 上传出错
     uploader.onUploadError = function(file,reason) {
-     $.toast(reason);
-   }
+      uploader.reset();
+      $.toast(reason);
+    }
     // 当图片初始化
     uploader.onReset = function(){
       image_list.before('<div class="updata_image_btn"><button type="button" class="hs-icon"></button><input type="file" name="file" class="webuploader-element-invisible" accept="image/*" single></div>');
@@ -503,6 +533,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       } else if(type == 'Q_TYPE_DENIED') {
         $.toast('兄弟必须是图片');
       }
+      uploader.reset();
     }
     // 删除图片按钮
     image_list.on('click','.close',function(){

@@ -1,5 +1,5 @@
 .center {
-  height: 100%;
+
   .hs-main {
     padding-top: 0;
     background-color: #fff;
@@ -36,7 +36,7 @@
       .font-dpr(14px);
       color: #fff;
       background: none;
-      border: 0.013333rem solid #fff;
+      border: 1px solid #fff;
       padding: 0 0.3rem;
       display: block;
       width: 2.5rem;
@@ -98,17 +98,31 @@
             .hs-cf;
             color: #000;
             i {
+              font-style: normal;
               display: inline-block;
               margin-left: 0.266667rem;
               margin-right: 0.293333rem;
+              .font-dpr(24px);
+              .font-line-height(24px);
+              &.activate:before {
+                content: "\e601";
+              }
+              &.bought:before {
+                content: "\e60b";
+              }
+              &.untreated:before {
+                content: "\e60c";
+              }
             }
             &:after {
+              .hs-icon;
               position: absolute;
-              content: ">";
+              content: "\e605";
               right: 0.506667rem;
               color: #6f6f6f;
               top: 0;
-              font-size: 16px;
+              .font-dpr(18px);
+              .font-line-height(18px);
             }
           }
           &:last-child {
