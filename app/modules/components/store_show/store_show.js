@@ -108,7 +108,6 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   });
   dialog_reward.on('click','.submit',function(){
     var _this = $(this);
-
     if(dialog_reward.find('input').val() >= 1){
       $.ajax({
         type: 'POST',
@@ -149,6 +148,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   });
   // 发送私信
   var dialog_chat = $('.dialog_chat');
+  var image_list = dialog_chat.find('.image_list');
   $('.chat_btn').on('click',function(){
     dialog_chat.find('textarea').val('');
     dialog_chat.show();
@@ -156,16 +156,26 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
 
   dialog_chat.on('click','.submit',function(){
     var _this = $(this);
-    if(!dialog_chat.find('textarea').val().length) {
+    var content;
+    var content_type;
+    if(dialog_chat.find('textarea').val().length) {
+      content = dialog_chat.find('textarea').val().length;
+      content_type = 0;
+    } else {
+      content = dialog_chat.find('textarea').attr('data-imgurl');
+      content_type = 1;
+    }
+
+    if(!content) {
       $.toast('私信内容不能为空');
-    } else if (esc.find(dialog_chat.find('textarea').val()).length) {
+    } else if (esc.find(content).length) {
       dialog_chat.hide();
       $.toast('🚔 我要报警了');
     } else {
       $.post('/index.php?g=restful&m=HsMessage&a=send',{
         to_uid:_this.data('touid'),
-        content_type:0,
-        content:dialog_chat.find('textarea').val()
+        content_type:content_type,
+        content:content
       },function(data){
         if(data.status == 1) {
           dialog_chat.hide();
@@ -174,12 +184,102 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         } else {
           $.toast(data.info);
         }
+        chat_uploader.reset();
       })
     }
   })
+
+  // 上传图片
+
+  var chat_uploader = WebUploader.create({
+    fileNumLimit: 1,
+    // 自动上传。
+    auto: true,
+    // 文件接收服务端。
+    server: '/index.php?g=api&m=HsFileupload&a=upload',
+    // 二进制上传
+    sendAsBinary: true,
+    // 只允许选择文件，可选。
+    accept: {
+      title: 'Images',
+      extensions: 'gif,jpg,jpeg,bmp,png,webp',
+      mimeTypes: 'image/*'
+    }
+  });
+  // 监听input file是否有文件添加进来
+  dialog_chat.on("change",'.webuploader-element-invisible', function(e) {
+    chat_uploader.addFiles(e.target.files);
+    chat_uploader.upload();
+  });
+  // 图片列队
+  chat_uploader.onFileQueued = function(file){
+    // 控制提交按钮
+    dialog_chat.find('.ui-dialog-close').attr('disabled','disabled');
+    dialog_chat.find('.submit').attr('disabled','disabled');
+    dialog_chat.find('.updata_image_btn').hide();
+    // 控制回复框
+    dialog_chat.find('textarea').attr('disabled','disabled');
+    dialog_chat.find('textarea').attr('placeholder','图片和文字二选一！')
+    // 生成缩略图
+    chat_uploader.makeThumb(file,function(error,ret){
+      image_list.empty();
+      if(error){
+        image_list.html('预览错误');
+      } else {
+        image_list.append('<img src="'+ret+'" />');
+      }
+    });
+  }
+  // 上传成功
+  chat_uploader.onUploadSuccess = function(file,response) {
+    // 添加关闭按钮
+    image_list.append('<button class="close" data-id="'+file.id+'"></button>');
+    // 恢复提交按钮
+    dialog_chat.find('.ui-dialog-close').removeAttr('disabled','disabled');
+    dialog_chat.find('.submit').removeAttr('disabled','disabled');
+    // 消除进度条
+    image_list.find('.progress').remove();
+    // 删除上传框
+    dialog_chat.find('.updata_image_btn').remove();
+    dialog_chat.find('textarea').attr('data-imgurl',response.data);
+  }
+  image_list.on('click','.close',function(){
+    chat_uploader.reset();
+  });
+  // 控制进度条
+  chat_uploader.onUploadProgress = function(file,percentage) {
+    image_list.append('<div class="progress"><span></span></div>');
+    image_list.find('.progress span').css('width', percentage * 100 + '%');
+  }
+  // 上传出错
+  chat_uploader.onUploadError = function(file,reason) {
+    chat_uploader.reset();
+    $.toast(reason);
+  }
+  // 当图片初始化
+  chat_uploader.onReset = function(){
+    image_list.before('<div class="updata_image_btn"><button type="button" class="hs-icon"></button><input type="file" name="file" class="webuploader-element-invisible" accept="image/*" single></div>');
+    image_list.empty();
+    dialog_chat.find('textarea').removeAttr('disabled');
+    dialog_chat.find('textarea').removeAttr('data-imgurl');
+    dialog_chat.find('textarea').attr('placeholder','回复')
+  }
+  // 选择时文件出错
+  chat_uploader.onError = function(type){
+    if(type == 'Q_EXCEED_NUM_LIMIT'){
+      $.toast('最多可上传1张');
+    } else if(type == 'Q_EXCEED_SIZE_LIMIT') {
+      $.toast('太大了，不让传');
+    } else if(type == 'Q_TYPE_DENIED') {
+      $.toast('兄弟必须是图片');
+    }
+    chat_uploader.reset();
+  }
+
   // 关闭按钮
   dialog_chat.on('click','.ui-dialog-close',function(){
     dialog_chat.hide();
+    chat_uploader.reset();
   });
   // 点赞
   var praise = $('.praise');
