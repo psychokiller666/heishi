@@ -14,7 +14,7 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
     title: '黑市 | 美好而操蛋的东西',
     desc: '这里能让好事自然发生',
     link: GV.HOST+location.pathname,
-    img: 'http://hs.ontheroadstore.com/tpl/simplebootx_mobile/Public/i/logo.png'
+    img: '/tpl/simplebootx_mobile/Public/i/logo.png'
   };
   init.wx_share(share_data);
   // 检查是否有新的消息
@@ -26,10 +26,10 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
     search_box.find('input').trigger('focus');
     search_box.on('click','button',function(){
       search_box.off('click','button');
-      if(search_box.find('input').val().length){
+      if(!search_box.find('input').val().length){
         search_box.hide();
       } else {
-        window.location.href = '/index.php?g=portal&m=HsSearch&keyword='+serialize(search_box.find('input').val());
+        window.location.href = '/index.php?g=portal&m=HsSearch&keyword='+search_box.find('input').val();
       }
     });
     search_box.on('click',function(e){
