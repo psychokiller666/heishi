@@ -5,6 +5,8 @@ var wx = require('weixin-js-sdk');
 var handlebars = require('../../../../node_modules/handlebars/dist/handlebars.min.js');
 // 过滤关键词
 var esc = require('../../../../node_modules/chn-escape/escape.js');
+// 百度上传组件
+var WebUploader = require('../../../../node_modules/tb-webuploader/dist/webuploader.min.js');
 // 初始化
 var common = require('../common/common.js');
 
@@ -22,15 +24,107 @@ $(document).on('pageInit','.detail', function (e, id, page) {
   var chat_content = $('.chat_content');
   var chat_footer = $('.chat-footer');
   var chat_reply_tpl = handlebars.compile($("#chat_reply_tpl").html());
+  var image_list = update_img_box.find('.image_list');
+
+  var uploader = WebUploader.create({
+    fileNumLimit: 1,
+    // 自动上传。
+    auto: true,
+    // 文件接收服务端。
+    server: '/index.php?g=api&m=HsFileupload&a=upload',
+    // 二进制上传
+    sendAsBinary: true,
+    // 只允许选择文件，可选。
+    accept: {
+      title: 'Images',
+      extensions: 'gif,jpg,jpeg,bmp,png,webp',
+      mimeTypes: 'image/*'
+    }
+  });
   // 上传图片
   update_img_btn.on('click',function(e) {
     if(!$(this).hasClass('active')){
       $(this).addClass('active');
       update_img_box.show();
+
     } else {
       $(this).removeClass('active');
       update_img_box.hide();
     }
+  })
+  // 监听input file是否有文件添加进来
+  update_img_box.on("change",'.webuploader-element-invisible', function(e) {
+    uploader.addFiles(e.target.files);
+  });
+  // 图片列队
+  uploader.onFileQueued = function(file){
+    // 控制回复按钮
+    update_img_box.find('.cancel').attr('disabled','disabled');
+    update_img_box.find('.submit').attr('disabled','disabled');
+    // 控制回复框
+    comment_input.hide();
+    // 生成缩略图
+    uploader.makeThumb(file,function(error,ret){
+      image_list.empty();
+      if(error){
+        image_list.html('预览错误');
+      } else {
+        image_list.append('<img src="'+ret+'" />');
+      }
+    });
+  }
+  // 上传成功
+  uploader.onUploadSuccess = function(file,response) {
+    // 添加关闭按钮
+    image_list.append('<button class="close" data-id="'+file.id+'">取消</button>');
+    // 恢复提交按钮
+    update_img_box.find('.cancel').removeAttr('disabled','disabled');
+    update_img_box.find('.submit').removeAttr('disabled','disabled');
+    // 消除进度条
+    image_list.find('.progress').remove();
+    // 删除上传框
+    update_img_box.find('.image .updata_image_btn').remove();
+    // type状态等于4
+    type = 4;
+    if(response.status == 1) {
+     chat_content.val(response.data);
+   } else {
+     $.toast(response.info);
+   }
+ }
+  // 控制进度条
+  uploader.onUploadProgress = function(file,percentage) {
+    image_list.append('<div class="progress"><span></span></div>');
+    image_list.find('.progress span').css('width', percentage * 100 + '%');
+  }
+  // 上传出错
+  uploader.onUploadError = function(file,reason) {
+    uploader.reset();
+    $.toast(reason);
+  }
+  // 当图片初始化
+  uploader.onReset = function(){
+    image_list.before('<div class="updata_image_btn"><button type="button" class="hs-icon"></button><input type="file" name="file" class="webuploader-element-invisible" accept="image/*" single></div>');
+    image.find('.image_list').empty();
+    chat_content.val('');
+    chat_content.show();
+    type = 0;
+  }
+  // 选择时文件出错
+  uploader.onError = function(type){
+    if(type == 'Q_EXCEED_NUM_LIMIT'){
+      $.toast('最多可上传1张');
+    } else if(type == 'Q_EXCEED_SIZE_LIMIT') {
+      $.toast('太大了，不让传');
+    } else if(type == 'Q_TYPE_DENIED') {
+      $.toast('兄弟必须是图片');
+    }
+    uploader.reset();
+  }
+  // 删除图片按钮
+  image_list.on('click','.close',function(){
+    chat_content.removeAttr('disabled');
+    uploader.reset();
   })
   // 输入框得到焦点时
   chat_content.on('focus',function(){
