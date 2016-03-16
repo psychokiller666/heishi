@@ -28,7 +28,8 @@ $(document).on('pageInit','.seller_list', function(e, id, page){
 
   // 上拉加载更多
   var loading = false;
-  var pages = 2;
+  var page_number = 2;
+  var pages;
   var seller_list_tpl = handlebars.compile($("#seller_list_tpl").html());
   // 加入判断方法
   handlebars.registerHelper('eq', function(v1, v2, options) {
@@ -40,27 +41,23 @@ $(document).on('pageInit','.seller_list', function(e, id, page){
   });
 
   // 添加数据
-  function add_data(page_number){
+  function add_data(){
     $.ajax({
       type: 'POST',
       url: '/index.php?g=user&m=HsFellows&a=ajax_fellows_activate',
       data: {
-        page: pages
+        page: page_number
       },
       dataType: 'json',
       timeout: 4000,
       success: function(data){
-        if(pages >= data.pages+3){
-          $.toast(data.info);
-          // 加载完毕，则注销无限加载事件，以防不必要的加载
-          $.destroyPullToRefresh($('.pull-to-refresh-content'));
-          $.pullToRefreshDone('.pull-to-refresh-content');
-          // 删除加载提示符
-          $('.pull-to-refresh-layer').remove();
-        } else if(data.status == 1){
+        if(data.status == 1){
           seller_list_bd.find('ul').prepend(seller_list_tpl(data));
-          pages++;
+          page_number++;
+          pages = data.pages;
           init.loadimg();
+        } else {
+          $.toast(data.info);
         }
         $.pullToRefreshDone('.pull-to-refresh-content');
         $.refreshScroller();
@@ -79,7 +76,16 @@ $(document).on('pageInit','.seller_list', function(e, id, page){
     setTimeout(function() {
       // 重置加载flag
       loading = false;
-      add_data(pages);
+      if(page_number >= pages){
+        // 加载完毕，则注销无限加载事件，以防不必要的加载
+        $.destroyPullToRefresh($('.pull-to-refresh-content'));
+        $.pullToRefreshDone('.pull-to-refresh-content');
+        // 删除加载提示符
+        $('.pull-to-refresh-layer').remove();
+        $.toast('没有更多内容了');
+        return false;
+      }
+      add_data(page_number);
     }, 500);
   });
 });

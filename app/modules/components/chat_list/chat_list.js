@@ -96,6 +96,7 @@ $(document).on('pageInit','.detail', function (e, id, page) {
   var recent_tpl = handlebars.compile($("#recent_tpl").html());
   var recent_btn = $('.recent_btn');
   recent_btn.on('click',function(e) {
+    var _this = $(this);
     if(!$(this).hasClass('active')){
       $(this).addClass('active');
       $.ajax({
@@ -114,6 +115,8 @@ $(document).on('pageInit','.detail', function (e, id, page) {
             chat_header_bd.css('background-color','#ededed');
           } else {
             $.toast(data.info);
+            recent_btn.off('click');
+            _this.remove();
           }
         },
         error: function(xhr, type){
