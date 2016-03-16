@@ -14,6 +14,16 @@
     }
     .recent_btn {
       float: right;
+      .font-dpr(22px);
+      background: none;
+      border: none;
+      &:before {
+        content: "\e61a";
+      }
+      &.active:before {
+        color: #68be8d;
+        content: "\e619";
+      }
     }
     .recent_box {
       padding: 0.31rem 0.48rem;
