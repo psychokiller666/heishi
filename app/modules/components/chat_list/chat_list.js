@@ -25,6 +25,7 @@ $(document).on('pageInit','.detail', function (e, id, page) {
   var chat_footer = $('.chat-footer');
   var chat_reply_tpl = handlebars.compile($("#chat_reply_tpl").html());
   var image_list = update_img_box.find('.image_list');
+  var chat_footer_bd = $('.chat-footer-bd');
 
   var uploader = WebUploader.create({
     fileNumLimit: 1,
@@ -46,10 +47,11 @@ $(document).on('pageInit','.detail', function (e, id, page) {
     if(!$(this).hasClass('active')){
       $(this).addClass('active');
       update_img_box.show();
-
     } else {
       $(this).removeClass('active');
       update_img_box.hide();
+      // 上传初始化
+      uploader.reset();
     }
   })
   // 监听input file是否有文件添加进来
@@ -59,10 +61,11 @@ $(document).on('pageInit','.detail', function (e, id, page) {
   // 图片列队
   uploader.onFileQueued = function(file){
     // 控制回复按钮
-    update_img_box.find('.cancel').attr('disabled','disabled');
-    update_img_box.find('.submit').attr('disabled','disabled');
+    chat_footer_bd.find('button').attr('disabled','disabled');
+    update_img_box.find('.updata_image_btn').hide();
     // 控制回复框
-    comment_input.hide();
+    chat_content.attr('disabled','disabled');
+    chat_content.val('').attr('placeholder','文字和图片只能选一个');
     // 生成缩略图
     uploader.makeThumb(file,function(error,ret){
       image_list.empty();
@@ -76,19 +79,17 @@ $(document).on('pageInit','.detail', function (e, id, page) {
   // 上传成功
   uploader.onUploadSuccess = function(file,response) {
     // 添加关闭按钮
-    image_list.append('<button class="close" data-id="'+file.id+'">取消</button>');
+    image_list.append('<button class="close" data-id="'+file.id+'"></button>');
     // 恢复提交按钮
-    update_img_box.find('.cancel').removeAttr('disabled','disabled');
-    update_img_box.find('.submit').removeAttr('disabled','disabled');
+    chat_footer_bd.find('button').removeAttr('disabled','disabled');
     // 消除进度条
     image_list.find('.progress').remove();
     // 删除上传框
-    update_img_box.find('.image .updata_image_btn').remove();
+    update_img_box.find('.updata_image_btn').remove();
     // type状态等于4
-    type = 4;
     if(response.status == 1) {
-     chat_content.val(response.data);
-   } else {
+      image_list.attr('data-imgurl',response.data);
+    } else {
      $.toast(response.info);
    }
  }
@@ -104,11 +105,12 @@ $(document).on('pageInit','.detail', function (e, id, page) {
   }
   // 当图片初始化
   uploader.onReset = function(){
-    image_list.before('<div class="updata_image_btn"><button type="button" class="hs-icon"></button><input type="file" name="file" class="webuploader-element-invisible" accept="image/*" single></div>');
-    image.find('.image_list').empty();
-    chat_content.val('');
+    image_list.before('<div class="updata_image_btn"><button type="button"></button><input type="file" name="file" class="webuploader-element-invisible" accept="image/*" single></div>');
+    image_list.empty();
+    image_list.removeAttr('data-imgurl');
+    chat_content.val('').attr('placeholder','回复');
+    chat_content.removeAttr('disabled');
     chat_content.show();
-    type = 0;
   }
   // 选择时文件出错
   uploader.onError = function(type){
@@ -123,7 +125,6 @@ $(document).on('pageInit','.detail', function (e, id, page) {
   }
   // 删除图片按钮
   image_list.on('click','.close',function(){
-    chat_content.removeAttr('disabled');
     uploader.reset();
   })
   // 输入框得到焦点时
@@ -143,23 +144,31 @@ $(document).on('pageInit','.detail', function (e, id, page) {
     '共产党'
     ];
     esc.init(text_list);
-
-    if(!chat_content.val().length){
+    var content;
+    var content_type;
+    if(image_list.attr('data-imgurl')){
+      content = image_list.attr('data-imgurl');
+      content_type = 1;
+    } else {
+      content = chat_content.val();
+      content_type = 2;
+    }
+    if(!content){
       chat_content.attr('placeholder','😒 内容不能为空');
     } else if (esc.find(chat_content.val()).length) {
       $.toast('🚔 我要报警了');
     } else {
       var reply_data = {
-        content_type: 0,
-        content: chat_content.val()
+        content_type: content_type,
+        content: content
       }
       $.ajax({
         type: 'POST',
         url: '/index.php?g=restful&m=HsMessage&a=send',
         data: {
           to_uid: $(this).data('touid'),
-          content_type: 0,
-          content: chat_content.val()
+          content_type: reply_data.content_type,
+          content: reply_data.content
         },
         dataType: 'json',
         timeout: 4000,
@@ -167,7 +176,11 @@ $(document).on('pageInit','.detail', function (e, id, page) {
           if(data.status == 1){
             chat_list.find('ul').append(chat_reply_tpl(reply_data));
             $.toast('🌚 发送成功');
+            init.loadimg();
             $('.content').scrollTop(9999999);
+            update_img_btn.removeClass('active');
+            update_img_box.hide();
+            uploader.reset();
           } else {
             $.toast(data.info);
           }
@@ -212,6 +225,7 @@ $(document).on('pageInit','.detail', function (e, id, page) {
             recent_btn.off('click');
             _this.remove();
           }
+
         },
         error: function(xhr, type){
           $.toast('网络错误 code:'+xhr);
@@ -228,7 +242,7 @@ $(document).on('pageInit','.detail', function (e, id, page) {
   // 上拉加载更多
   var loading = false;
   // 初始化下拉
-  var page_number = 1;
+  var page_number = 0;
   var chat_tpl = handlebars.compile($("#chat_tpl").html());
   // 增加handlebars判断
   handlebars.registerHelper('eq', function(v1, v2, options) {
@@ -259,19 +273,24 @@ $(document).on('pageInit','.detail', function (e, id, page) {
       dataType: 'json',
       timeout: 4000,
       success: function(data){
-        if(page_number >= data.total){
-          // 加载完毕，则注销无限加载事件，以防不必要的加载
-          $.destroyPullToRefresh($('.pull-to-refresh-content'));
-          $.pullToRefreshDone('.pull-to-refresh-content');
-          // 删除加载提示符
-          $('.pull-to-refresh-layer').remove();
-          $.toast('😒 没有更多了');
-        } else {
+        if(data.status == 1){
+          if(page_number >= data.pages){
+            // 加载完毕，则注销无限加载事件，以防不必要的加载
+            $.destroyPullToRefresh($('.pull-to-refresh-content'));
+            $.pullToRefreshDone('.pull-to-refresh-content');
+            // 删除加载提示符
+            $('.pull-to-refresh-layer').remove();
+            $.toast('😒 没有更多了');
+            return false;
+          }
           chat_list.find('ul').prepend(chat_tpl(data.data));
           page_number++;
           init.loadimg();
           $.pullToRefreshDone('.pull-to-refresh-content');
+        } else {
+          $.toast(data.info);
         }
+
       },
       error: function(xhr, type){
         $.toast('网络错误 code:'+xhr);
