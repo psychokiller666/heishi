@@ -242,7 +242,7 @@ $(document).on('pageInit','.detail', function (e, id, page) {
   // 上拉加载更多
   var loading = false;
   // 初始化下拉
-  var page_number = 0;
+  var page_number = 1;
   var chat_tpl = handlebars.compile($("#chat_tpl").html());
   // 增加handlebars判断
   handlebars.registerHelper('eq', function(v1, v2, options) {
@@ -263,6 +263,7 @@ $(document).on('pageInit','.detail', function (e, id, page) {
   });
   // 增加数据
   function add_data(pages){
+
     $.ajax({
       type: 'POST',
       url: '/index.php?g=user&m=HsMessage&a=ajax_details',
@@ -284,6 +285,21 @@ $(document).on('pageInit','.detail', function (e, id, page) {
             return false;
           }
           chat_list.find('ul').prepend(chat_tpl(data.data));
+          // 初始化加载
+          console.log(page_number);
+          if(page_number == 1){
+            $.refreshScroller();
+            $('.content').scrollTop($('.content ul').height());
+          }
+          if($('.content').height() > $('.content ul').height()){
+            // 加载完毕，则注销无限加载事件，以防不必要的加载
+            $.destroyPullToRefresh($('.pull-to-refresh-content'));
+            $.pullToRefreshDone('.pull-to-refresh-content');
+            // 删除加载提示符
+            $('.pull-to-refresh-layer').remove();
+            return false;
+          }
+
           page_number++;
           init.loadimg();
           $.pullToRefreshDone('.pull-to-refresh-content');
@@ -299,11 +315,7 @@ $(document).on('pageInit','.detail', function (e, id, page) {
   }
   // 初始化1页数据
   add_data(page_number);
-  // 移动到底部
-  $.refreshScroller();
-  setTimeout(function(){
-    $('.content').scrollTop($('.content ul').height());
-  },1000);
+
   // 监听下拉
   page.on('refresh', '.pull-to-refresh-content',function(e) {
    if (loading ) return;
@@ -313,7 +325,6 @@ $(document).on('pageInit','.detail', function (e, id, page) {
       // 重置加载flag
       loading = false;
       // 添加数据
-      console.log(page_number);
       add_data(page_number);
       $.refreshScroller();
     }, 500);

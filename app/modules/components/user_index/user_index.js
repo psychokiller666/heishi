@@ -25,30 +25,78 @@ $(document).on('pageInit','.center', function(e, id, page){
   })
   // 别人的个人中心
   var store_list = $('.store_list');
+  var attention_btn = $('.attention-btn');
   if(store_list.length){
-    if(store_list.find('li').length <= 19) {
-      $('.infinite-scroll-preloader').remove();
-    } else {
-      var loading = false;
-      var page_num = 2;
-      var pages;
-      var page_size = 20;
-      var post_id = store_list.data('id');
-      var store_list_tpl = handlebars.compile($("#store_list_tpl").html());
-      function add_data(page_size,page) {
-        $.ajax({
-          type: 'POST',
-          url: '/index.php?g=User&m=index&a=ajax_more_articles',
-          data: {
-            id:post_id,
-            page:page_num,
-            page_size:page_size
-          },
-          dataType: 'json',
-          timeout: 4000,
-          success: function(data){
-            if(data.status == 1){
-              store_list.find('ul').append(store_list_tpl(data.data));
+    // 检查是否关注
+    if(attention_btn.length){
+      $.post('/index.php?g=user&m=HsFellows&a=ajax_relations',{
+        my_uid:attention_btn.data('myuid'),
+        other_uid:attention_btn.data('id')
+      },function(data){
+        if(data.relations == '2' || data.relations == '3') {
+          attention_btn.addClass('active');
+          attention_btn.text('取消关注');
+        } else if(data.relations == '1' || data.relations == '0') {
+          attention_btn.removeClass('active');
+          attention_btn.html('关注');
+        }
+      });
+    // 操作关注 & 取消关注
+    attention_btn.on('click',function(){
+
+      if($(this).hasClass('active')){
+        // 取消关注
+        $.post('/index.php?g=user&m=HsFellows&a=ajax_cancel',{
+          uid:$(this).data('id')
+        },function(data){
+          if(data.status == '1') {
+            attention_btn.text('关注');
+            attention_btn.removeClass('active');
+            $.toast(data.info);
+          } else {
+            $.toast(data.info);
+          }
+        });
+      } else {
+        // 关注
+        $.post('/index.php?g=user&m=HsFellows&a=ajax_add',{
+          uid:$(this).data('id')
+        },function(data){
+          if(data.status == '1') {
+            attention_btn.text('取消关注');
+            attention_btn.addClass('active');
+            $.toast(data.info);
+          } else {
+            $.toast(data.info);
+          }
+        });
+      }
+    });
+  }
+
+  if(store_list.find('li').length <= 19) {
+    $('.infinite-scroll-preloader').remove();
+  } else {
+    var loading = false;
+    var page_num = 2;
+    var pages;
+    var page_size = 20;
+    var post_id = store_list.data('id');
+    var store_list_tpl = handlebars.compile($("#store_list_tpl").html());
+    function add_data(page_size,page) {
+      $.ajax({
+        type: 'POST',
+        url: '/index.php?g=User&m=index&a=ajax_more_articles',
+        data: {
+          id:post_id,
+          page:page_num,
+          page_size:page_size
+        },
+        dataType: 'json',
+        timeout: 4000,
+        success: function(data){
+          if(data.status == 1){
+            store_list.find('ul').append(store_list_tpl(data.data));
               // 更新最后加载的序号
               pages = data.pages;
               page_num++;
@@ -63,7 +111,7 @@ $(document).on('pageInit','.center', function(e, id, page){
             $.toast('网络错误 code:'+type);
           }
         });
-      }
+    }
       // 监听滚动
       page.on('infinite', function() {
       // 如果正在加载，则退出
