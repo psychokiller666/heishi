@@ -1,6 +1,7 @@
 // 页面初始化
 // 图片延时加载
 var Layzr = require('../../../../node_modules/layzr.js/dist/layzr.js');
+
 // 微信sdk
 var wx = require('weixin-js-sdk');
 
@@ -26,14 +27,12 @@ var common = function(page){
   console.log(page,'页面初始化');
   // 图片加载
   var layzr = new Layzr({
-    threshold: 10000,
+    threshold: 0,
   });
 };
 // 图片延时加载
 common.prototype.loadimg = function(){
-  var layzr = new Layzr({
-    threshold: 10000,
-  });
+  var layzr = new Layzr();
   layzr.update();
 }
 // 检测新消息

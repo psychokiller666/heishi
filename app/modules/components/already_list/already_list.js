@@ -33,6 +33,22 @@ $(document).on('pageInit','.untreated', function (e, id, page) {
       return options.inverse(this);
     }
   });
+  // 搜索
+  var already_search_btn = $('.already_search_btn');
+  var already_search_box = $('.already_search_box');
+
+  already_search_btn.on('click',function(){
+    var _this = $(this);
+    if(_this.hasClass('active')){
+      _this.removeClass('active');
+      already_search_box.hide();
+    } else {
+      _this.addClass('active');
+      already_search_box.show();
+      already_search_box.find('input').trigger('focus');
+    }
+    $('.hs-main').css('top',$('.already_header').height());
+  })
   // 添加数据
   function add_data(page_size,page) {
     $.ajax({
