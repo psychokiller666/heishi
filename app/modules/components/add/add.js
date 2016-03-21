@@ -295,10 +295,11 @@ $(document).on('pageInit','.add', function (e, id, page) {
         timeout: 5000,
         success: function(data){
           if(data.status == 1) {
+            submit_btn.attr('disabled','disabled');
             $.toast(data.info+'2秒后自动跳转，等待审核');
             setTimeout(function(){
               window.location.href = data.url;
-            },2000)
+            },2000);
           } else {
             $.toast(data.info);
           }
@@ -311,5 +312,4 @@ $(document).on('pageInit','.add', function (e, id, page) {
   })
 
 });
-$.init();
 
