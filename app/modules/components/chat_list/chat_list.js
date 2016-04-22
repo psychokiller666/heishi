@@ -50,9 +50,10 @@ $(document).on('pageInit','.detail', function (e, id, page) {
     } else {
       $(this).removeClass('active');
       update_img_box.hide();
-      // 上传初始化
-      uploader.reset();
+
     }
+    // 上传初始化
+    uploader.reset();
   })
   // 监听input file是否有文件添加进来
   update_img_box.on("change",'.webuploader-element-invisible', function(e) {
@@ -105,7 +106,8 @@ $(document).on('pageInit','.detail', function (e, id, page) {
   }
   // 当图片初始化
   uploader.onReset = function(){
-    image_list.before('<div class="updata_image_btn"><button type="button"></button><input type="file" name="file" class="webuploader-element-invisible" accept="image/*" single></div>');
+    update_img_box.find('.updata_image_btn').remove();
+    image_list.before('<div class="updata_image_btn"><button class="hs-icon" type="button"></button><input type="file" name="file" class="webuploader-element-invisible" accept="image/*" single></div>');
     image_list.empty();
     image_list.removeAttr('data-imgurl');
     chat_content.val('').attr('placeholder','回复');
@@ -176,11 +178,11 @@ $(document).on('pageInit','.detail', function (e, id, page) {
           if(data.status == 1){
             chat_list.find('ul').append(chat_reply_tpl(reply_data));
             $.toast('🌚 发送成功');
-            init.loadimg();
             $('.content').scrollTop(9999999);
             update_img_btn.removeClass('active');
             update_img_box.hide();
             uploader.reset();
+            init.loadimg();
           } else {
             $.toast(data.info);
           }
@@ -261,6 +263,13 @@ $(document).on('pageInit','.detail', function (e, id, page) {
     }
     return v2;
   });
+  handlebars.registerHelper("chat_avatar", function(v1, options) {
+    if (v1 == chat_list.data('owner')) {
+      return options.fn(this);
+    } else {
+      return options.inverse(this);
+    }
+  });
   // 增加数据
   function add_data(pages){
 
@@ -275,18 +284,19 @@ $(document).on('pageInit','.detail', function (e, id, page) {
       timeout: 4000,
       success: function(data){
         if(data.status == 1){
-          if(page_number >= data.pages){
-            // 加载完毕，则注销无限加载事件，以防不必要的加载
-            $.destroyPullToRefresh($('.pull-to-refresh-content'));
-            $.pullToRefreshDone('.pull-to-refresh-content');
-            // 删除加载提示符
-            $('.pull-to-refresh-layer').remove();
-            $.toast('😒 没有更多了');
-            return false;
-          }
-          chat_list.find('ul').prepend(chat_tpl(data.data));
+          // if(page_number >= data.pages){
+          //   // 加载完毕，则注销无限加载事件，以防不必要的加载
+          //   $.destroyPullToRefresh($('.pull-to-refresh-content'));
+          //   $.pullToRefreshDone('.pull-to-refresh-content');
+          //   // 删除加载提示符
+          //   $('.pull-to-refresh-layer').remove();
+          //   $.toast('😒 没有更多了');
+          //   return false;
+          // }
+
           // 初始化加载
-          console.log(page_number);
+          chat_list.find('ul').prepend(chat_tpl(data.data));
+          init.loadimg();
           if(page_number == 1){
             $.refreshScroller();
             $('.content').scrollTop($('.content ul').height());
@@ -301,10 +311,15 @@ $(document).on('pageInit','.detail', function (e, id, page) {
           }
 
           page_number++;
-          init.loadimg();
+          // init.loadimg();
           $.pullToRefreshDone('.pull-to-refresh-content');
-        } else {
-          $.toast(data.info);
+        } else if(data.status == 0) {
+          // 加载完毕，则注销无限加载事件，以防不必要的加载
+          $.destroyPullToRefresh($('.pull-to-refresh-content'));
+          $.pullToRefreshDone('.pull-to-refresh-content');
+          // 删除加载提示符
+          $('.pull-to-refresh-layer').remove();
+          // $.toast('😒 没有更多了');
         }
 
       },

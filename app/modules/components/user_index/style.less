@@ -33,7 +33,6 @@
     .withdraw-btn {
       line-height: 0.82rem;
       margin-top: 0.46rem;
-      .font-dpr(14px);
       color: #fff;
       background: none;
       border: 1px solid #fff;
@@ -42,13 +41,33 @@
       width: 2.5rem;
       margin-left: auto;
       margin-right: auto;
+      // padding-left: .5rem;
+      // padding-right: .25rem;
+      // position: relative;
+      .font-dpr(14px);
+      strong {
+        height: .5rem;
+        line-height: .5rem;
+        .font-dpr(14px);
+      }
       i {
-        margin-right: 0.16rem;
-        border: 0.013333rem solid #fff;
-        padding: 0.04rem 0.16rem;
-        border-radius: 0.053333rem;
         font-style: normal;
-        .font-dpr(10px);
+        // width: .5rem;
+        height: .5rem;
+        line-height: .5rem;
+        .hs-icon;
+        &:after{
+          font-size: .5rem;
+          content: "\e60a";
+          // position: absolute;
+          // left: .42rem;
+        }
+        // margin-right: 0.16rem;
+        // border: 0.013333rem solid #fff;
+        // padding: 0.04rem 0.16rem;
+        // border-radius: 0.053333rem;
+        // font-style: normal;
+        // .font-dpr(10px);
       }
     }
   }
@@ -97,39 +116,54 @@
             position: relative;
             .hs-cf;
             color: #000;
-            i {
-              font-style: normal;
-              display: inline-block;
-              margin-left: 0.266667rem;
-              margin-right: 0.293333rem;
-              .font-dpr(24px);
-              .font-line-height(24px);
-              &.activate:before {
-                content: "\e614";
-              }
-              &.bought:before {
-                content: "\e60b";
-              }
-              &.untreated:before {
-                content: "\e60c";
-              }
+            .new {
+              position: relative;
             }
-            &:after {
-              .hs-icon;
-              position: absolute;
-              content: "\e605";
-              right: 0.506667rem;
-              color: #6f6f6f;
-              top: 0;
-              .font-dpr(18px);
-              .font-line-height(18px);
+            .new:after {
+             content: "";
+             width: .2rem;
+             height: .2rem;
+             border-radius: .3rem;
+             background-color: red;
+             position: absolute;
+             top: 50%;
+             right: 0;
+             margin-top: -.1rem;
+             margin-right: -.3rem;
+           }
+           i {
+            font-style: normal;
+            display: inline-block;
+            margin-left: 0.266667rem;
+            margin-right: 0.293333rem;
+            .font-dpr(20px);
+            line-height: 0;
+            &.activate:before {
+              content: "\e614";
+            }
+            &.bought:before {
+              content: "\e60b";
+            }
+            &.untreated:before {
+              content: "\e60c";
             }
           }
-          &:last-child {
-            border-bottom: none;
+          &:after {
+            .hs-icon;
+            position: absolute;
+            content: "\e605";
+            right: 0.506667rem;
+            color: #6f6f6f;
+            top: 0;
+            .font-dpr(18px);
+            .font-line-height(18px);
           }
+        }
+        &:last-child {
+          border-bottom: none;
         }
       }
     }
   }
+}
 }

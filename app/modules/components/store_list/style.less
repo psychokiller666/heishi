@@ -56,13 +56,19 @@
                        float: right;
                        span {
                            .font-dpr(13px);
+                           font-size: 13px;
                            text-align: left;
-                           margin-left: 0.28rem;
-                           .font-line-height(18px);
+                           margin-left: .28rem;
+                           position: relative;
+                           padding-left: .7rem;
+                           display: block;
+                           float: left;
+                           text-align: right;
                            i {
-                            margin-right: 0.14rem;
                             font-style: normal;
                             .font-dpr(18px);
+                            position: absolute;
+                            left: 0;
                             &.views:before {
                                 content: "\e60f";
                             }

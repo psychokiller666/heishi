@@ -42,6 +42,7 @@
     background-repeat: no-repeat;
     -webkit-background-size: cover;
     -webkit-border-radius: 2.666667rem;
+    background-image: url(../img/avater.png);
 }
 /* 字体 */
 .font-dpr(@font-size) {
@@ -71,7 +72,7 @@ input::-webkit-inner-spin-button {
 @import "../../../bower_components/SUI-Mobile/less/mixins.less";
 @import "../../../bower_components/SUI-Mobile/less/variables.less";
 @import "pull-to-refresh.less";
-@import "../../../bower_components/SUI-Mobile/less/pages.less";
+@import "pages.less";
 @import "infinite.less";
 @import "../../../bower_components/SUI-Mobile/less/preloader.less";
 
@@ -85,7 +86,52 @@ input::-webkit-inner-spin-button {
     position: absolute;
     top: 45%;
     .font-dpr(32px);
-    color: #333;
+    color: #a8a8a8;
     text-align: center;
     width: 10rem;
+}
+a:hover {
+    text-decoration: none;
+}
+// 按钮
+button {
+  box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+  &[disabled="disabled"] , &:visited , &:active{
+    opacity: .7;
+}
+
+}
+// 滚动公告
+.placard {
+    background-color: #fff;
+    height: 1.08rem;
+    background-color: #3f7355;
+    padding:0 0.32rem;
+    position: relative;
+    .placard_content {
+        .font-dpr(18px);
+        line-height: 1.08rem;
+        color: #fff;
+    }
+    .placard_close {
+        position: absolute;
+        width: .52rem;
+        height: .52rem;
+        line-height: .52rem;
+        .hs-icon;
+        right: .32rem;
+        top: 50%;
+        margin-top: -.26rem;
+        border: none;
+        background:none;
+        background-color: #fff;
+        border-radius: 100%;
+        text-align:center;
+        &:after {
+            color: #3f7355;
+            content: "\e615";
+            font-size: .42rem;
+        }
+    }
 }

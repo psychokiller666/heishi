@@ -16,12 +16,37 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   }
   var init = new common(page);
   var share_data = {
-    title: page.find('.frontcover .title').text(),
+    title: page.find('.frontcover .title').text()+' | 黑市',
     desc: page.find('.content_bd').text(),
     link: GV.HOST+location.pathname,
     img: page.find('.frontcover .image').data('share')
   };
   init.wx_share(share_data);
+  // 检查是否关注
+  init.checkfollow(1);
+  // 系统公告
+  var placard = $('.placard');
+  var placard_content;
+  var placard_id;
+  if(placard.attr('data-placard').length){
+    placard.show();
+    placard_content = placard.attr('data-placard').split('|')[1];
+    placard_id = placard.attr('data-placard').split('|')[0];
+    placard.find('.placard_content').text(placard_content);
+  } else {
+    placard.hide();
+  }
+  placard.on('click','.placard_close',function(){
+    $.post('/index.php?g=restful&m=HsSystemNotice&a=disabled',{
+      notice_id:placard_id
+    },function(res){
+      if(res.status == 1 ){
+        placard.hide();
+      } else {
+        $.alert(res.info);
+      }
+    })
+  })
   // 过滤关键词
   var text_list = [
   '燃料',
@@ -33,55 +58,58 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   ];
   // 过滤关键词插件esc初始化
   esc.init(text_list);
-  // 加关注
-  // 检查用户关系
-  var attention_btn = $('.attention-btn');
-  if(attention_btn.data('myuid') != attention_btn.data('otheruid')) {
-    $.post('/index.php?g=user&m=HsFellows&a=ajax_relations',{
-      my_uid:attention_btn.data('myuid'),
-      other_uid:attention_btn.data('otheruid')
-    },function(data){
-      if(data.relations == '2' || data.relations == '3') {
-        attention_btn.addClass('active');
-        attention_btn.text('取消关注');
-      } else if(data.relations == '1' || data.relations == '0') {
-        attention_btn.removeClass('active');
-        attention_btn.html('<i class="hs-icon"></i>关注');
-      }
-    });
-  } else {
-    attention_btn.hide();
-  }
-  // 操作关注 & 取消关注
-  attention_btn.on('click',function(){
-    if($(this).hasClass('active')){
-      // 取消关注
-      $.post('/index.php?g=user&m=HsFellows&a=ajax_cancel',{
-        uid:$(this).data('otheruid')
+  if($('.hs-store-show-header').length){
+    // 加关注
+    // 检查用户关系
+    var attention_btn = $('.attention-btn');
+    if(attention_btn.data('myuid') != attention_btn.data('otheruid')) {
+      $.post('/index.php?g=user&m=HsFellows&a=ajax_relations',{
+        my_uid:attention_btn.data('myuid'),
+        other_uid:attention_btn.data('otheruid')
       },function(data){
-        if(data.status == '1') {
-          attention_btn.html('<i class="hs-icon"></i>关注');
+        if(data.relations == '2' || data.relations == '3') {
+          attention_btn.addClass('active');
+          attention_btn.text('已关注');
+        } else if(data.relations == '1' || data.relations == '0') {
           attention_btn.removeClass('active');
-          $.toast(data.info);
-        } else {
-          $.toast(data.info);
+          attention_btn.html('<i class="hs-icon"></i>关注');
         }
       });
     } else {
-      // 关注
-      $.post('/index.php?g=user&m=HsFellows&a=ajax_add',{
-        uid:$(this).data('otheruid')
-      },function(data){
-        if(data.status == '1') {
-          attention_btn.text('取消关注');
-          attention_btn.addClass('active');
-          $.toast(data.info);
-        } else {
-          $.toast(data.info);
-        }
-      });
+      attention_btn.hide();
     }
-  });
+    // 操作关注 & 取消关注
+    page.on('click','.attention-btn',function(){
+      var _this = $(this);
+      if(_this.hasClass('active')){
+        // 取消关注
+        $.post('/index.php?g=user&m=HsFellows&a=ajax_cancel',{
+          uid:_this.data('otheruid')
+        },function(data){
+          if(data.status == '1') {
+            _this.html('<i class="hs-icon"></i>关注');
+            _this.removeClass('active');
+            $.toast(data.info);
+          } else {
+            $.toast(data.info);
+          }
+        });
+      } else {
+        // 关注
+        $.post('/index.php?g=user&m=HsFellows&a=ajax_add',{
+          uid:_this.data('otheruid')
+        },function(data){
+          if(data.status == '1') {
+            _this.text('已关注');
+            _this.addClass('active');
+            $.toast(data.info);
+          } else {
+            $.toast(data.info);
+          }
+        });
+      }
+    });
+  }
   // 微信预览图片
   var images = $('.images');
   page.on('click','.images ul li',function(){
@@ -98,7 +126,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   // 打赏
   var dialog_reward = $('.dialog_reward');
   var reward_btn = $('.reward_btn');
-  $('.reward_btn').on('click',function(){
+  page.on('click','.reward_btn',function(){
     dialog_reward.find('input').val('');
     dialog_reward.show();
   });
@@ -150,7 +178,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   // 发送私信
   var dialog_chat = $('.dialog_chat');
   var image_list = dialog_chat.find('.image_list');
-  $('.chat_btn').on('click',function(){
+  page.on('click','.chat_btn',function(){
     dialog_chat.find('textarea').val('');
     dialog_chat.show();
   });
@@ -160,7 +188,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     var content;
     var content_type;
     if(dialog_chat.find('textarea').val().length) {
-      content = dialog_chat.find('textarea').val().length;
+      content = dialog_chat.find('textarea').val();
       content_type = 0;
     } else {
       content = dialog_chat.find('textarea').attr('data-imgurl');
@@ -258,11 +286,12 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   }
   // 当图片初始化
   chat_uploader.onReset = function(){
+    dialog_chat.find('.updata_image_btn').remove();
     image_list.before('<div class="updata_image_btn"><button type="button" class="hs-icon"></button><input type="file" name="file" class="webuploader-element-invisible" accept="image/*" single></div>');
     image_list.empty();
     dialog_chat.find('textarea').removeAttr('disabled');
     dialog_chat.find('textarea').removeAttr('data-imgurl');
-    dialog_chat.find('textarea').attr('placeholder','回复')
+    dialog_chat.find('textarea').attr('placeholder','私信卖家')
   }
   // 选择时文件出错
   chat_uploader.onError = function(type){
@@ -285,7 +314,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   var praise = $('.praise');
   var praise_number = $('.praise .header').find('span');
   var praise_list_tpl = handlebars.compile($("#praise_list_tpl").html());
-  praise.on('click','.praise_btn',function(){
+  page.on('click','.praise_btn',function(){
     var btn_data = {
       uid:$(this).data('uid'),
       username:$(this).data('username'),
@@ -331,12 +360,12 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     $('.praise_more').parent().remove();
     if($(this).hasClass('active')) {
       $(this).parent().remove();
-      $('.store-show .praise ul li').eq(15).before(praise_more_tpl('更多'));
+      $('.store-show .praise ul li').eq(15).before(praise_more_tpl());
       $('.store-show .praise ul').height('2.64rem');
     } else {
       $(this).parent().remove();
       $('.store-show .praise ul').height('auto');
-      $('.store-show .praise ul').append(praise_more_tpl('回收'));
+      $('.store-show .praise ul').append(praise_more_tpl());
       $('.praise_more').addClass('active');
     }
   });
@@ -379,6 +408,8 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
               $('.infinite-scroll-preloader').remove();
               $.toast('😒 没有评论了');
             } else {
+              // 删除刚刚添加的
+              comment_bd.find('.new').remove();
               // 添加继续
               comment_bd.append(comment_list_tpl(data));
               cur_cid = comment_bd.find('li').last().data('id');
@@ -406,7 +437,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     // 设置flag
     loading = true;
     // 如果当前页面加载过。直接加载最后的cid
-    if(comment_bd.find('li').length){
+    if(comment_bd.find('li').length && !comment_bd.find('li').hasClass('new')){
       cur_cid = comment_bd.find('li').last().data('id');
     }
     setTimeout(function() {
@@ -471,11 +502,18 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     });
     // 提交评论
     dialog_comment.on('click','.submit', function() {
+      dialog_comment.off('click','.submit');
       dialog_comment.find('button').attr('disabled','disabled');
+      var comment_content;
+      if(comment_input.attr('data-imgurl')){
+        comment_content = comment_input.attr('data-imgurl');
+      } else {
+        comment_content = comment_input.val();
+      }
       // 判断是否为空并且过滤关键词
-      if(!comment_input.val().length){
+      if(!comment_content.length){
         comment_input.attr('placeholder','😒 评论不能为空');
-      } else if (esc.find(comment_input.val()).length) {
+      } else if (esc.find(comment_content).length) {
         // 如果为空
         dialog_comment.hide();
         $.toast('🚔 我要报警了');
@@ -483,7 +521,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         if(is_father) {
           // 一级回复
           var post_data = {
-            content:comment_input.val(),
+            content:comment_content,
             post_table:comment.data('table'),
             post_id:id,
             to_uid:0,
@@ -494,7 +532,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         } else {
           // 二级回复
           var post_data = {
-            content:comment_input.val(),
+            content:comment_content,
             post_table:comment.data('table'),
             post_id:comment.data('id'),
             to_uid:element.data('uid'),
@@ -522,17 +560,17 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
                 var reply_data = {
                  is_father:true,
                  type:type,
-                 comment:comment_input.val(),
+                 comment:comment_content,
                  username:comment.data('username'),
                  avatar:comment.data('avatar'),
                  uid:comment.data('uid'),
                  id:data.data.id};
-                 comment_bd.prepend(reply_tpl(reply_data));
+                 comment_bd.append(reply_tpl(reply_data));
                } else {
                 var reply_data = {
                  is_father:false,
                  type:type,
-                 comment:comment_input.val(),
+                 comment:comment_content,
                  username:comment.data('username'),
                  parent_full_name:element.data('username'),
                  uid:comment.data('uid'),
@@ -550,6 +588,8 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
               }
             } else {
               $.toast(data.info);
+              uploader.reset();
+              dialog_comment.hide();
             }
             uploader.reset();
             init.loadimg();
@@ -575,7 +615,8 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       dialog_comment.find('.cancel').attr('disabled','disabled');
       dialog_comment.find('.submit').attr('disabled','disabled');
       // 控制回复框
-      comment_input.hide();
+      comment_input.attr('disabled','disabled');
+      comment_input.val('').attr('placeholder','图片和文字二选一！');
       // 生成缩略图
       uploader.makeThumb(file,function(error,ret){
         image_list.empty();
@@ -589,7 +630,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     // 上传成功
     uploader.onUploadSuccess = function(file,response) {
       // 添加关闭按钮
-      image_list.append('<button class="close" data-id="'+file.id+'">取消</button>');
+      image_list.append('<button class="close" data-id="'+file.id+'"></button>');
       // 恢复提交按钮
       dialog_comment.find('.cancel').removeAttr('disabled','disabled');
       dialog_comment.find('.submit').removeAttr('disabled','disabled');
@@ -600,11 +641,13 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       // type状态等于4
       type = 4;
       if(response.status == 1) {
-       comment_input.val(response.data);
+       // comment_input.val(response.data);
+       comment_input.attr('data-imgurl',response.data);
      } else {
-       $.toast(response.info);
-     }
-   }
+      uploader.reset();
+      $.toast(response.info);
+    }
+  }
     // 控制进度条
     uploader.onUploadProgress = function(file,percentage) {
       image_list.append('<div class="progress"><span></span></div>');
@@ -617,9 +660,12 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
     // 当图片初始化
     uploader.onReset = function(){
+      image.find('.updata_image_btn').remove();
       image_list.before('<div class="updata_image_btn"><button type="button" class="hs-icon"></button><input type="file" name="file" class="webuploader-element-invisible" accept="image/*" single></div>');
       image.find('.image_list').empty();
       comment_input.val('');
+      comment_input.removeAttr('data-imgurl');
+      comment_input.attr('placeholder','随便说点什么');
       comment_input.show();
       type = 0;
     }
@@ -643,6 +689,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     dialog_comment.on('click','.cancel', function() {
       dialog_comment.off('click','.cancel');
       dialog_comment.off('click','.submit');
+      dialog_comment.off("change",'.webuploader-element-invisible');
       dialog_comment.hide();
       // 上传图片初始化
       uploader.reset();
@@ -650,7 +697,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   }
 
   // 点击回复框
-  $('.comment_bd').on('click','li',function(e){
+  page.on('click','.comment_bd li',function(e){
     var comment_id = $(this).data('id');
     var username = $(this).data('username');
     // 图片
@@ -665,7 +712,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
   });
 
-  comment_btn.on('click',function(){
+  page.on('click','.comment-btn',function(){
     var comment_id = $(this).data('id');
     comment_box(comment_id,true,'',$(this),true);
   });

@@ -50,13 +50,29 @@
         .number {
           float: right;
           button {
-            padding: 0.2rem 0.12rem;
-            .font-dpr(18px);
             border: 1px solid rgba(211, 211, 211, .5);
-            line-height: 0;
             background:none;
             color: #6ac18e;
             font-weight: bold;
+            width: .8rem;
+            height: .6rem;
+            line-height: 0.42rem;
+            &#min {
+              &:after {
+                font-size: 0.42rem;
+                width: 0.32rem;
+                height: 0.32rem;
+                content: "-";
+              }
+            }
+            &#add {
+              &:after {
+                font-size: 0.42rem;
+                width: 0.32rem;
+                height: 0.32rem;
+                content: "+";
+              }
+            }
           }
           input {
             width:.8rem;

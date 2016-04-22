@@ -52,3 +52,6 @@ require('../modules/components/posts/posts.js');
 // 商品内容页
 require('../modules/components/store_show/store_show.js');
 require('../modules/components/orderform/orderform.js');
+
+// 跳转页
+require('../modules/components/success/success.js');

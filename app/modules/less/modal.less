@@ -31,11 +31,11 @@
     z-index: 10200;
 }
 .modal {
-    width: 3.8rem;
+    width: 6.8rem;
     position: absolute;
     z-index: 11000;
     left: 50%;
-    margin-left: -1.9rem;
+    margin-left: -3.4rem;
     margin-top: 0;
     top: 50%;
     text-align: center;
@@ -58,15 +58,16 @@
     }
 }
 .modal-inner {
-    padding: 0.5rem;
+    padding: .32rem .5rem;
     .hairline(bottom, #b5b5b5);
     border-radius: 0.35rem 0.35rem 0 0;
     position: relative;
     background: @modalBgColor;
+    .font-dpr(16px);
 }
 .modal-title {
     font-weight: 500;
-    font-size: 0.9rem;
+    // font-size: 0.9rem;
     text-align: center;
     .font-dpr(16px);
     +.modal-text {
@@ -74,7 +75,7 @@
     }
 }
 .modal-buttons {
-    height: 2.2rem;
+    // height: 2.2rem;
     overflow: hidden;
     .flexbox();
     .justify-content(center);
@@ -85,10 +86,11 @@
 }
 .modal-button {
     width: 100%;
-    padding: 0 0.25rem;
-    height: 2.2rem;
-    font-size: 0.85rem;
-    line-height: 2.2rem;
+    padding: 0.25rem;
+    // height: 2.2rem;
+    // font-size: 0.85rem;
+    // line-height: 2.2rem;
+    .font-dpr(18px);
     text-align: center;
     color: @modalButonColor;
     background: @modalButonBg;
@@ -141,10 +143,11 @@
 // Action sheet
 .actions-modal {
     position: absolute;
-    left: 0;
     bottom: 0;
+    width: 10rem;
     z-index: 11000;
-    width: 100%;
+    left: 50%;
+    margin-left: -5rem;
     transform: translate3d(0,100%,0);
     &.modal-in {
         transition-duration: @actionsModalDuration;
@@ -184,43 +187,46 @@
     }
     &.color-danger {
       color: @color-danger;
-    }
-    &.bg-danger {
+  }
+  &.bg-danger {
       background: @color-danger;
       color: white;
       &:active {
-      background: @color-danger-active;
+          background: @color-danger-active;
       }
-    }
-    &:first-child {
-        border-radius: 0.2rem 0.2rem 0 0;
-    }
-    &:last-child {
-        .hairline-remove(bottom);
-        border-radius: 0 0 0.2rem 0.2rem;
-    }
-    &:first-child:last-child {
-        border-radius: 0.2rem;
-    }
-    &.disabled {
-        opacity: 0.95;
-        color:@gray;
-    }
+  }
+  &:first-child {
+    border-radius: 0.2rem 0.2rem 0 0;
+}
+&:last-child {
+    .hairline-remove(bottom);
+    border-radius: 0 0 0.2rem 0.2rem;
+}
+&:first-child:last-child {
+    border-radius: 0.2rem;
+}
+&.disabled {
+    opacity: 0.95;
+    color:@gray;
+}
 }
 .actions-modal-button {
     cursor: pointer;
-    line-height: 2.15rem;
-    font-size:1rem;
+    .font-line-height(24px);
+    .font-dpr(18px);
+    padding:0.4rem 0;
     color: @color-primary;
     &:active, &.active-state {
         background: @actionsModalActiveButtonBg;
     }
 }
 .actions-modal-label {
-    font-size: 0.7rem;
-    line-height: 1.3;
-    min-height: 2.2rem;
-    padding: 0.4rem 0.5rem;
+    // font-size: 0.7rem;
+    .font-dpr(16px);
+    .font-line-height(20px);
+    // min-height: 2.2rem;
+    // padding: 0.4rem 0.5rem;
+    padding:0.4rem 0;
     color: @color-text-secondary;
     .flexbox();
     .justify-content(center);

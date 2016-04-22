@@ -10,6 +10,8 @@ $(document).on('pageInit','.seller_list', function(e, id, page){
   var init = new common(page);
   // 调用微信分享sdk
   init.wx_share(false);
+  // 检查是否有新的消息
+  init.msg_tip();
 
   var seller_list_bd = $('.seller_list_bd');
   // 判断是否有数据
@@ -21,9 +23,9 @@ $(document).on('pageInit','.seller_list', function(e, id, page){
     $('.pull-to-refresh-layer').remove();
   } else {
     $.refreshScroller();
-    setTimeout(function(){
-      $('.content').scrollTop($('.content ul').height());
-    },500);
+    // setTimeout(function(){
+    //   $('.content').scrollTop($('.content ul').height());
+    // },500);
   }
 
   // 上拉加载更多

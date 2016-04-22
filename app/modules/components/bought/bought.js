@@ -63,8 +63,8 @@ $(document).on('pageInit','.bought', function (e, id, page) {
     },function(data){
       if(data.status == '1'){
         $.toast('收货成功');
-        _this.remove();
         _this.parent('.logistics').parent('.header').parent('li').find('.contact .office span').text('已收货');
+        _this.remove();
       } else {
         $.toast(data.info);
       }

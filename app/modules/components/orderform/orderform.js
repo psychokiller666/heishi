@@ -20,10 +20,11 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
   var max_remain = orderform_bd.data('remain');
   var total = orderform_bd.find('.total span i');
   var price = orderform_bd.find('.price span i');
+  var postage = orderform_bd.find('.postage span i');
   var attach = $('#attach');
   //初始化数量为1,并失效减
   order_number.val(1);
-  total.text(parseInt(order_number.val())*parseInt(price.text()));
+  total.text(parseInt(order_number.val())*parseInt(price.text())+parseInt(postage.text()));
   min_btn.attr('disabled',true);
   //数量增加操作
   add_btn.on('click',function(){
@@ -34,7 +35,7 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
     if(parseInt(order_number.val()) >= max_remain){
       add_btn.attr('disabled',true);
     }
-    total.text(parseInt(order_number.val())*parseInt(price.text()));
+    total.text(parseInt(order_number.val())*parseInt(price.text())+parseInt(postage.text()));
   })
   //数量减少操作
   min_btn.on('click',function(){
@@ -44,11 +45,11 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
     } else {
       order_number.val(parseInt(order_number.val())-1);
     }
-    total.text(parseInt(order_number.val())*parseInt(price.text()));
+    total.text(parseInt(order_number.val())*parseInt(price.text())+parseInt(postage.text()));
   })
   // 生成订单
   var hs_footer = $('.hs-footer');
-  hs_footer.on('click','button',function(){
+  hs_footer.on('click','.orderform_submit',function(){
     var _this = $(this);
     var post_data = {
       'order[object_id]': $(this).data('id'),
@@ -64,7 +65,7 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
         var ok_url = GV.pay_url+'hsjsapi.php?order_number=' + data.order_number +
         '&object_id=' + _this.data('id') +
         '&quantity=' + order_number.val() +
-        '&seller_username=' + _this.data('seller_username');
+        '&seller_username=' + _this.data('username');
         $.hidePreloader();
         window.location.href = ok_url;
       } else {
@@ -74,8 +75,4 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
     })
   })
 
-  // 添加地址
-  $('.addr').tap(function(){
-    console.log('sds');
-  });
 })
