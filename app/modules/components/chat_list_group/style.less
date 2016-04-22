@@ -65,6 +65,19 @@
               float:left;
               margin-left: 0.38rem;
               position: relative;
+              &.new {
+                overflow: inherit;
+              }
+              &.new:after {
+                position: absolute;
+                content: "";
+                width: .2rem;
+                height: .2rem;
+                border-radius: 200%;
+                top: 0;
+                right: 0;
+                background-color: red;
+              }
             }
             .info {
               .hs-cf();

@@ -38,19 +38,33 @@
     }
   }
   .already_search_box {
-    padding: .21rem .24rem;
+    margin:0 0.24rem;
+    padding: 0.08rem 0;
     width: 9.58rem;
-    .hs-cf;
+    position: relative;
     display: none;
+    .hs-cf;
     input {
+      background-color: #eaeaea;
+      border-radius: 0.04rem;
+      border:none;
       padding: .21rem;
-      float: left;
-      width: 6.6rem;
+      width: 9.16rem;
+      .font-dpr(16px);
     }
     button {
       padding: .21rem;
-      float: right;
       width: 1.6rem;
+      background-color: #eaeaea;
+      position: absolute;
+      border-radius: 0.04rem;
+      border:none;
+      right: 0;
+      top: 0.08rem;
+      &:after{
+        .font-dpr(16px);
+        content: "提交";
+      }
     }
   }
 }

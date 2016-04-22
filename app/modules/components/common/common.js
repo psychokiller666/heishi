@@ -1,7 +1,6 @@
 // 页面初始化
 // 图片延时加载
-var Layzr = require('../../../../node_modules/layzr.js/dist/layzr.js');
-
+var lazyload = require('../../../../bower_components/lazyload/lazyload.min.js');
 // 微信sdk
 var wx = require('weixin-js-sdk');
 
@@ -14,40 +13,74 @@ var common = function(page){
   // 控制.hs-page高度
   if($(this.page).find('.hs-page').length){
     if($(this.page).find('header').length){
-      $(this.page).find('.hs-main').css('top',$(this.page).find('header').height());
+      $(this.page).find('.hs-main').css('top',lib.flexible.px2rem($(this.page).find('header').height())+'rem');
     } else {
       $(this.page).find('.hs-main').css('top','0');
     }
     if($(this.page).find('footer').length){
-      $(this.page).find('.hs-main').css('bottom',$(this.page).find('footer').height());
+      $(this.page).find('.hs-main').css('bottom',lib.flexible.px2rem($(this.page).find('footer').height())+'rem');
     } else {
       $(this.page).find('.hs-main').css('bottom','0');
     }
   }
-  console.log(page,'页面初始化');
+  // console.log(page,'页面初始化');
   // 图片加载
-  var layzr = new Layzr({
-    threshold: 0,
+  // 头部
+  if($(this.page).find('header').length){
+    $('[data-layzr]').lazyload({
+      data_attribute:'layzr',
+      container: $("header")
+    });
+  }
+  // 内容部分
+  $('[data-layzr]').lazyload({
+    data_attribute:'layzr',
+    container: $(".content")
   });
+
 };
 // 图片延时加载
 common.prototype.loadimg = function(){
-  var layzr = new Layzr();
-  layzr.update();
+  $('[data-layzr]').lazyload({
+    data_attribute:'layzr',
+    container: $(".content")
+  });
 }
 // 检测新消息
 common.prototype.msg_tip = function(){
   $.getJSON('/index.php?g=user&m=HsMessage&a=new_messages',{},function(data){
     if(data.status == '1'){
-      console.log(data.data);
+      if(data.data.messages >= 1){
+        $('.hs-footer').find('.messages').addClass('new');
+      }
+      if(data.data.posts >= 1){
+        if($('.center').length){
+          $('.activate').next('span').addClass('new');
+        }
+        $('.hs-footer').find('.me').addClass('new');
+      }
     } else {
       $.toast(data.info);
     }
   });
 }
 // 检查是否关注公众号
-common.prototype.checkfollow = function(){
-
+common.prototype.checkfollow = function(type){
+  $.ajax({
+    url: '/index.php?g=user&m=HsWeixin&a=userinfo',
+    data: {
+      type:type
+    },
+    type: 'POST',
+    async:false
+  }).done(function (res) {
+    if(res.data == 0) {
+      $('.follow_me').show();
+    }
+  });
+  $(this.page).on('click','.bitch_close',function(){
+    $('.follow_me').hide();
+  })
 }
 // 微信jssdk分享
 common.prototype.wx_share = function(options){
@@ -58,7 +91,7 @@ common.prototype.wx_share = function(options){
       url: encodeURIComponent(location.href.split('#')[0])
     }
   }).done(function(data){
-    console.log(data,'微信sdk初始化');
+    // console.log(data,'微信sdk初始化');
     // 判断是否分享
     if(options) {
       wx.config({

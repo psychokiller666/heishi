@@ -16,7 +16,7 @@
   .ui-dialog-cnt {
     width: 7.65rem;
     background-color: #dcdcdc;
-    border-radius: .28rem;
+    // border-radius: .28rem;
     position: relative;
     margin: 0 auto;
     margin-top: 4.4rem;
@@ -24,19 +24,25 @@
       position: absolute;
       top: 0;
       .ui-dialog-close {
-        position: absolute;
-        left: -0.226667rem;
-        top: -0.133333rem;
-        border:3px solid #fff;
+        // position: absolute;
+        left: -0.36rem;
+        top:  -0.36rem;
+        border:2px solid #fff;
         border-radius: 100%;
         display: block;
         background-color: #000;
         box-shadow:1px 1px 3px #333333;
+        position: relative;
+        width: 0.72rem;
+        height: 0.72rem;
+        line-height: 0;
         i {
           display: block;
           font-style: normal;
-          .font-dpr(24px);
-          .font-line-height(24px);
+          font-size: 0.5rem;
+          line-height: 0;
+          left: 50%;
+          top: 50%;
           color: #fff;
           &:before {
             content: "\e615";
@@ -52,12 +58,10 @@
         background-color: #fff;
         width:6.77rem;
         .font-dpr(14px);
-        border-radius: .28rem;
       }
     }
     .ui-dialog-ft {
       line-height: 0;
-      padding: .2rem;
       background: #dcdcdc;
       .hs-cf;
       .image_list {
@@ -70,18 +74,21 @@
         }
         .close {
           position: absolute;
-          right: -0.1rem;
-          top: -0.1rem;
+          right: -0.19rem;
+          top: -0.19rem;
           border-radius: 200%;
           background-color: #000;
           border: none;
           color: #fff;
           opacity: .8;
-          .font-line-height(16px);
           .hs-icon;
           &:before {
             content: "\e615";
-            .font-dpr(16px);
+            font-size: 0.38rem;
+            display: block;
+            width: 0.38rem;
+            height: 0.38rem;
+            line-height: 0.38rem;
           }
         }
         .progress {
@@ -108,7 +115,7 @@
         float: left;
         margin-left: 0.4rem;
         button {
-          padding: 0.293333rem 0;
+          // padding: 0.293333rem 0;
           .font-dpr(22px);
           background: none;
           border:none;
@@ -117,6 +124,7 @@
           left: 0;
           display: block;
           color: #00bb9c;
+          line-height: 1rem;
           &:before {
             content: "\e600";
           }

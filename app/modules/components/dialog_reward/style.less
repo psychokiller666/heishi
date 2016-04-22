@@ -26,19 +26,25 @@
       position: absolute;
       top: 0;
       .ui-dialog-close {
-        position: absolute;
+        // position: absolute;
         left: -0.226667rem;
         top: -0.133333rem;
-        border:3px solid #fff;
+        border:2px solid #fff;
         border-radius: 100%;
         display: block;
         background-color: #000;
         box-shadow:1px 1px 3px #333333;
+        position: relative;
+        width: 0.72rem;
+        height: 0.72rem;
+        line-height: 0;
         i {
           display: block;
           font-style: normal;
-          .font-dpr(24px);
-          .font-line-height(24px);
+          font-size: 0.5rem;
+          line-height: 0;
+          left: 50%;
+          top: 50%;
           color: #fff;
           &:before {
             content: "\e615";
@@ -75,7 +81,7 @@
         &:before{
           position: absolute;
           content: "\e609";
-          top: 0;
+          top: 0.013333rem;
           left: 0.666667rem;
           font-family: "iconfont"!important;
           font-style: normal;
@@ -87,7 +93,7 @@
         &:after{
           content: "\e608";
           position: absolute;
-          top: 0;
+          top: 0.013333rem;
           right: 0.666667rem;
           font-family: "iconfont"!important;
           font-style: normal;

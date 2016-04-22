@@ -6,7 +6,7 @@
         z-index: 100;
         bottom: 0;
         background-color: #1b181f;
-        opacity: .98;
+        // opacity: .98;
         color: #5d5c61;
         ul {
             padding-left: 0.266667rem;
@@ -38,6 +38,7 @@
                         text-align: center;
                         &.text {
                             .font-dpr(12px);
+                            line-height: 10px;
                             [data-dpr="2"] & {
                                 line-height: 12 * 2px;
                             }
@@ -47,7 +48,8 @@
                         }
                         &.hs-icon {
                             font-size: 32px;
-                            line-height: 32px;
+                            line-height: 30px;
+                            position: relative;
                             [data-dpr="2"] & {
                                 font-size: 28 * 2px;
                                 line-height: 26 * 2px;
@@ -71,7 +73,18 @@
                             &.messages:before {
                                 content: "\e613";
                             }
+                            &.new:after {
+                                content: "";
+                                width: .2rem;
+                                height: .2rem;
+                                border-radius: .3rem;
+                                background-color: red;
+                                position: absolute;
+                                top: -0.04rem;
+                                right: .6rem;
+                            }
                         }
+
                     }
                 }
             }

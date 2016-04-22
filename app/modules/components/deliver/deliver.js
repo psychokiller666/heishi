@@ -15,16 +15,17 @@ $(document).on('pageInit','.deliver', function (e, id, page) {
   deliver_bd.on('click','.scanning_btn',function(){
     wx.scanQRCode({
       desc: '快递单号',
-      needResult: 0,
+      needResult: 1,
       scanType: ["qrCode","barCode"],
       success: function(data){
-        deliver_bd.find('input').val(data.resultStr.split(',')[1]);
+        deliver_bd.find('.number input').val(data.resultStr.split(',')[1]);
       }
     });
   });
   // 确认发货
   page.on('click','.deliver_submit_deliver',function(){
     var _this = $(this);
+    $('.deliver-footer').find('botton').attr('disabled','disabled');
     $.post("/index.php?g=user&m=HsOrder&a=deliver",{
       uid:_this.data('uid'),
       order_number:_this.data('ordernumber'),
@@ -40,6 +41,38 @@ $(document).on('pageInit','.deliver', function (e, id, page) {
         $.toast(data.info);
       }
     });
+  })
+  // 联系卖家
+  page.on('click','.msg_btn',function(){
+    var _this = $(this);
+    var features_btn = [
+    {
+      text: '请选择',
+      label: true
+    },
+    {
+      text: '买家电话',
+      bold: true,
+      color: 'danger',
+      onClick: function() {
+        window.open('tel:'+_this.data('tel'));
+      }
+    },
+    {
+      text: '私信买家',
+      onClick: function() {
+        $.router.load('/User/HsMessage/detail/from_uid/'+_this.data('uid')+'.html', true);
+      }
+    }
+    ];
+    var cancel_btn = [
+    {
+      text: '取消',
+      bg: 'danger'
+    }
+    ];
+    var groups = [features_btn, cancel_btn];
+    $.actions(groups);
   })
 
 })
