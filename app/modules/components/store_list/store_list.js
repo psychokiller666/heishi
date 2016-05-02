@@ -72,6 +72,7 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
   // 列表首页_通用底部发布
   var hs_footer = $('.hs-footer');
   var notice_box = $('.notice_box');
+  var notice_bd = $('.notice_bd');
   var old_active;
   // 记录位置
   hs_footer.find('li').each(function(index,item) {
@@ -90,6 +91,29 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
       hs_footer.find('li').eq(old_active).find('a').addClass('active');
       notice_box.hide();
     }
+  })
+  notice_bd.on('click','a',function(e){
+    var typeid = $(this).data('typeid');
+    e.preventDefault();
+    $.showPreloader();
+    $.post('/index.php?g=restful&m=HsMobile&a=ajax_mobile_checking','',function(data){
+      if(data.status == 1){
+        $.hidePreloader();
+        $('.phone_verify').find('.submit').attr('href','/user/HsPost/notice/type/'+typeid+'.html');
+        $('.phone_verify').show();
+      } else {
+        // $.toast(data.info);
+        $.hidePreloader();
+        $.router.load('/user/HsPost/add/type/'+typeid+'.html', true);
+      }
+    })
+
+    $('.notice_btn').find('a').removeClass('active');
+    hs_footer.find('li').eq(old_active).find('a').addClass('active');
+    notice_box.hide();
+  })
+  $('.phone_verify').on('click','.modal-overlay',function(){
+    $('.phone_verify').hide();
   })
   var store_list = $('.store_list');
   // 下拉加载更多
@@ -111,7 +135,7 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
     keyword = store_list.data('keyword');
     ctype = 3;
     isculture = store_list.data('isculture');
-    page_num = 1;
+    var page_num = 1;
     add_data(page_num);
     if(isculture == 1){
       store_list.addClass('culture_list').removeClass('store_list');
@@ -150,8 +174,8 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
       pages_next = parseInt(current_pages) + 3;
       pages_prev = parseInt(current_pages) - 1;
     }
-    store_list.attr('data-pages-next',pages_next);
-    store_list.attr('data-pages-prev',pages_prev);
+    store_list.attr('data-pages_next',pages_next);
+    store_list.attr('data-pages_prev',pages_prev);
   }
   // 控制ul里面li的数量
   // function control_number
@@ -170,7 +194,7 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
       return n;
     }
     $.map(store_list.find('li'),function(item,index){
-      number.push($(item).attr('data-page'));
+      number.push($(item).data('page'));
     })
     return number.unique();
   }
@@ -210,7 +234,7 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
       success: function(data){
         if(data.status == 1){
 
-          if (store_list.attr('data-pages-next') >= data.pages+1) {
+          if (store_list.data('pages-next') >= data.pages+1) {
             $.detachInfiniteScroll($('.infinite-scroll'));
             // 删除加载提示符
             $('.infinite-scroll-preloader').remove();
@@ -243,10 +267,8 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
       }
     });
   }
-  $('.infinite-scroll').on('scroll',function(e){
-    console.log($('.content').scrollTop());
-    console.log(e);
-  })
+
+
   // 监听滚动
   page.on('infinite','.infinite-scroll', function(e) {
     // 如果正在加载，则退出
@@ -255,33 +277,28 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
     loading = true;
     setTimeout(function() {
       loading = false;
-      add_data(store_list.attr('data-pages-next'),'down');
+      add_data(store_list.data('pages_next'),'down');
     },500);
-    new control_dom().remove_first();
+    // new control_dom().remove_first();
     $.refreshScroller();
   });
-  // page.on('infinite','.infinite-scroll-top', function() {
-  //   // 如果正在加载，则退出
-  //   if (loading) return;
-  //   // 设置flag
-  //   loading = true;
-  //   setTimeout(function() {
-  //     loading = false;
-  //     add_data(store_list.attr('data-pages-next'),'down');
-  //   },500);
-  //   new control_dom().remove_first();
-  //   $.refreshScroller();
-  // });
+
+  store_list.on('scrollend',function(e){
+    console.log(e);
+  });
 
   // 向上加载更多
-  // $('.content').on('scroll',function(e){
-  //   if($('.content').scrollTop() <= $('.content li').height() * 3){
-  //     if (loading) return;
-  //     if(store_list.attr('data-pages-prev') > 0){
+  // store_list.on('scroll',function(e){
+  //   if (loading) return;
+
+
+  //   if(store_list.scrollTop() <= store_list.find('li').height() * 15){
+  //     if(store_list.data('pages_prev') >= 1){
+  //       console.log(store_list.data('pages_prev'));
   //       loading = true;
   //       setTimeout(function() {
   //         loading = false;
-  //         add_data(store_list.attr('data-pages-prev'),'up');
+  //         add_data(store_list.data('pages_prev'),'up');
   //       },500);
   //       new control_dom().remove_last();
   //       $.refreshScroller();

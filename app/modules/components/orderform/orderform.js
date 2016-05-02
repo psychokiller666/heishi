@@ -9,7 +9,7 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
     return false;
   }
   var init = new common(page);
-  init.wx_share(false);
+  // init.wx_share(false);
 
   var orderform = $('.orderform');
   var orderform_bd = $('.orderform_bd');
