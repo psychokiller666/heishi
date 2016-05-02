@@ -135,3 +135,51 @@ button {
         }
     }
 }
+.phone_verify {
+    display: none;
+    .modal-overlay {
+        visibility: visible;
+        opacity: 1;
+    }
+    .phone_verify_modal {
+        position: absolute;
+        z-index: 11000;
+        top: 3.1rem;
+        left: 50%;
+        margin-left: -3.11rem;
+        .phone_verify_bd {
+            width: 6.22rem;
+            padding:0.0925rem;
+            margin:0 auto;
+            background-color: #fff;
+            .logo {
+                width: 6.22rem;
+                height: 3.05rem;
+                background-image: url('../img/phone_verify.png');
+                background-position: 50% 50%;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+            .info {
+                text-align: center;
+                h3 {
+                    .font-dpr(18px);
+                    padding-top: 0.266667rem;
+                    padding-bottom: 0.3rem;
+                }
+                p {
+                    .font-dpr(13px);
+                    padding-bottom: 0.2rem;
+                }
+            }
+            .submit {
+                color: #00df78;
+                .font-dpr(18px);
+                padding: 0.266667rem;
+                margin:0 auto;
+                display: block;
+                text-align: center;
+            }
+        }
+    }
+}

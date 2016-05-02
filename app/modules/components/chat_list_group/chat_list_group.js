@@ -15,6 +15,7 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
   // 列表首页_通用底部发布
   var hs_footer = $('.hs-footer');
   var notice_box = $('.notice_box');
+  var notice_bd = $('.notice_bd');
   var old_active;
   // 记录位置
   hs_footer.find('li').each(function(index,item) {
@@ -33,6 +34,29 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
       hs_footer.find('li').eq(old_active).find('a').addClass('active');
       notice_box.hide();
     }
+  })
+  notice_bd.on('click','a',function(e){
+    var typeid = $(this).data('typeid');
+    e.preventDefault();
+    $.showPreloader();
+    $.post('/index.php?g=restful&m=HsMobile&a=ajax_mobile_checking','',function(data){
+      if(data.status == 1){
+        $.hidePreloader();
+        $('.phone_verify').find('.submit').attr('href','/user/HsPost/notice/type/'+typeid+'.html');
+        $('.phone_verify').show();
+      } else {
+        // $.toast(data.info);
+        $.hidePreloader();
+        $.router.load('/user/HsPost/add/type/'+typeid+'.html', true);
+      }
+    })
+
+    $('.notice_btn').find('a').removeClass('active');
+    hs_footer.find('li').eq(old_active).find('a').addClass('active');
+    notice_box.hide();
+  })
+  $('.phone_verify').on('click','.modal-overlay',function(){
+    $('.phone_verify').hide();
   })
   // 从右往左滑
   $('.chat_list_group_bd ul li').height($('.chat_list_group_bd ul li').height());
