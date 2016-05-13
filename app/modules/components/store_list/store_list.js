@@ -134,9 +134,7 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
     // 初始化加载
     keyword = store_list.data('keyword');
     ctype = 3;
-    isculture = store_list.data('isculture');
-    var page_num = 1;
-    add_data(page_num);
+    add_data(store_list.data('pages_next'));
     if(isculture == 1){
       store_list.addClass('culture_list').removeClass('store_list');
       $('.hs-footer').find('li a').removeClass('active');
@@ -234,7 +232,7 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
       success: function(data){
         if(data.status == 1){
 
-          if (store_list.data('pages-next') >= data.pages+1) {
+          if (store_list.data('pages_next') > data.pages) {
             $.detachInfiniteScroll($('.infinite-scroll'));
             // 删除加载提示符
             $('.infinite-scroll-preloader').remove();
@@ -246,6 +244,11 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
             } else {
               store_list.find('ul').append(store_list_tpl({data:data.data,page:ajax_page}));
               control_pages(ajax_page,'down');
+            }
+            if (store_list.data('pages_next') >= data.pages) {
+              $.detachInfiniteScroll($('.infinite-scroll'));
+              // 删除加载提示符
+              $('.infinite-scroll-preloader').remove();
             }
             init.loadimg();
           }

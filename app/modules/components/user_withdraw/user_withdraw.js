@@ -33,7 +33,10 @@ $(document).on('pageInit','#withdraw', function (e, id, page) {
   });
   // 提现
   var user_withdraw = $('.user_withdraw');
-  page.on('click','.submit',function(){
+  if(parseInt($('.amount_submit').data('amount')) < 1){
+    $('.amount_submit').attr('disabled','disabled');
+  }
+  page.on('click','.amount_submit',function(){
     var _this = $(this);
     var amount = Math.floor(parseInt($(this).data('amount')));
     $.confirm('确认提现？',
@@ -69,7 +72,7 @@ $(document).on('pageInit','#withdraw', function (e, id, page) {
         });
       }),
     function(){
-      page.off('click','.submit');
+      page.off('click','..amount_submit');
     }
 
   });

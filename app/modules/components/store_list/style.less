@@ -2,7 +2,12 @@
 .store_list {
     ul {
         li {
-            border-bottom: 0.4rem solid rgba(241, 241, 241, 1);
+            border-bottom: 1px solid #dcdcdc;
+            border-width: 0.4rem;
+            .hs-cf;
+            &:last-child {
+                border: none;
+            }
             a {
                 display: block;
                 color: #212121;
@@ -15,57 +20,46 @@
                     background-repeat: no-repeat;
                     background-size: cover;
                 }
-                .info {
-                    .hs-cf;
-                    padding: 0.17rem 0.34rem 0.1rem 0.34rem;
+                .title {
+                    .font-dpr(18px);
+                    .font-line-height(24px);
+                    font-weight: bold;
+                    padding: 0.24rem 0.34rem;
+                }
+                .date {
+                    .font-dpr(14px);
+                    .font-line-height(14px);
+                    padding: 0 0.34rem 0.24rem 0.34rem;
+                    color: #b7b7b7;
                     .classify {
                         background-color: #6ac18e;
                         color: #fff;
-                        padding:0.11rem 0.16rem;
+                        padding:0 0.16rem;
+                        line-height: 0.56rem;
+                        height: 0.56rem;
                         display: block;
                         float: left;
                         .font-dpr(14px);
                         border-radius: 3px;
                     }
-                    .tags {
-                        float: right;
-                        padding:0.14rem 0;
-                        span {
-                            color: #6ac18e;
-                            .font-dpr(14px);
-                            margin-left: 0.293333rem;
-                        }
-                    }
-                }
-                .title {
-                    .font-dpr(18px);
-                    .font-line-height(24px);
-                    font-weight: bold;
-                    padding: 0 0.34rem;
-                }
-                .date {
-                    .font-dpr(14px);
-                    .font-line-height(14px);
-                    padding: 0.14rem 0.34rem 0.2rem 0.34rem;
-
-                    color: #b7b7b7;
                     .hs-cf;
                     .time {
                         float: left;
                     }
                     .icon {
-                       float: right;
-                       span {
-                           .font-dpr(13px);
-                           font-size: 13px;
-                           text-align: left;
-                           margin-left: .28rem;
-                           position: relative;
-                           padding-left: .7rem;
-                           display: block;
-                           float: left;
-                           text-align: right;
-                           i {
+                     float: right;
+                     line-height: 0.56rem;
+                     span {
+                         .font-dpr(13px);
+                         font-size: 13px;
+                         text-align: left;
+                         margin-left: .28rem;
+                         position: relative;
+                         padding-left: .7rem;
+                         display: block;
+                         float: left;
+                         text-align: right;
+                         i {
                             font-style: normal;
                             .font-dpr(18px);
                             position: absolute;
@@ -83,6 +77,34 @@
                     }
                 }
             }
+        }
+    }
+
+}
+.pages{
+    border-top: 1px solid #000;
+    border-width: 0.03rem;
+    padding:0.4rem 0.34rem;
+    .hs-cf;
+    text-align: center;
+    a {
+        float: left;
+        display: block;
+        width: 0.65rem;
+        height: 0.72rem;
+        line-height: 0.76rem;
+        border: 1px solid #000;
+        border-width: 0.04rem;
+        margin-left: 0.13rem;
+        color: #000;
+        .font-dpr(16px);
+        &:first-child{
+            margin-left: 0;
+        }
+        &.active {
+            background-color: #000;
+            color: #fff;
+            font-weight: bold;
         }
     }
 }

@@ -63,11 +63,66 @@ $(document).on('pageInit','.bought', function (e, id, page) {
     },function(data){
       if(data.status == '1'){
         $.toast('收货成功');
-        _this.parent('.logistics').parent('.header').parent('li').find('.contact .office span').text('已收货');
+        _this.parent('.logistics').parent('.header').parent('li').find('.status').text('已收货');
         _this.remove();
       } else {
         $.toast(data.info);
       }
+    })
+  });
+  already_list.on('click','.contact_btn',function(){
+    var _this = $(this);
+    var userid = _this.data('userid');
+    var buttons1;
+    var buttons2 = [
+    {
+      text: '取消',
+      bg: 'danger'
+    }
+    ];
+    $.post('/index.php?g=restful&m=HsMobile&a=ajax_get_moblie',{
+      uid:userid
+    },function(data){
+      if(data.status == '1'){
+        buttons1 = [
+        {
+          text: '请选择',
+          label: true
+        },
+        {
+          text: '私信卖家',
+          bold: true,
+          color: 'danger',
+          onClick: function() {
+            $.router.load('/User/HsMessage/detail/from_uid/'+userid+'.html', true);
+          }
+        },
+        {
+          text: '卖家电话',
+          onClick: function() {
+            // $.router.load('tel:'+data.data, true);
+            window.open('tel:'+data.data);
+          }
+        }
+        ];
+
+      } else {
+        buttons1 = [
+        {
+          text: '请选择',
+          label: true
+        },
+        {
+          text: '私信卖家',
+          bold: true,
+          color: 'danger',
+          onClick: function() {
+            $.router.load('/User/HsMessage/detail/from_uid/'+userid+'.html', true);
+          }
+        }];
+
+      }
+      $.actions([buttons1,buttons2]);
     })
   });
   if(already_list.find('li').length < 20){

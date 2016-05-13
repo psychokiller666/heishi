@@ -1,4 +1,9 @@
 // 粉丝列表
+// handlebars
+var handlebars = require('../../../../node_modules/handlebars/dist/handlebars.min.js');
+// 页面初始化
+var common = require('../common/common.js');
+
 $(document).on('pageInit','.fans_list', function (e, id, page) {
   if (page.selector == '.page'){
     return false;
@@ -10,13 +15,13 @@ $(document).on('pageInit','.fans_list', function (e, id, page) {
   // 下拉加载更多
   var loading = false;
   // 初始化下拉
-  var pages = 2;
+  var pages_num = 2;
   var fans_list_bd_tpl = handlebars.compile($("#fans_list_bd_tpl").html());
   var post_url = '/index.php?g=user&m=HsFellows&a=ajax_myfans_more';
   if($('.my_fellows').length){
     post_url = '/index.php?g=user&m=HsFellows&a=ajax_myfellows_more';
   }
-  if(fans_list_bd.find('li').length != 10){
+  if(fans_list_bd.find('li').length < 20){
     $.detachInfiniteScroll($('.infinite-scroll'));
     // 删除加载提示符
     $('.infinite-scroll-preloader').remove();
@@ -34,13 +39,13 @@ $(document).on('pageInit','.fans_list', function (e, id, page) {
       timeout: 4000,
       success: function(data){
         if(data.status == 1) {
-          if(data.next_page == pages){
+          if(data.next_page == pages_num){
             $.detachInfiniteScroll($('.infinite-scroll'));
             // 删除加载提示符
             $('.infinite-scroll-preloader').remove();
           }
-          fans_list_bd.find('ul').append(fans_list_bd(data.data));
-          pages++;
+          fans_list_bd.find('ul').append(fans_list_bd_tpl(data.data));
+          pages_num++;
           init.loadimg();
         } else if(data.status == 0) {
           $.detachInfiniteScroll($('.infinite-scroll'));
@@ -53,7 +58,7 @@ $(document).on('pageInit','.fans_list', function (e, id, page) {
       }
     });
   }
-  page.on('infinite', function() {
+  page.on('infinite','.content', function() {
     // 如果正在加载，则退出
     if (loading) return;
     // 设置flag
@@ -62,7 +67,7 @@ $(document).on('pageInit','.fans_list', function (e, id, page) {
     setTimeout(function() {
       // 重置加载flag
       loading = false;
-      add_data(pages);
+      add_data(pages_num);
 
     }, 1000);
   });

@@ -48,6 +48,12 @@ require('../modules/components/already_list/already_list.js');
 require('../modules/components/deliver/deliver.js');
 // 发过的东西
 require('../modules/components/posts/posts.js');
+// 粉丝列表
+require('../modules/components/fans_list/fans_list.js');
+// 提现列表
+require('../modules/components/user_withdraw_list/user_withdraw_list.js');
+// 投诉
+require('../modules/components/user_complaints/user_complaints.js');
 
 // 商品内容页
 require('../modules/components/store_show/store_show.js');

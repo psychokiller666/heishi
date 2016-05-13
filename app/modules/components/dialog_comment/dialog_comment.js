@@ -67,7 +67,7 @@ if ($('.comment').length){
       // 自动上传。
       auto: true,
       // 文件接收服务端。
-      server: 'http://hstest.ontheroadstore.com/index.php?g=api&m=HsFileupload&a=upload',
+      server: '/index.php?g=api&m=HsFileupload&a=upload',
       // 二进制上传
       sendAsBinary: true,
       // 只允许选择文件，可选。
