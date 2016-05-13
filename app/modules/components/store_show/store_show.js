@@ -10,6 +10,9 @@ var WebUploader = require('../../../../node_modules/tb-webuploader/dist/webuploa
 // 过滤关键词
 var esc = require('../../../../node_modules/chn-escape/escape.js');
 
+// 图片延时加载
+var lazyload = require('../../../../bower_components/lazyload/lazyload.min.js');
+
 $(document).on('pageInit','.store-show', function (e, id, page) {
   if (page.selector == '.page'){
     return false;
@@ -70,13 +73,16 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         if(data.relations == '2' || data.relations == '3') {
           attention_btn.addClass('active');
           attention_btn.text('已关注');
+          attention_btn.removeClass('hide');
         } else if(data.relations == '1' || data.relations == '0') {
           attention_btn.removeClass('active');
           attention_btn.html('<i class="hs-icon"></i>关注');
+          attention_btn.removeClass('hide');
         }
+
       });
     } else {
-      attention_btn.hide();
+      attention_btn.addClass('hide');
     }
     // 操作关注 & 取消关注
     page.on('click','.attention-btn',function(){
@@ -413,7 +419,11 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
               // 添加继续
               comment_bd.append(comment_list_tpl(data));
               cur_cid = comment_bd.find('li').last().data('id');
-              init.loadimg();
+
+              $('[data-layzr]').lazyload({
+                data_attribute:'layzr',
+                container: $(".comment")
+              });
             }
           } else if(data.status == '0'){
               // 加载完毕，则注销无限加载事件，以防不必要的加载

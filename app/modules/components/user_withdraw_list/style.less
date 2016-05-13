@@ -1,0 +1,127 @@
+.user_withdraw_list {
+  .hs-footer {
+    a {
+      padding: 0.466667rem 0;
+      background-color: #02df79;
+      color: #fff;
+      text-align: center;
+      width: 10rem;
+      border: none;
+      .font-dpr(16px);
+      font-weight: bold;
+      display: block;
+    }
+  }
+  .hs-main {
+    .header {
+      height: 4.666667rem;
+      background-color: #07e07b;
+      position: relative;
+      color: #fff;
+      .header_bd {
+        width: 5.333333rem;
+        margin:0 auto;
+        h3 {
+          .font-dpr(16px);
+          position: absolute;
+          top: 0.453333rem;
+        }
+        h4 {
+          .font-dpr(48px);
+          position: absolute;
+          top: 1.8rem;
+          line-height: 0;
+        }
+        h5 {
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          background-color: #06f184;
+          height: 0.933333rem;
+          line-height: 0.933333rem;
+          .font-dpr(14px);
+          width: 100%;
+          text-align: center;
+        }
+        p {
+          position: absolute;
+          top: 2.7rem;
+          border-top: 1px dashed #fff;
+          border-width: 0.03rem;
+          width: 5.333333rem;
+          padding-top: 0.24rem;
+          display: block;
+          .font-dpr(16px);
+          .hs-cf;
+          opacity: .8;
+          span {
+            &:first-child {
+              float: left;
+            }
+            &:last-child {
+              float: right;
+            }
+          }
+        }
+      }
+    }
+    .user_withdraw_list_bd {
+      border-top: 1px solid #eee;
+      border-width: 0.4rem;
+      h3 {
+        .hs-cf;
+        height: 0.8rem;
+        line-height: 0.8rem;
+        .font-dpr(14px);
+        color: #787878;
+        padding:0 0.346667rem;
+        span {
+          &:first-child {
+            float: left;
+          }
+          &:last-child {
+            float: right;
+          }
+        }
+      }
+      ul {
+        li {
+          .hs-cf;
+          height: 0.893333rem;
+          line-height: 0.893333rem;
+          .font-dpr(14px);
+          color: #787878;
+          padding:0 0.346667rem;
+          span {
+            b {
+              &.status_0 {
+                color: #464646;
+              }
+              &.status_1 {
+                color: #04df7a;
+              }
+              &.status_3 {
+                color: #ff5b5b;
+              }
+            }
+            &:first-child {
+              float: left;
+            }
+            &:last-child {
+              float: right;
+              font-weight: bold;
+
+              &.red {
+                color: #ff5b5b;
+              }
+            }
+          }
+          &:nth-child(even){
+            background-color: #f8f8f8;
+          }
+        }
+      }
+    }
+  }
+}
+

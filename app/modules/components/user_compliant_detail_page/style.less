@@ -1,0 +1,89 @@
+.user_compliant_detail_page {
+  .hs-footer {
+    a {
+      background-color: #01df78;
+      border: none;
+      color: #fff;
+      padding: 0.466667rem 0;
+      color: #fff;
+      width: 10rem;
+      display: block;
+      .font-dpr(16px);
+      text-align: center;
+    }
+  }
+  .content {
+    background-color: #f3f3f3 !important;
+    .item {
+      padding: 0 0;
+      background-color: #fff;
+      margin-top: 0.32rem;
+      &:last-child {
+        padding: 0.44rem 0.45rem;
+        h3 {
+          color: #a0a0a0;
+          .font-dpr(15px);
+        }
+        .content-padded {
+          margin-top: 0.32rem;
+          color: #494949;
+          .font-dpr(16px);
+          .font-line-height(26px);
+        }
+      }
+      .hs-cf;
+      ul {
+        position: relative;
+        padding-left: 1.066667rem;
+        &:after{
+          position: absolute;
+          background-color: #a0a0a0;
+          width: 0.04rem;
+          height: 100%;
+          left: 0.53rem;
+          top: 0;
+          content: "";
+        }
+        li {
+          color: #6a6a6a;
+          .font-dpr(16px);
+          position: relative;
+          border-bottom: 1px solid #dcdcdc;
+          padding-bottom: 0.42rem;
+          padding-right: 1.066667rem;
+          &:last-child {
+            border: none;
+
+          }
+          &:first-child {
+            color: #1e1e1e;
+            &:after{
+              top: 0;
+              left: -.67rem;
+              border: 1px solid #a3ffa3;
+              background-color: #00ff00;
+              border-width: 0.06rem;
+            }
+          }
+          span {
+            display: block;
+            margin-top: 0.266667rem;
+          }
+          &:after{
+            position: absolute;
+            background-color: #00ff00;
+            width: 0.22rem;
+            height: 0.22rem;
+            border: none;
+            border-radius: 200%;
+            background-color: #a0a0a0;
+            left: -.62rem;
+            top: .09rem;
+            content: "";
+            z-index: 999;
+          }
+        }
+      }
+    }
+  }
+}
