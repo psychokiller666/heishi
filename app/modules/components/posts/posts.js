@@ -18,7 +18,7 @@ $(document).on('pageInit','.posts', function (e, id, page) {
     // 注销上拉
     $.detachInfiniteScroll($('.infinite-scroll'));
   }
-  already_list.find('li').on('click','.office_empty_btn',function(e) {
+  already_list.on('click','.office_empty_btn',function(e) {
     var _this = this;
     var stock_number = $(this).parent().parent().find('.username span');
     $.confirm('确定要清空库存吗？', function () {
@@ -35,7 +35,7 @@ $(document).on('pageInit','.posts', function (e, id, page) {
 
 
   });
-  already_list.find('li').on('click','.office_btn',function(e) {
+  already_list.on('click','.office_btn',function(e) {
     var _this = this;
     already_list.find('li').off('click',_this);
     var stock_number = $(this).parent().parent().find('.username span');
@@ -50,12 +50,16 @@ $(document).on('pageInit','.posts', function (e, id, page) {
 
     });
     stock_box.on('click','.submit_remain',function(){
+      if(stock_box.find('input').val() < 1 || stock_box.find('input').val() > 500){
+        $.toast('请填写1~500数字');
+        return;
+      }
       $.post('/index.php?g=user&m=Center&a=ajax_update_goods',{
         object_id:object_id,
         numbers: stock_box.find('input').val()
       },function(data){
         if(data.status == 1){
-          $.toast('🙂 修改成功');
+          $.toast('修改成功');
           stock_number.text(stock_box.find('input').val());
           stock_box.hide();
         } else {
