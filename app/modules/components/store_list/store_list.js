@@ -10,6 +10,8 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
   }
   var init = new common(page);
 
+
+
   // 调用微信分享sdk
   var share_data = {
     title: '黑市 | 美好而操蛋的东西',
@@ -119,37 +121,7 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
   // 下拉加载更多
   var loading = false;
   // 初始化下拉
-  var page_size = 20;
-  var ctype;
-  var keyword;
-  var isculture;
-  if($('.showall').length){
-    ctype = 3;
-  } else {
-    ctype = 1
-  }
-  // 搜索加载页
-  var search_list = $('.search-list');
-  if($('.search-list').length){
-    // 初始化加载
-    keyword = store_list.data('keyword');
-    ctype = 3;
-    add_data(store_list.data('pages_next'));
-    if(isculture == 1){
-      store_list.addClass('culture_list').removeClass('store_list');
-      $('.hs-footer').find('li a').removeClass('active');
-      $('.hs-footer').find('li a').eq(1).addClass('active');
-    }
 
-    if(store_list.find('li').length != page_size) {
-
-    } else {
-      // 加载完毕，则注销无限加载事件，以防不必要的加载
-      $.detachInfiniteScroll($('.infinite-scroll'));
-      // 删除加载提示符
-      $('.infinite-scroll-preloader').remove();
-    }
-  }
   var store_list_tpl = handlebars.compile($("#store_list_tpl").html());
   // 增加handlebars判断
   handlebars.registerHelper('eq', function(v1, v2, options) {
@@ -159,108 +131,81 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
       return options.inverse(this);
     }
   });
-  // 控制前后页数
-  // function control_pages
-  // control_pages[0,1] 返回前后页数
-  function control_pages(current_pages,up_and_down){
-    var pages_next;
-    var pages_prev;
-    if(up_and_down == 'down'){
-      pages_next = parseInt(current_pages) + 1;
-      pages_prev = parseInt(current_pages) - 3;
-    } else if(up_and_down == 'up'){
-      pages_next = parseInt(current_pages) + 3;
-      pages_prev = parseInt(current_pages) - 1;
-    }
-    store_list.attr('data-pages_next',pages_next);
-    store_list.attr('data-pages_prev',pages_prev);
-  }
-  // 控制ul里面li的数量
-  // function control_number
-  // number 返回当前ul里面有多少个page页
-  function control_number(number){
-    var number = [];
-    // 去掉重复数组
-    Array.prototype.unique = function(){
-      var b = {} , n = [];
-      for (var i = 0 ; i < this.length; i++){
-        if(!b[this[i]]){
-          b[this[i]] = 1;
-          n.push(this[i]);
-        }
+  // 控制翻页
+  var control_pages = {
+    init:function(){
+      if(store_list.data('curpage') > 1){
+        this.show_page();
       }
-      return n;
-    }
-    $.map(store_list.find('li'),function(item,index){
-      number.push($(item).data('page'));
-    })
-    return number.unique();
-  }
-  // function control_number
-  // remove_first 删除第一个
-  // remove_last 删除最后一个
-  function control_dom() {
-    var first_id = $('.store_list').find('li').first().data('page').split('_')[1];
-    var last_id = $('.store_list').find('li').last().data('page').split('_')[1];
-    this.remove_first = function(){
-      if(control_number().length == 3){
-        $('[data-page=page_'+first_id).remove();
+    },
+    get_subpage:function(){
+      if(store_list.data('subpage') < 5){
+        store_list.attr('data-subpage',store_list.data('subpage')+1);
       }
-    }
-    this.remove_last = function(){
-      if(control_number().length == 3){
-        $('[data-page=page_'+last_id).remove();
+      return store_list.attr('data-subpage');
+    },
+    get_page:function(){
+      return store_list.attr('data-page');
+    },
+    show_page:function(){
+      $('.pages').removeClass('hide');
+      // 注销滚动
+      $.detachInfiniteScroll($('.infinite-scroll'));
+      $('.infinite-scroll-preloader').remove();
+    },
+    get_ajax_data:function(){
+      var r_page = this.get_page(),
+      r_subpage = this.get_subpage();
+      return {
+        page:r_page,
+        pages:store_list.attr('data-pages'),
+        page_size:store_list.attr('data-pagesize'),
+        ctype:store_list.attr('data-ctype'),
+        keyword:store_list.attr('data-keyword'),
+        is_culture:store_list.attr('data-isculture'),
+        subpage:r_subpage
       }
     }
   }
-
+  control_pages.init();
   // function add_data
-  // ajax_page 页数，up_and_down 添加上或下
-  function add_data(ajax_page,up_and_down) {
+  function add_data(ajax_data) {
     $.ajax({
       type: 'POST',
-      url: '/index.php?g=restful&m=HsArticle&a=ajax_index_list',
-      data: {
-        page:ajax_page,
-        page_size:page_size,
-        ctype:ctype,
-        keyword:keyword,
-        is_culture:isculture
-      },
+      url: '/index.php?g=portal&m=index&a=ajax_index_list',
+      data: ajax_data,
       dataType: 'json',
       timeout: 4000,
       success: function(data){
         if(data.status == 1){
-
-          if (store_list.data('pages_next') > data.pages) {
+          if (ajax_data.page >= data.pages) {
             $.detachInfiniteScroll($('.infinite-scroll'));
-            // 删除加载提示符
             $('.infinite-scroll-preloader').remove();
             $.toast('没有了');
           } else {
-            if(up_and_down == 'up'){
-              store_list.find('ul').prepend(store_list_tpl({data:data.data,page:ajax_page}));
-              control_pages(ajax_page,'up');
-            } else {
-              store_list.find('ul').append(store_list_tpl({data:data.data,page:ajax_page}));
-              control_pages(ajax_page,'down');
-            }
-            if (store_list.data('pages_next') >= data.pages) {
-              $.detachInfiniteScroll($('.infinite-scroll'));
-              // 删除加载提示符
-              $('.infinite-scroll-preloader').remove();
-            }
+            store_list.find('ul').append(store_list_tpl(data));
+            // 图片加载
             init.loadimg();
-          }
-          if($('.search-list').length){
-            if(!data.data.length){
-              store_list.append('<div class="no_data">毛都没找到</div>');
-              // 加载完毕，则注销无限加载事件，以防不必要的加载
-              $.detachInfiniteScroll($('.infinite-scroll'));
-              // 删除加载提示符
-              $('.infinite-scroll-preloader').remove();
+            if(ajax_data.subpage >= 5){
+              control_pages.show_page();
             }
           }
+          if(ajax_data.keyword){
+            if(!data.data.length){
+              if(!store_list.find('li').length){
+                store_list.append('<div class="no_data">毛都没找到</div>');
+              }
+              $.detachInfiniteScroll($('.infinite-scroll'));
+              $('.infinite-scroll-preloader').remove();
+            }
+            if(ajax_data.subpage >= 5){
+              $.detachInfiniteScroll($('.infinite-scroll'));
+              $('.infinite-scroll-preloader').remove();
+              $('.pages').addClass('hide');
+            }
+          }
+          // 刷新
+          $.refreshScroller();
         } else {
           $.toast('请求错误');
         }
@@ -270,8 +215,6 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
       }
     });
   }
-
-
   // 监听滚动
   page.on('infinite','.infinite-scroll', function(e) {
     // 如果正在加载，则退出
@@ -280,32 +223,18 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
     loading = true;
     setTimeout(function() {
       loading = false;
-      add_data(store_list.data('pages_next'),'down');
+      add_data(control_pages.get_ajax_data());
     },500);
-    // new control_dom().remove_first();
-    $.refreshScroller();
   });
-
-  store_list.on('scrollend',function(e){
-    console.log(e);
-  });
-
-  // 向上加载更多
-  // store_list.on('scroll',function(e){
-  //   if (loading) return;
-
-
-  //   if(store_list.scrollTop() <= store_list.find('li').height() * 15){
-  //     if(store_list.data('pages_prev') >= 1){
-  //       console.log(store_list.data('pages_prev'));
-  //       loading = true;
-  //       setTimeout(function() {
-  //         loading = false;
-  //         add_data(store_list.data('pages_prev'),'up');
-  //       },500);
-  //       new control_dom().remove_last();
-  //       $.refreshScroller();
-  //     }
-  //   }
-  // })
+  // 搜索加载页
+  var search_list = $('.search-list');
+  if(search_list.length){
+    // 初始化加载
+    add_data(control_pages.get_ajax_data());
+    if(store_list.data('isculture') == 1){
+      store_list.addClass('culture_list').removeClass('store_list');
+      $('.hs-footer').find('li a').removeClass('active');
+      $('.hs-footer').find('li a').eq(1).addClass('active');
+    }
+  }
 });
