@@ -380,8 +380,6 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   var comment_bd = $('.comment_bd');
   var loading = false;
   // 初始化下拉
-  var post_id = comment.data('id');
-  var cur_cid;
   var is_load = true;
   var comment_list_tpl = handlebars.compile($("#comment_list_tpl").html());
 
@@ -394,7 +392,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
   });
   // 请求加载评论方法
-  function add_data() {
+  function add_data(post_id,cur_cid) {
     $.ajax({
       type: 'GET',
       url: '/index.php?g=Comment&m=Widget&a=ajax_more&table=posts',
@@ -418,7 +416,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
               comment_bd.find('.new').remove();
               // 添加继续
               comment_bd.append(comment_list_tpl(data));
-              cur_cid = comment_bd.find('li').last().data('id');
+              comment.attr('data-cid',comment_bd.find('.father').last().data('id'));
 
               $('[data-layzr]').lazyload({
                 data_attribute:'layzr',
@@ -447,14 +445,12 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     // 设置flag
     loading = true;
     // 如果当前页面加载过。直接加载最后的cid
-    if(comment_bd.find('li').length && !comment_bd.find('li').hasClass('new')){
-      cur_cid = comment_bd.find('li').last().data('id');
-    }
+
     setTimeout(function() {
       // 重置加载flag
       loading = false;
       // 请求数据
-      add_data();
+      add_data(comment.data('id'),comment.data('cid'));
       $.refreshScroller();
     }, 500);
   });
@@ -522,7 +518,8 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       }
       // 判断是否为空并且过滤关键词
       if(!comment_content.length){
-        comment_input.attr('placeholder','😒 评论不能为空');
+        dialog_comment.hide();
+        $.toast('评论不能为空');
       } else if (esc.find(comment_content).length) {
         // 如果为空
         dialog_comment.hide();
@@ -616,8 +613,15 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
 
     // 监听input file是否有文件添加进来
     dialog_comment.on("change",'.webuploader-element-invisible', function(e) {
-      uploader.addFiles(e.target.files);
-      uploader.upload();
+      if(comment_input.val().length){
+        $.confirm('图片和文字二选一', '提示', function () {
+          uploader.addFiles(e.target.files);
+          uploader.upload();
+        });
+      } else {
+        uploader.addFiles(e.target.files);
+        uploader.upload();
+      }
     });
     // 图片列队
     uploader.onFileQueued = function(file){
@@ -675,6 +679,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       image.find('.image_list').empty();
       comment_input.val('');
       comment_input.removeAttr('data-imgurl');
+      comment_input.removeAttr('disabled');
       comment_input.attr('placeholder','随便说点什么');
       comment_input.show();
       type = 0;
