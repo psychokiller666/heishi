@@ -9,7 +9,18 @@ $(document).on('pageInit','.center', function(e, id, page){
     return false;
   }
   var init = new common(page);
-  init.wx_share(false);
+  if($('.user_inedx').length){
+    var share_data = {
+      title: '这哥们卖的破烂有点意思 | 黑市',
+      desc: '这里能让好事自然发生',
+      link: window.location.href,
+      img: $('.avatar').data('layzr')
+    };
+    init.wx_share(share_data);
+  } else {
+    init.wx_share(false);
+  }
+
   // 检查是否有新的消息
   init.msg_tip();
   // 高度补丁
@@ -62,7 +73,7 @@ $(document).on('pageInit','.center', function(e, id, page){
   })
 
   // 别人的个人中心
-  var store_list = $('.store_list');
+  var store_list = $('.user_inedx');
   var attention_btn = $('.attention-btn');
   if(store_list.length){
     // 检查是否关注
