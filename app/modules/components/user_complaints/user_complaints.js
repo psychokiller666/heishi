@@ -155,6 +155,8 @@ $(document).on('pageInit','.complaints_page', function (e, id, page) {
   }
 
   submit_btn.on('click',function(){
+    var _this = this;
+    $(_this).attr('disabled','disabled');
     if(get_telphone() && get_memo()){
       $.post('/index.php?g=user&m=HsOrder&a=compliant_action',{
         telphone:$('.telphone').val(),
@@ -166,6 +168,9 @@ $(document).on('pageInit','.complaints_page', function (e, id, page) {
       },function(data){
         if(data.status == 1){
           submit_box.show();
+        } else {
+          $.toast(data.info);
+          $(_this).removeAttr('disabled');
         }
       })
     }
