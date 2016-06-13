@@ -452,7 +452,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       // 请求数据
       add_data(comment.data('id'),comment.data('cid'));
       $.refreshScroller();
-    }, 500);
+    }, 1000);
   });
 
   // 添加评论

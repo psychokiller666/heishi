@@ -9,6 +9,33 @@
        padding: .21rem .24rem;
        width: 9.58rem;
        li {
+        &.down_xls {
+          line-height: 1.24rem;
+          border-left: 1px solid #f1f1f1;
+          border-right: 1px solid #f1f1f1;
+          box-shadow: 0 5px 5px #d6d6d6;
+          margin-bottom: .266667rem;
+          background-color: #fff;
+          padding:0 .16rem;
+          .font-dpr(14px);
+          .hs-cf;
+          .info {
+            float: left;
+          }
+          .down_btn {
+            float: right;
+            .font-dpr(13px);
+            border:1px solid #5bd69d;
+            border-width: 0.02rem;
+            background-color: #fff;
+            padding: 0 0.26rem;
+            color: #5bd69d;
+            border-radius: 4px;
+            line-height: 0.56rem;
+            display: block;
+            margin-top: 0.34rem;
+          }
+        }
         padding: .16rem .16rem 0 .16rem;
         border-left: 1px solid #f1f1f1;
         border-right: 1px solid #f1f1f1;
@@ -112,6 +139,10 @@
         }
         .office {
           float:right;
+          margin: .2rem 0;
+          &.my_bought{
+            margin: 0;
+          }
           button,a {
             .font-dpr(13px);
             border:1px solid #5bd69d;

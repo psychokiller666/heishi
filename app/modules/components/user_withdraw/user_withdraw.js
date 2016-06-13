@@ -58,13 +58,12 @@ $(document).on('pageInit','#withdraw', function (e, id, page) {
               _this.attr('data-amount',res.data);
               $('.money span').text(res.data);
               $('.user_withdraw strong').text(res.data);
+              setTimeout(function(){
+                $.router.load('/User/Center/index.html#center', true);
+              },1000);
             } else {
               $.toast(res.info);
             }
-            setTimeout(function(){
-              $.router.load('/User/Center/index.html', true);
-              // $.router.back('#center');
-            },2000);
           },
           error: function(xhr, type){
             $.toast('网络错误 code:'+xhr);
