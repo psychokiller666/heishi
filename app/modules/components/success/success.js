@@ -8,6 +8,7 @@ $(document).on('pageInit','.jump', function(e, id, page){
   }
   var init = new common(page);
   init.wx_share(false);
+<<<<<<< HEAD
   if($('.success').length){
     init.cnzz_push('完成订单',{
       '订单ID': $(page).data('ordernumber'),
@@ -15,6 +16,9 @@ $(document).on('pageInit','.jump', function(e, id, page){
       '订单类型': $(page).data('actiontype')
     });
   }
+=======
+
+>>>>>>> cbb38720676b5f64ea112cecb2f590529a0dfa1e
   if(!$('.error').length) {
     setTimeout(function(){
       window.location.href = $('.no_data').data('url');
@@ -24,4 +28,9 @@ $(document).on('pageInit','.jump', function(e, id, page){
       history.go(-1);
     },3000)
   }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> cbb38720676b5f64ea112cecb2f590529a0dfa1e
 });
