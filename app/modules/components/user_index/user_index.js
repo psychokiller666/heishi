@@ -90,9 +90,12 @@ $(document).on('pageInit','.center', function(e, id, page){
           attention_btn.html('关注');
         }
       });
+<<<<<<< HEAD
       $('.msg-btn').on('click',function(){
         $.router.load('/User/HsMessage/detail/from_uid/'+$(this).data('id'),true);
       })
+=======
+>>>>>>> cbb38720676b5f64ea112cecb2f590529a0dfa1e
     // 操作关注 & 取消关注
     attention_btn.on('click',function(){
 
