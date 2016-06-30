@@ -151,6 +151,15 @@ $(document).on('pageInit','.add', function (e, id, page) {
           filepath:data.data,
           iscover:iscover
         });
+      } else {
+        $.toast(data.info);
+        $(_this).empty();
+        if($(_this).hasClass('cover')){
+          $(_this).html('<div class="image hs-icon"></div><input type="file" name="file" class="webuploader-element-invisible" accept="image/*" single="">')
+        } else {
+          $(_this).html('<div class="image"></div><input type="file" name="file" class="webuploader-element-invisible" accept="image/*" single="">');
+        }
+        uploader.removeFile(file);
       }
     }
     uploader.onUploadError = function(file,data){
@@ -160,6 +169,9 @@ $(document).on('pageInit','.add', function (e, id, page) {
       $('[data-id="'+file.id+'"]').remove();
 
       $.toast('请重新上传图片');
+      submit_btn.removeAttr('disabled');
+    }
+    uploader.onReset = function(){
       submit_btn.removeAttr('disabled');
     }
     uploader.onError = function(type){
@@ -271,7 +283,7 @@ $(document).on('pageInit','.add', function (e, id, page) {
   submit_btn.on('click',function(){
     var _this = $(this);
     var post_data;
-    console.log(_this.data('type') == 1);
+    // console.log(_this.data('type') == 1);
     // 判断
     if(get_title() && get_excerpt() && get_picture_list() && get_tags()){
       if(_this.data('type') == 1){
@@ -302,7 +314,7 @@ $(document).on('pageInit','.add', function (e, id, page) {
       }
       // 提交
       _this.attr('disabled','disabled');
-      console.log(post_data);
+      // console.log(post_data);
       $.ajax({
         type: 'post',
         url: '/index.php?g=user&m=HsPost&a=add_post',
