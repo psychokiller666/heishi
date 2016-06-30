@@ -50,9 +50,10 @@ $(document).on('pageInit','.detail', function (e, id, page) {
     } else {
       $(this).removeClass('active');
       update_img_box.hide();
-      // 上传初始化
-      uploader.reset();
+
     }
+    // 上传初始化
+    uploader.reset();
   })
   // 监听input file是否有文件添加进来
   update_img_box.on("change",'.webuploader-element-invisible', function(e) {
@@ -105,7 +106,8 @@ $(document).on('pageInit','.detail', function (e, id, page) {
   }
   // 当图片初始化
   uploader.onReset = function(){
-    image_list.before('<div class="updata_image_btn"><button type="button"></button><input type="file" name="file" class="webuploader-element-invisible" accept="image/*" single></div>');
+    update_img_box.find('.updata_image_btn').remove();
+    image_list.before('<div class="updata_image_btn"><button class="hs-icon" type="button"></button><input type="file" name="file" class="webuploader-element-invisible" accept="image/*" single></div>');
     image_list.empty();
     image_list.removeAttr('data-imgurl');
     chat_content.val('').attr('placeholder','回复');
@@ -141,7 +143,26 @@ $(document).on('pageInit','.detail', function (e, id, page) {
     '叶子',
     '淘宝',
     'taobao.com',
-    '共产党'
+    '共产党',
+    '有飞',
+    '想飞',
+    '要飞',
+    '微信',
+    '加我',
+    '大妈',
+    '飞吗',
+    '飞嘛',
+    'qq',
+    '拿货',
+    'weed',
+    '机长',
+    'thc',
+    'V信',
+    'wechat',
+    'VX',
+    '蘑菇',
+    '邮票',
+    'LSD'
     ];
     esc.init(text_list);
     var content;
@@ -176,11 +197,11 @@ $(document).on('pageInit','.detail', function (e, id, page) {
           if(data.status == 1){
             chat_list.find('ul').append(chat_reply_tpl(reply_data));
             $.toast('🌚 发送成功');
-            init.loadimg();
             $('.content').scrollTop(9999999);
             update_img_btn.removeClass('active');
             update_img_box.hide();
             uploader.reset();
+            init.loadimg();
           } else {
             $.toast(data.info);
           }
@@ -242,7 +263,7 @@ $(document).on('pageInit','.detail', function (e, id, page) {
   // 上拉加载更多
   var loading = false;
   // 初始化下拉
-  var page_number = 0;
+  var page_number = 1;
   var chat_tpl = handlebars.compile($("#chat_tpl").html());
   // 增加handlebars判断
   handlebars.registerHelper('eq', function(v1, v2, options) {
@@ -261,8 +282,16 @@ $(document).on('pageInit','.detail', function (e, id, page) {
     }
     return v2;
   });
+  handlebars.registerHelper("chat_avatar", function(v1, options) {
+    if (v1 == chat_list.data('owner')) {
+      return options.fn(this);
+    } else {
+      return options.inverse(this);
+    }
+  });
   // 增加数据
   function add_data(pages){
+
     $.ajax({
       type: 'POST',
       url: '/index.php?g=user&m=HsMessage&a=ajax_details',
@@ -274,21 +303,42 @@ $(document).on('pageInit','.detail', function (e, id, page) {
       timeout: 4000,
       success: function(data){
         if(data.status == 1){
-          if(page_number >= data.pages){
+          // if(page_number >= data.pages){
+          //   // 加载完毕，则注销无限加载事件，以防不必要的加载
+          //   $.destroyPullToRefresh($('.pull-to-refresh-content'));
+          //   $.pullToRefreshDone('.pull-to-refresh-content');
+          //   // 删除加载提示符
+          //   $('.pull-to-refresh-layer').remove();
+          //   $.toast('😒 没有更多了');
+          //   return false;
+          // }
+
+          // 初始化加载
+          chat_list.find('ul').prepend(chat_tpl(data.data));
+          init.loadimg();
+          if(page_number == 1){
+            $.refreshScroller();
+            $('.content').scrollTop($('.content ul').height());
+          }
+          if($('.content').height() > $('.content ul').height()){
             // 加载完毕，则注销无限加载事件，以防不必要的加载
             $.destroyPullToRefresh($('.pull-to-refresh-content'));
             $.pullToRefreshDone('.pull-to-refresh-content');
             // 删除加载提示符
             $('.pull-to-refresh-layer').remove();
-            $.toast('😒 没有更多了');
             return false;
           }
-          chat_list.find('ul').prepend(chat_tpl(data.data));
+
           page_number++;
-          init.loadimg();
+          // init.loadimg();
           $.pullToRefreshDone('.pull-to-refresh-content');
-        } else {
-          $.toast(data.info);
+        } else if(data.status == 0) {
+          // 加载完毕，则注销无限加载事件，以防不必要的加载
+          $.destroyPullToRefresh($('.pull-to-refresh-content'));
+          $.pullToRefreshDone('.pull-to-refresh-content');
+          // 删除加载提示符
+          $('.pull-to-refresh-layer').remove();
+          // $.toast('😒 没有更多了');
         }
 
       },
@@ -299,11 +349,7 @@ $(document).on('pageInit','.detail', function (e, id, page) {
   }
   // 初始化1页数据
   add_data(page_number);
-  // 移动到底部
-  $.refreshScroller();
-  setTimeout(function(){
-    $('.content').scrollTop($('.content ul').height());
-  },1000);
+
   // 监听下拉
   page.on('refresh', '.pull-to-refresh-content',function(e) {
    if (loading ) return;
@@ -313,7 +359,6 @@ $(document).on('pageInit','.detail', function (e, id, page) {
       // 重置加载flag
       loading = false;
       // 添加数据
-      console.log(page_number);
       add_data(page_number);
       $.refreshScroller();
     }, 500);

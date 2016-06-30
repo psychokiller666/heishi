@@ -9,15 +9,17 @@
     position: relative;
     .hs-cf();
     .title {
-      .font-dpr(14px);
+      .font-dpr(16px);
       float: left;
     }
     .recent_btn {
       float: right;
-      .font-dpr(22px);
       background: none;
       border: none;
+      padding-left: 1rem;
+      padding-bottom: 0.04rem;
       &:before {
+        .font-dpr(16px);
         content: "\e61a";
       }
       &.active:before {
@@ -33,7 +35,7 @@
       left: 0;
       display: none;
       .hs-cf;
-      .image {
+      .images {
         width: 1.746667rem;
         height: 1.693333rem;
         background-position: 50% 50%;

@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="page-group">
-        <div class="container show-list page">
+        <div class="container page show_list">
             <header class="hs-header">
                 @@include('list_header/index');
             </header>
@@ -18,6 +18,10 @@
                 @@include('list_footer/index');
             </footer>
             <main class="hs-main">
+                <div class="placard">
+                    <marquee direction="left">ddddddddddddddddddddddddddddddddddd</marquee>
+                    <button type="button" class="placard_close"></button>
+                </div>
                 @@include('store_list/index');
             </main>
             <div class="search_box">
@@ -26,8 +30,53 @@
                     <button type="button" class="search_submit">搜索</button>
                 </div>
             </div>
+            <div class="follow_me">
+                <!-- <div class="popup-overlay"></div> -->
+                <div class="modal-overlay modal-overlay-visible"></div>
+                <div class="bitch_follow_me">
+                    <button type="button" class="bitch_close"></button>
+                    <div class="bitch_text_1">
+                        <p>长按下图</p>
+                        <p>扫描图中二维码</p>
+                        <p>关注<strong>黑市</strong></p>
+                    </div>
+                    <div class="bitch_img_1"></div>
+                    <div class="bitch_text_2"><span>下次才能找到我们</span></div>
+                    <div class="bitch_img_2"><img src="img/follow_me_bitch_code.png" alt="长按扫描二维码"></div>
+                    <div class="bitch_text_3">
+                        <p>线上亚文化市集</p>
+                        <p>每个人都可以<strong>售卖</strong>、<strong>购买</strong>、<strong>分享</strong></p>
+                        <p>那些美好而操蛋的东西</p>
+                    </div>
+                    <div class="bitch_img_3"></div>
+                </div>
+            </div>
+            <div class="phone_verify">
+                <div class="modal-overlay modal-overlay-visible"></div>
+                <div class="phone_verify_modal">
+                    <div class="phone_verify_bd">
+                        <div class="logo"></div>
+                        <div class="info">
+                            <h3>卖家手机验证须知</h3>
+                            <p>为了方便买家联系卖家</p>
+                            <p>我们需要确认手机号码真实存在</p>
+                            <p>并进行短信认证</p>
+                            <p>验证成功之后才能发布商品</p>
+                        </div>
+                        <a href="#" class="submit">开始认证</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script src="js/main.js"></script>
+    <script>
+    //全局变量
+    var GV = {
+        HOST: "http://hstest.ontheroadstore.com/",
+        pay_url :"http://hs.ontheroadstore.com/payment/test_pay/",
+        img_url :"http://img8.ontheroadstore.com/"
+    };
+</script>
 </body>
 </html>

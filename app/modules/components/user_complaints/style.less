@@ -1,0 +1,192 @@
+// 投诉
+.complaints_page {
+  .hs-footer {
+    button {
+      background-color: #01df78;
+      border: none;
+      color: #fff;
+      padding: 0.466667rem 0;
+      color: #fff;
+      width: 10rem;
+      .font-dpr(16px);
+    }
+  }
+  .content {
+    background-color: #f6f6f6;
+    height: 100%;
+    .item {
+      background-color: #fff;
+      padding:0.346667rem;
+      position: relative;
+      .hs-cf;
+      textarea {
+        width:100%;
+        border: none;
+        .font-dpr(15px);
+        .font-line-height(24px);
+      }
+      &.photo {
+        ul {
+          li {
+            position: relative;
+            float: left;
+            width: 2.11rem;
+            height: 2.08rem;
+            border: 1px solid #cacaca;
+            border-width: 0.04rem;
+            border-radius: 0.04rem;
+            overflow: hidden;
+            margin-right: 0.18rem;
+            margin-bottom: 0.18rem;
+            &:nth-child(4){
+              margin-right: 0;
+            }
+            &:nth-child(8){
+              margin-right: 0;
+            }
+            &:nth-child(12){
+              margin-right: 0;
+            }
+            &:nth-child(16){
+              margin-right: 0;
+            }
+            img {
+              width: 100%;
+            }
+            .remove_btn {
+              position:absolute;
+              right: 0.08rem;
+              top: 0.08rem;
+              line-height: 0;
+              border-radius: 200%;
+              background-color: #000;
+              border: none;
+              color: #fff;
+              opacity: .8;
+              z-index: 999;
+              &:after {
+                content: "\e615";
+                font-size: .38rem;
+                display: block;
+                width: .38rem;
+                height: .38rem;
+                line-height: .38rem;
+              }
+            }
+            input {
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 2.11rem;
+              height: 2.08rem;
+              display: block;
+              opacity: 0;
+            }
+            .updata_btn {
+             width: 2.11rem;
+             height: 2.08rem;
+             color: #cacaca;
+             background: none;
+             .font-dpr(60px);
+             line-height: 0;
+             font-weight: 400;
+             border: none;
+             &:before {
+              content: "\e617";
+            }
+          }
+          .progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            overflow: hidden;
+            width: 100%;
+            height: .16rem;
+            background-color: #e2e2e2;
+            box-sizing: border-box;
+            z-index: 9999;
+            span {
+              display: block;
+              width: 0;
+              background: #65d521;
+              height: 100%;
+              font-size: 0;
+            }
+          }
+        }
+      }
+    }
+    &.phone {
+      margin-top: 0.346667rem;
+      line-height: 0;
+      padding:.5rem 0.346667rem;
+      label {
+        position: absolute;
+        .font-dpr(15px);
+        color: #414141;
+        font-weight: bold;
+      }
+      input {
+        position: absolute;
+        left: 1.5rem;
+        width: 8rem;
+        top: 0;
+        height: 100%;
+        border:none;
+        .font-dpr(15px);
+      }
+    }
+  }
+}
+.submit_box {
+  display: none;
+  .modal-overlay {
+    visibility: visible;
+    opacity: 1;
+  }
+  .submit_box_modal {
+    position: absolute;
+    z-index: 11000;
+    top: 3.1rem;
+    left: 50%;
+    margin-left: -3.67rem;
+    .submit_box_bd {
+      width: 6.22rem;
+      padding: 0.56rem 0.4rem 0.24rem 0.4rem;
+      margin:0 auto;
+      background-color: #eee;
+      border-radius: 0.12rem;
+      .hs-cf;
+      .info {
+        ol {
+          li {
+            .font-dpr(16px);
+            .font-line-height(26px);
+            margin-bottom: 0.4rem;
+            color: #2f2f2f;
+          }
+        }
+      }
+      a {
+        float:left;
+        display: block;
+        width: 2.893333rem;
+        height: 0.933333rem;
+        text-align: center;
+        .font-dpr(16px);
+        line-height: 0.933333rem;
+        color: #000;
+        border: 1px solid #000;
+        border-width: 0.04rem;
+        border-radius: .12rem;
+        &.fucking {
+          float: right;
+          color: #6abc8b;
+          border-color: #6abc8b;
+        }
+      }
+    }
+  }
+}
+
+}

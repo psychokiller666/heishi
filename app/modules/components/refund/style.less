@@ -1,0 +1,32 @@
+.refund {
+  background-color: #f6f6f6 !important;
+  .hs-main {
+    background-color: #fff;
+    input:disabled {
+      color: #262626;
+    }
+    input.money {
+      color: #fe0d0d;
+    }
+    .already_list {
+      .refund_status{
+        width: 4rem;
+        float: left;
+        margin: .1rem 0;
+        .font-dpr(14px);
+        .font-line-height(18px);
+        i {
+          .font-dpr(18px);
+          &:before {
+            content: "\e622";
+          }
+          &.processed {
+            &:before {
+              content: "\e621";
+            }
+          }
+        }
+      }
+    }
+  }
+}

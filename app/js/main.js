@@ -48,7 +48,22 @@ require('../modules/components/already_list/already_list.js');
 require('../modules/components/deliver/deliver.js');
 // 发过的东西
 require('../modules/components/posts/posts.js');
+// 粉丝列表
+require('../modules/components/fans_list/fans_list.js');
+// 提现列表
+require('../modules/components/user_withdraw_list/user_withdraw_list.js');
+// 投诉
+require('../modules/components/user_complaints/user_complaints.js');
+// 退款
+require('../modules/components/refund/refund.js');
+// 退款详情
+require('../modules/components/refund_detail/refund_detail.js');
 
 // 商品内容页
 require('../modules/components/store_show/store_show.js');
 require('../modules/components/orderform/orderform.js');
+
+// 跳转页
+require('../modules/components/success/success.js');
+
+
