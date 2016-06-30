@@ -67,7 +67,6 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
         '&object_id=' + _this.data('id') +
         '&quantity=' + order_number.val() +
         '&seller_username=' + _this.data('username');
-<<<<<<< HEAD
 
         init.cnzz_push('下订单',{
           '订单ID': data.order_number
@@ -76,10 +75,7 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
           $.hidePreloader();
           window.location.href = ok_url;
         },1500);
-=======
-        $.hidePreloader();
-        window.location.href = ok_url;
->>>>>>> cbb38720676b5f64ea112cecb2f590529a0dfa1e
+
       } else {
         $.toast(data.info);
       }

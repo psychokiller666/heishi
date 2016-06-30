@@ -1,10 +1,7 @@
 // 页面初始化
 // 图片延时加载
-<<<<<<< HEAD
 var lazyload = require('../../../../bower_components/jieyou_lazyload/lazyload.min.js');
-=======
-var lazyload = require('../../../../bower_components/lazyload/lazyload.min.js');
->>>>>>> cbb38720676b5f64ea112cecb2f590529a0dfa1e
+
 // 微信sdk
 var wx = require('weixin-js-sdk');
 
@@ -27,10 +24,8 @@ var common = function(page){
       $(this.page).find('.hs-main').css('bottom','0');
     }
   }
-<<<<<<< HEAD
-=======
-  // console.log(page,'页面初始化');
->>>>>>> cbb38720676b5f64ea112cecb2f590529a0dfa1e
+
+
   // 图片加载
   // 头部
   if($(this.page).find('header').length){
@@ -44,11 +39,9 @@ var common = function(page){
     data_attribute:'layzr',
     container: $(".content")
   });
-<<<<<<< HEAD
-  this.cnzz_dplus();
-=======
 
->>>>>>> cbb38720676b5f64ea112cecb2f590529a0dfa1e
+  this.cnzz_dplus();
+
 };
 // 图片延时加载
 common.prototype.loadimg = function(){
@@ -104,10 +97,7 @@ common.prototype.wx_share = function(options){
       url: encodeURIComponent(location.href.split('#')[0])
     }
   }).done(function(data){
-<<<<<<< HEAD
-=======
-    // console.log(data,'微信sdk初始化');
->>>>>>> cbb38720676b5f64ea112cecb2f590529a0dfa1e
+
     // 判断是否分享
     if(options) {
       wx.config({

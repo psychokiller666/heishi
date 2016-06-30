@@ -11,11 +11,7 @@ var WebUploader = require('../../../../node_modules/tb-webuploader/dist/webuploa
 var esc = require('../../../../node_modules/chn-escape/escape.js');
 
 // 图片延时加载
-<<<<<<< HEAD
 var lazyload = require('../../../../bower_components/jieyou_lazyload/lazyload.min.js');
-=======
-var lazyload = require('../../../../bower_components/lazyload/lazyload.min.js');
->>>>>>> cbb38720676b5f64ea112cecb2f590529a0dfa1e
 
 $(document).on('pageInit','.store-show', function (e, id, page) {
   if (page.selector == '.page'){
