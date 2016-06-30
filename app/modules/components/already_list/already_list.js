@@ -3,9 +3,7 @@
 var handlebars = require('../../../../node_modules/handlebars/dist/handlebars.min.js');
 // 页面初始化
 var common = require('../common/common.js');
-var deliver_data = {
-  title:'ffff'
-}
+
 $(document).on('pageInit','.untreated', function (e, id, page) {
   if (page.selector == '.page'){
     return false;
@@ -24,6 +22,9 @@ $(document).on('pageInit','.untreated', function (e, id, page) {
   if($('.delivered').length){
     ajax_url = '/index.php?g=user&m=HsOrder&a=ajax_delivered';
   }
+  if($('.refund').length){
+    ajax_url = '/index.php?g=user&m=HsOrder&a=ajax_refund';
+  }
   var already_list_tpl = handlebars.compile($("#already_list_tpl").html());
   // 加入判断方法
   handlebars.registerHelper('eq', function(v1, v2, options) {
@@ -36,19 +37,87 @@ $(document).on('pageInit','.untreated', function (e, id, page) {
   // 搜索
   var already_search_btn = $('.already_search_btn');
   var already_search_box = $('.already_search_box');
-
+  var already_li_old;
+  $('.already_header').find('li').each(function(index,item){
+    if($(item).hasClass('active')){
+      already_li_old = index;
+    }
+  });
   already_search_btn.on('click',function(){
     var _this = $(this);
     if(_this.hasClass('active')){
+      $('.already_header').find('li').eq(already_li_old).addClass('active');
       _this.removeClass('active');
       already_search_box.hide();
     } else {
+      $('.already_header').find('li').removeClass('active');
       _this.addClass('active');
       already_search_box.show();
       already_search_box.find('input').trigger('focus');
     }
     $('.hs-main').css('top',$('.already_header').height());
   })
+  already_search_box.on('click','button',function(){
+    if(already_search_box.find('input').val().length) {
+      window.location.href = '/index.php?g=user&m=HsOrder&a=search&content='+already_search_box.find('input').val();
+    } else {
+      $('.already_header').find('li').eq(already_li_old).addClass('active');
+      already_search_btn.removeClass('active');
+      already_search_box.hide();
+      $('.hs-main').css('top',$('.already_header').height());
+    }
+  })
+
+  function search_data(content){
+    $.ajax({
+      type: 'POST',
+      url: '/index.php?g=user&m=HsOrder&a=ajax_search_by_name',
+      data: {
+        content:content,
+      },
+      dataType: 'json',
+      timeout: 4000,
+      success: function(data){
+        if(data.status == 1){
+          already_list.find('ul').html(already_list_tpl(data.data));
+          init.loadimg();
+        } else {
+          $.toast(data.info);
+        }
+      },
+      error: function(xhr, type){
+        $.toast('网络错误 code:'+type);
+      }
+    });
+  }
+  if($('.search').length){
+    search_data($('.search').data('content'));
+  }
+  // 联系卖家
+  page.on('click','.contact_btn',function(){
+    var _this = $(this);
+    var features_btn = [
+    {
+      text: '请选择',
+      label: true
+    },
+    {
+      text: '私信买家',
+      onClick: function() {
+        $.router.load('/User/HsMessage/detail/from_uid/'+_this.data('uid')+'.html', true);
+      }
+    }
+    ];
+    var cancel_btn = [
+    {
+      text: '取消',
+      bg: 'danger'
+    }
+    ];
+    var groups = [features_btn, cancel_btn];
+    $.actions(groups);
+  })
+
   // 添加数据
   function add_data(page_size,page) {
     $.ajax({

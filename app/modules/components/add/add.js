@@ -50,7 +50,6 @@ $(document).on('pageInit','.add', function (e, id, page) {
     if(_this.length){
      $.each(_this,function(index,item){
       temp.push(item.iscover);
-      console.log(temp);
       if(temp.indexOf(is_cover) == -1) {
         result = false;
       } else {
@@ -61,7 +60,7 @@ $(document).on('pageInit','.add', function (e, id, page) {
    return result;
  };
   // 限制图片数量
-  var max_pic_number = 5;
+  var max_pic_number = 22;
 
   // WebUploader 初始化
   var uploader = WebUploader.create({
@@ -114,8 +113,6 @@ $(document).on('pageInit','.add', function (e, id, page) {
           $(_this).find('.image').append('<img src="'+ret+'" />');
         }
       });
-      // 控制提交按钮
-      submit_btn.attr('disabled','disabled');
     }
     // 上传图片
     uploader.addFiles(e.target.files);
@@ -124,6 +121,16 @@ $(document).on('pageInit','.add', function (e, id, page) {
       var progress_tpl = '<div class="progress"><span></span></div>';
       $(_this).find('.image').append(progress_tpl);
       $(_this).find('.image .progress span').css('width', percentage * 100 + '%');
+    }
+    // 文件开始上传的时候
+    uploader.onStartUpload = function(){
+      // 控制提交按钮
+      submit_btn.attr('disabled','disabled');
+    }
+    // 所有文件上传结束的时候
+    uploader.onUploadFinished = function(){
+      // 控制提交按钮
+      submit_btn.removeAttr('disabled');
     }
     // 图片上传成功
     uploader.onUploadSuccess = function(file, data){
@@ -145,11 +152,15 @@ $(document).on('pageInit','.add', function (e, id, page) {
           iscover:iscover
         });
       }
-      // 控制提交按钮
-      submit_btn.removeAttr('disabled');
     }
     uploader.onUploadError = function(file,data){
-      $.toast(data);
+
+      uploader.removeFile(file);
+      picture_list.remove(file.id);
+      $('[data-id="'+file.id+'"]').remove();
+
+      $.toast('请重新上传图片');
+      submit_btn.removeAttr('disabled');
     }
     uploader.onError = function(type){
       if(type == 'Q_EXCEED_NUM_LIMIT'){
@@ -187,7 +198,7 @@ $(document).on('pageInit','.add', function (e, id, page) {
       tags.find('button.active').each(function(index,item){
         tags_list.push($(item).data('keyword'))
       });
-      tags_list = JSON.stringify(tags_list);
+      tags_list = tags_list.join(',');
     } else {
       tags_list = false;
       $.toast("标签不能为空");
@@ -221,7 +232,7 @@ $(document).on('pageInit','.add', function (e, id, page) {
     if(title_number&& title_number<=32){
       title_input = title.find('input').val();
     } else {
-      $.toast('内容不能为空，少于32个字');
+      $.toast('标题不能为空，少于32个字');
       title.find('input').trigger('focus');
       title_input = false;
     }
@@ -250,30 +261,34 @@ $(document).on('pageInit','.add', function (e, id, page) {
     if(number){
       input = parseInt(nameclass.find('input').val());
     } else {
-      input = false;
+      input = 0;
       nameclass.find('input').trigger('focus');
       $.toast(name+'不能为空');
     }
     return input;
   }
   // 提交
-  $('.submit').on('click',function(){
+  submit_btn.on('click',function(){
     var _this = $(this);
     var post_data;
-
+    console.log(_this.data('type') == 1);
     // 判断
-    if(get_title() && get_picture_list() &&get_excerpt() &&get_tags()) {
+    if(get_title() && get_excerpt() && get_picture_list() && get_tags()){
       if(_this.data('type') == 1){
-        post_data = {
-          'post[type]':_this.data('type'),
-          'post[post_token]':_this.data('token'),
-          'post[post_pictures]':get_picture_list(),
-          'post[post_title]':get_title(),
-          'post[post_excerpt]':get_excerpt(),
-          'post[post_numbers]':get_number('数量',$('.number')),
-          'post[post_price]':get_number('价格',$('.price')),
-          'post[postage]':parseInt($('.postage').find('input').val()),
-          'post[post_keywords]':get_tags(),
+        if(get_number('价格',$('.price')) && get_number('数量',$('.number'))){
+          post_data = {
+            'post[type]':_this.data('type'),
+            'post[post_token]':_this.data('token'),
+            'post[post_pictures]':get_picture_list(),
+            'post[post_title]':get_title(),
+            'post[post_excerpt]':get_excerpt(),
+            'post[post_numbers]':get_number('数量',$('.number')),
+            'post[post_price]':get_number('价格',$('.price')),
+            'post[postage]':parseInt($('.postage').find('input').val()),
+            'post[post_keywords]':get_tags(),
+          }
+        } else {
+          return false;
         }
       } else {
         post_data = {
@@ -287,9 +302,10 @@ $(document).on('pageInit','.add', function (e, id, page) {
       }
       // 提交
       _this.attr('disabled','disabled');
+      console.log(post_data);
       $.ajax({
         type: 'post',
-        url: _this.data('action'),
+        url: '/index.php?g=user&m=HsPost&a=add_post',
         data: post_data,
         dataType: 'json',
         timeout: 5000,
@@ -298,7 +314,7 @@ $(document).on('pageInit','.add', function (e, id, page) {
             $.toast(data.info+'2秒后自动跳转，等待审核');
             setTimeout(function(){
               window.location.href = data.url;
-            },2000)
+            },2000);
           } else {
             $.toast(data.info);
           }
@@ -309,7 +325,5 @@ $(document).on('pageInit','.add', function (e, id, page) {
       })
     }
   })
-
 });
-$.init();
 

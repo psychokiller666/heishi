@@ -28,7 +28,6 @@ html {
     text-decoration: none;
   }
   .hs-main {
-    -webkit-overflow-scrolling: touch;
     width: 10rem;
     position: absolute;
   }
@@ -38,11 +37,14 @@ html {
     overflow-y: scroll;
     overflow-x: hidden;
     width: 10rem;
+    z-index: 10;
+    -webkit-overflow-scrolling: touch;
   }
 }
 /* 包含 */
 @import "../modules/less/common.less";
 @import "../modules/components/btn/style.less";
+@import "../modules/components/form/style.less";
 
 /* 头部 */
 @import "../modules/components/list_header/style.less";
@@ -86,6 +88,13 @@ html {
 @import "../modules/components/deliver/style.less";
 /* 发过的帖子 */
 @import "../modules/components/posts/style.less";
+/* 提现列表 */
+@import "../modules/components/user_withdraw_list/style.less";
+/* 投诉 */
+@import "../modules/components/user_complaints/style.less";
+/* 投诉结果 */
+@import "../modules/components/user_compliant_detail_page/style.less";
+
 
 /* 私信 */
 /* 头部 */
@@ -108,7 +117,14 @@ html {
 @import "../modules/components/seller_list/style.less";
 /* 买过的东西 */
 @import "../modules/components/bought/style.less";
+/* 退款 */
+@import "../modules/components/refund/style.less";
+/* 退款详细 */
+@import "../modules/components/refund_detail/style.less";
 
 /* 支付 */
 /* 打赏 */
 @import "../modules/components/pay_reward/style.less";
+/* 未关注遮罩框 */
+@import "../modules/components/checkfollow/style.less";
+

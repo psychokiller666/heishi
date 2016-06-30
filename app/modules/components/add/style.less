@@ -102,11 +102,20 @@
             position: absolute;
             top: 0;
             right: 0;
-            background: none;
+            border-radius: 200%;
+            background-color: #000;
             border: none;
-            z-index: 9999;
+            color: #fff;
+            opacity: .8;
+            z-index: 999;
+            .hs-icon;
             &:after {
-              content: 'x';
+              content: "\e615";
+              font-size: 0.38rem;
+              display: block;
+              width: 0.38rem;
+              height: 0.38rem;
+              line-height: 0.38rem;
             }
           }
           .image {
@@ -116,101 +125,102 @@
             background-repeat: no-repeat;
             background-size: cover;
             &:after {
-              content: "+";
-              line-height: 2.08rem;
-              .font-dpr(60px);
-              position: absolute;
-              top: 0;
-              left: 0;
-              z-index: 99;
-              width: 100%;
-            }
-            .progress {
-              position: absolute;
-              bottom: 0;
-              left: 0;
-              overflow: hidden;
-              width: 100%;
-              height: .16rem;
-              background-color: #e2e2e2;
-              box-sizing: border-box;
-              z-index: 9999;
-              span {
-                display: block;
-                width: 0;
-                background: #65d521;
-                height: 100%;
-                font-size: 0;
-              }
-            }
-          }
-          &.cover {
-            position: relative;
-            &:before {
-              position: absolute;
-              .font-dpr(42px);
-              .font-line-height(42px);
-              content: "\e618";
-              top: 0;
-              left: 0;
-              color: #68be8c;
-              z-index: 9999;
-            }
-            .image:after {
-              content: "\e617";
+             content: "\e603";
+             line-height: 2.08rem;
+             .font-dpr(60px);
+             .hs-icon;
+             position: absolute;
+             top: 0;
+             left: 0;
+             z-index: 99;
+             width: 100%;
+           }
+           .progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            overflow: hidden;
+            width: 100%;
+            height: .16rem;
+            background-color: #e2e2e2;
+            box-sizing: border-box;
+            z-index: 9999;
+            span {
+              display: block;
+              width: 0;
+              background: #65d521;
+              height: 100%;
+              font-size: 0;
             }
           }
-          &:nth-child(4){
-            margin-right: 0;
+        }
+        &.cover {
+          position: relative;
+          &:before {
+            position: absolute;
+            .font-dpr(42px);
+            .font-line-height(42px);
+            content: "\e618";
+            top: 0;
+            left: 0;
+            color: #68be8c;
+            z-index: 999;
           }
-          &:nth-child(8){
-            margin-right: 0;
+          .image:after {
+            content: "\e617";
           }
-          &:nth-child(12){
-            margin-right: 0;
-          }
-          &:nth-child(16){
-            margin-right: 0;
-          }
+        }
+        &:nth-child(4){
+          margin-right: 0;
+        }
+        &:nth-child(8){
+          margin-right: 0;
+        }
+        &:nth-child(12){
+          margin-right: 0;
+        }
+        &:nth-child(16){
+          margin-right: 0;
         }
       }
     }
-    &.price,&.postage,&.number{
-      padding: 0.36rem 0;
-      border-bottom: 0.013333rem solid rgba(211, 211, 211, .5);
-      .hs-cf;
-      position: relative;
-    }
-    &.price:before,&.postage:before {
-      content: "¥";
-      position: absolute;
-      right: 0;
-      .font-dpr(22px);
-      color: #afafaf;
-    }
-    &.number {
-      border-bottom: none;
-    }
-    &.tags {
-      button {
-       .font-dpr(16px);
-       border:none;
-       background-color: #dcdcdc;
-       color: #fff;
-       border-radius: 2px;
-       padding: 0.16rem 0.12rem;
-       margin-right: 0.16rem;
-       margin-bottom: 0.2rem;
-       &.active {
-        background-color: #68be8c;
-      }
-    }
-    label {
-      display: block;
-      .font-dpr(16px);
-      color: #c0c0c0;
+  }
+  &.price,&.postage,&.number{
+    padding: 0.36rem 0;
+    border-bottom: 0.013333rem solid rgba(211, 211, 211, .5);
+    .hs-cf;
+    position: relative;
+  }
+  &.price:before,&.postage:before {
+    content: "¥";
+    position: absolute;
+    right: 0;
+    .font-dpr(22px);
+    color: #afafaf;
+  }
+  &.number {
+    border-bottom: none;
+  }
+  &.tags {
+    button {
+     .font-dpr(16px);
+     border:none;
+     background-color: #dcdcdc;
+     color: #fff;
+     border-radius: 2px;
+     padding: 0.16rem 0.12rem;
+     margin-right: 0.16rem;
+     margin-bottom: 0.2rem;
+     &.active {
+      background-color: #68be8c;
     }
   }
+  label {
+    display: block;
+    .font-dpr(16px);
+    color: #c0c0c0;
+  }
+}
 }
 }
 }
