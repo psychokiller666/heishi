@@ -109,7 +109,7 @@ $(document).on('pageInit','#refund_detail', function(e, id, page){
           text: '拒绝退款',
           color: 'danger',
           onClick: function() {
-            $.router.load("#reason",true);
+            window.location.href = '/user/HsOrder/untreated.html';
           }
         },
         ];
