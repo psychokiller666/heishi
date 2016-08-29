@@ -10,23 +10,32 @@ $(document).on('pageInit','.jump', function(e, id, page){
   init.wx_share(false);
 
   if($('.success').length){
+    $.showPreloader('确认支付中');
     init.cnzz_push('完成订单',{
       '订单ID': $(page).data('ordernumber'),
       'value': $(page).data('price'),
       '订单类型': $(page).data('actiontype')
     });
-  }
-
-  if(!$('.error').length) {
+    setTimeout(function(){
+      $.hidePreloader();
+      $('.no_data').text('支付成功');
+    },1800);
     setTimeout(function(){
       window.location.href = $('.no_data').data('url');
-    },3000)
-  } else {
-    setTimeout(function(){
-      history.go(-1);
-    },3000)
+    },3000);
   }
 
+  if($('.error').length) {
+    if($('.no_data').attr('data-url')){
+      setTimeout(function(){
+        window.location.href = $('.no_data').data('url');
+      },1800);
+    } else {
+      setTimeout(function(){
+        history.go(-1);
+      },3000);
+    }
 
+  }
 
 });

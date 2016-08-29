@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <meta content="yes" name="apple-touch-fullscreen">
+  <meta content="telephone=no,email=no" name="format-detection">
+  <title>黑市</title>
+  <link rel="stylesheet" href="css/main.min.css">
+</head>
+<body>
+  <div class="page-group">
+    <div class="container page personal page-current" id="personal">
+      <main class="hs-main">
+        <a class="item" href="#revise_username">
+          <label>昵称</label>
+          <button>姿势混子</button>
+        </a>
+        <a class="item" href="#revise_telphone">
+          <label>手机号码</label>
+          <button>姿势混子</button>
+        </a>
+      </main>
+    </div>
+    <div class="container page revise_username" id="revise_username">
+      <footer class="hs-footer"><button type="button">确认修改</button></footer>
+      <main class="hs-main">
+        <div class="item">
+          <input type="text" name="" placeholder="请输出20个字符（10个汉字）的昵称">
+        </div>
+        <div class="item info">
+          每月只可修改一次昵称，请慎重修改。
+        </div>
+      </main>
+    </div>
+    <div class="container page revise_telphone" id="revise_telphone">
+      <footer class="hs-footer"><button type="button">确认修改</button></footer>
+      <main class="hs-main">
+        <div class="item">
+          <input type="text" name="" placeholder="请输入新手机号">
+        </div>
+        <div class="item verification">
+          <input type="text" name="" placeholder="请输入验证码">
+          <button type="button">获取验证码</button>
+        </div>
+      </main>
+    </div>
+  </div>
+  <script src="js/main.min.js"></script>
+</body>
+</html>

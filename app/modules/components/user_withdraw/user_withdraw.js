@@ -38,14 +38,12 @@ $(document).on('pageInit','#withdraw', function (e, id, page) {
   }
   page.on('click','.amount_submit',function(){
     var _this = $(this);
-    var amount = Math.floor(parseInt($(this).data('amount')));
     $.confirm('确认提现？',
       function() {
         $.ajax({
           type: 'POST',
           url: '/index.php?g=user&m=center&a=withdraw',
           data: {
-            amount: amount,
             alipay_name: alipay_name.val(),
             alipay_account: alipay_account.val(),
             alipay_tel: telphone.val()
@@ -54,13 +52,13 @@ $(document).on('pageInit','#withdraw', function (e, id, page) {
           timeout: 4000,
           success: function(res){
             if(res.status == 1){
-              $.toast(res.info);
               _this.attr('data-amount',res.data);
               $('.money span').text(res.data);
               $('.user_withdraw strong').text(res.data);
-              setTimeout(function(){
-                $.router.load('/User/Center/index.html#center', true);
-              },1000);
+              $.alert(res.info, '提示', function () {
+                $.router.load('', true);
+                window.location.href='/user/Center/my_purse.html#my_purse';
+              });
             } else {
               $.toast(res.info);
             }
@@ -71,7 +69,7 @@ $(document).on('pageInit','#withdraw', function (e, id, page) {
         });
       }),
     function(){
-      page.off('click','..amount_submit');
+      page.off('click','.amount_submit');
     }
 
   });

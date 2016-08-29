@@ -14,6 +14,18 @@
       background-repeat: no-repeat;
       background-size: cover;
       text-align: center;
+      .header_btns {
+        padding-left: 1.8rem;
+        .hs-cf;
+        a {
+          float: left;
+          margin-right: .2rem;
+          &:last-child {
+            margin-right: 0;
+
+          }
+        }
+      }
       .avatar {
         width: 1.44rem;
         height: 1.44rem;
@@ -111,37 +123,29 @@
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 2;
           }
+
           .date {
-            height: 1.02rem;
-            text-overflow: -o-ellipsis-lastline;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
+            margin-top: 0.16rem;
+            .hs-cf;
+            .classify {
+              float: left;
+              background-color: #6ac18e;
+              color: #fff;
+              padding: 0 0.12rem;
+              line-height: 0.52rem;
+              height: .52rem;
+              display: block;
+              float: left;
+              .font-dpr(14px);
+              border-radius: 3px;
+            }
+            .time {
+              float: right;
+              color: #a0a0a0;
+              .font-dpr(16px);
+              line-height: 0.52rem;
+            }
           }
-          // .date {
-          //   margin-top: 0.16rem;
-          //   .hs-cf;
-          //   .classify {
-          //     float: left;
-          //     background-color: #6ac18e;
-          //     color: #fff;
-          //     padding: 0 0.12rem;
-          //     line-height: 0.52rem;
-          //     height: .52rem;
-          //     display: block;
-          //     float: left;
-          //     .font-dpr(14px);
-          //     border-radius: 3px;
-          //   }
-          //   .time {
-          //     float: right;
-          //     color: #a0a0a0;
-          //     .font-dpr(16px);
-          //     line-height: 0.52rem;
-          //   }
-          // }
         }
       }
     }

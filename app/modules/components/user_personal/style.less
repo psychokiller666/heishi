@@ -1,0 +1,89 @@
+.personal,.revise_username,.revise_telphone {
+  background-color: #eee;
+  height: 100%;
+  position: absolute;
+  .hs-footer {
+    button {
+      padding: 0.466667rem 0;
+      background-color: #02df79;
+      color: #fff;
+      text-align: center;
+      width: 10rem;
+      border: none;
+      .font-dpr(16px);
+      font-weight: bold;
+      display: block;
+    }
+  }
+  .item {
+    background-color: #fff;
+    padding: 0.35rem 0.2rem;
+    border-bottom: 1px solid #ededed;
+    border-width: 0.02rem;
+    display: block;
+    &:nth-last-child(3) {
+      margin-top: 0.24rem;
+    }
+    &.info {
+      border-bottom: 0;
+      .font-dpr(15px);
+    }
+    .hs-cf;
+    label {
+      .font-dpr(15px);
+      width: 2.5rem;
+      position: absolute;
+      text-align: left;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      color: #888;
+      &~.input {
+        padding-left: 2.6rem;
+      }
+    }
+    input {
+      .font-dpr(15px);
+      width: 100%;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      -webkit-appearance: none;
+      border: none;
+      // padding-left: 2.6rem;
+      color: #909090;
+    }
+    button {
+      color: #070707;
+      float: right;
+      border: none;
+      background:none;
+      .font-dpr(15px);
+      &:after {
+        .hs-icon;
+        content: "\e605";
+        padding-left: .25rem;
+        color: #686868;
+      }
+    }
+    &.verification {
+      input {
+        width: 7.4rem;
+        right: 0;
+      }
+      button {
+        width: 2rem;
+        border: 1px solid #000;
+        border-width: 0.04rem;
+        .font-dpr(14px);
+        &:disabled {
+          border-color: #8f8f8f;
+          color: #8f8f8f;
+        }
+        &:after {
+          display: none;
+          padding-top: 0;
+        }
+      }
+    }
+  }
+
+}

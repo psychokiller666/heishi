@@ -109,7 +109,7 @@ $(document).on('pageInit','#refund_detail', function(e, id, page){
           text: '拒绝退款',
           color: 'danger',
           onClick: function() {
-            window.location.href = '/user/HsOrder/untreated.html';
+            $.router.load("#reason",true);
           }
         },
         ];
@@ -142,8 +142,7 @@ $(document).on('pageInit','#reason', function(e, id, page){
       },function(res){
         $.toast(res.info);
         if(res.status == 1){
-          location.href = window.location.pathname;
-          // $.router.load("#refund_detail",true);
+          window.location.href = '/user/HsOrder/untreated.html';
         }
       })
     });

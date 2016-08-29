@@ -16,6 +16,7 @@ $.config = {
     autoInit: true
 };
 require('../../node_not/SUI-Mobile/dist/js/sm.min.js');
+require('../../node_not/SUI-Mobile/dist/js/sm-extend.min.js');
 
 // 首页(商品列表页)
 require('../modules/components/store_list/store_list.js');
@@ -58,6 +59,10 @@ require('../modules/components/user_complaints/user_complaints.js');
 require('../modules/components/refund/refund.js');
 // 退款详情
 require('../modules/components/refund_detail/refund_detail.js');
+// 修改资料
+require('../modules/components/user_personal/user_personal.js');
+// 别人的个人中心
+require('../modules/components/user_people/user_people.js');
 
 // 商品内容页
 require('../modules/components/store_show/store_show.js');
@@ -66,4 +71,8 @@ require('../modules/components/orderform/orderform.js');
 // 跳转页
 require('../modules/components/success/success.js');
 
-
+// 发现页
+require('../modules/components/discovery_index/discovery_index.js');
+require('../modules/components/discovery_show/discovery_show.js');
+require('../modules/components/discovery_seller/discovery_seller.js');
+require('../modules/components/discovery_classify/discovery_classify.js');

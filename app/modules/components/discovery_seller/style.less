@@ -1,0 +1,90 @@
+.discovery_seller {
+  ul {
+    width: 9.36rem;
+    padding: 0 0.32rem;
+    li {
+      padding-top: 0.48rem;
+      padding-bottom: 0.24rem;
+      border-bottom: 1px solid #cfcfcf;
+      border-width: 0.02rem;
+      .header {
+        height: 1.2rem;
+        .hs-cf;
+        .avatar {
+          width: 1.2rem;
+          float: left;
+        }
+        .info {
+          float: left;
+          padding-left: 0.2rem;
+          width: 5.6rem;
+          padding-top: 0.12rem;
+          .username {
+            .font-dpr(16px);
+            color: #1c1c1c;
+            display: -webkit-box;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+          }
+          .summary {
+            .font-dpr(14px);
+            color: #646464;
+            padding-top: 0.32rem;
+            display: -webkit-box;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+          }
+        }
+        button {
+          float: right;
+          margin-top: 0.12rem;
+          // height: 0.48rem;
+          line-height: 0.52rem;
+          border: 1px solid #68be8d;
+          border-width: 0.05rem;
+          border-radius: 0.08rem;
+          background-color: #fff;
+          padding: 0 0.3rem;
+          .font-dpr(14px);
+          color: #68be8d;
+          &.add {
+            &:before {
+              .hs-icon;
+              content: "+";
+              .font-dpr(16px);
+            }
+          }
+        }
+      }
+      .list {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: space-between;
+        -moz-justify-content: space-between;
+        -webkit-justify-content: space-between;
+        justify-content: space-between;
+        padding-top: 0.48rem;
+        a {
+          width: 4.6rem;
+          display: block;
+          img {
+            width: 4.6rem;
+            height: 2.56rem;
+            background-image: url(../img/index_loading.gif);
+            background-color: #000;
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            background-size: cover;
+          }
+        }
+      }
+    }
+  }
+}
