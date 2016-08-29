@@ -76,4 +76,11 @@ $(document).on('pageInit','.user_withdraw_list', function (e, id, page) {
     $.refreshScroller();
   });
 
+  page.on('click','.frozen_amount',function(e){
+    page.find('.phone_verify').show();
+  });
+  page.on('click','.phone_verify .submit',function(e){
+    page.find('.phone_verify').hide();
+  });
+
 });

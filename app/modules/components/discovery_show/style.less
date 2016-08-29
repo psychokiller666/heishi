@@ -1,0 +1,86 @@
+.discovery_show {
+  .hs-main {
+    background-color: #eee;
+    .top {
+      background: url('../img/discovery_3.jpg') no-repeat;
+      background-size: cover;
+      width: 10rem;
+      height: 2.0rem;
+    }
+    .list {
+      padding:0.16rem;
+      width: 9.68rem;
+      ul {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        flex-direction: row;
+        flex-wrap:wrap;
+        justify-content:space-between;
+        li {
+          // height: 5.24rem;
+          width: 4.76rem;
+          background-color: #fff;
+          box-shadow:0.04rem 0.04rem 0.08rem rgba(0, 0, 0, .3);
+          margin-bottom: 0.16rem;
+          a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            .image {
+              width: 100%;
+              height: 2.96rem;
+              background-image: url(../img/index_loading.gif);
+              background-color: #000;
+              background-position: 50% 50%;
+              background-repeat: no-repeat;
+              background-size: cover;
+            }
+            .title {
+              padding:.2rem .2rem 0 .2rem;
+              color: #292929;
+              .font-dpr(16px);
+              .font-line-height(20px);
+              display: -webkit-box;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 2;
+            }
+            .date {
+              padding: .2rem;
+              display: -webkit-box;
+              display: -moz-box;
+              display: -ms-flexbox;
+              display: -webkit-flex;
+              display: flex;
+              -webkit-box-pack: space-between;
+              -moz-justify-content: space-between;
+              -webkit-justify-content: space-between;
+              justify-content: space-between;
+              .classify {
+                .font-dpr(14px);
+                background-color: #6ac18d;
+                color: #fff;
+                padding: 0 .16rem;
+                line-height: .56rem;
+                height: .56rem;
+                text-align: center;
+                border-radius: 0.04rem;
+              }
+              .time {
+                .font-dpr(14px);
+                line-height: .56rem;
+                height: .56rem;
+                line-height: .56rem;
+                color: #8c8c8c;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

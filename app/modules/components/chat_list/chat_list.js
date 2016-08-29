@@ -91,9 +91,10 @@ $(document).on('pageInit','.detail', function (e, id, page) {
     if(response.status == 1) {
       image_list.attr('data-imgurl',response.data);
     } else {
-     $.toast(response.info);
-   }
- }
+      uploader.reset();
+      $.toast(response.info);
+    }
+  }
   // 控制进度条
   uploader.onUploadProgress = function(file,percentage) {
     image_list.append('<div class="progress"><span></span></div>');
@@ -162,7 +163,12 @@ $(document).on('pageInit','.detail', function (e, id, page) {
     'VX',
     '蘑菇',
     '邮票',
-    'LSD'
+    'LSD',
+    'taobao',
+    'tb',
+    '操你妈',
+    '草你妈',
+    '🍃'
     ];
     esc.init(text_list);
     var content;

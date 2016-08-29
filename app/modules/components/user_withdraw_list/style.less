@@ -55,11 +55,27 @@
           .hs-cf;
           opacity: .8;
           span {
-            &:first-child {
+            width: 50%;
+            &:nth-child(1) {
               float: left;
+              text-align: left;
             }
-            &:last-child {
+            &:nth-child(2) {
               float: right;
+              text-align: right;
+            }
+            &:nth-child(3) {
+              float: left;
+              text-align: left;
+            }
+            &:nth-child(4) {
+              float: right;
+              text-align: right;
+            }
+            &.frozen_amount:after {
+              content: '\e627';
+              .hs-icon;
+              font-weight: bold;
             }
           }
         }

@@ -10,8 +10,6 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
   }
   var init = new common(page);
 
-
-
   // 调用微信分享sdk
   var share_data = {
     title: '黑市 | 美好而操蛋的东西',
@@ -207,11 +205,11 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
           // 刷新
           $.refreshScroller();
         } else {
-          $.toast('请求错误');
+          // $.toast('请求错误');
         }
       },
       error: function(xhr, type){
-        $.toast('网络错误 code:'+type);
+        // $.toast('网络错误 code:'+type);
       }
     });
   }
