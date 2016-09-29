@@ -11,7 +11,7 @@ $(document).on('pageInit','.center', function(e, id, page){
   var init = new common(page);
   if($('.user_inedx').length){
     var share_data = {
-      title: '这哥们卖的破烂有点意思 | 黑市',
+      title: '帮你发现点牛逼物件，爱点不点 | 黑市',
       desc: '这里能让好事自然发生',
       link: window.location.href,
       img: $('.avatar').data('layzr')
@@ -25,50 +25,24 @@ $(document).on('pageInit','.center', function(e, id, page){
   init.msg_tip();
   // 高度补丁
   $('.hs-main').css('top','0');
-  // 列表首页_通用底部发布
-  var hs_footer = $('.hs-footer');
-  var notice_box = $('.notice_box');
-  var notice_bd = $('.notice_bd');
-  var old_active;
-  // 记录位置
-  hs_footer.find('li').each(function(index,item) {
-    if($(item).find('a').hasClass('active')) {
-      old_active = index
-    }
-  })
-  hs_footer.on('click','.notice_btn',function() {
-    if(!$(this).find('a').hasClass('active')){
-      hs_footer.find('li a').removeClass('active');
-      $(this).find('a').addClass('active');
-      notice_box.show();
-      notice_box.css('bottom',hs_footer.height()-2);
-    } else {
-      $(this).find('a').removeClass('active');
-      hs_footer.find('li').eq(old_active).find('a').addClass('active');
-      notice_box.hide();
-    }
-  })
-  notice_bd.on('click','a',function(e){
-    var typeid = $(this).data('typeid');
+  // 发布
+
+  page.on('click','.add_posts a',function(e){
     e.preventDefault();
     $.showPreloader();
     $.post('/index.php?g=restful&m=HsMobile&a=ajax_mobile_checking','',function(data){
       if(data.status == 1){
         $.hidePreloader();
-        $('.phone_verify').find('.submit').attr('href','/user/HsPost/notice/type/'+typeid+'.html');
+        $('.phone_verify').find('.submit').attr('href','/user/HsPost/notice/type/1.html');
         $('.phone_verify').show();
       } else {
         // $.toast(data.info);
         $.hidePreloader();
-        $.router.load('/user/HsPost/add/type/'+typeid+'.html', true);
+        $.router.load('/user/HsPost/add/type/1.html', true);
       }
     })
-
-    $('.notice_btn').find('a').removeClass('active');
-    hs_footer.find('li').eq(old_active).find('a').addClass('active');
-    notice_box.hide();
   })
-  $('.phone_verify').on('click','.modal-overlay',function(){
+  page.find('.phone_verify').on('click','.modal-overlay',function(){
     $('.phone_verify').hide();
   })
 

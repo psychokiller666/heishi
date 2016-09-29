@@ -230,23 +230,26 @@
             &.untreated:before {
               content: "\e61e";
             }
-          }
-          &:after {
-            .hs-icon;
-            position: absolute;
-            content: "\e605";
-            right: 0.506667rem;
-            color: #6f6f6f;
-            top: 0;
-            .font-dpr(18px);
-            .font-line-height(18px);
-          }
+            &.notice_btn:before {
+             content: "\e628";
+           }
+         }
+         &:after {
+          .hs-icon;
+          position: absolute;
+          content: "\e605";
+          right: 0.506667rem;
+          color: #6f6f6f;
+          top: 0;
+          .font-dpr(18px);
+          .font-line-height(18px);
         }
-        &:last-child {
-          border-bottom: none;
-        }
+      }
+      &:last-child {
+        border-bottom: none;
       }
     }
   }
+}
 }
 }

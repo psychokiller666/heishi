@@ -9,7 +9,6 @@ var handlebars = require('../../../../node_modules/handlebars/dist/handlebars.mi
 var WebUploader = require('../../../../node_modules/tb-webuploader/dist/webuploader.min.js');
 // 过滤关键词
 var esc = require('../../../../node_modules/chn-escape/escape.js');
-
 // 图片延时加载
 var lazyload = require('../../../../bower_components/jieyou_lazyload/lazyload.min.js');
 
@@ -143,19 +142,41 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   // 微信预览图片
   var images = $('.images');
   page.on('click','.images ul li',function(){
-    var preview_list = [];
-    $.each($('.images ul li'),function(index,item){
-      preview_list.push($('.images ul li').eq(index).data('preview'));
-    });
-    if(GV.device == 'any@weixin') {
-      wx.previewImage({
-        current: $(this).data('preview'),
-        urls: preview_list
-      });
-    } else {
 
+    if(GV.device == 'any@weixin') {
+      if($(this).hasClass('video')){
+        $.photoBrowser({
+          photos : [{html:'<video width="100%" controls="controls" autoplay="autoplay" poster＝"'+$(this).data('layzr')+'"><source src="'+$(this).data('video')+'" type="video/mp4">你那破鸡吧不支持播放</video>'}],
+          container : '.container',
+          type: 'popup'
+        }).open();
+        // $.popup('<div class="popup popup-video">'+
+        //   '<div class="popup-header"><a class="hs-icon close-popup"></a></div>'+
+        //   '<div class="content-block">'+
+        //   '<video src="'+$(this).data('video')+'" width="100%" controls="controls" autoplay="autoplay"></video>'+
+        //   '</div>'+
+        //   '</div>', true)
+      } else {
+        var preview_list = [];
+        $.each($('.images ul li'),function(index,item){
+          preview_list.push($('.images ul li').eq(index).data('preview'));
+        });
+        wx.previewImage({
+          current: $(this).data('preview'),
+          urls: preview_list
+        });
+      }
+    } else {
+      var preview_lists = [];
+      $.each($('.images ul li'),function(index,item){
+        if($(item).hasClass('video')){
+          preview_lists.push({html:'<video src="'+$('.images ul li').eq(index).data('video')+'" width="100%" controls="controls" autoplay="autoplay"></video>'});
+        } else {
+          preview_lists.push({url:$('.images ul li').eq(index).data('preview')});
+        }
+      });
       var previewimage = $.photoBrowser({
-        photos : preview_list,
+        photos : preview_lists,
         container : '.container',
         type: 'popup'
       })
@@ -362,6 +383,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   var praise = $('.praise');
   var praise_number = $('.praise .header').find('span');
   var praise_list_tpl = handlebars.compile($("#praise_list_tpl").html());
+
   page.on('click','.praise_btn',function(){
     var btn_data = {
       uid:$(this).data('uid'),
@@ -507,7 +529,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   var reply_tpl = handlebars.compile($("#reply_tpl").html());
 
   // 弹出回复框
-  function comment_box(id,ispic,username,element,is_father) {
+  function comment_box(id,ispic,username,element,is_father,is_wxinput,comment_data) {
     // 初始化
     comment_input.val('').attr('placeholder','随便说点什么');
     dialog_comment.find('button').removeAttr('disabled');
@@ -576,18 +598,31 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
             to_uid:0,
             parentid:0,
             type:type,
-            url:window.location.href
+            url:window.location.origin + window.location.pathname
           }
         } else {
           // 二级回复
-          var post_data = {
-            content:comment_content,
-            post_table:comment.data('table'),
-            post_id:comment.data('id'),
-            to_uid:element.data('uid'),
-            parentid:element.data('id'),
-            type:type,
-            url:window.location.href
+          // 是否是从微信公众号里进来的
+          if(is_wxinput) {
+            var post_data = {
+              content:comment_content,
+              post_table:comment.data('table'),
+              post_id:comment.data('id'),
+              to_uid:comment_data.to_uid,
+              parentid:comment_data.parentid,
+              type:type,
+              url:window.location.origin + window.location.pathname
+            }
+          } else {
+            var post_data = {
+              content:comment_content,
+              post_table:comment.data('table'),
+              post_id:comment.data('id'),
+              to_uid:element.data('uid'),
+              parentid:element.data('id'),
+              type:type,
+              url:window.location.origin + window.location.pathname
+            }
           }
         }
         $.ajax({
@@ -604,6 +639,9 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
               dialog_comment.hide();
               comment_count.text(parseInt(comment_count.text())+1);
               // 添加评论dom
+              if(is_wxinput) {
+                return false;
+              }
               if(is_father) {
                 // 回复直接添加底部
                 var reply_data = {
@@ -765,13 +803,18 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         urls: [$(e.srcElement).data('preview')]
       });
     } else {
-      comment_box(comment_id,false,username,$(this),false);
+      comment_box(comment_id,false,username,$(this),false,false);
     }
   });
 
   page.on('click','.comment-btn',function(){
     var comment_id = $(this).data('id');
-    comment_box(comment_id,true,'',$(this),true);
+    comment_box(comment_id,true,'',$(this),true,false);
   });
-
+  if(page.find('.comment').data('fast') == 1){
+    comment_box(page.find('.comment').data('id'),false,page.find('.comment').data('commenttouser'),'',false,true,{
+      to_uid:page.find('.comment').data('commenttouid'),
+      parentid:page.find('.comment').data('commentparentid')
+    });
+  }
 });
