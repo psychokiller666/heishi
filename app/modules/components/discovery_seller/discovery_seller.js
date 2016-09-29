@@ -6,7 +6,15 @@ $(document).on('pageInit','.discovery_seller', function (e, id, page) {
     return false;
   }
   var init = new common(page);
-  init.wx_share(false);
+  // 调用微信分享sdk
+  var share_data = {
+    title: page.data('desc'),
+    desc: '这里能让好事自然发生',
+    link: GV.HOST+location.pathname,
+    img: 'http://jscache.ontheroadstore.com/tpl/simplebootx_mobile/Public/i/logo.png'
+  };
+  init.wx_share(share_data);
+  init.checkfollow(1);
 
   // 判断当前按钮关注状态
   var other_uids = [];
@@ -22,9 +30,9 @@ $(document).on('pageInit','.discovery_seller', function (e, id, page) {
         if(item == 1) {
           page.find('.header button').eq(index).text('关注').removeClass().addClass('add active');
         } else if(item ==2) {
-          page.find('.header button').eq(index).text('取消关注').removeClass().addClass('cancel');
+          page.find('.header button').eq(index).text('已关注').removeClass().addClass('cancel');
         } else if(item ==3) {
-          page.find('.header button').eq(index).text('互相关注').removeClass().addClass('cancel');
+          page.find('.header button').eq(index).text('已关注').removeClass().addClass('cancel');
         }
       });
     } else {
@@ -53,7 +61,7 @@ $(document).on('pageInit','.discovery_seller', function (e, id, page) {
         uid:$(_this).data('id')
       },function(res){
         if(res.status == '1') {
-          $(_this).text('取消关注').removeClass().addClass('cancel');
+          $(_this).text('已关注').removeClass().addClass('cancel');
           $.toast(res.info);
         } else {
           $.toast(res.info);

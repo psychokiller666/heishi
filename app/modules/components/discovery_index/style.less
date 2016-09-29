@@ -2,6 +2,7 @@
   .hs-main {
     .search {
       width: 10rem;
+      overflow: hidden;
       form {
         display: inline-flex;
         overflow: hidden;
@@ -44,9 +45,12 @@
       height: 5.0rem;
       padding-bottom: 0 !important;
       .swiper-pagination {
+        bottom: 0.2rem;
         .swiper-pagination-bullet {
           background-color: #fff;
           opacity: .4;
+          width: 0.2rem;
+          height: 0.2rem;
         }
         .swiper-pagination-bullet-active {
           background-color: #fff;
@@ -58,7 +62,7 @@
         width: 10rem;
         height: 5.00rem;
         img {
-          max-width: 100%;
+          width: 100%;
           height: 100%;
         }
       }
@@ -85,12 +89,12 @@
         -moz-order: 1;
         -webkit-order: 1;
         order: 1;
-        padding-right: 0.96rem;
+        padding-right: 0.3rem;
         &:last-of-type{
           padding-right: 0;
         }
         img {
-          max-height: 100%;
+          height: 100%;
         }
       }
     }
@@ -106,7 +110,7 @@
           padding-bottom: 0;
         }
         img {
-          max-width: 100%;
+          width: 100%;
         }
       }
     }
@@ -163,7 +167,9 @@
             background-repeat: no-repeat;
             background-size: cover;
             a {
-              min-height: 100%;
+              img {
+                width: 100%;
+              }
             }
           }
         }

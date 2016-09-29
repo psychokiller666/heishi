@@ -229,9 +229,20 @@
             float: left;
             background-repeat: no-repeat;
             -webkit-background-size: cover;
+            background-size: cover;
             margin-right: 0.18rem;
             margin-bottom: 0.213333rem;
             background-image: url('../img/index_loading.gif');
+            position: relative;
+            &.video:after {
+                position: absolute;
+                content: '';
+                background-image: url('../img/show_video.png');
+                background-repeat: no-repeat;
+                background-position: center;
+                width: 2.96rem;
+                height: 3.08rem;
+            }
             &:nth-child(3) {
                 margin-right: 0;
             }
@@ -454,6 +465,9 @@
                 }
                 .color_3 {
                     color: blue;
+                }
+                .color_14 {
+                    color: #7b7b7b;
                 }
                 .comment_image {
                     width: 2.62rem;

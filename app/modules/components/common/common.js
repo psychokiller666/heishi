@@ -57,12 +57,12 @@ common.prototype.msg_tip = function(){
       if(data.data.messages >= 1){
         $('.hs-footer').find('.messages').addClass('new');
       }
-      if(data.data.posts >= 1){
-        if($('.center').length){
-          $('.activate').next('span').addClass('new');
-        }
-        $('.hs-footer').find('.me').addClass('new');
-      }
+      // if(data.data.posts >= 1){
+      //   if($('.center').length){
+      //     $('.activate').next('span').addClass('new');
+      //   }
+      //   $('.hs-footer').find('.me').addClass('new');
+      // }
     } else {
       $.toast(data.info);
     }
@@ -110,7 +110,6 @@ common.prototype.wx_share = function(options){
         'checkJsApi',
         'onMenuShareTimeline',
         'onMenuShareAppMessage',
-        'showMenuItems',
         'showAllNonBaseMenuItem'
         ]
       });
@@ -139,16 +138,6 @@ common.prototype.wx_share = function(options){
           });
         }
       });
-      wx.showMenuItems({
-        menuList: [
-        'menuItem:addContact',
-        'menuItem:profile',
-        'menuItem:share:appMessage',
-        'menuItem:share:timeline',
-        'menuItem:copyUrl',
-        'menuItem:favorite'
-        ]
-      });
     });
     } else {
       wx.config({
@@ -159,25 +148,11 @@ common.prototype.wx_share = function(options){
         signature: data.signature,
         jsApiList: [
         'checkJsApi',
-        'hideMenuItems',
         'scanQRCode'
         ]
       });
       wx.ready(function(){
-        wx.hideMenuItems({
-          menuList: [
-          'menuItem:share:appMessage',
-          'menuItem:share:timeline',
-          'menuItem:share:qq',
-          'menuItem:share:weiboApp',
-          'menuItem:favorite',
-          'menuItem:share:facebook',
-          'menuItem:share:QZone',
-          'menuItem:copyUrl',
-          'menuItem:openWithSafari',
-          'menuItem:readMode'
-          ]
-        });
+
       });
     }
   });
@@ -236,7 +211,7 @@ common.prototype.cnzz_dplus = function(){
         var href = $(this).attr('href');
         e.preventDefault();
 
-        dplus.track("点击头部导航栏" , {
+        dplus.track("点击底部导航栏" , {
           '按钮名称' : title
         },function(){
           if(href){
