@@ -4,7 +4,7 @@ var handlebars = require('../../../../node_modules/handlebars/dist/handlebars.mi
 // 初始化
 var common = require('../common/common.js');
 // 手势
-var Hammer = require('hammerjs');
+// var Hammer = require('hammerjs');
 
 $(document).on('pageInit','.user_hslike', function (e, id, page) {
   if (page.selector == '.page'){
@@ -69,9 +69,27 @@ $(document).on('pageInit','.user_hslike', function (e, id, page) {
       add_data(page.data('pages'));
     },500);
   });
-  var hammertime = new Hammer(page.find('.content li'));
+  add_data(page.data('pages'))
+  //取消点赞
+  page.find('.user_hslike .classify').on("click",function(e){
+      e.preventDefault();
+      var _that=this;
+      var id=this.getAttribute("data-title");
+      $.post('/index.php?g=user&m=HsLike&a=cancel_like', {
+        id: id
+      }, function (data) {
+        if (data.status == 1) {
+          $.toast("取消成功");
+          _that.parentNode.parentNode.parentNode.parentNode.style.display="none";
+        } else {
+          $.toast(data.info);
+        }
+      });
+  })
+  
+  // var hammertime = new Hammer(page.find('.content li'));
   //为该dom元素指定触屏移动事件
-  console.log(hammertime);
+  // console.log(hammertime);
   // hammertime.on('panright', function (ev) {
   //   //控制台输出
   //   console.log(ev);
