@@ -42,7 +42,9 @@ $(document).on('pageInit','.deliver', function (e, id, page) {
     }
   })
   page.on("blur",".express_name",function(){
-    $(".select").html("").css("height","auto");
+    setTimeout(function(){
+          $(".select").html("").css("height","auto");
+        },300)
   })
   page.on('input','.express_name',function(){
     var _this = $(this);
@@ -60,6 +62,8 @@ $(document).on('pageInit','.deliver', function (e, id, page) {
             str+='<div class="input"><input type="text" class="express_select" value="'+data.data[i]+'" readonly="readonly" /></div>';
           }
           $(".select").html(str);
+        }else{
+          $(".select").html("").css("height","auto");
         }
     });
   })
