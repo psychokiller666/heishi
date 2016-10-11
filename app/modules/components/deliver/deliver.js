@@ -22,6 +22,53 @@ $(document).on('pageInit','.deliver', function (e, id, page) {
       }
     });
   });
+  //选择快递公司
+  //初始化
+  page.on("focus",".express_name",function(){
+      if(!$(".express_name").val()){
+      $.post("/index.php?g=restful&m=HsExpress&a=express_name_query",function(data){
+          if(data.status == 1){
+            var str="";
+            $(".select").html("").css("height","auto");
+            if(data.data.length>4){
+              $(".select").css({'overflow-y':'auto','height':'3.37rem',"width":"7.24rem"})
+            }
+            for(var i = 0;i < data.data.length; i++){
+              str+='<div class="input"><input type="text" class="express_select" value="'+data.data[i]+'" readonly="readonly" /></div>';
+            }
+            $(".select").html(str);
+          }
+      })
+    }
+  })
+  page.on("blur",".express_name",function(){
+    $(".select").html("").css("height","auto");
+  })
+  page.on('input','.express_name',function(){
+    var _this = $(this);
+    var val = $(this).val();
+    $.post("/index.php?g=restful&m=HsExpress&a=express_name_query",{
+      name:val
+    },function(data){
+        if(data.status == 1){
+          var str="";
+          $(".select").html("").css("height","auto");
+          if(data.data.length>4){
+            $(".select").css({'overflow-y':'auto','height':'3.37rem',"width":"7.24rem"})
+          }
+          for(var i = 0;i < data.data.length; i++){
+            str+='<div class="input"><input type="text" class="express_select" value="'+data.data[i]+'" readonly="readonly" /></div>';
+          }
+          $(".select").html(str);
+        }
+    });
+  })
+  //下拉选项
+  page.on("click",".express_select",function(){
+    var str=$(this).val();
+    $(".express_name").val(str);
+    $(".select").html("").css("height","auto");
+  })
   // 确认发货
   page.on('click','.deliver_submit_deliver',function(){
     var _this = $(this);
