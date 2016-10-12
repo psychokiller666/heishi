@@ -133,36 +133,36 @@ $(document).on('pageInit','.deliver', function (e, id, page) {
     $.actions(groups);
   })
   // 联系卖家
-  page.on('click','.msg_btn',function(){
-    var _this = $(this);
-    var features_btn = [
-    {
-      text: '请选择',
-      label: true
-    },
-    {
-      text: '买家电话',
-      bold: true,
-      color: 'danger',
-      onClick: function() {
-        window.open('tel:'+_this.data('tel'));
-      }
-    },
-    {
-      text: '私信买家',
-      onClick: function() {
-        $.router.load('/User/HsMessage/detail/from_uid/'+_this.data('uid')+'.html', true);
-      }
-    }
-    ];
-    var cancel_btn = [
-    {
-      text: '取消',
-      bg: 'danger'
-    }
-    ];
-    var groups = [features_btn, cancel_btn];
-    $.actions(groups);
-  })
+  // page.on('click','.msg_btn',function(){
+  //   var _this = $(this);
+  //   var features_btn = [
+  //   {
+  //     text: '请选择',
+  //     label: true
+  //   },
+  //   {
+  //     text: '买家电话',
+  //     bold: true,
+  //     color: 'danger',
+  //     onClick: function() {
+  //       window.open('tel:'+_this.data('tel'));
+  //     }
+  //   },
+  //   {
+  //     text: '私信买家',
+  //     onClick: function() {
+  //       $.router.load('/User/HsMessage/detail/from_uid/'+_this.data('uid')+'.html', true);
+  //     }
+  //   }
+  //   ];
+  //   var cancel_btn = [
+  //   {
+  //     text: '取消',
+  //     bg: 'danger'
+  //   }
+  //   ];
+  //   var groups = [features_btn, cancel_btn];
+  //   $.actions(groups);
+  // })
 
 })
