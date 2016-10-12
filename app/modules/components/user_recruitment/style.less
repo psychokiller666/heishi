@@ -1,0 +1,133 @@
+.logistique {
+  .logistique-footer {
+    width: 10rem;
+    overflow: hidden;
+    position: absolute;
+    z-index: 100;
+    bottom: 0;
+    background-color: #1b181f;
+    color: #5d5c61;
+    .hs-cf();
+    button , a{
+      width: 5rem;
+      float: left;
+      border:none;
+      .font-dpr(16px);
+      color: #fff;
+      padding: 0.44rem 0;
+      color: #fff;
+      text-align: center;
+      &.contact_btn {
+        background-color: #000;
+      }
+      &.logistique_submit_deliver {
+        background-color: #58d996;
+      }
+    }
+  }
+  .hs-main {
+    padding-top: 0;
+    .logistique_bd {
+      background-color: #eee;
+      .goods {
+        margin-bottom: 1px;
+        padding: 0.32rem 0.333333rem;
+        background-color: #fff;
+        .hs-cf();
+        .info {
+          margin-left: 0.5rem;
+          width: 7.346667rem;
+          height: 1.2rem;
+          position: relative;
+          p{
+          	.font-dpr(16px);
+            .font-line-height(28px);
+            span{
+          		color: #57da96;
+         	 }
+          }
+        }
+      }
+      .receipt {
+        padding:0.2rem 0;
+        background-color: #fff;
+        margin-top: 0.2rem;
+        .express-check{
+		 font-size: 15px;
+		 padding: 0 0.5rem 0.32rem;
+		 background-color: #fff;
+		 position: relative;
+		 top: 0.24rem;
+		 bottom: 0;
+		  li{
+		  	width: auto;
+			margin-left: 1rem;
+			position: relative;
+			border-bottom: 1px solid #dcdcdc;
+			span{
+				position: absolute;
+				top: 0.35rem;
+				left: -0.75rem;
+				border: 2px solid #eeeeee;
+				width: 0.17rem;
+				height: 0.17rem;
+				background-color: #eeeeee;
+				border-radius: 50%;
+				z-index: 1;
+				
+			}
+			p{
+				.font-dpr(14px);
+				.font-line-height(30px);
+			}
+			p:nth-child(1){
+				padding-top: 0.1rem;
+			}
+			p:nth-child(2){
+				padding-bottom: 0.1rem;
+			}
+			&:nth-child(1){
+				color: #57da96;
+			}
+			&:after{
+				content: " ";
+			    position: absolute;
+			    width: 0.05rem;
+			    top: 0.35rem;
+			    bottom: -0.36rem;
+			    left: -0.67rem;
+			    background-color: #eee;
+			}
+			&:nth-child(1):after{
+				top: 0.35rem;
+			}
+			&:last-child:after{
+				bottom: 0;
+			}
+			&:nth-child(1) span{
+				width: 0.2rem;
+				height: 0.2rem;
+				left: -0.765rem;
+				background-color: #57da96;
+			}
+		  }
+		}
+      }
+    }
+  }
+  .not-express-icon{
+  	margin-top:55%;
+  	width: 100%;
+  	text-align: center;
+  	.font-dpr(40px);
+  	img{
+  		width:15%;
+  	}
+  }
+  .not-express-chech{
+	width:100%;
+	text-align:center;
+	.font-dpr(16px);
+	margin-top: 0.2rem;
+ }
+}

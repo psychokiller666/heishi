@@ -78,3 +78,6 @@ require('../modules/components/discovery_index/discovery_index.js');
 require('../modules/components/discovery_show/discovery_show.js');
 require('../modules/components/discovery_seller/discovery_seller.js');
 require('../modules/components/discovery_classify/discovery_classify.js');
+
+//物流查询
+require('../modules/components/user_recruitment/express_query.js');
