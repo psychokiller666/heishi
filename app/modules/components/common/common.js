@@ -219,7 +219,9 @@ common.prototype.cnzz_dplus = function(){
           }
         },300);
       });
-      dplus.track('页面浏览');
+      dplus.track('页面浏览',{
+        '受访页面' : window.location.href
+      });
     }
   });
   common.prototype.cnzz_push = function(pushdata){
