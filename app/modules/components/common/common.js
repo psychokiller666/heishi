@@ -138,6 +138,9 @@ common.prototype.wx_share = function(options){
           });
         }
       });
+      wx.ready(function(){
+        wx.showOptionMenu();
+      });
     });
     } else {
       wx.config({
@@ -152,7 +155,7 @@ common.prototype.wx_share = function(options){
         ]
       });
       wx.ready(function(){
-
+        wx.hideOptionMenu();
       });
     }
   });
