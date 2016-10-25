@@ -64,7 +64,7 @@ require('../modules/components/user_personal/user_personal.js');
 // 别人的个人中心
 require('../modules/components/user_people/user_people.js');
 // 赞过的商品
-require('../modules/components/user_hslike/user_hslike.js');
+require('../modules/components/user_favorite/user_favorite.js');
 
 // 商品内容页
 require('../modules/components/store_show/store_show.js');
