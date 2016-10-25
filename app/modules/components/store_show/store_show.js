@@ -414,6 +414,37 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       }
     });
   });
+  //收藏
+  page.on('click','.collect',function(){
+    var bool=$(".collect i").hasClass("nocollect");
+    if(bool){
+      $(".collect i").removeClass("nocollect").addClass("collect");
+      collect(this)
+    }
+    function collect(that){
+       $.ajax({
+      type: 'POST',
+      url: '/index.php?g=user&m=Favorite&a=do_favorite_new',
+      data: {
+        id:$(that).data('id')
+      },
+      dataType: 'json',
+      timeout: 10000,
+      success: function(data){
+        console.log(data);
+        if(data.status == 1){
+          $.toast(data.info);
+          init.loadimg();
+        } else {
+          $.toast(data.info);
+        }
+      },
+      error: function(xhr, type){
+        $.toast('网络错误 code:'+xhr);
+      }
+    });
+    }
+  });
   // 更多按钮
   var praise_more_tpl = handlebars.compile($("#praise_more_tpl").html());
   $('.store-show .praise ul li').each(function(index,item){

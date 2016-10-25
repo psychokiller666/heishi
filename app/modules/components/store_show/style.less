@@ -156,6 +156,7 @@
             position: absolute;
             top: 0.36rem;
             left: 0.333333rem;
+            width: 9.33333rem;
             z-index: 100;
             .hs-cf;
             a {
@@ -168,6 +169,21 @@
                 line-height: 0.64rem;
                 .font-dpr(12px);
                 border-radius: 0.053333rem;
+            }
+            .collect{
+                float: right;
+                i{
+                    .font-line-height(24px);
+                    .font-dpr(24px);
+                    &.nocollect:before{
+                        color: white;
+                        content: "\e62c";
+                    }
+                    &.collect:before{
+                        color: #eb4f38;
+                        content: "\e62b";
+                    }
+                }
             }
         }
         .title {
