@@ -70,7 +70,7 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
     }, 500, 'ease-in');
     $(this).addClass('active');
     // 删除聊天
-    $('.chat_list_group_bd ul li').on('click','.delete',function(){
+    _this.on('click','.delete',function(){
       $.post('/index.php?g=User&m=HsMessage&a=ajax_delete_list',{
         mid: $(this).data('mid')
       },function(data){
