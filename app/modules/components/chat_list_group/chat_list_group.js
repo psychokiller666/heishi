@@ -58,14 +58,17 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
   $('.phone_verify').on('click','.modal-overlay',function(){
     $('.phone_verify').hide();
   })
+  // $('.chat_list_group_bd ul').on("touchmove","li",function(){
+  //   console.log("Asd");
+  // });
   // 从右往左滑
-  $('.chat_list_group_bd ul li').height($('.chat_list_group_bd ul li').height());
-  $('.chat_list_group_bd ul li').find('.delete').height($('.chat_list_group_bd ul li').height());
-  $('.chat_list_group_bd ul li').swipeLeft(function(){
+  $('.chat_list_group_bd ul').on("swipeLeft","li",function(){
     var _this = $(this);
-    $('.delete').hide();
+    $('.btn-box').hide();
+    $('.chat_list_group_bd ul li').height($('.chat_list_group_bd ul li').height());
+    $('.chat_list_group_bd ul li').find('.btn-box').height($('.chat_list_group_bd ul li').height());
     $('.chat_list_group_bd ul li').removeClass('active');
-    $('.delete',this).animate({
+    $('.btn-box',this).animate({
       display: 'block'
     }, 500, 'ease-in');
     $(this).addClass('active');
@@ -82,10 +85,25 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
         }
       });
     });
+    //置顶
+    _this.on('click','.stick',function(){
+      $.post('/User/HsMessage/ajax_setting_top',{
+        mid: $(this).data('mid')
+      },function(data){
+        if(data.status == 1) {
+          $.toast(data.info);
+          setTimeout(function(){
+            location.reload();
+          },500);
+        } else {
+          $.toast(data.info);
+        }
+      });
+    });
   });
   // 从左往右滑
-  $('.chat_list_group_bd ul li').swipeRight(function(){
-    $('.delete').hide();
+  $('.chat_list_group_bd ul').on("swipeRight","li",function(){
+    $('.btn-box').hide();
     $(this).removeClass('active');
   });
 

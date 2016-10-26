@@ -34,19 +34,28 @@
           &.active {
             a {
               position: absolute;
-              left: -1.4rem;
+              left: -3.5rem;
               width: 10rem;
             }
-            .delete {
+            .btn-box {
               position: absolute;
               right: 0;
               top: 0;
-              background-color: #fe0000;
-              .font-dpr(16px);
               color: #fff;
-              padding: 0 .8rem;
-              border:none;
-              display: none;
+              button{
+                float: left;
+                padding: 0 .8rem;
+                height: 100%;
+                .font-dpr(16px);
+                border:none;
+                color: white;
+              }
+              .delete{
+                background-color: #fe0000;
+              }
+              .stick{
+                background-color: #cdcdcd;
+              }
             }
             .info {
               .date {
@@ -114,7 +123,7 @@
             }
           }
         }
-        .delete {
+        .btn-box {
           display: none;
         }
       }
