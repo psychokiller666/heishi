@@ -50,6 +50,7 @@
                 }
             }
         }
+        
     }
     .hs-store-show-footer {
         width: 10rem;
@@ -538,4 +539,39 @@
         }
     }
 }
+.prompt{
+    position: absolute;
+    width: 10rem;
+    height: 100%;
+    z-index: 999;
+    background: rgba(0,0,0,0.8);
+    left: 0;
+    top: 0;
+    display: none;
 }
+.prompt_box{
+    padding:0.3rem;
+    position: absolute;
+    width: 4.2rem;
+    right: 0.42rem;
+    top: 1.3rem;
+    background-image: url('../img/prompt_box.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    div{
+        color: #68be8c;
+        .font-dpr(13px);
+        .font-line-height(20px);
+        margin: 0.25rem 0 0.3rem 0;
+    }
+    button{
+        .font-dpr(13px);
+        background-color: #68be8c;
+        padding: 0.13rem;
+        border: none;
+        color: black;
+        margin: 0.06rem 0 0.3rem 0;
+    }
+}
+}
+

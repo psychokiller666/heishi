@@ -46,6 +46,7 @@ $(document).on('pageInit','.center', function(e, id, page){
     $('.phone_verify').hide();
   })
 
+
   // 别人的个人中心
   var store_list = $('.user_inedx');
   var attention_btn = $('.attention-btn');
