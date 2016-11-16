@@ -95,7 +95,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       },function(data){
         if(data.relations == '2' || data.relations == '3') {
           attention_btn.addClass('active');
-          attention_btn.text('已关注');
+          attention_btn.text('取消关注');
           attention_btn.removeClass('hide');
         } else if(data.relations == '1' || data.relations == '0') {
           attention_btn.removeClass('active');
@@ -125,17 +125,24 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         });
       } else {
         // 关注
-        $.post('/index.php?g=user&m=HsFellows&a=ajax_add',{
-          uid:_this.data('otheruid')
-        },function(data){
-          if(data.status == '1') {
-            _this.text('已关注');
-            _this.addClass('active');
-            $.toast(data.info);
-          } else {
-            $.toast(data.info);
-          }
-        });
+        $(".prompt").on('touchmove',function(e){
+          e.preventDefault();
+        })
+        $(".prompt").css("display","block");
+        $(".prompt button").click(function(){
+          $.post('/index.php?g=user&m=HsFellows&a=ajax_add',{
+            uid:_this.data('otheruid')
+          },function(data){
+            $(".prompt").css("display","none");
+            if(data.status == '1') {
+              _this.text('取消关注');
+              _this.addClass('active');
+              $.toast(data.info);
+            } else {
+              $.toast(data.info);
+            }
+          });
+        })
       }
     });
   }
