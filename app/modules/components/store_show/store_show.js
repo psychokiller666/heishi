@@ -527,16 +527,20 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
             }
           } else if(data.status == '0'){
               // 加载完毕，则注销无限加载事件，以防不必要的加载
+              // 重置加载flag
               $.detachInfiniteScroll($('.infinite-scroll'));
               // 删除加载提示符
               $('.infinite-scroll-preloader').remove();
               $.toast('😒 没有评论了');
+
             }
           } else {
             $.toast(data.info);
           }
+          loading = false;
         },
         error: function(xhr, type){
+          loading = false;
           // $.toast('网络错误 code:'+type);
         }
       });
@@ -547,14 +551,11 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     // 设置flag
     loading = true;
     // 如果当前页面加载过。直接加载最后的cid
-
-    setTimeout(function() {
-      // 重置加载flag
-      loading = false;
+    // setTimeout(function() {
       // 请求数据
       add_data(comment.data('id'),comment.data('cid'));
       $.refreshScroller();
-    }, 2000);
+    // }, 2000);
   });
 
   // 添加评论
