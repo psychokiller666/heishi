@@ -198,29 +198,37 @@ common.prototype.cnzz_dplus = function(){
       $('.hs-header a').on('click',function(e){
         var title = $.trim($(this).text());
         var href = $(this).attr('href');
-        e.preventDefault();
-
+        // e.preventDefault();
+        // setTimeout(function(){
+        //   location.href = href;
+        // },300)
         dplus.track("点击头部导航栏" , {
           '按钮名称' : title
-        },function(){
-          if(href){
-            location.href = href;
-          }
-        },300);
+        });
       });
       // 点击底部导航栏
       $('.hs-footer a').on('click',function(e){
         var title = $.trim($(this).text());
         var href = $(this).attr('href');
-        e.preventDefault();
-
+        // e.preventDefault();
+        // setTimeout(function(){
+        //   location.href = href;
+        // },300)
         dplus.track("点击底部导航栏" , {
           '按钮名称' : title
-        },function(){
-          if(href){
-            location.href = href;
-          }
-        },300);
+        });
+      });
+      //点击商品页视频
+      $('.store-show').on('click',".video",function(e){
+        var title = $.trim($('.frontcover .title').text());
+        // console.log(title);
+        // e.preventDefault();
+        // setTimeout(function(){
+        //   location.href = href;
+        // },300)
+        dplus.track("点击商品页视频" , {
+          '商品标题' : title
+        });
       });
       dplus.track('页面浏览',{
         '受访页面' : window.location.href
