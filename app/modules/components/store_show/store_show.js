@@ -505,6 +505,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       dataType: 'json',
       timeout: 10000,
       success: function(data){
+        console.log("requst in success function.");
         if(data.state == 'success'){
           if(data.status == '1'){
             if(data.comments.length == 0){
@@ -519,7 +520,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
               // 添加继续
               comment_bd.append(comment_list_tpl(data));
               comment.attr('data-cid',comment_bd.find('.father').last().data('id'));
-
+              old_cid = comment_bd.find('.father').last().data('id');
               $('[data-layzr]').lazyload({
                 data_attribute:'layzr',
                 container: $(".comment")
@@ -545,17 +546,30 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         }
       });
   }
+  var old_cid="";
+  var first_request = true;
   // 控制下拉加载评论
   page.on('infinite', function(){
-    if (loading ) return;
+    if (loading ){
+        console.log("@infinite block loading return loading=" + loading);   
+        return;
+    } 
     // 设置flag
+    // console.log("@infinite begin to loading loading=" + loading);
     loading = true;
     // 如果当前页面加载过。直接加载最后的cid
-    // setTimeout(function() {
       // 请求数据
-      add_data(comment.data('id'),comment.data('cid'));
+      var new_cid = comment.data('cid');
+      if (new_cid=="" && first_request) {
+        add_data(comment.data('id'),new_cid);
+        first_request = false;
+      } else if (new_cid != old_cid) {
+        return;
+      } else {
+        add_data(comment.data('id'),new_cid);
+      }
+      //add_data(comment.data('id'),comment.data('cid'));
       $.refreshScroller();
-    // }, 2000);
   });
 
   // 添加评论
