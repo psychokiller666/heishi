@@ -549,7 +549,9 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   var first_request = true;
   //若初始无法出现滚动条
   if($(window).height()>comment.offset().top){
-    add_data(comment.data('id'),'');
+    if(!comment.data('cid')){
+         add_data(comment.data('id'),'');
+      }
   }
   // 控制下拉加载评论
   page.on('infinite', function(){
