@@ -25,6 +25,9 @@ $(document).on('pageInit','.untreated', function (e, id, page) {
   if($('.refund').length){
     ajax_url = '/index.php?g=user&m=HsOrder&a=ajax_refund';
   }
+  if($('.finished').length){
+    ajax_url = '/index.php?g=user&m=HsOrder&a=ajax_refund_finished';
+  }
   var already_list_tpl = handlebars.compile($("#already_list_tpl").html());
   // 加入判断方法
   handlebars.registerHelper('eq', function(v1, v2, options) {
