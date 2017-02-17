@@ -116,6 +116,105 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
     $('.phone_verify').hide();
   })
   var store_list = $('.store_list');
+  // 下拉加载更多
+  var loading = false;
+  // 初始化下拉
+
+  var store_list_tpl = handlebars.compile($("#store_list_tpl").html());
+  // 增加handlebars判断
+  handlebars.registerHelper('eq', function(v1, v2, options) {
+    if(v1 == v2){
+      return options.fn(this);
+    } else {
+      return options.inverse(this);
+    }
+  });
+  // 控制翻页
+  var control_pages = {
+    init:function(){
+      if(store_list.data('curpage') > 1){
+        this.show_page();
+      }
+    },
+    get_subpage:function(){
+      if(store_list.data('subpage') < 5){
+        store_list.attr('data-subpage',store_list.data('subpage')+1);
+      }
+      return store_list.attr('data-subpage');
+    },
+    get_page:function(){
+      return store_list.attr('data-page');
+    },
+    show_page:function(){
+      $('.pages').removeClass('hide');
+      // 注销滚动
+      $.detachInfiniteScroll($('.infinite-scroll'));
+      $('.infinite-scroll-preloader').remove();
+    },
+    get_ajax_data:function(){
+      var r_page = this.get_page(),
+      r_subpage = this.get_subpage();
+      return {
+        page:r_page,
+        pages:store_list.attr('data-pages'),
+        page_size:store_list.attr('data-pagesize'),
+        ctype:store_list.attr('data-ctype'),
+        keyword:store_list.attr('data-keyword'),
+        is_culture:store_list.attr('data-isculture'),
+        subpage:r_subpage
+      }
+    }
+  }
+  control_pages.init();
+  // function add_data
+  function add_data(ajax_data) {
+    $.ajax({
+      type: 'POST',
+      url: '/index.php?g=portal&m=index&a=ajax_index_list',
+      data: ajax_data,
+      dataType: 'json',
+      timeout: 4000,
+      success: function(data){
+        if(data.status == 1){
+          if (ajax_data.page >= data.pages) {
+            $.detachInfiniteScroll($('.infinite-scroll'));
+            $('.infinite-scroll-preloader').remove();
+            $.toast('没有了');
+          } else {
+            store_list.find('ul').append(store_list_tpl(data));
+            // 图片加载
+            init.loadimg();
+            if(ajax_data.subpage >= 5){
+              control_pages.show_page();
+            }
+          }
+          if(ajax_data.keyword){
+            if(!data.data.length){
+              if(!store_list.find('li').length){
+                store_list.append('<div class="no_data">毛都没找到</div>');
+              }
+              $.detachInfiniteScroll($('.infinite-scroll'));
+              $('.infinite-scroll-preloader').remove();
+            }
+            if(ajax_data.subpage >= 5){
+              $.detachInfiniteScroll($('.infinite-scroll'));
+              $('.infinite-scroll-preloader').remove();
+              $('.pages').addClass('hide');
+            }
+          }
+          // 刷新
+          $.refreshScroller();
+        } else {
+          // $.toast('请求错误');
+        }
+      },
+      error: function(xhr, type){
+        // $.toast('网络错误 code:'+type);
+      }
+    });
+  }
+  // 监听滚动
+  var store_list = $('.store_list');
   $('.infinite-scroll-preloader').remove();
   //判断是否出现翻页
   if($(".store_list").data("pages") == 1){
@@ -135,6 +234,7 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
   var search_list = $('.search-list');
   if(search_list.length){
     // 初始化加载
+    add_data(control_pages.get_ajax_data());
     if(store_list.data('isculture') == 1){
       store_list.addClass('culture_list').removeClass('store_list');
       $('.hs-footer').find('li a').removeClass('active');
