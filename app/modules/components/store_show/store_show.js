@@ -453,7 +453,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
   });
   //统计进入次数
-  var user_id = $(".collect").data("id");
+  var user_id = $(".praise_btn").data("id");
   setTimeout(function(){
     $.ajax({
         type: 'GET',
