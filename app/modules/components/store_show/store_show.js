@@ -452,6 +452,14 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     });
     }
   });
+  //统计进入次数
+  var user_id = $(".collect").data("id");
+  setTimeout(function(){
+    $.ajax({
+        type: 'GET',
+        url: '/index.php?g=restful&m=HsArticle&a=ajax_hits&id='+user_id
+    });
+  },300)
   // 更多按钮
   var praise_more_tpl = handlebars.compile($("#praise_more_tpl").html());
   $('.store-show .praise ul li').each(function(index,item){
