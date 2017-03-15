@@ -12,7 +12,6 @@ $(document).on('pageInit','.posts', function (e, id, page) {
   init.wx_share(false);
 
   var already_list = $('.already_list');
-  var stock_box = $('.stock_box');
   // 判断是否有数据
   if(already_list.find('.no_data').length){
     // 注销上拉
@@ -20,58 +19,75 @@ $(document).on('pageInit','.posts', function (e, id, page) {
   }
   already_list.on('click','.office_empty_btn',function(e) {
     var _this = this;
-    var stock_number = $(this).parent().parent().find('.username span');
+    var stock_number = $(this).parent().find('.remain');
     $.confirm('确定要清空库存吗？', function () {
-     $.post('/index.php?g=user&m=Center&a=ajax_empty_goods',{
-      object_id:$(_this).data('id'),
+     $.post('/index.php?g=user&m=Center&a=ajax_update_goods',{
+      object_id:$(_this).data('object_id'),
+      numbers:0,
+      pid:$(_this).data('pid')
     },function(data){
       if(data.status == 1){
-        stock_number.text('0');
+        stock_number.val(0);
       } else {
         $.alert(data.info);
       }
     })
    });
-
-
   });
   already_list.on('click','.office_btn',function(e) {
     var _this = this;
-    already_list.find('li').off('click',_this);
-    var stock_number = $(this).parent().parent().find('.username span');
-    var object_id = $(this).data('id');
-    stock_box.show();
-    stock_box.find('input').val(stock_number.text());
-
-    stock_box.find('input').trigger('focus');
-    stock_box.find('input').focus(function(){
-
-    }).blur(function(e){
-
-    });
-    stock_box.on('click','.submit_remain',function(){
-      if(stock_box.find('input').val() < 1 || stock_box.find('input').val() > 500){
-        $.toast('请填写1~500数字');
-        return;
-      }
-      $.post('/index.php?g=user&m=Center&a=ajax_update_goods',{
-        object_id:object_id,
-        numbers: stock_box.find('input').val()
+    var stock_number = $(this).parent().find('.remain');
+    if(stock_number.val() < 1 || stock_number.val() > 999){
+      $.toast('请填写1~999');
+      return;
+    }
+    $.confirm('确定要更改库存吗？', function () {
+     $.post('/index.php?g=user&m=Center&a=ajax_update_goods',{
+        object_id:$(_this).data('object_id'),
+        pid:$(_this).data('pid'),
+        numbers: stock_number.val()
       },function(data){
         if(data.status == 1){
-          $.toast('修改成功');
-          stock_number.text(stock_box.find('input').val());
-          stock_box.hide();
+          stock_number.val(parseInt(stock_number.val()));
+          $.alert(data.info);
         } else {
-          $.toast(data.info);
+          $.alert(data.info);
         }
       })
-    })
-    stock_box.on('click',function(e){
-      stock_box.hide();
-      stock_box.off('click');
-      // stock_box.off('click','.submit_remain');
     });
+    // var object_id = $(this).data('id');
+    // stock_box.show();
+    // stock_box.find('input').val(stock_number.text());
+
+    // stock_box.find('input').trigger('focus');
+    // stock_box.find('input').focus(function(){
+
+    // }).blur(function(e){
+
+    // });
+    // stock_box.on('click','.submit_remain',function(){
+    //   if(stock_box.find('input').val() < 1 || stock_box.find('input').val() > 500){
+    //     $.toast('请填写1~500数字');
+    //     return;
+    //   }
+    //   $.post('/index.php?g=user&m=Center&a=ajax_update_goods',{
+    //     object_id:object_id,
+    //     numbers: stock_box.find('input').val()
+    //   },function(data){
+    //     if(data.status == 1){
+    //       $.toast('修改成功');
+    //       stock_number.text(stock_box.find('input').val());
+    //       stock_box.hide();
+    //     } else {
+    //       $.toast(data.info);
+    //     }
+    //   })
+    // })
+    // stock_box.on('click',function(e){
+    //   stock_box.hide();
+    //   stock_box.off('click');
+    //   // stock_box.off('click','.submit_remain');
+    // });
   });
   var loading = false;
   // 初始化下拉

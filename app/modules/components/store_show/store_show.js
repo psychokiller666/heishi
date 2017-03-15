@@ -214,6 +214,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
           'order[counts]': parseInt(dialog_reward.find('input').val()),
           'order[type]': 0,
           'order[payment_type]': 0,
+          'order[seller_name]':$(this).data('username'),
           'order[attach]': '打赏'
         },
         dataType: 'json',
@@ -421,6 +422,42 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       }
     });
   });
+  //选款
+  function touchmove(e){
+    e.preventDefault();
+  }
+  page.on("click",".select",function(e){
+    var ev = e.target;
+    if(ev == this){
+      $(this).css("display","none");
+      window.removeEventListener("touchmove",touchmove);
+    }
+  })
+
+  page.on("click",".styles",function(){
+    $(".select").css("display","block");
+    window.addEventListener("touchmove",touchmove);
+  })
+  page.on("click",".now_buy",function(){
+    var n = $(".now_buy").attr("href");
+    if(n == ""){
+      $.toast("请选择款项",1000);
+    }
+  })
+  page.on("click",".select_main li",function(){
+      if(!$(this).find("div").attr("class")){
+        var id = $(this).data("id");
+        var article_id = $(this).data("articleid");
+        var str = "/User/HsOrder/add/object_id/"+article_id+"/mid/"+id+".html";
+        $(".now_buy").attr("href",str);
+        $(".select_main li").find("div").css({"background":"transparent"});
+        $(this).find("div").css({"background":"#58d996"});
+      }
+  })
+  page.on("click",".close span",function(){
+      window.removeEventListener("touchmove",touchmove);
+      $(".select").css("display","none");
+  })
   //收藏
   page.on('click','.collect',function(){
     var bool=$(".collect i").hasClass("nocollect");
@@ -540,7 +577,6 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
               // 删除加载提示符
               $('.infinite-scroll-preloader').remove();
               $.toast('😒 没有评论了');
-
             }
           } else {
             $.toast(data.info);

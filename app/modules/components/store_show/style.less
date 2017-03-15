@@ -292,7 +292,6 @@
     background-color: #191919;
     .hs-cf;
     .info {
-        margin-left: 0.346667rem;
         float: left;
         color: #fff;
         strong {
@@ -301,6 +300,13 @@
             padding-top: 0.32rem;
             padding-bottom: 0.15rem;
             line-height: 0.613333rem;
+            span{
+                .font-dpr(16px);
+                    display: inline-block;
+                    float: right;
+                    margin-left: 0.3rem;
+                    padding-top: 0.24rem;
+            }
         }
         span {
             .font-dpr(12px);
@@ -432,6 +438,87 @@
             }
         }
     }
+}
+/*类型选择*/
+.select {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background:rgba(0,0,0,0.8); 
+    z-index: 1000;
+    display: none;
+    .select_main {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        .close{
+            width: 9.4rem;
+            height: 0.92rem;
+            color: white;
+            padding: 0 0.3rem;
+            line-height: 0.92rem;
+            .font-dpr(14px);
+            text-align: right;
+            background-color: black;
+        }
+        ul{
+            background-color: white;
+            padding: 0 0.3rem;
+            li{
+                border-bottom: 0.02rem solid #cfcfcf;
+                height: 1.62rem;
+                padding-top: 0.24rem;
+                position: relative;
+                strong{
+                    .font-dpr(16px);
+                    display: block;
+                }
+                span{
+                    .font-dpr(14px);
+                    position: absolute;
+                    bottom: 0.24rem;
+                    left: 0;
+                    text-align: left;
+                    color: #d71f1f;
+                }
+                .close-repertory{
+                    color: #7c7c7c;
+                }
+                div{
+                    position: absolute;
+                    width: 0.18rem;
+                    height: 0.18rem;
+                    border:0.05rem solid #58d996;
+                    border-radius: 50% 50%;
+                    right: 0;
+                    top: 48%;
+                    transform: translateY(-50%);
+                }
+                .no_repertory{
+                    border-color: rgba(211,211,211,.5);
+                }
+                .repertory{
+                    color:#4f4f4f;
+                    left: 46%;
+                }
+                &:last-child{
+                    border-bottom: none;
+                }
+            }
+        }
+        .now_buy{
+            width: 9.4rem;
+            height: 1.31rem;
+            color: white;
+            padding: 0 0.3rem;
+            line-height: 1.31rem;
+            .font-dpr(14px);
+            text-align: center;
+            background-color: #63b083;
+            display: block;
+        }
+    }
+
 }
 /* 评论 */
 .comment {

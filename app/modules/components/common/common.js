@@ -110,7 +110,7 @@ common.prototype.wx_share = function(options){
         'checkJsApi',
         'onMenuShareTimeline',
         'onMenuShareAppMessage',
-        'showAllNonBaseMenuItem'
+        'showAllNonBaseMenuItem',
         ]
       });
       wx.ready(function(){
