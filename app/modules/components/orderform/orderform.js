@@ -9,7 +9,7 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
     return false;
   }
   var init = new common(page);
-  // init.wx_share(false);
+  init.wx_share(false);
 
   var orderform = $('.orderform');
   var orderform_bd = $('.orderform_bd');
@@ -57,30 +57,23 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
       'order[counts]': order_number.val(),
       'order[type]': 1,
       'order[payment_type]': 0,
-      'order[attach]': attach.val()
+      'order[attach]': attach.val(),
+      'order[seller_name]':$(this).data('username'),
+      'order[mid]':$(this).data('mid')
     };
 
-    $.showPreloader();
     $.post('/index.php?g=restful&m=HsOrder&a=add',post_data,function(data){
       if(data.status == 1){
-        var ok_url = GV.pay_url+'hsjsapi.php?order_number=' + data.order_number +
-        '&object_id=' + _this.data('id') +
-        '&quantity=' + order_number.val() +
-        '&seller_username=' + _this.data('username');
-
+        var ok_url = GV.pay_url+'hsjsapi.php?order_number=' + data.order_number;
+        setTimeout(function(){
+          window.location.href = ok_url;
+        },500);
         init.cnzz_push('下订单',{
           '订单ID': data.order_number
         });
-        setTimeout(function(){
-          $.hidePreloader();
-          window.location.href = ok_url;
-        },1500);
-
       } else {
         $.toast(data.info);
       }
-      $.hidePreloader();
     })
   })
-
 })

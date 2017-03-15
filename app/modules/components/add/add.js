@@ -267,17 +267,105 @@ $(document).on('pageInit','.add', function (e, id, page) {
   }
 
   // 获取价格、邮费、数量
-  function get_number(name,nameclass){
-    var number = nameclass.find('input').val().length;
-    var input;
-    if(number){
-      input = parseInt(nameclass.find('input').val());
-    } else {
-      input = 0;
-      nameclass.find('input').trigger('focus');
-      $.toast(name+'不能为空');
+  // function get_number(name,nameclass){
+  //   var number = nameclass.find('input').val().length;
+  //   var input;
+  //   if(number){
+  //     input = parseInt(nameclass.find('input').val());
+  //     if(isNaN(input)){
+  //       $.toast("请正确输入");
+  //     }
+  //   } else {
+  //     input = 0;
+  //     nameclass.find('input').trigger('focus');
+  //     $.toast(name+'不能为空');
+  //   }
+  //   return input;
+  // }
+  function getByteLen(val) {
+      var len = 0;
+      for (var i = 0; i < val.length; i++) {
+          var a = val.charAt(i);
+          if (a.match(/[^\x00-\xff]/ig) != null) {
+              len += 2;
+          }
+          else {
+              len += 1;
+          }
+      }
+      return len;
+  }
+  function get_number(type){
+    var str = '.'+type+' input',
+    state = true;
+    $(str).each(function(){
+      var number = $(this).val().length,
+      name = $(this).data("name"),
+      nan = parseInt($(this).val()-0);
+      if(!number){
+        $(this).trigger('focus');
+        $.toast(name+'不能为空');
+        state = false;
+        return false;
+      }
+      if(isNaN(nan) && name != "型号"){
+        $(this).trigger('focus');
+        $.toast('请正确输入: '+name);
+        state = false;
+        return false;
+      }
+      if(name == "型号" && getByteLen($(this).val()) >16){
+        $(this).trigger('focus');
+        $.toast("型号最多8个字",1000);
+        state = false;
+        return false;
+      }
+      if(name == "价格" && $(this).val() >999999){
+        $.toast(name+"最高999999");
+        state = false;
+        return false;
+      }
+      if(name == "邮费" && $(this).val() >999){
+        $.toast(name+"最高999");
+        state = false;
+        return false;
+      }
+      if(name == "数量" && $(this).val() >999){
+        $.toast(name+"最高999");
+        state = false;
+        return false;
+      }
+    })
+    return state;
+  }
+  // 选款数组
+  function goods(type){
+    var arr = [];
+    if(type == "types"){
+      var str = '.'+type+' .items';
+      $(str).each(function(index){
+        var obj = {},
+        input = $(this).find("input"),
+        select_postage = $(".select_postage input");
+        for(var i = 0;i < $(input).length;i++){
+          var title = $(input).eq(i).data("title"),
+          val = $(input).eq(i).val();
+          obj[title] = val;
+        }
+        obj[select_postage.data("title")] = select_postage.val();
+        arr.push(obj);
+      })
+    }else{
+      var str = '.'+type+' input',
+      obj = {};
+      $(str).each(function(){
+        var title = $(this).data("title"),
+        val = $(this).val();
+        obj[title] = val;
+      })
+      arr.push(obj)
     }
-    return input;
+    return arr;
   }
   // 提交
   submit_btn.on('click',function(){
@@ -287,16 +375,19 @@ $(document).on('pageInit','.add', function (e, id, page) {
     // 判断
     if(get_title() && get_excerpt() && get_picture_list() && get_tags()){
       if(_this.data('type') == 1){
-        if(get_number('价格',$('.price')) && get_number('数量',$('.number'))){
+        if(get_number($('.select').attr("id"))){
           post_data = {
             'post[type]':_this.data('type'),
             'post[post_token]':_this.data('token'),
             'post[post_pictures]':get_picture_list(),
             'post[post_title]':get_title(),
             'post[post_excerpt]':get_excerpt(),
-            'post[post_numbers]':get_number('数量',$('.number')),
-            'post[post_price]':get_number('价格',$('.price')),
-            'post[postage]':parseInt($('.postage').find('input').val()),
+            //重写
+            'post[goods]':goods($('.select').attr("id")),
+            'post[goods_size]':goods($('.select').data("type")).length,
+            // 'post[post_numbers]':get_number('数量',$('.number')),
+            // 'post[post_price]':get_number('价格',$('.price')),
+            // 'post[postage]':parseInt($('.postage').find('input').val()),
             'post[post_keywords]':get_tags(),
           }
         } else {
@@ -336,6 +427,58 @@ $(document).on('pageInit','.add', function (e, id, page) {
         }
       })
     }
+  })
+  //类型添加
+  $(".select").on("click",function(){
+    if($(this).attr("id") == "default"){
+      $(this).attr("id","types");
+      $(this).find('div').css("background","#58d996");
+    }else{
+      $(this).attr("id","default");
+      $(this).find('div').css("background","white");
+    }
+    $(".default").toggle();
+    $(".types").toggle();
+  })
+  $(".types").on("click",".cancel_items",function(){
+    var num = $(".items").length;
+    if(num>=2){
+     $(this).parents(".items").remove();
+    }else{
+      $(".default").toggle();
+      $(".types").toggle();
+      $(".types").find('input').val("");
+      $(".select").attr("id","default");
+      $(".select").find('div').css("background","white");
+    }
+  })
+  $(".types").on("click",".add_item",function(){
+    var num = $(".items").length;
+    var items = $($(".items")[0]).clone();
+    if(num>=6){
+      $.toast("最多6个",1000);
+    }else{
+      items.find(".styles").find("input").val("");
+      $(this).before(items);
+    }      
+  })
+  $(".types").on("blur",".styles",function(){
+    $('.types .styles').each(function(){
+      if(getByteLen($(this).find("input").val()) >16){
+        if($(this).find("input").css("color") != "red"){
+          $(this).find("input").css("color","red");
+          $.toast("最多8个字",1000);
+        }
+        return;
+      }else{
+        $(this).find("input").css("color","#383838");
+      }
+    })    
+  })
+  $(".types").on("input",".styles",function(){
+      if($(this).find("input").val().length <=6){
+        $(this).find("input").css("color","#383838");
+      }
   })
 });
 
