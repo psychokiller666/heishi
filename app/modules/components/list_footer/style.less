@@ -24,6 +24,7 @@
                 }
                 a {
                     display: block;
+                    position: relative;
                     &:hover {
                         text-decoration:none;
                     }
@@ -75,6 +76,9 @@
                             &.explore:before {
                                 content: "\e626";
                             }
+                            &.shopping:before {
+                                content: "\e6e4";
+                            }
                             &.new:after {
                                 content: "";
                                 width: .2rem;
@@ -86,7 +90,22 @@
                                 right: .6rem;
                             }
                         }
-
+                    }
+                    .information,
+                    .shopping-num{
+                        width: 0.4rem;
+                        height: 0.4rem;
+                        position: absolute;
+                        background-color: #58d996;
+                        left: 50%;
+                        top: 0;
+                        transform: translate(10%,-10%);
+                        border-radius: 0.2rem 0.2rem;
+                        text-align: center;
+                        line-height: 0.4rem;
+                        color: white;
+                        .font-dpr(12px);
+                        display: none;
                     }
                 }
             }

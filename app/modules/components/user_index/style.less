@@ -240,6 +240,9 @@
               .font-dpr(20px);
               content: "\e62c";
             }
+            &.messages:before {
+              content: "\e613";
+            }
          }
          &:after {
           .hs-icon;
@@ -250,6 +253,19 @@
           top: 0;
           .font-dpr(18px);
           .font-line-height(18px);
+        }
+        .newMessages {
+          width: 0.4rem;
+          height: 0.4rem;
+          border-radius: 0.4rem;
+          background-color: #58d996;
+          color: white;
+          display: inline-block;
+          margin-left: 0.3rem;
+          text-align: center;
+          line-height: 0.4rem;
+          display: none;
+          .font-dpr(12px);
         }
       }
       &:last-child {

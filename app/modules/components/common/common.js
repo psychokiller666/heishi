@@ -55,7 +55,14 @@ common.prototype.msg_tip = function(){
   $.getJSON('/index.php?g=user&m=HsMessage&a=new_messages',{},function(data){
     if(data.status == '1'){
       if(data.data.messages >= 1){
-        $('.hs-footer').find('.messages').addClass('new');
+        // 修改新消息提示位置 0315
+        if(data.data.messages > 99){
+          $('.center').find('.newMessages').css("display","inline-block").text('99');
+          $('.information').css('display','block').text('99');
+        }else{
+          $('.center').find('.newMessages').css("display","inline-block").text(data.data.messages);
+          $('.information').css("display","block").text(data.data.messages);
+        }
       }
       // if(data.data.posts >= 1){
       //   if($('.center').length){
@@ -121,6 +128,10 @@ common.prototype.wx_share = function(options){
         imgUrl: options.img,
         success: function(){
           // 用户确认分享后执行的回调函数
+          //诸葛统计
+            zhuge.track('分享微信朋友圈',{
+              '受访页面' : $.trim(options.title)
+            });
           _this.cnzz_push('分享微信朋友圈',{
             '标题':$.trim(options.title)
           });
@@ -133,6 +144,9 @@ common.prototype.wx_share = function(options){
         imgUrl: options.img,
         success:function(){
           // 用户确认分享后执行的回调函数
+          zhuge.track('分享微信好友',{
+              '受访页面' : $.trim(options.title)
+            });
           _this.cnzz_push('分享微信好友',{
             '标题':$.trim(options.title)
           });
