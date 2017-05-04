@@ -37,26 +37,6 @@
               left: -3.5rem;
               width: 10rem;
             }
-            .btn-box {
-              position: absolute;
-              right: 0;
-              top: 0;
-              color: #fff;
-              button{
-                float: left;
-                padding: 0 .8rem;
-                height: 100%;
-                .font-dpr(16px);
-                border:none;
-                color: white;
-              }
-              .delete{
-                background-color: #fe0000;
-              }
-              .stick{
-                background-color: #cdcdcd;
-              }
-            }
             .info {
               .date {
                 margin-right: 1.6rem !important;
@@ -65,6 +45,7 @@
           }
           a {
             display: block;
+            transition: all 0.3s;
             width: 10rem;
             padding-top: .2rem;
             .hs-cf();
@@ -80,8 +61,8 @@
               &.new:after {
                 position: absolute;
                 content: "";
-                width: .2rem;
-                height: .2rem;
+                width: .25rem;
+                height: .25rem;
                 border-radius: 200%;
                 top: 0;
                 right: 0;
@@ -124,7 +105,30 @@
           }
         }
         .btn-box {
-          display: none;
+          position: absolute;
+          right: 0;
+          top: 0;
+          color: #fff;
+          width: 0;
+          transition: all 0.3s;
+          overflow: hidden;
+          button{
+            position: absolute;
+            height: 100%;
+            .font-dpr(16px);
+            border:none;
+            color: white;
+            width: 2.45rem;
+            top: 0;
+          }
+          .delete{
+            background-color: #fe0000;
+            left: 0;
+          }
+          .stick{
+            background-color: #cdcdcd;
+            left: 2.45rem;
+          }
         }
       }
     }

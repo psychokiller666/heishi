@@ -26,7 +26,6 @@ chat_content.on('focus',function(){
   update_img_box.hide();
   update_img_btn.removeClass('active');
 })
-
 chat_footer.find('.submit').on('click',function(){
 
   if(chat_content.val().length){
