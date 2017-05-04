@@ -43,15 +43,16 @@ $(document).on('pageInit','#refund_detail', function(e, id, page){
     recent_box.css('top',$('.refund_header').height());
     var recent_tpl = handlebars.compile($("#recent_tpl").html());
     var recent_btn = $('.recent_btn');
-    recent_btn.on('click',function(e) {
+    chat_header_bd.on('click',function(e) {
+      var recent_btn = $(this).find('.recent_btn');
       var _this = $(this);
-      if(!$(this).hasClass('active')){
-        $(this).addClass('active');
+      if(!recent_btn.hasClass('active')){
+        recent_btn.addClass('active');
         $.ajax({
           type: 'POST',
           url: '/index.php?g=restful&m=HsOrder&a=ajax_order_details',
           data: {
-            order_number: $(this).data('ordernumber')
+            order_number: recent_btn.data('ordernumber')
           },
           dataType: 'json',
           timeout: 4000,
@@ -59,11 +60,9 @@ $(document).on('pageInit','#refund_detail', function(e, id, page){
             if(data.status == 1){
               recent_box.html(recent_tpl(data.data));
               recent_box.show();
-              chat_header_bd.css('background-color','#ededed');
+              _this.css('background-color','#ededed');
             } else {
               $.toast(data.info);
-              recent_btn.off('click');
-              _this.remove();
             }
 
           },
@@ -72,12 +71,13 @@ $(document).on('pageInit','#refund_detail', function(e, id, page){
           }
         });
       } else {
-        $(this).removeClass('active');
+        recent_btn.removeClass('active');
         recent_box.hide();
-        chat_header_bd.css('background-color','#fff');
+        $(this).css('background-color','#fff');
       }
     })
-    page.find('.btn').on('click',function(){
+    //卖家操作 同意/拒绝退款
+    page.find('.seller_btn').on('click',function(){
       var _this = $(this);
       var buttons1;
       if(_this.data('status') == 0) {
@@ -91,17 +91,19 @@ $(document).on('pageInit','#refund_detail', function(e, id, page){
           bold: true,
           color: 'danger',
           onClick: function() {
-            $.confirm('你确定同意退款吗？', function () {
-              $.post('/index.php?g=User&m=HsRefund&a=seller_process_post',{
-                id:_this.data('id'),
-                action:'allow',
-                order_number:_this.data('ordernumber')
-              },function(res){
-                $.toast(res.info);
-                if(res.status == 1){
-                  location.reload();
-                }
-              })
+            $.alert('你确定同意退款吗？', '请核实退款金额是否正确', function () {
+              $.confirm('确定退款', function () {
+                $.post('/index.php?g=User&m=HsRefund&a=seller_process_post',{
+                  id:_this.data('id'),
+                  action:'allow',
+                  order_number:_this.data('ordernumber')
+                },function(res){
+                  $.toast(res.info);
+                  if(res.status == 1){
+                    location.reload();
+                  }
+                })
+              });
             });
           }
         },
@@ -122,6 +124,100 @@ $(document).on('pageInit','#refund_detail', function(e, id, page){
       ];
       var groups = [buttons1, buttons2];
       $.actions(groups);
+    })
+    //卖家联系买家
+    page.find('.msg_btn').on('click',function(){
+      var _this = $(this);
+      var buttons1;
+      if(_this.data('status') == 0) {
+        buttons1 = [
+        {
+          text: '请选择',
+          label: true
+        },
+        {
+          text: '买家电话',
+          bold: true,
+          color: 'danger',
+          onClick: function() {
+            $.post('/index.php?g=restful&m=HsOrder&a=ajax_get_buyer_phone',{
+              order_number:_this.data('ordernumber')
+            },function(res){
+              if(res.status == 1){
+                window.open('tel:'+res.data);
+              }
+            })
+          }
+        },
+        {
+          text: '私信买家',
+          color: 'danger',
+          onClick: function() {
+            var userid = _this.data('refund_user_id');
+            $.router.load('/User/HsMessage/detail/from_uid/'+userid+'.html', true);
+          }
+        },
+        ];
+      }
+      var buttons2 = [
+      {
+        text: '取消',
+        bg: 'danger'
+      }
+      ];
+      var groups = [buttons1, buttons2];
+      $.actions(groups);
+    })
+    //买家操作 修改退款金额 练习卖家
+    // page.find('.buyer_btn').on('click',function(){
+    //   var _this = $(this);
+    //   var buttons1;
+    //   buttons1 = [
+    //   {
+    //     text: '请选择',
+    //     label: true
+    //   },
+    //   {
+    //     text: '修改退款金额',
+    //     color: 'danger',
+    //     onClick: function() {
+    //       setTimeout(function(){
+    //         $('.amend_money').css('display','block');
+    //       },500);
+    //     }
+    //   },
+    //   ];
+    //   var buttons2 = [
+    //   {
+    //     text: '取消',
+    //     bg: 'danger'
+    //   }
+    //   ];
+    //   var groups = [buttons1, buttons2];
+    //   $.actions(groups);
+    // })
+    $('.submit').on('click',function(){
+      var price = $(this).data('max_fee');
+      var num = $('.amend_money_number').val();
+      var _this = $(this);
+      if(num){
+        $.toast('请输入修改金额',1000);
+      }
+      if(price < num){
+        $.toast('请不要超过'+price+'元');
+      }else{
+        $.post('/index.php?g=User&m=HsRefund&a=ajax_update_refund_amount',{
+          id:_this.data('id'),
+          refund_amount: num
+        },function(res){
+          $.toast(res.info,1000);
+          location.reload();
+        })
+      }
+      $('.amend_money').css('display','none');
+    })
+    $('.cancel').on('click',function(){
+      $('.amend_money').css('display','none');
     })
   });
 $(document).on('pageInit','#reason', function(e, id, page){

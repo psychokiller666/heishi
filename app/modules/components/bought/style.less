@@ -4,10 +4,11 @@
       ul {
         li {
           .header {
+            padding-bottom: 0;
+            border-bottom: none;
             .logistics {
               .hs-cf;
               padding-bottom: 0.16rem;
-              margin-bottom: 0.16rem;
               border-bottom: 1px solid rgba(211, 211, 211, .5);
               span {
                 float: left;
@@ -34,6 +35,15 @@
                 margin-top: .2rem;
               }
             }
+            .orderList{
+              padding: 0.16rem 0;
+              border-bottom: 1px solid rgba(211, 211, 211, .5);
+              &:after{
+                display:block;
+                content: "";
+                clear: both;
+              }
+            }
           }
           .title {
             .date {
@@ -50,19 +60,52 @@
             }
             .price {
               color: red !important;
-              bottom: 0.5rem;
+              bottom: 0;
               position: absolute;
               width: 100%;
               left: 0;
               .font-dpr(12px);
-              .styles{
-                color: #000;
-                float: right;
+              span:first-child{
+                margin-right: 0.2rem;
               }
+              .styles{
+                color: #aaa;
+              }
+              a{
+                color: #5bd69d;
+                .font-dpr(12px);
+              }
+            }
+          }
+          .image{
+            background: none;
+          }
+          .all_price{
+            .font-dpr(12px);
+            line-height: 1rem;
+            height: 1.5rem;
+            border-bottom: 1px solid rgba(211,211,211,.5);
+            &:after{
+              display:block;
+              content: "";
+              clear: both;
+            }
+            .number,
+            .date{
+              line-height: 0;
+              width: 100%;
+              color: #aaa;
+            }
+            .date{
+              float: left;
+              text-align: right;
             }
           }
           .contact {
             padding: 0.2rem 0;
+            height: auto;
+            line-height: 1em;
+            .hs-cf();
             .complaints {
               float: left;
               .font-dpr(13px);
@@ -81,11 +124,6 @@
                 line-height: 0;
               }
             }
-            .username {
-              span {
-                color: red;
-              }
-            }
             .office {
               span {
                 color: #58d996;
@@ -96,6 +134,9 @@
                 &.not {
                   color: #111;
                 }
+              }
+              .reimburse{
+                display: none;
               }
             }
           }

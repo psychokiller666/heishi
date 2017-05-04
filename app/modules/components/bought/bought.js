@@ -26,7 +26,17 @@ $(document).on('pageInit','.bought', function (e, id, page) {
       return options.inverse(this);
     }
   });
-
+  //判断是否显示 申请退款选项
+  liForeach();
+  function liForeach(){
+    $('li').each(function(){
+      var lengthA = $(this).find('.orderList .price a').length;
+      var lengthOrderList= $(this).find('.orderList').length;
+      if(lengthA == lengthOrderList){
+        $(this).find('.apply_for').css('display','none')
+      }
+    })
+  }
   // 添加数据
   function add_data(page_size,page) {
     $.ajax({
@@ -37,14 +47,23 @@ $(document).on('pageInit','.bought', function (e, id, page) {
         page_size:page_size
       },
       dataType: 'json',
-      timeout: 4000,
+      timeout: 10000,
       success: function(data){
         if(data.status == 1){
-          already_list.find('ul').append(already_list_tpl(data.data));
+          //计算邮费 为发货 已发货
+          var dataObj = data.data;
+          for(var i = 0;i<dataObj.length;i++){
+            if(dataObj[i].type == 1){
+              dataObj[i]['shopping_price'] = dataObj[i].total_fee-dataObj[i].price*dataObj[i].counts;
+            }
+          }
+          already_list.find('ul').append(already_list_tpl(dataObj));
           // 更新最后加载的序号
           pages = data.pages;
+          //设置是否显示退款详情
           page_num++;
           init.loadimg();
+          liForeach();
         } else {
           $.toast('请求错误');
         }
