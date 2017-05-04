@@ -36,7 +36,7 @@
             margin-top: 0.34rem;
           }
         }
-        padding: .16rem .16rem 0 .16rem;
+        padding: 0 .16rem 0 .16rem;
         border-left: 1px solid #f1f1f1;
         border-right: 1px solid #f1f1f1;
         box-shadow: 0px 0.04rem 0.04rem #d6d6d6;
@@ -68,8 +68,25 @@
             }
           }
         }
+        .order_number{
+          .font-dpr(14px);
+          height: 1.2rem;
+          line-height: 1.2rem;
+          border-bottom: 1px solid rgba(211, 211, 211, .5);
+          color: #aaa;
+          .address_btn{
+            .font-dpr(13px);
+            border:1px solid #5bd69d;
+            border-width: 0.02rem;
+            background-color: #fff;
+            padding: 0.1rem 0.26rem;
+            color: #5bd69d;
+            border-radius: 4px;
+            margin-left: 0.2rem;
+          }
+        }
         .header {
-          padding-bottom: 0.16rem;
+          padding: 0.16rem 0;
           border-bottom: 1px solid rgba(211, 211, 211, .5);
           .hs-cf();
           .image {
@@ -97,8 +114,8 @@
             }
             .total {
               position: absolute;
-              .font-dpr(15px);
-              .font-line-height(15px);
+              .font-dpr(12px);
+              .font-line-height(12px);
               bottom: 0;
               left: 0;
               color: #FB0E0E;
@@ -118,20 +135,77 @@
              .font-dpr(12px);
              .font-line-height(12px);
              color: #aaa;
-             .styles{
+             /*.styles{
               padding-right: 0.2rem;
-             }
+             }*/
            }
+            .son_order_number{
+              float: right;
+              .font-dpr(14px);
+              color: #aaa;
+            }
+            .refund_details{
+              position: absolute;
+              right: 0;
+              top: 0.5rem;
+              a{
+                color: #5bd69d;
+                .font-dpr(14px);
+              }
+            }
+
+            .price_styles{
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              width: 100%;
+              .font-dpr(12px);
+              .font-line-height(12px);
+              .total{
+                color: #FB0E0E;
+                margin-right: 0.2rem;
+              }
+              .styles{
+                color: #aaa;
+                left: 1rem;
+                position: absolute;
+                bottom: 0;
+              }
+              a{
+                color: #5bd69d;
+                .font-dpr(12px);
+              }
+            }
          }
        }
+       .all_price{
+          .font-dpr(12px);
+          line-height: 1rem;
+          height: 1.5rem;
+          border-bottom: 1px solid rgba(211,211,211,.5);
+          &:after{
+            display:block;
+            content: "";
+            clear: both;
+          }
+          .number,
+          .date{
+            line-height: 0;
+            width: 100%;
+            color: #aaa;
+          }
+          .date{
+            float: left;
+            text-align: right;
+          }
+        }
        .contact {
-        .hs-cf();
-        padding: 0.15rem 0;
+        .font-dpr(14px);
+        height: 1.2rem;
+        line-height: 1.2rem;
         .username {
-          width: 4rem;
           float: left;
-          .font-dpr(14px);
-          margin: 0.2rem 0;
+          width: 4rem;
           display: -webkit-box;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -142,10 +216,6 @@
         }
         .office {
           float:right;
-          margin: .2rem 0;
-          &.my_bought{
-            margin: 0;
-          }
           button,a {
             .font-dpr(13px);
             border:1px solid #5bd69d;

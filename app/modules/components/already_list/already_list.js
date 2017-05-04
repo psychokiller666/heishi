@@ -120,7 +120,7 @@ $(document).on('pageInit','.untreated', function (e, id, page) {
     var groups = [features_btn, cancel_btn];
     $.actions(groups);
   })
-
+  
   // 添加数据
   function add_data(page_size,page) {
     $.ajax({
@@ -134,7 +134,22 @@ $(document).on('pageInit','.untreated', function (e, id, page) {
       timeout: 4000,
       success: function(data){
         if(data.status == 1){
-          already_list.find('ul').append(already_list_tpl(data.data));
+          //计算邮费 未发货 已发货
+          //匹配名字
+          var dataObj = data.data;
+          if(ajax_url == '/index.php?g=user&m=HsOrder&a=ajax_untreated' || ajax_url == '/index.php?g=user&m=HsOrder&a=ajax_delivered'){
+            for(var i = 0;i<dataObj.length;i++){
+              if(dataObj[i].type == 1){
+                dataObj[i]['buyer_postage'] = dataObj[i].total_fee-dataObj[i].price*dataObj[i].counts;
+              }
+            }
+          }
+          for(var i = 0;i<dataObj.length;i++){
+            dataObj[i]['user_name_string'] = data.users[dataObj[i]['user_id']]['user_nicename'];
+          }
+          already_list.find('ul').append(already_list_tpl(dataObj));
+          //判断购物车内子订单是否全部退货 若全部退货则删除大订单
+          showItem();
           // 更新最后加载的序号
           pages = data.pages;
           page_num++;
@@ -154,7 +169,49 @@ $(document).on('pageInit','.untreated', function (e, id, page) {
     var addressid = _this.data('addressid');
     var userid = _this.data('userid');
     var ordernumber = _this.data('ordernumber');
+    if(_this.data('type') == 2){
+      var status = confirm_round(this);
+      return status;
+    }
   });
+
+  //判断订单中是否有待处理商品
+  function confirm_round(that){
+    var _this = that;
+    var href = $(_this).attr('href');
+    var ret = true;
+    $(_this).parents('li').find('.header').each(function(index){
+      var tag = $(this).data('tag');
+      var process_status = $(this).data('process_status');
+      if(tag == 0 && process_status == 25){
+        $.alert('请处理退款完再来发货');
+        ret = false;
+        return false;
+      }
+    })
+    return ret;
+  }
+  //初始化购物车订单是否应 子订单全部退款 显示
+  function showItem(){
+    $('.mergeOrder').each(function(){
+      var n = $(this).find('.header').length;
+      var m = 0;
+      $(this).find('.header').each(function(){
+        var tag = $(this).data('tag');
+        var process_status = $(this).data('process_status');
+        if(process_status == 25 && tag == 1){
+          m++;
+        }
+        if(process_status == 26){
+          m++;
+        }
+      })
+      if(m == n){
+        $(this).remove();
+      }
+    })
+  }
+  showItem();
   if(already_list.find('li').length < 20){
     $.detachInfiniteScroll($('.infinite-scroll'));
     // 删除加载提示符
