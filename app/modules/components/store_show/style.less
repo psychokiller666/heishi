@@ -72,6 +72,7 @@
                     padding: .16rem 0;
                     a {
                         display: block;
+                        position: relative;
                         span {
                             display: block;
                             color: #bbbabc;
@@ -111,7 +112,25 @@
                                 &.user:before {
                                     content: "\e611";
                                 }
+                                &.shopping:before {
+                                    content: "\e6e4";
+                                }
                             }
+                        }
+                        .shopping-num{
+                            width: 0.4rem;
+                            height: 0.4rem;
+                            position: absolute;
+                            background-color: #58d996;
+                            left: 50%;
+                            top: 0;
+                            transform: translate(10%,-10%);
+                            border-radius: 0.2rem 0.2rem;
+                            text-align: center;
+                            line-height: 0.4rem;
+                            color: white;
+                            .font-dpr(12px);
+                            display: none;
                         }
                     }
                 }
@@ -224,16 +243,48 @@
    }
    .content_bd {
     padding: 0.346667rem 0.413333rem;
-    .font-dpr(14px);
-    line-height: 0.746667rem;
+    .font-dpr(15px);
     color: #212121;
     overflow: hidden;
+    line-height: 0.65rem;
+    text-align: justify;
+    letter-spacing: 1px;
+    word-break: break-all;
+    h1{
+        .font-dpr(32px);
+        font-weight: 400;
+    }
+    h2{
+        .font-dpr(24px);
+        font-weight: 400;
+    }
+    h3{
+        .font-dpr(18px);
+        font-weight: 400;
+    }
+    h4{
+        .font-dpr(16px);
+        font-weight: 400;
+    }
+    h5{
+        .font-dpr(13px);
+        font-weight: 400;
+    }
+    h6{
+        .font-dpr(12px);
+        font-weight: 400;
+    }
+    strong{
+        font-weight: 700 !important;
+    }
     p {
-        padding-bottom: 0.16rem;
         overflow: hidden;
+        padding-bottom: 0.16rem;
     }
     img {
         width: 100%;
+        display: block;
+        padding: 0.2rem 0;
     }
 }
 .images {
@@ -259,6 +310,7 @@
                 background-position: center;
                 width: 2.96rem;
                 height: 3.08rem;
+                background-size: 30%;
             }
             &:nth-child(3) {
                 margin-right: 0;
@@ -313,9 +365,10 @@
             line-height: 0.293333rem;
         }
     }
+    .shopping_cart,
     .buy_btn {
         line-height: 0.946667rem;
-        padding: 0 0.906667rem;
+        padding: 0 0.44rem;
         margin-top: 0.36rem;
         background: none;
         border: 0.04rem solid #ff4400;
@@ -325,10 +378,16 @@
         font-weight: bold;
         float: right;
         &:disabled {
-            // opacity: .8;
             color: #a5a5a5;
             border: 0.04rem solid #a5a5a5;
+            padding: 0 0.906667rem;
         }
+    }
+    .shopping_cart{
+        padding: 0 0.3rem;
+        border-color: white;
+        color: white;
+        margin-right: 0.3rem;
     }
 }
 /* 点赞 */
@@ -451,7 +510,7 @@
         position: absolute;
         bottom: 0;
         width: 100%;
-        .close{
+        .close_select{
             width: 9.4rem;
             height: 0.92rem;
             color: white;
@@ -628,8 +687,8 @@
 }
 .prompt{
     position: absolute;
-    width: 10rem;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     z-index: 999;
     background: rgba(0,0,0,0.8);
     left: 0;
@@ -662,3 +721,8 @@
 }
 }
 
+@media screen and (max-width: 640px) {
+    .buy .buy_btn{
+        .font-dpr(12px) !important;
+    }
+}

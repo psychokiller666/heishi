@@ -53,21 +53,25 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
     var _this = $(this);
     _this.attr('disabled','disabled');
     var post_data = {
-      'order[object_id]': $(this).data('id'),
-      'order[counts]': order_number.val(),
+      'order[orders][0][seller_name]':$(this).data('username'),
+      'order[orders][0][attach]': attach.val(),
+      'order[orders][0][seller_uid]': $(this).data('seller_uid'),
+      'order[orders][0][goods][0][object_id]': $(this).data('id'),
+      'order[orders][0][goods][0][counts]': order_number.val(),
+      'order[orders][0][goods][0][mid]':$(this).data('mid'),
       'order[type]': 1,
-      'order[payment_type]': 0,
-      'order[attach]': attach.val(),
-      'order[seller_name]':$(this).data('username'),
-      'order[mid]':$(this).data('mid')
+      'order[payment_type]': 0
     };
 
-    $.post('/index.php?g=restful&m=HsOrder&a=add',post_data,function(data){
+    $.post('/index.php?g=restful&m=HsOrder&a=union_add',post_data,function(data){
       if(data.status == 1){
         var ok_url = GV.pay_url+'hsjsapi.php?order_number=' + data.order_number;
         setTimeout(function(){
           window.location.href = ok_url;
         },500);
+        zhuge.track('下订单',{
+          '订单ID' : data.order_number
+        });
         init.cnzz_push('下订单',{
           '订单ID': data.order_number
         });

@@ -1,5 +1,63 @@
 // 商品列表
 .store_list,.user_favorite {
+    /*banner移到首页*/
+    .banner {
+      width: 10rem;
+      height: 5.0rem;
+      padding-bottom: 0 !important;
+      .swiper-pagination {
+        bottom: 0.2rem;
+        .swiper-pagination-bullet {
+          background-color: #fff;
+          opacity: .4;
+          width: 0.2rem;
+          height: 0.2rem;
+        }
+        .swiper-pagination-bullet-active {
+          background-color: #fff;
+          opacity: 1;
+        }
+      }
+      .swiper-slide a {
+        display: block;
+        width: 10rem;
+        height: 5.00rem;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+    .classification {
+      background-color: #f3f3f3;
+      width:9.68rem;
+      padding:0.28rem 0.16rem;
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      justify-content:center;
+      a {
+        height: 2.48rem;
+        -webkit-box-flex: 1.0;
+        -moz-flex-shrink: 1;
+        -webkit-flex-shrink: 1;
+        flex-shrink: 1;
+        -webkit-box-ordinal-group: 1;
+        -moz-order: 1;
+        -webkit-order: 1;
+        order: 1;
+        padding-right: 0.3rem;
+        &:last-of-type{
+          padding-right: 0;
+        }
+        img {
+          height: 100%;
+        }
+      }
+    }
+    /*商品列表*/
     ul {
         li {
             border-bottom: 1px solid #dcdcdc;
