@@ -17,6 +17,9 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
   var notice_box = $('.notice_box');
   var notice_bd = $('.notice_bd');
   var old_active;
+  //初始化侧拉高度
+  // $('.chat_list_group_bd ul li').height($('.chat_list_group_bd ul li').height());
+  $('.chat_list_group_bd ul li').find('.btn-box').height($('.chat_list_group_bd ul li').height());
   // 记录位置
   hs_footer.find('li').each(function(index,item) {
     if($(item).find('a').hasClass('active')) {
@@ -58,53 +61,83 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
   $('.phone_verify').on('click','.modal-overlay',function(){
     $('.phone_verify').hide();
   })
-  // $('.chat_list_group_bd ul').on("touchmove","li",function(){
-  //   console.log("Asd");
-  // });
-  // 从右往左滑
-  $('.chat_list_group_bd ul').on("swipeLeft","li",function(){
-    var _this = $(this);
-    $('.btn-box').hide();
-    $('.chat_list_group_bd ul li').height($('.chat_list_group_bd ul li').height());
-    $('.chat_list_group_bd ul li').find('.btn-box').height($('.chat_list_group_bd ul li').height());
-    $('.chat_list_group_bd ul li').removeClass('active');
-    $('.btn-box',this).animate({
-      display: 'block'
-    }, 500, 'ease-in');
-    $(this).addClass('active');
-    // 删除聊天
-    _this.on('click','.delete',function(){
-      $.post('/index.php?g=User&m=HsMessage&a=ajax_delete_list',{
-        mid: $(this).data('mid')
-      },function(data){
-        if(data.status == 1) {
-          _this.remove();
-          $.toast(data.info);
-        } else {
-          $.toast(data.info);
+  //置顶 删除按钮 记录touch位置
+  var touchclientX = 0,
+  touchclientY = 0;
+  $('.chat_list_group_bd ul').on('touchstart','li',function(e){
+    e.stopPropagation();
+    touchclientX = e.originalEvent.targetTouches[0].clientX;
+    touchclientY = e.originalEvent.targetTouches[0].clientY;
+  })
+  $('.chat_list_group_bd ul').on('touchmove','li',function(e){
+    
+    var num = e.originalEvent.targetTouches.length;
+    if(num == 1){
+      var x = Math.abs(touchclientX - e.originalEvent.targetTouches[0].clientX);
+      var y = Math.abs(touchclientY - e.originalEvent.targetTouches[0].clientY);
+      //判断上下  还是左右
+      if(x < y) return;
+      e.preventDefault();
+      e.stopPropagation();
+      var n = (touchclientX - e.originalEvent.targetTouches[0].clientX)/100;
+      if(n <= 4 && n>=0){
+        if($(this).find('.btn-box').width() != 0){
+          return;
         }
-      });
-    });
-    //置顶
-    _this.on('click','.stick',function(){
-      $.post('/User/HsMessage/ajax_setting_top',{
-        mid: $(this).data('mid')
-      },function(data){
-        if(data.status == 1) {
-          $.toast(data.info);
-          setTimeout(function(){
-            location.reload();
-          },500);
-        } else {
-          $.toast(data.info);
+        if(n > 1){
+          $(this).find('.btn-box').css('width',"4.9rem");
+          $(this).find('a').css('transform',"translateX(-4.9rem)");
+          $(this).find('a').css('webkitTransform',"translateX(-4.9rem)");
+        }else{
+          $(this).find('.btn-box').css('width',"0");
+          $(this).find('a').css('transform',"translateX(0)");
+          $(this).find('a').css('webkitTransform',"translateX(0)");
         }
-      });
+      }else if(n < 0 && n>=-4){
+        var m = 4+n;
+        if($(this).find('.btn-box').width() == 0){
+          return;
+        }
+        if(m <= 3){
+          $(this).find('.btn-box').css('width',"0");
+          $(this).find('a').css('transform',"translateX(0)");
+          $(this).find('a').css('webkitTransform',"translateX(0)");
+        }else{
+          $(this).find('.btn-box').css('width',"4.9rem");
+          $(this).find('a').css('transform',"translateX(-4.9rem)");
+          $(this).find('a').css('webkitTransform',"translateX(-4.9rem)");
+        }
+      }
+    }
+  })
+  // 删除聊天
+  page.on('click','.delete',function(){
+    var that = this;
+    $.post('/index.php?g=User&m=HsMessage&a=ajax_delete_list',{
+      mid: $(this).data('mid')
+    },function(data){
+      if(data.status == 1) {
+        $(that).parents('li').remove();
+        $.toast(data.info);
+      } else {
+        $.toast(data.info);
+      }
     });
   });
-  // 从左往右滑
-  $('.chat_list_group_bd ul').on("swipeRight","li",function(){
-    $('.btn-box').hide();
-    $(this).removeClass('active');
+  //置顶
+  page.on('click','.stick',function(){
+    $.post('/User/HsMessage/ajax_setting_top',{
+      mid: $(this).data('mid')
+    },function(data){
+      if(data.status == 1) {
+        $.toast(data.info);
+        setTimeout(function(){
+          location.reload();
+        },500);
+      } else {
+        $.toast(data.info);
+      }
+    });
   });
 
   // 下拉加载
