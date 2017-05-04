@@ -26,6 +26,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   init.wx_share(share_data);
   // 检查是否关注
   init.checkfollow(1);
+  
   // 系统公告
   var placard = $('.placard');
   var placard_content;
@@ -153,7 +154,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     if(GV.device == 'any@weixin') {
       if($(this).hasClass('video')){
         $.photoBrowser({
-          photos : [{html:'<video width="100%" controls="controls" autoplay="autoplay" poster＝"'+$(this).data('layzr')+'"><source src="'+$(this).data('video')+'" type="video/mp4">你那破鸡吧不支持播放</video>'}],
+          photos : [{html:'<video width="100%" style="max-height:100%" controls="controls" autoplay="autoplay" poster="'+$(this).data('layzr')+'"><source src="'+$(this).data('video')+'" type="video/mp4">你那破鸡吧不支持播放</video>'}],
           container : '.container',
           type: 'popup'
         }).open();
@@ -177,7 +178,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       var preview_lists = [];
       $.each($('.images ul li'),function(index,item){
         if($(item).hasClass('video')){
-          preview_lists.push({html:'<video src="'+$('.images ul li').eq(index).data('video')+'" width="100%" controls="controls" autoplay="autoplay"></video>'});
+          preview_lists.push({html:'<video src="'+$('.images ul li').eq(index).data('video')+'" style="max-height:100%" width="100%" controls="controls" autoplay="autoplay"></video>'});
         } else {
           preview_lists.push({url:$('.images ul li').eq(index).data('preview')});
         }
@@ -423,6 +424,8 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     });
   });
   //选款
+  //商品类型id
+  var styles_id = 0;
   function touchmove(e){
     e.preventDefault();
   }
@@ -436,28 +439,100 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
 
   page.on("click",".styles",function(){
     $(".select").css("display","block");
+    $(".select").find(".now_buy").text('立刻购买');
     window.addEventListener("touchmove",touchmove);
   })
   page.on("click",".now_buy",function(){
     var n = $(".now_buy").attr("href");
     if(n == ""){
       $.toast("请选择款项",1000);
+      return false;
+    }
+    if($(this).text().length != 4){
+      //清空购买地址，调用添加商品到购物车接口
+      shopping(this,styles_id);
+      $(".now_buy").removeAttr("href");
+      window.removeEventListener("touchmove",touchmove);
+      return false;
     }
   })
+
+  //选择款项
   page.on("click",".select_main li",function(){
-      if(!$(this).find("div").attr("class")){
+      if(!$(this).find("div").attr("class")){ //判断是否有库存
         var id = $(this).data("id");
         var article_id = $(this).data("articleid");
+        styles_id = id;
         var str = "/User/HsOrder/add/object_id/"+article_id+"/mid/"+id+".html";
         $(".now_buy").attr("href",str);
         $(".select_main li").find("div").css({"background":"transparent"});
         $(this).find("div").css({"background":"#58d996"});
       }
   })
-  page.on("click",".close span",function(){
+  page.on("click",".close_select",function(){
       window.removeEventListener("touchmove",touchmove);
       $(".select").css("display","none");
   })
+  //购物车
+  page.on("click",".shopping_cart",function(){
+    var ele = $(this).siblings('.styles');
+    if(ele.length){
+      $(".select").css("display","block");
+      window.addEventListener("touchmove",touchmove);
+      $(".select").find(".now_buy").text('添加到购物车');
+    }else{
+      //添加到购物车
+      shopping(this);
+    }
+  })
+  //商品添加至购物车接口
+  function shopping (that,styles_id) {
+    if(!styles_id){
+      styles_id = $(that).data('mid')
+    }
+    $.ajax({
+      type: 'POST',
+      url: '/index.php?g=restful&m=HsShoppingCart&a=add',
+      data: {
+        object_id:$(that).data('object_id'),
+        mid: styles_id,
+        nums: 1
+      },
+      dataType: 'json',
+      timeout: 4000,
+      success: function(data){
+        if(data.status == 1){
+          shoppingSuccess();
+          $(".select").css("display","none");
+          $(".select li div").each(function(){
+             $(this).css("background","transparent");
+          })
+          $.toast(data.info,500);
+        } else {
+          $.toast(data.info,500);
+        }
+      },
+      error: function(xhr, type){
+        $.toast('网络错误 code:'+xhr,500);
+      }
+    })
+  }
+  //获取 更新购物车数量
+  shoppingSuccess();
+  function shoppingSuccess(){
+    $.ajax({
+      type: 'GET',
+      url: '/index.php?g=restful&m=HsShoppingCart&a=counts',
+      dataType: 'json',
+      timeout: 4000,
+      success: function(data){
+        if(data.status != 1 ) return;
+        if(data.numbers > 0 && $('.shopping-num').length == 1){
+          $('.shopping-num').text(data.numbers).css('display','block');
+        }
+      }
+    });
+  }
   //收藏
   page.on('click','.collect',function(){
     var bool=$(".collect i").hasClass("nocollect");
