@@ -81,3 +81,6 @@ require('../modules/components/discovery_classify/discovery_classify.js');
 
 //物流查询
 require('../modules/components/user_recruitment/express_query.js');
+
+//购物车
+require('../modules/components/user_mychart/user_mychart.js');
