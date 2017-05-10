@@ -20,7 +20,8 @@ require('../../node_not/SUI-Mobile/dist/js/sm-extend.min.js');
 
 // 首页(商品列表页)
 require('../modules/components/store_list/store_list.js');
-
+// 首页搜索列表
+require('../modules/components/store_list/search_list.js');
 // 文化列表
 require('../modules/components/culture_list/culture_list.js');
 

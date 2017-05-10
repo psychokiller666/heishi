@@ -161,7 +161,9 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
     $('.infinite-scroll-preloader').remove();
     return false;
   }
-
+  if($('.chat_list_group_bd').find('li').length == 10 && $('.chat_list_group_bd ul').height() <= $('.chat_list_group').height()){
+    add_data(pages);
+  }
   function add_data(pagess){
     $.ajax({
       type: 'POST',
