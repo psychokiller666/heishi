@@ -65,7 +65,6 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
   $('.search_btn').on('click',function(){
     search_box.show();
     search_box.find('input').trigger('focus');
-
     search_box.on('click','button',function(){
       var _this = $(this);
       var ctype = _this.data('ctype');
@@ -74,12 +73,11 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
       if(!search_box.find('input').val().length){
         search_box.hide();
       } else {
-        window.location.href = '/index.php?g=portal&m=HsSearch&ctype='+ctype+'&isculture='+isculture+'&keyword='+search_box.find('input').val();
+        window.location.href = '/Portal/index/search.html?query='+search_box.find('input').val();
+        // window.location.href = '/index.php?g=portal&m=HsSearch&ctype='+ctype+'&isculture='+isculture+'&keyword='+search_box.find('input').val();
       }
     });
-
     search_box.on('click',function(e){
-      // $(this).off('click');
       if(e.srcElement.className == 'search_box'){
         search_box.hide();
       }
