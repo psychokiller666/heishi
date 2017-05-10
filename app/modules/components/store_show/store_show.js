@@ -705,7 +705,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     comment_input.val('').attr('placeholder','随便说点什么');
     dialog_comment.find('button').removeAttr('disabled');
     dialog_comment.show();
-    comment_input.trigger('focus');
+    // comment_input.trigger('focus');
     var image_list = dialog_comment.find('.image_list');
     var image = dialog_comment.find('.image');
     var type =0;
