@@ -4,6 +4,15 @@
     padding-top: 0;
     background-color: #fff;
   }
+  .no_data {
+    color: #a8a8a8;
+    text-align: center;
+    width: 10rem;
+    .font-dpr(18px);
+    margin-top: 1.5rem;
+    transform: translateY(0);
+    position: static;
+  }
   .content {
     .header {
       height: 4.506667rem;
@@ -44,7 +53,7 @@
         line-height: 0;
       }
       a {
-        line-height: 0.82rem;
+        /*line-height: 0.82rem;
         margin-top: 0.46rem;
         color: #fff;
         background: none;
@@ -55,7 +64,7 @@
         width: 2.5rem;
         margin-left: auto;
         margin-right: auto;
-        .font-dpr(14px);
+        .font-dpr(14px);*/
         &.msg-btn {
           margin-top: .46rem;
           color: #fff;
@@ -255,7 +264,16 @@
           .font-line-height(18px);
         }
         .newMessages {
-          width: 0.4rem;
+          position: absolute;
+          width: .25rem;
+          height: .25rem;
+          border-radius: 100%;
+          top: -0.38rem;
+          right: 0;
+          background-color: #58d996;
+          display: none;
+
+          /*width: 0.4rem;
           height: 0.4rem;
           border-radius: 0.4rem;
           background-color: #58d996;
@@ -266,7 +284,7 @@
           line-height: 0.4rem;
           display: none;
           .font-dpr(12px);
-        }
+*/        }
       }
       &:last-child {
         border-bottom: none;

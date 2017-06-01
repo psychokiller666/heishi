@@ -51,6 +51,23 @@
               }
             }
           }
+          &.user {
+            .avatar {
+              float:left;
+            }
+            .content_bd {
+              background-color: #68be8d;
+              float:left;
+              margin-left: 0.333333rem;
+              color: #fff;
+              &:after {
+                left: -0.22rem;
+                top: 0;
+                border-top: 0.16rem solid #68be8d;
+                border-left: 0.24rem solid transparent;
+              }
+            }
+          }
           .date{
             text-align: center;
             .font-dpr(12px);
@@ -86,5 +103,13 @@
         }
       }
     }
+  }
+  /*没有消息时*/
+  .no_session{
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 70vh;
+    .font-dpr(15px);
   }
 }

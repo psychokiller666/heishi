@@ -65,11 +65,6 @@ $(document).on('pageInit','.center', function(e, id, page){
           attention_btn.html('关注');
         }
       });
-
-      $('.msg-btn').on('click',function(){
-        $.router.load('/User/HsMessage/detail/from_uid/'+$(this).data('id'),true);
-      })
-
     // 操作关注 & 取消关注
     attention_btn.on('click',function(){
 

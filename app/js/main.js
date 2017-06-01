@@ -31,10 +31,14 @@ require('../modules/components/notice/notice.js');
 require('../modules/components/add/add.js');
 
 // 私信列表
-require('../modules/components/chat_list_group/chat_list_group.js');
+// require('../modules/components/chat_list_group/chat_list_group.js');
+require('../modules/components/chat_list_group/nim_chat_list_group.js');
 
 // 私信页
-require('../modules/components/chat_list/chat_list.js');
+// require('../modules/components/chat_list/chat_list.js');
+require('../modules/components/chat_list/nim_chat_list.js');
+//通用底部
+require('../modules/components/list_footer/list_footer.js');
 
 // 用户中心
 require('../modules/components/user_index/user_index.js');
