@@ -52,28 +52,29 @@ common.prototype.loadimg = function(){
 }
 // 检测新消息
 common.prototype.msg_tip = function(){
-  $.getJSON('/index.php?g=user&m=HsMessage&a=new_messages',{},function(data){
-    if(data.status == '1'){
-      if(data.data.messages >= 1){
-        // 修改新消息提示位置 0315
-        if(data.data.messages > 99){
-          $('.center').find('.newMessages').css("display","inline-block").text('99');
-          $('.information').css('display','block').text('99');
-        }else{
-          $('.center').find('.newMessages').css("display","inline-block").text(data.data.messages);
-          $('.information').css("display","block").text(data.data.messages);
-        }
-      }
-      // if(data.data.posts >= 1){
-      //   if($('.center').length){
-      //     $('.activate').next('span').addClass('new');
-      //   }
-      //   $('.hs-footer').find('.me').addClass('new');
-      // }
-    } else {
-      $.toast(data.info);
-    }
-  });
+  console.log('已使用IM即时通讯');
+  // $.getJSON('/index.php?g=user&m=HsMessage&a=new_messages',{},function(data){
+  //   if(data.status == '1'){
+  //     if(data.data.messages >= 1){
+  //       // 修改新消息提示位置 0315
+  //       if(data.data.messages > 99){
+  //         $('.center').find('.newMessages').css("display","inline-block").text('99');
+  //         $('.information').css('display','block').text('99');
+  //       }else{
+  //         $('.center').find('.newMessages').css("display","inline-block").text(data.data.messages);
+  //         $('.information').css("display","block").text(data.data.messages);
+  //       }
+  //     }
+  //     // if(data.data.posts >= 1){
+  //     //   if($('.center').length){
+  //     //     $('.activate').next('span').addClass('new');
+  //     //   }
+  //     //   $('.hs-footer').find('.me').addClass('new');
+  //     // }
+  //   } else {
+  //     $.toast(data.info);
+  //   }
+  // });
 }
 // 检查是否关注公众号
 common.prototype.checkfollow = function(type){

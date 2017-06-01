@@ -92,11 +92,38 @@ input::-webkit-inner-spin-button {
 }
 .no_data{
     position: absolute;
-    top: 45%;
+    top: 50%;
     .font-dpr(32px);
     color: #a8a8a8;
     text-align: center;
-    width: 10rem;
+    width: 8rem;
+    transform: translateY(-100%);
+    left: 1rem;
+    div{
+        border: 0.05rem solid black;
+        border-radius: 0.15rem;
+        text-align: center;
+        .font-dpr(16px);
+        margin-bottom: 0.4rem;
+        line-height: 1.5em;
+        color: black;
+        font-weight: 700;
+        padding: 0.5rem 0;
+    }
+    a{
+        border: 0.05rem solid black;
+        border-radius: 0.15rem;
+        text-align: center;
+        .font-dpr(14px);
+        margin: 0 auto;
+        display: block;
+        padding: 0 0.7rem;
+        color: #fff;
+        font-weight: 700;
+        line-height: 2.5em;
+        width: 5em;
+        background-color: red;
+    }
 }
 a:hover {
     text-decoration: none;
