@@ -57,7 +57,8 @@ $(document).on('pageInit','.culture', function (e, id, page) {
       if(!search_box.find('input').val().length){
         search_box.hide();
       } else {
-        window.location.href = '/index.php?g=portal&m=HsSearch&ctype='+ctype+'&isculture='+isculture+'&keyword='+search_box.find('input').val();
+        // window.location.href = '/index.php?g=portal&m=HsSearch&ctype='+ctype+'&isculture='+isculture+'&keyword='+search_box.find('input').val();
+        window.location.href = '/Portal/index/search.html?query='+search_box.find('input').val();
       }
     });
 

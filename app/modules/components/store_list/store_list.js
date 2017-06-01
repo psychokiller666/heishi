@@ -4,22 +4,6 @@ var handlebars = require('../../../../node_modules/handlebars/dist/handlebars.mi
 // 初始化
 var common = require('../common/common.js');
 
-//购物车数量监控
-$.ajax({
-  type: 'GET',
-  url: '/index.php?g=restful&m=HsShoppingCart&a=counts',
-  dataType: 'json',
-  timeout: 4000,
-  success: function(data){
-    if(data.status != 1 ) return;
-    if(data.numbers > 0 && $('.shopping-num').length == 1){
-      $('.shopping-num').text(data.numbers).css('display','block');
-    }
-  },
-  error: function(xhr, type){
-    // $.toast('网络错误 code:'+type);
-  }
-});
 $(document).on('pageInit','.show-list', function (e, id, page) {
   if (page.selector == '.page'){
     return false;
