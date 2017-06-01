@@ -249,8 +249,8 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   var dialog_chat = $('.dialog_chat');
   var image_list = dialog_chat.find('.image_list');
   page.on('click','.chat_btn',function(){
-    dialog_chat.find('textarea').val('');
-    dialog_chat.show();
+    // dialog_chat.find('textarea').val('');
+    // dialog_chat.show();
   });
 
   dialog_chat.on('click','.submit',function(){
@@ -528,7 +528,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       success: function(data){
         if(data.status != 1 ) return;
         if(data.numbers > 0 && $('.shopping-num').length == 1){
-          $('.shopping-num').text(data.numbers).css('display','block');
+          $('.shopping-num').css('display','block');
         }
       }
     });
