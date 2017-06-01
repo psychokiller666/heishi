@@ -4,22 +4,6 @@ var handlebars = require('../../../../node_modules/handlebars/dist/handlebars.mi
 // 初始化
 var common = require('../common/common.js');
 
-//购物车数量监控
-$.ajax({
-  type: 'GET',
-  url: '/index.php?g=restful&m=HsShoppingCart&a=counts',
-  dataType: 'json',
-  timeout: 4000,
-  success: function(data){
-    if(data.status != 1 ) return;
-    if(data.numbers > 0 && $('.shopping-num').length == 1){
-      $('.shopping-num').text(data.numbers).css('display','block');
-    }
-  },
-  error: function(xhr, type){
-    // $.toast('网络错误 code:'+type);
-  }
-});
 $(document).on('pageInit','.search-list', function (e, id, page) {
   if (page.selector == '.page'){
     return false;
@@ -59,6 +43,8 @@ $(document).on('pageInit','.search-list', function (e, id, page) {
       }
     });
   });
+  //防止微信后退导致重新加载
+  $('.search_item').empty();
   var query = decodeURI(location.search.slice(7));
   var total_num = 0,  //总数
   total_pages = 0,  //总页数
@@ -69,40 +55,28 @@ $(document).on('pageInit','.search-list', function (e, id, page) {
   var statusLoad = true;
   page.on('infinite','.infinite-scroll', function() {
     if(statusLoad && (total_pages != total_num)){
-      add_data(query,itemNum,pagesize);
       statusLoad = false;
+      add_data(query,itemNum,pagesize);
     }
   });
   //加载模板
   function dataTpl(items,imgUrl){
     var htmlStr = '';
     for(var i = 0;i<items.length;i++){
-      if(items[i]["goods_type"] == 0){
-        htmlStr += '<li>'
-          +'<a href="/Portal/HsArticle/index/id/'+items[i]["goods_id"]+'.html">'
-            +'<div class="image" data-layzr="'+imgUrl+items[i]["goods_cover_img"]+'@640w_1l" data-layzr-bg></div>'
-            +'<h2 class="title">'+items[i]["goods_title"]+'</h2>'
-            +'<div class="date">'
-              +'<div class="time"><span class="classify">扯淡</span></div>'
-            +'</div>'
-          +'</a>'
-        +'</li>';
-      }else if(items[i]["goods_type"] == 1){
-        htmlStr += '<li>'
-          +'<a href="/Portal/HsArticle/index/id/'+items[i]["goods_id"]+'.html">'
-            +'<div class="image" data-layzr="'+imgUrl+items[i]["goods_cover_img"]+'@640w_1l" data-layzr-bg></div>'
-            +'<h2 class="title">'+items[i]["goods_title"]+'</h2>'
-            +'<div class="date">'
-              +'<div class="time"><span class="classify">摆摊</span></div>'
-              +'<div class="icon">'
-                +'<span><i class="hs-icon views"></i>'+items[i]["goods_hits"]+'</span>'
-                +'<span><i class="hs-icon comments"></i>'+items[i]["goods_comments"]+'</span>'
-                +'<span><i class="hs-icon praises"></i>'+items[i]["goods_likes"]+'</span>'
-             +'</div>'
-            +'</div>'
-          +'</a>'
-        +'</li>';
-      }
+      htmlStr += '<li>'
+        +'<a href="/Portal/HsArticle/index/id/'+items[i]["goods_id"]+'.html">'
+          +'<div class="image" data-layzr="'+imgUrl+items[i]["goods_cover_img"]+'@640w_1l" data-layzr-bg></div>'
+          +'<h2 class="title">'+items[i]["goods_title"]+'</h2>'
+          +'<div class="date">'
+            +'<div class="time"><span class="classify">摆摊</span></div>'
+            +'<div class="icon">'
+              +'<span><i class="hs-icon views"></i>'+items[i]["goods_hits"]+'</span>'
+              +'<span><i class="hs-icon comments"></i>'+items[i]["goods_comments"]+'</span>'
+              +'<span><i class="hs-icon praises"></i>'+items[i]["goods_likes"]+'</span>'
+           +'</div>'
+          +'</div>'
+        +'</a>'
+      +'</li>';
     }
     return htmlStr;
   }
@@ -127,11 +101,11 @@ $(document).on('pageInit','.search-list', function (e, id, page) {
           var str = dataTpl(items,imgUrl)
           $('.search_item').append(str);
           itemNum += pagesize;
-          statusLoad = true;
           init.loadimg();
           if(status){
             noData();
           }
+          statusLoad = true;
         }else{
           $.toast(data.info);
         }
