@@ -844,6 +844,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
                   element.parent('.reply').append(reply_tpl(reply_data));
                 }
               }
+              uploader.reset();
             } else {
               $.toast(data.info);
               uploader.reset();
@@ -864,16 +865,20 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
 
     // 监听input file是否有文件添加进来
     dialog_comment.on("change",'.webuploader-element-invisible', function(e) {
-      if(comment_input.val().length){
-        $.confirm('图片和文字二选一', '提示', function () {
-          uploader.addFiles(e.target.files);
-          uploader.upload();
-        });
-      } else {
-        uploader.addFiles(e.target.files);
-        uploader.upload();
-      }
+      uploader.addFiles(e.target.files);
+      uploader.upload();
     });
+    //文本发生变化时
+    comment_input[0].oninput = function(e) {
+      var num = $(this).val().length;
+      if(num){
+        dialog_comment.find('.webuploader-element-invisible').attr('disabled','disabled');
+        dialog_comment.find('.hs-icon').css('color','#eee');
+      }else{
+        dialog_comment.find('.webuploader-element-invisible').removeAttr('disabled','disabled');
+        dialog_comment.find('.hs-icon').css('color','#000');
+      }
+    }
     // 图片列队
     uploader.onFileQueued = function(file){
       // 控制回复按钮
