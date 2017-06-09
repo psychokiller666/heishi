@@ -229,10 +229,8 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
       console.log('sessions');
       var data = sessions;
       $('.no_session').remove();
-      var userIds = [];
       for(var i in data){
-        userIds.push(data[i]['to']);
-        //时间转换
+        //时间转换0
         var time = new Date() - data[i]['lastMsg']['time'];
         var setTime = new Date(data[i]['lastMsg']['time']);
         if(time >= 86400000){
@@ -250,20 +248,7 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
       for(var i in data){
         getUserImg(data[i]['to']);
       }
-      //获取用户在线状态
-      nim.subscribeEvent({
-        type: 1,
-        accounts: userIds,
-        subscribeTime: 60,
-        sync: true,
-        done: function(err, res){
-          if (err) {
-            // console.error('订阅好友事件失败', err);
-          } else {
-            // console.info('订阅好友事件', res);
-          }
-        }
-      });
+
       //删除自己和自己的私信
       // $('.chat_list_group_bd').find('li').each(function(){
       //   var uid = $(this).data('id');
@@ -295,30 +280,33 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
           deleteSession = false;
           return false;
         }
-        //收到消息使用代码
-        $('.chat_list_group_bd').find('ul li').each(function(){
-          var id = $(this).data('id');
-          var dataId = session.to;
-          if(id == dataId){
-            $(this).remove();
-            return false;
+        //收到消息使用代码 安卓端列表重复,由于onSessions列表未加载完，所以延时加载数据
+        setTimeout(function(){
+          $('.chat_list_group_bd').find('ul li').each(function(){
+            var id = $(this).data('id');
+            var dataId = session.to;
+            if(id == dataId){
+              $(this).remove();
+              return false;
+            }
+          })
+          var data = session;
+          //时间转换
+          var time = new Date() - data['lastMsg']['time'];
+          var setTime = new Date(data['lastMsg']['time']);
+          if(time >= 86400000){
+            data['lastMsg']['create_time'] = setTime.Format('MM-dd');
+          }else{
+            data['lastMsg']['create_time'] = setTime.ResidueTime();
           }
-        })
-        var data = session;
-        //时间转换
-        var time = new Date() - data['lastMsg']['time'];
-        var setTime = new Date(data['lastMsg']['time']);
-        if(time >= 86400000){
-          data['lastMsg']['create_time'] = setTime.Format('MM-dd');
-        }else{
-          data['lastMsg']['create_time'] = setTime.ResidueTime();
-        }
-        if(data['lastMsg']['type'] == 'image'){
-          data['lastMsg']['text'] = '[照片]';
-        }
-        $('.chat_list_group_bd').find('ul').prepend(chat_list_group_bd_tpl_update(data));
-        $('.chat_list_group_bd ul li').find('.btn-box').height($('.chat_list_group_bd ul li').height());
-        getUserImg(data['to']);
+          if(data['lastMsg']['type'] == 'image'){
+            data['lastMsg']['text'] = '[照片]';
+          }
+          $('.chat_list_group_bd').find('ul').prepend(chat_list_group_bd_tpl_update(data));
+          $('.chat_list_group_bd ul li').find('.btn-box').height($('.chat_list_group_bd ul li').height());
+          getUserImg(data['to']);
+        },300)
+        
 
     }
 

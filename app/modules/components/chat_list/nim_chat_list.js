@@ -127,6 +127,7 @@ $(document).on('pageInit','.detail', function (e, id, page) {
       return false;
     }
     if(status_message_status){
+      //上传图片
       nim.sendFile({
           scene: 'p2p',
           to: $(that).data('touid'),
@@ -148,19 +149,47 @@ $(document).on('pageInit','.detail', function (e, id, page) {
           done: sendMsgDoneFile
       });
       function sendMsgDoneFile(error, msg){
-        //如果用户不存在 则注册用户 
+        //发送图片时，如果用户不存在 则注册用户 
         if(error){
-          if(error.code){
+          if(error.code == 404){
             var url = '/index.php?g=api&m=HsNeteasyIM&a=register_new_user&user_id=' + $(that).data('touid');
             $.ajax({
               type: 'GET',
               url: url,
               timeout: 4000,
               success: function(data){
-                console.log(data);
+                var date = JSON.parse(data);
+                if(date.status == 1){
+                  nim.sendFile({
+                      scene: 'p2p',
+                      to: $(that).data('touid'),
+                      type: 'image',
+                      fileInput: $('.webuploader-element-invisible')[0],
+                      beginupload: function(upload) {
+                          // - 如果开发者传入 fileInput, 在此回调之前不能修改 fileInput
+                          // - 在此回调之后可以取消图片上传, 此回调会接收一个参数 `upload`, 调用 `upload.abort();` 来取消文件上传
+                      },
+                      uploadprogress: function(obj) {
+                          //在上传
+                      },
+                      uploaddone: function(error, file) {
+                        //完成回调
+                      },
+                      beforesend: function(msg) {
+                        //接受消息
+                      },
+                      done: sendMsgDoneFile
+                  });
+                  messagePush($(that).data('touid'), '[图片]', 1);
+                }else{
+                  $.toast('发送失败,请重新发送');
+                }
+              },
+              error: function(){
+                $.toast('发送失败,请重新发送');
               }
             });
-            return $.toast('发送失败,请重新发送');
+            return false;
           }else{
             return $.toast(error);
           }
@@ -182,6 +211,11 @@ $(document).on('pageInit','.detail', function (e, id, page) {
           image_list.css('height','0');
           init.loadimg();
           $('.content').scrollTop($('.content ul').height());
+
+          //用户不在线发推送
+          if(user_line_status){
+            messagePush($(that).data('touid'),'[图片]',1);
+          }
         }else if(msg.status == 'fail'){
           $.toast('发送失败');
         }else if(msg.status == 'sending'){
@@ -200,19 +234,33 @@ $(document).on('pageInit','.detail', function (e, id, page) {
         done: sendMsgDone
       });
       function sendMsgDone(error, msg) {
-        //如果用户不存在 则注册用户 
+        //发送文字时，如果用户不存在 则注册用户 
         if(error){
-          if(error.code){
+          if(error.code == 404){
             var url = '/index.php?g=api&m=HsNeteasyIM&a=register_new_user&user_id=' + $(that).data('touid');
             $.ajax({
               type: 'GET',
               url: url,
               timeout: 4000,
               success: function(data){
-                console.log(data);
+                var date = JSON.parse(data);
+                if(date.status == 1){
+                  var msg = nim.sendText({
+                    scene: 'p2p',
+                    to: $(that).data('touid'),
+                    text: content,
+                    done: sendMsgDone
+                  });
+                  messagePush($(that).data('touid'), content, 0);
+                }else{
+                  $.toast('发送失败,请重新发送');
+                }
+              },
+              error:function(){
+                $.toast('发送失败,请重新发送');
               }
             });
-            return $.toast('发送失败,请重新发送');
+            return false;
           }else{
             return $.toast(error);
           }
@@ -226,6 +274,11 @@ $(document).on('pageInit','.detail', function (e, id, page) {
           getUserImg($(that).data('id'));
           chat_content.val('');
           $('.content').scrollTop($('.content ul').height());
+
+          //用户不在线发推送
+          if(user_line_status){
+            messagePush($(that).data('touid'), msg.text, 0);
+          }
         }else if(msg.status == 'fail'){
           $.toast('发送失败,请重新发送');
         }else if(msg.status == 'sending'){
@@ -405,25 +458,39 @@ $(document).on('pageInit','.detail', function (e, id, page) {
     }
   });
   //获取用户在线状态
+  var user_line_status = true;
   function onPushEvents (param) {
+    // console.log(param,20170606);
     //ios只有在退出登录才会离线
     var touid = $('.submit').data('touid');
-    var status = true;
     if (param.msgEvents) {
       param.msgEvents.forEach(function(data){
-        var touid = $('.submit').data('touid');
-        if(data.account == touid){
-          status = false;
+        if(data.account == touid && data.value == 1){
+          user_line_status = false;
+
+        }else if(data.account == touid && data.value != 1){
+          user_line_status = true;
         }
       })
-    }
-    if(status){
-      //使用微信推送
-      console.log('这sb不在线');
     }
   }
   function onConnect() {
       console.log('连接成功');
+      //订阅用户
+      var uid = $('.submit').data('touid');
+      nim.subscribeEvent({
+        type: 1,
+        accounts: [uid],
+        subscribeTime: 3600,
+        sync: true,
+        done: function(err, res){
+          if (err) {
+            // console.error('订阅好友事件失败', err);
+          } else {
+            // console.info('订阅好友事件', res);
+          }
+        }
+      });
   }
   // 重连
   function onWillReconnect(obj) {
@@ -606,5 +673,22 @@ $(document).on('pageInit','.detail', function (e, id, page) {
     var session_id = 'p2p-'+uid;
     nim.resetSessionUnread(session_id);
     reset_session = true;
+  }
+
+  //如果用户不在线则发微信推送
+  function messagePush(id,content,type){
+    $.ajax({
+      type: 'POST',
+      url: '/index.php?g=restful&m=HsMessage&a=push_message',
+      data:{
+        to_user_id: id,
+        message: content,
+        message_type: type
+      },
+      timeout: 4000,
+      success: function(data){
+        console.log(data);
+      }
+    });
   }
 });
