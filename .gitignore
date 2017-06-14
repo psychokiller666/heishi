@@ -7,6 +7,7 @@
 # node.js
 npm-debug.log
 node_modules/
+php_thinkcmf_h5/
 
 # bower
 .bower-cache

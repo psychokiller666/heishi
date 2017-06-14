@@ -245,6 +245,11 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
       //添加数据
       $('.chat_list_group_bd').find('ul').append(chat_list_group_bd_tpl_default(data));
       $('.chat_list_group_bd ul li').find('.btn-box').height($('.chat_list_group_bd ul li').height());
+      if(IsPC()){
+        $('.btn-box').each(function(){
+          $(this).css('width','2.45rem');
+        })
+      }
       for(var i in data){
         getUserImg(data[i]['to']);
       }
@@ -304,6 +309,12 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
           }
           $('.chat_list_group_bd').find('ul').prepend(chat_list_group_bd_tpl_update(data));
           $('.chat_list_group_bd ul li').find('.btn-box').height($('.chat_list_group_bd ul li').height());
+          //pc端微信由于没有touch事件 直接显示删除按钮
+          if(IsPC()){
+            $('.btn-box').each(function(){
+              $(this).css('width','2.45rem');
+            })
+          }
           getUserImg(data['to']);
         },300)
         
@@ -361,4 +372,18 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
       })
     }
    }
+  function IsPC() {
+    var userAgentInfo = navigator.userAgent;
+    var Agents = ["Android", "iPhone",
+                "SymbianOS", "Windows Phone",
+                "iPad", "iPod"];
+    var flag = true;
+    for (var v = 0; v < Agents.length; v++) {
+        if (userAgentInfo.indexOf(Agents[v]) > 0) {
+            flag = false;
+            break;
+        }
+    }
+    return flag;
+  }
 });
