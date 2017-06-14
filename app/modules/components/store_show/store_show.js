@@ -993,4 +993,27 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       parentid:page.find('.comment').data('commentparentid')
     });
   }
+  //适配pc端换行间距
+  if(location.href.indexOf('culture') > 0 && IsPC()){
+    $('.content_bd').find('p').css('line-height','0.5rem');
+    $('.content_bd').find('p').each(function(){
+      if($(this).html().length < 10){
+        $(this).css('height','10px');
+      }
+    })
+  }
+  function IsPC() {
+    var userAgentInfo = navigator.userAgent;
+    var Agents = ["Android", "iPhone",
+                "SymbianOS", "Windows Phone",
+                "iPad", "iPod"];
+    var flag = true;
+    for (var v = 0; v < Agents.length; v++) {
+        if (userAgentInfo.indexOf(Agents[v]) > 0) {
+            flag = false;
+            break;
+        }
+    }
+    return flag;
+  }
 });
