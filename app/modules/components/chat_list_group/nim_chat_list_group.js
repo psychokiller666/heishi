@@ -131,22 +131,6 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
   //IM即时通讯
   var myId = $('#cnzz_user_id').val(),
   nim;
-  function IsPC() {
-    var userAgentInfo = navigator.userAgent;
-    var Agents = ["Android", "iPhone",
-      "SymbianOS", "Windows Phone",
-      "iPad", "iPod"
-    ];
-    var flag = false;
-    for(var v = 0; v < Agents.length; v++) {
-      if(userAgentInfo.indexOf(Agents[v]) > 0) {
-        flag = true;
-        break;
-      }
-    }
-    return flag;
-  }
-  var statusDb = IsPC();
     $.ajax({
         type: 'POST',
         url: '/index.php?g=api&m=HsNeteasyIM&a=get_token',
@@ -164,7 +148,7 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
               onsessions: onSessions,
               syncSessionUnread: true,
               onupdatesession: onUpdateSession,
-              db: statusDb
+              db: true
           });
         },
         error: function(xhr, type){
@@ -226,7 +210,6 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
         $.toast(error);
     }
     function onSessions(sessions) {
-      console.log('sessions');
       var data = sessions;
       $('.no_session').remove();
       for(var i in data){
@@ -245,11 +228,7 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
       //添加数据
       $('.chat_list_group_bd').find('ul').append(chat_list_group_bd_tpl_default(data));
       $('.chat_list_group_bd ul li').find('.btn-box').height($('.chat_list_group_bd ul li').height());
-      if(IsPC()){
-        $('.btn-box').each(function(){
-          $(this).css('width','2.45rem');
-        })
-      }
+      pcCompatibility();
       for(var i in data){
         getUserImg(data[i]['to']);
       }
@@ -310,11 +289,7 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
           $('.chat_list_group_bd').find('ul').prepend(chat_list_group_bd_tpl_update(data));
           $('.chat_list_group_bd ul li').find('.btn-box').height($('.chat_list_group_bd ul li').height());
           //pc端微信由于没有touch事件 直接显示删除按钮
-          if(IsPC()){
-            $('.btn-box').each(function(){
-              $(this).css('width','2.45rem');
-            })
-          }
+          pcCompatibility();
           getUserImg(data['to']);
         },300)
         
@@ -372,18 +347,32 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
       })
     }
    }
+   //pc端点击右边出现删除按钮
   function IsPC() {
     var userAgentInfo = navigator.userAgent;
     var Agents = ["Android", "iPhone",
-                "SymbianOS", "Windows Phone",
-                "iPad", "iPod"];
-    var flag = true;
-    for (var v = 0; v < Agents.length; v++) {
-        if (userAgentInfo.indexOf(Agents[v]) > 0) {
-            flag = false;
-            break;
-        }
+      "SymbianOS", "Windows Phone",
+      "iPad", "iPod"
+    ];
+    var flag = false;
+    for(var v = 0; v < Agents.length; v++) {
+      if(userAgentInfo.indexOf(Agents[v]) > 0) {
+        flag = true;
+        break;
+      }
     }
     return flag;
   }
+   function pcCompatibility(){
+    if(!IsPC()){
+      $('li').each(function(){
+        var newDiv = '<div class="delete_btn" style="width:2.45rem;position:absolute;height:100%;right:0;top:0;z-index:99;line-height:1.5rem;text-align:center;">操作</div>';
+        $(this).append(newDiv);
+      })
+      $('.delete_btn').click(function(){
+        $(this).parent().find('.btn-box').css('width','2.45rem');
+        $(this).hide();
+      })
+    }
+   }
 });

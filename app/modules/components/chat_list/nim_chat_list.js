@@ -414,22 +414,6 @@ $(document).on('pageInit','.detail', function (e, id, page) {
   var reset_session = false,
   mineId = $('#cnzz_user_id').val(),
   nim;
-  function IsPC() {
-    var userAgentInfo = navigator.userAgent;
-    var Agents = ["Android", "iPhone",
-      "SymbianOS", "Windows Phone",
-      "iPad", "iPod"
-    ];
-    var flag = false;
-    for(var v = 0; v < Agents.length; v++) {
-      if(userAgentInfo.indexOf(Agents[v]) > 0) {
-        flag = true;
-        break;
-      }
-    }
-    return flag;
-  }
-  var statusDb = IsPC();
   $.ajax({
     type: 'POST',
     url: '/index.php?g=api&m=HsNeteasyIM&a=get_token',
@@ -448,7 +432,7 @@ $(document).on('pageInit','.detail', function (e, id, page) {
           onsessions: onSessions,
           onupdatesession: onUpdateSession,
           onpushevents: onPushEvents,
-          db: statusDb
+          db: true
       });
     },
     error: function(xhr, type){
