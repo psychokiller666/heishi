@@ -17,8 +17,11 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
   var notice_box = $('.notice_box');
   var notice_bd = $('.notice_bd');
   var old_active;
-  //初始化侧拉高度
-  // $('.chat_list_group_bd ul li').height($('.chat_list_group_bd ul li').height());
+  
+  // 判断链接 显示回到首页
+  if(location.pathname != '/user/HsMessage/lists.html'){
+    $('.return_index').show();
+  }
   // 记录位置
   hs_footer.find('li').each(function(index,item) {
     if($(item).find('a').hasClass('active')) {
