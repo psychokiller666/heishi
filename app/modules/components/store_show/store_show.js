@@ -147,6 +147,10 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       }
     });
   }
+  // 文化视频适配  目前 视频上传时 固定 670 502
+  var iframe_ratio = ($('.content_bd').width()*(1-0.826666/10))/670;
+  page.find('iframe').css({'transform': 'scale('+iframe_ratio+')', 'transform-origin': 'top left'});
+  page.find('iframe').parent().css({'height': iframe_ratio*502+'px'});
   // 微信预览图片
   var images = $('.images');
   page.on('click','.images ul li',function(){
