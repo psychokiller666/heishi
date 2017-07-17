@@ -87,11 +87,9 @@ $(document).on('pageInit','.detail', function (e, id, page) {
     '叶子',
     '淘宝',
     'taobao.com',
-    '共产党',
     '有飞',
     '想飞',
     '要飞',
-    '微信',
     '加我',
     '大妈',
     '飞吗',
@@ -101,9 +99,6 @@ $(document).on('pageInit','.detail', function (e, id, page) {
     'weed',
     '机长',
     'thc',
-    'V信',
-    'wechat',
-    'VX',
     '蘑菇',
     '邮票',
     'LSD',
@@ -119,7 +114,7 @@ $(document).on('pageInit','.detail', function (e, id, page) {
     var status_message_status = $(this).data('status');
     content = chat_content.val();
     if(esc.find(chat_content.val()).length){
-      $.toast('🚔 我要报警了');
+      $.toast('🚔 请文明用语');
       return;
     }
     if($(that).data('touid') == $(that).data('id')){
