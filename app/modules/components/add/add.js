@@ -201,40 +201,40 @@ $(document).on('pageInit','.add', function (e, id, page) {
   });
 
   // 选择标签
-  var tags = $('.tags');
-  var tags_num = tags.find('button.active').length;
-  // 返回选中标签
-  function get_tags(tags_list){
-    var tags_list = [];
-    if(tags.find('button.active').length) {
-      tags.find('button.active').each(function(index,item){
-        tags_list.push($(item).data('keyword'))
-      });
-      tags_list = tags_list.join(',');
-    } else {
-      tags_list = false;
-      $.toast("标签不能为空");
-    }
-    return tags_list;
-  }
-  tags.find('button').on('click',function(e) {
-    if(tags_num >= 2){
-      if($(this).hasClass('active')){
-        $(this).removeClass('active');
-        tags_num--;
-      } else {
-        $.toast("😕 标签最多选2个");
-      }
-    } else {
-      if(!$(this).hasClass('active')){
-        $(this).addClass('active');
-        tags_num++;
-      } else {
-        $(this).removeClass('active');
-        tags_num--;
-      }
-    }
-  })
+  // var tags = $('.tags');
+  // var tags_num = tags.find('button.active').length;
+  // // 返回选中标签
+  // function get_tags(tags_list){
+  //   var tags_list = [];
+  //   if(tags.find('button.active').length) {
+  //     tags.find('button.active').each(function(index,item){
+  //       tags_list.push($(item).data('keyword'))
+  //     });
+  //     tags_list = tags_list.join(',');
+  //   } else {
+  //     tags_list = false;
+  //     $.toast("标签不能为空");
+  //   }
+  //   return tags_list;
+  // }
+  // tags.find('button').on('click',function(e) {
+  //   if(tags_num >= 2){
+  //     if($(this).hasClass('active')){
+  //       $(this).removeClass('active');
+  //       tags_num--;
+  //     } else {
+  //       $.toast("😕 标签最多选2个");
+  //     }
+  //   } else {
+  //     if(!$(this).hasClass('active')){
+  //       $(this).addClass('active');
+  //       tags_num++;
+  //     } else {
+  //       $(this).removeClass('active');
+  //       tags_num--;
+  //     }
+  //   }
+  // })
   // 获取标题
   function get_title(){
     var title = $('.title');
@@ -371,9 +371,8 @@ $(document).on('pageInit','.add', function (e, id, page) {
   submit_btn.on('click',function(){
     var _this = $(this);
     var post_data;
-    // console.log(_this.data('type') == 1);
     // 判断
-    if(get_title() && get_excerpt() && get_picture_list() && get_tags()){
+    if(get_title() && get_excerpt() && get_picture_list()){
       if(_this.data('type') == 1){
         if(get_number($('.select').attr("id"))){
           post_data = {
@@ -385,10 +384,7 @@ $(document).on('pageInit','.add', function (e, id, page) {
             //重写
             'post[goods]':goods($('.select').attr("id")),
             'post[goods_size]':goods($('.select').data("type")).length,
-            // 'post[post_numbers]':get_number('数量',$('.number')),
-            // 'post[post_price]':get_number('价格',$('.price')),
-            // 'post[postage]':parseInt($('.postage').find('input').val()),
-            'post[post_keywords]':get_tags(),
+            'post[post_keywords]':'',
           }
         } else {
           return false;
@@ -400,7 +396,7 @@ $(document).on('pageInit','.add', function (e, id, page) {
           'post[post_pictures]':get_picture_list(),
           'post[post_title]':get_title(),
           'post[post_excerpt]':get_excerpt(),
-          'post[post_keywords]':get_tags(),
+          'post[post_keywords]':'',
         }
       }
       // 提交
