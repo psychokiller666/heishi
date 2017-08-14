@@ -21,6 +21,44 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
   init.checkfollow(1);
   // 检查是否有新的消息
   init.msg_tip();
+  // 检测用户是否产生跨号支付留有待购买商品
+  $.ajax({
+    type: 'GET',
+    url: '/index.php?g=restful&m=HsArticle&a=ajax_check_last_goods',
+    timeout: 4000,
+    success: function(data){
+      if(data.status == 1){
+        var id = data.data.id;
+        var post_title = data.data.post_title;
+        var filepath = data.data.filepath;
+        var img_url = $('.img_url').val() + filepath + '@640w_1l';
+        $('.hint_purchase').find('img').attr('src', img_url);
+        $('.hint_purchase').find('h3').text(post_title);
+        $('.hint_purchase').find('.btn').on('click',function(){
+          delete_last_goods();
+          var url = '/Portal/HsArticle/index/id/'+id+'.html';
+          location.href = url;
+        })
+        $('.hint_purchase').find('.close').on('click',function(){
+          delete_last_goods();
+          $('.hint_purchase').css('display','none');
+        })
+        $('.hint_purchase').css('display','block');
+      }
+    }
+  });
+  function delete_last_goods(){
+    $.ajax({
+      type: 'GET',
+      url: '/index.php?g=restful&m=HsArticle&a=ajax_delete_last_goods',
+      timeout: 4000,
+      success: function(data){
+        if(data.status == 1){
+          console.log(data);
+        }
+      }
+    });
+  }
   // 系统公告
   var placard = $('.placard');
   var placard_content;
