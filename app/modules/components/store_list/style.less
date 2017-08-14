@@ -1,9 +1,9 @@
 // 商品列表
 .store_list,.user_favorite,.search_list{
     /*banner移到首页未添加*/
-    /*.banner {
+    .banner {
       width: 10rem;
-      height: 5.0rem;
+      height: 5.61rem;
       padding-bottom: 0 !important;
       .swiper-pagination {
         bottom: 0.2rem;
@@ -21,7 +21,7 @@
       .swiper-slide a {
         display: block;
         width: 10rem;
-        height: 5.00rem;
+        height: 5.61rem;
         img {
           width: 100%;
           height: 100%;
@@ -29,17 +29,18 @@
       }
     }
     .classification {
-      background-color: #f3f3f3;
+      background-color: #fff;
       width:9.68rem;
-      padding:0.28rem 0.16rem;
+      padding:0.12rem 0.16rem;
       display: -webkit-box;
       display: -moz-box;
       display: -ms-flexbox;
       display: -webkit-flex;
       display: flex;
-      justify-content:center;
+      justify-content: space-around;
       a {
-        height: 2.48rem;
+        height: 2rem;
+        width: 20%;
         -webkit-box-flex: 1.0;
         -moz-flex-shrink: 1;
         -webkit-flex-shrink: 1;
@@ -48,15 +49,21 @@
         -moz-order: 1;
         -webkit-order: 1;
         order: 1;
-        padding-right: 0.3rem;
-        &:last-of-type{
-          padding-right: 0;
-        }
+        color: #000;
         img {
-          height: 100%;
+          width: 50%;
+          display: block;
+          margin: 0 auto;
+        }
+        div{
+            .font-dpr(13px);
+            width: 100%;
+            text-align: center;
+            margin-top: 10%;
+            white-space: nowrap;
         }
       }
-    }*/
+    }
     /*商品列表*/
     ul {
         li {
@@ -76,7 +83,7 @@
                     background-color: #000;
                     background-position: 50% 50%;
                     background-repeat: no-repeat;
-                    background-size: cover;
+                    background-size: 100%;
                 }
                 .title {
                     .font-dpr(18px);
@@ -209,5 +216,61 @@
             .font-dpr(14px);
             color: #fff;
         }
+    }
+}
+.hint_purchase{
+    display: none;
+    position: absolute;
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    top: 0;
+    .store_details{
+        width: 69%;
+        height: 54%;
+        margin: 25% 13.5% 0;
+        padding: 2%;
+        position: relative;
+        background-color: #fff;
+        img{
+            width: 100%;
+            display: block;
+        }
+        .hr{
+            background-image: url('/tpl/heishiv2_mobile/Public/img/hr.png');
+            display: block;
+            width: 2.5rem;
+            height: 0.2rem;
+            margin: 0.4rem 0;
+            background-repeat: no-repeat;
+            background-size: 100%;
+        }
+        h3{
+            .font-dpr(14px);
+            line-height: 1.5em;
+        }
+        .btn{
+            width: 96%;
+            height: 1.07rem;
+            background-color: #6ac18e;
+            color: #fff;
+            .font-dpr(14px);
+            position: absolute;
+            bottom: 2%;
+            left: 2%;
+            border: none;
+        }
+    }
+    .close{
+        margin: 0.8rem auto;
+        width: 0.76rem;
+        height: 0.76rem;
+        background: none;
+        display: block;
+        position: relative;
+        background-image: url('/tpl/heishiv2_mobile/Public/img/close.png');
+        background-size: 100%;
+        border: none;
     }
 }
