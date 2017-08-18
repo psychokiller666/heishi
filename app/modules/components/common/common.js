@@ -133,6 +133,8 @@ common.prototype.wx_share = function(options){
             zhuge.track('分享微信朋友圈',{
               '受访页面' : $.trim(options.title)
             });
+          // 腾讯统计
+          MtaH5.clickStat('wx_onMenuShareTimeline',{'title': options.title});
           _this.cnzz_push('分享微信朋友圈',{
             '标题':$.trim(options.title)
           });
@@ -148,6 +150,9 @@ common.prototype.wx_share = function(options){
           zhuge.track('分享微信好友',{
               '受访页面' : $.trim(options.title)
             });
+          // 腾讯统计
+          MtaH5.clickStat('wx_onMenuShareAppMessage',{'title': options.title});
+          
           _this.cnzz_push('分享微信好友',{
             '标题':$.trim(options.title)
           });

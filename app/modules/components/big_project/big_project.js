@@ -8,10 +8,10 @@ $(document).on('pageInit','.big_project', function (e, id, page) {
   var init = new common(page);
   // 调用微信分享sdk
   var share_data = {
-    title: '黑市 | 美好而操蛋的东西',
+    title: '黑市 | '+ $('.project_name').val(),
     desc: '这里能让好事自然发生',
     link: GV.HOST+location.pathname,
-    img: 'http://jscache.ontheroadstore.com/tpl/simplebootx_mobile/Public/i/logo.png'
+    img: 'http://img8.ontheroadstore.com/upload/170817/be6eec2c499df6bfbb41b132e0275759.png'
   };
   init.wx_share(share_data);
   init.checkfollow(1);
