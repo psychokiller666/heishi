@@ -409,14 +409,22 @@ $(document).on('pageInit','.detail', function (e, id, page) {
   var reset_session = false,
   mineId = $('#cnzz_user_id').val(),
   nim;
+  if(GV.HOST == 'http://hstest.ontheroadstore.com/'){
+    mineId = 'hstest'+mineId;
+  }
   $.ajax({
     type: 'POST',
-    url: '/index.php?g=api&m=HsNeteasyIM&a=get_token',
+    url: '/index.php?g=api&m=HsNeteasyIM&a=get_token_by_user_id',
     timeout: 4000,
-    success: function(data){
-      var token = JSON.parse(data).data.token;
+    data: {
+      user_id: mineId
+    },
+    success: function(res){
+      var data = JSON.parse(res);
+      var token = data.data.token;
+      var appKey = data.data.app_key;
       nim = NIM.getInstance({
-          appKey: '3ee032ac53f77af2dd508b941d091f60',
+          appKey: appKey,
           account: mineId,
           token: token,
           syncSessionUnread: true,
@@ -491,7 +499,7 @@ $(document).on('pageInit','.detail', function (e, id, page) {
                   type: 'POST',
                   url: '/index.php?g=api&m=HsNeteasyIM&a=refresh_token',
                   data:{
-                      user_id: myId
+                      user_id: mineId
                   },
                   timeout: 4000,
                   success: function(data){

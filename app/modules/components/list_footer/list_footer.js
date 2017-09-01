@@ -2,23 +2,31 @@
 var hs_footer = $('.hs-footer');
 var newMessages = $('.newMessages');
 var myId = $('#cnzz_user_id').val();
+if(GV.HOST == 'http://hstest.ontheroadstore.com/'){
+    myId = 'hstest'+myId;
+}
 if(hs_footer.length){
     $.ajax({
-        type: 'POST',
-        url: '/index.php?g=api&m=HsNeteasyIM&a=get_token',
+        type: 'GET',
+        url: '/index.php?g=api&m=HsNeteasyIM&a=get_token_by_user_id',
         timeout: 4000,
-        success: function(data){
-            var token = JSON.parse(data).data.token;
-            callbackIM(token, myId);
+        data: {
+            user_id: myId
+        },
+        success: function(res){
+            var data = JSON.parse(res);
+            var token = data.data.token;
+            var appKey = data.data.app_key;
+            callbackIM(token, myId, appKey);
         },
         error: function(xhr, type){
             // $.toast(xhr.info);
             console.log(type);
         }
     });
-    var callbackIM = function(token, myId){
+    var callbackIM = function(token, myId, appKey){
         var nim = NIM.getInstance({
-            appKey: '3ee032ac53f77af2dd508b941d091f60',
+            appKey: appKey,
             account: myId,
             token: token,
             onconnect: onConnect,

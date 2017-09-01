@@ -134,14 +134,22 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
   //IM即时通讯
   var myId = $('#cnzz_user_id').val(),
   nim;
+  if(GV.HOST == 'http://hstest.ontheroadstore.com/'){
+    myId = 'hstest'+myId;
+  }
     $.ajax({
-        type: 'POST',
-        url: '/index.php?g=api&m=HsNeteasyIM&a=get_token',
+        type: 'GET',
+        url: '/index.php?g=api&m=HsNeteasyIM&a=get_token_by_user_id',
         timeout: 4000,
-        success: function(data){
-          var token = JSON.parse(data).data.token;
+        data: {
+          user_id: myId
+        },
+        success: function(res){
+          var data = JSON.parse(res);
+          var token = data.data.token;
+          var appKey = data.data.app_key;
           nim = NIM.getInstance({
-              appKey: '3ee032ac53f77af2dd508b941d091f60',
+              appKey: appKey,
               account: myId,
               token: token,
               onconnect: onConnect,
@@ -227,6 +235,8 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
         if(data[i]['lastMsg']['type'] == 'image'){
           data[i]['lastMsg']['text'] = '[照片]';
         }
+        // 删除id中的字符串
+        data[i]['to'] = data[i]['to'].replace(/[^0-9]/ig,"");
       }
       //添加数据
       $('.chat_list_group_bd').find('ul').append(chat_list_group_bd_tpl_default(data));
@@ -258,6 +268,9 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
             $('.chat_list_group_bd').find('ul li').each(function(){
               var id = $(this).data('id');
               var dataId = session.to;
+              if(GV.HOST == 'http://hstest.ontheroadstore.com/'){
+                id = 'hstest'+id;
+              }
               if(id == dataId){
                 $(this).remove();
                 return false;
