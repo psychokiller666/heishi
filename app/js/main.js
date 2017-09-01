@@ -10,13 +10,16 @@ require('../../bower_components/zepto/src/fx.js');
 require('../../bower_components/zepto/src/deferred.js');
 require('../../bower_components/zepto/src/callbacks.js');
 require('../../bower_components/zepto/src/ajax.js');
+// 由于sui自带的轮播不兼容移动端，直接引入
+require('../../bower_components/zepto/src/swiper.min.js');
 // SUI
 // SUI 自动初始化
 $.config = {
     autoInit: true
 };
 require('../../node_not/SUI-Mobile/dist/js/sm.min.js');
-require('../../node_not/SUI-Mobile/dist/js/sm-extend.min.js');
+// sm-extend中使用的轮播在移动端不兼容，现在使用了swiper,导致商品详情页中的图片预览无法使用
+// require('../../node_not/SUI-Mobile/dist/js/sm-extend.min.js');
 
 // 首页(商品列表页)
 require('../modules/components/store_list/store_list.js');

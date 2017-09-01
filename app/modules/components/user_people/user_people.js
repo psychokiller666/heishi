@@ -45,8 +45,8 @@ $(document).on('pageInit','#user_people', function (e, id, page) {
     $.detachInfiniteScroll($('.infinite-scroll'));
   }
   // 幻灯片
-  $(".swiper-container").swiper({
-    autoplay:2000
-  });
+  // $(".swiper-container").swiper({
+  //   autoplay:2000
+  // });
 
 });

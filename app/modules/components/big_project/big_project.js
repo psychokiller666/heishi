@@ -33,6 +33,15 @@ $(document).on('pageInit','.big_project', function (e, id, page) {
     })
     project_names_ul.css('width', project_names_ul.attr('data-width') + 'px');
   }
+  // swiper配置
+  var mySwiper = new Swiper ('.swiper-container',{
+    lazyLoading: true,
+    autoplay : 3000,
+    speed:300,
+    autoplayDisableOnInteraction : false,
+    loop: true,
+    pagination : '.swiper-pagination',
+  })
   // js控制Y轴滚动 status判断是点击还是左右滑动
   var touchclientX = 0,
   touchclientY = 0,

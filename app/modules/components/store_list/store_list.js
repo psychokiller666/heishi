@@ -105,6 +105,15 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
       }
     });
   });
+  // swiper配置
+  var mySwiper = new Swiper ('.swiper-container',{
+    lazyLoading: true,
+    autoplay : 3000,
+    speed:300,
+    autoplayDisableOnInteraction : false,
+    loop: true,
+    pagination : '.swiper-pagination',
+  })
   // 列表首页_通用底部发布
   var hs_footer = $('.hs-footer');
   var notice_box = $('.notice_box');
