@@ -84,7 +84,7 @@ common.prototype.checkfollow = function(type){
       type:type
     },
     type: 'POST',
-    async:false
+    async: true
   }).done(function (res) {
     if(res.data == 0) {
       $('.follow_me').show();
@@ -129,10 +129,6 @@ common.prototype.wx_share = function(options){
         imgUrl: options.img,
         success: function(){
           // 用户确认分享后执行的回调函数
-          //诸葛统计
-            zhuge.track('分享微信朋友圈',{
-              '受访页面' : $.trim(options.title)
-            });
           // 腾讯统计
           MtaH5.clickStat('wx_onMenuShareTimeline',{'title': options.title});
           _this.cnzz_push('分享微信朋友圈',{
@@ -147,9 +143,6 @@ common.prototype.wx_share = function(options){
         imgUrl: options.img,
         success:function(){
           // 用户确认分享后执行的回调函数
-          zhuge.track('分享微信好友',{
-              '受访页面' : $.trim(options.title)
-            });
           // 腾讯统计
           MtaH5.clickStat('wx_onMenuShareAppMessage',{'title': options.title});
           

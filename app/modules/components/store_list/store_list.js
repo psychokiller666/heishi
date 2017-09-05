@@ -25,7 +25,6 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
   $.ajax({
     type: 'GET',
     url: '/index.php?g=restful&m=HsArticle&a=ajax_check_last_goods',
-    timeout: 4000,
     success: function(data){
       if(data.status == 1){
         var id = data.data.id;
