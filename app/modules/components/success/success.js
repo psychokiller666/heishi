@@ -17,11 +17,6 @@ $(document).on('pageInit','.jump', function(e, id, page){
       'value': $(page).data('price'),
       '订单类型': $(page).data('actiontype')
     });
-    zhuge.track('完成订单',{
-      '订单ID': $(page).data('ordernumber'),
-      'value': $(page).data('price'),
-      '订单类型': $(page).data('actiontype')
-    });
     setTimeout(function(){
       $.hidePreloader();
       $('.no_data').text('支付成功');

@@ -302,13 +302,13 @@ $(document).on('pageInit','.add', function (e, id, page) {
       var number = $(this).val().length,
       name = $(this).data("name"),
       nan = parseInt($(this).val()-0);
-      if(!number){
+      if(!number && name != '条码'){
         $(this).trigger('focus');
         $.toast(name+'不能为空');
         state = false;
         return false;
       }
-      if(isNaN(nan) && name != "型号"){
+      if(isNaN(nan) && name != "型号" && name != '条码'){
         $(this).trigger('focus');
         $.toast('请正确输入: '+name);
         state = false;

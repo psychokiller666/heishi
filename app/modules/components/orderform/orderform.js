@@ -69,9 +69,6 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
         setTimeout(function(){
           window.location.href = ok_url;
         },500);
-        zhuge.track('下订单',{
-          '订单ID' : data.order_number
-        });
         init.cnzz_push('下订单',{
           '订单ID': data.order_number
         });

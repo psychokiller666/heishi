@@ -356,9 +356,6 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
         init.cnzz_push('下订单',{
           '订单ID': data.order_number
         });
-        zhuge.track('下订单',{
-          '订单ID' : data.order_number
-        });
       } else {
         $.toast(data.info);
       }
