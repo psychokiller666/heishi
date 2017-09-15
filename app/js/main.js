@@ -45,6 +45,8 @@ require('../modules/components/list_footer/list_footer.js');
 
 // 用户中心
 require('../modules/components/user_index/user_index.js');
+// 评论列表
+require('../modules/components/user_comment/user_comment.js');
 // 提现
 require('../modules/components/user_withdraw/user_withdraw.js');
 // 卖家动态

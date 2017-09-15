@@ -1,0 +1,56 @@
+.user_message {
+  .list {
+    margin-top: 0.133333rem;
+    padding: 0 0.32rem;
+    background-color: #fff;
+    li {
+      border-bottom: 0.01rem solid rgba(211, 211, 211, .5);
+      padding:0.5rem 0;
+      a {
+        .font-dpr(15px);
+        display: block;
+        position: relative;
+        line-height: 0.35rem;
+        .hs-cf;
+        color: #000;
+        span{
+          display: inline-block;
+          width: 0.35rem;
+          height: 0.35rem;
+          background-size: 100%;
+          background-position: center;
+          margin: 0 1em;
+        }
+        .my_comment_list{
+          background-image: url(../img/comment.png);
+        }
+        .message{
+          background-image: url(../img/message.png);
+        }
+        &:after {
+          .hs-icon;
+          position: absolute;
+          content: "\e605";
+          right: 0.506667rem;
+          color: #6f6f6f;
+          top: 0;
+          .font-dpr(18px);
+          .font-line-height(18px);
+        }
+        .newMessages {
+          position: absolute;
+          width: .25rem;
+          height: .25rem;
+          border-radius: 100%;
+          top: -0.38rem;
+          right: 0;
+          background-color: #58d996;
+          display: none;
+        }
+      }
+      /*&:last-child {
+        border-bottom: none;
+      }*/
+    }
+}
+}
