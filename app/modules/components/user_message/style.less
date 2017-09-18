@@ -6,6 +6,18 @@
     li {
       border-bottom: 0.01rem solid rgba(211, 211, 211, .5);
       padding:0.5rem 0;
+      position: relative;
+      .newComment,
+      .newMessages{
+        display: none;
+        position: absolute;
+        width: .25rem;
+        height: .25rem;
+        border-radius: 200%;
+        top: 0.36rem;
+        background-color: #58d996;
+        left: 0.65rem;
+      }
       a {
         .font-dpr(15px);
         display: block;
@@ -36,16 +48,6 @@
           top: 0;
           .font-dpr(18px);
           .font-line-height(18px);
-        }
-        .newMessages {
-          position: absolute;
-          width: .25rem;
-          height: .25rem;
-          border-radius: 100%;
-          top: -0.38rem;
-          right: 0;
-          background-color: #58d996;
-          display: none;
         }
       }
       /*&:last-child {
