@@ -21,9 +21,6 @@ $(document).on('pageInit','.user_message_list', function (e, id, page) {
           console.log(type);
         }
     });
-    if($(this).attr('data-href')){
-      location.href = $(this).attr('data-href');
-    }
   })
   // 监听加载
   var user_message_list_tpl = handlebars.compile($("#user_message_list_default").html());
@@ -67,7 +64,6 @@ $(document).on('pageInit','.user_message_list', function (e, id, page) {
         page: page_num,
       },
       success: function(data){
-        console.log(data);
         if(data.status == 1){
           $.each(data.data, function(i, item){
             item.user_avatar = data.head_imgs[item['from_uid']];

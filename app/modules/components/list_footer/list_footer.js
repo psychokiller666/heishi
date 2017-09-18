@@ -95,6 +95,21 @@ if(hs_footer.length){
             }
         }
     }
+    // 获取评论数量显示已读未读
+    $.ajax({
+        type: 'GET',
+        url: '/user/HsComment/ajax_get_my_comments',
+        success: function(data){
+            if(data.state == "success"){
+                if(data.data != 0){
+                    $('.newComment').css('display','block');
+                }
+            }
+        },
+        error: function(xhr, type){
+        // $.toast('网络错误 code:'+type);
+        }
+    });
     //购物车数量监控
     $.ajax({
         type: 'GET',
@@ -102,10 +117,10 @@ if(hs_footer.length){
         dataType: 'json',
         timeout: 4000,
         success: function(data){
-        if(data.status != 1 ) return;
-        if(data.numbers > 0 && $('.shopping-num').length == 1){
-            $('.shopping-num').css('display','block');
-        }
+            if(data.status != 1 ) return;
+            if(data.numbers > 0 && $('.shopping-num').length == 1){
+                $('.shopping-num').css('display','block');
+            }
         },
         error: function(xhr, type){
         // $.toast('网络错误 code:'+type);
