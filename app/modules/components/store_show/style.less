@@ -327,6 +327,7 @@
     padding-left: 0.346667rem;
     padding-right: 0.44rem;
     background-color: #191919;
+    position: relative;
     .hs-cf;
     .info {
         float: left;
@@ -365,7 +366,7 @@
         &:disabled {
             color: #a5a5a5;
             border: 0.04rem solid #a5a5a5;
-            padding: 0 0.906667rem;
+            padding: 0 0.6rem;
         }
     }
     .shopping_cart{
@@ -375,7 +376,7 @@
         margin-right: 0.3rem;
     }
     /* 活动 购买按钮 */
-    .activity_btn{
+    /*.activity_btn{
         line-height: .8rem;
         margin-top: .405rem;
         border: .04rem solid #af0001;
@@ -386,7 +387,7 @@
         color: #fff;
         .font-dpr(15px);
         margin-left: 0.2rem;
-    }
+    }*/
     .activity_experience{
         line-height: .8rem;
         margin-top: .405rem;
@@ -397,6 +398,33 @@
         padding: 0 .7rem;
         color: #af0001;
         .font-dpr(16px);
+    }
+    .download{
+        border-color: #f40;
+        color: #f40;
+        padding: 0 0.6rem;
+        margin-right: 0.3rem;
+    }
+    .activity1{
+        width: 56%;
+        position: absolute;
+        top: 50%;
+        z-index: 99;
+        right: -56%;
+        animation: activityFromRightToCenter 1s;
+        animation-fill-mode: forwards;
+        height: 5.2rem;
+    }
+    .infinite{
+        width: 100%;
+        position: absolute;
+    }
+    .activity2{
+        position: absolute;
+        z-index: 100;
+        width: 72%;
+        top: 50%;
+        right: 0;
     }
 }
 /* 点赞 */
@@ -733,5 +761,16 @@
 @media screen and (max-width: 640px) {
     .buy .buy_btn{
         .font-dpr(12px) !important;
+    }
+}
+@keyframes activityFromRightToCenter {
+    0% {
+        right: -56%;
+    }
+    68% {
+        right: 0;
+    }
+    100% {
+        right: -3%;
     }
 }
