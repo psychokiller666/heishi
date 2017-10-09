@@ -16,11 +16,29 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   if (page.selector == '.page'){
     return false;
   }
+  // 需要解锁商品在分享时添加字段 当出现解锁字段时请求
+  var share_url = GV.HOST+location.pathname;
+  if($('.disabled_btn').length){
+    $.ajax({
+      type: 'get',
+      url: '/index.php?g=restful&m=HsBuyPush&a=buy_push_url',
+      async: false,
+      data: {
+        user_id: $('.disabled_btn').attr('data-uid'),
+        id: $('.disabled_btn').attr('data-article_id')
+      },
+      success: function(data){
+        if(data.status == 1){
+          share_url = GV.HOST+'/index.php?g=Portal&m=HsArticle&a=index&id='+$('.disabled_btn').attr('data-article_id')+'&user_id='+$('.disabled_btn').attr('data-uid')+'&object_push='+data.code;
+        }
+      }
+    });
+  }
   var init = new common(page);
   var share_data = {
     title: page.find('.frontcover .title').text()+' | 黑市',
     desc: page.find('.content_bd').text(),
-    link: GV.HOST+location.pathname,
+    link: share_url,
     img: page.find('.frontcover .image').data('share')
   };
   init.wx_share(share_data);
@@ -1020,4 +1038,14 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
     return flag;
   }
+  // 指定商品 导流至app 判断是不是ios环境 安卓提示
+  var navigator_activity = navigator.userAgent;
+  var isiOS = !!navigator_activity.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+  $('.download_js').click(function(){
+    if(!isiOS){
+      $.toast('当前仅支持ios下载');
+      return false;
+    }
+  })
+
 });

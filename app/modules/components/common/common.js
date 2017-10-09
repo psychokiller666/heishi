@@ -78,6 +78,7 @@ common.prototype.msg_tip = function(){
 }
 // 检查是否关注公众号
 common.prototype.checkfollow = function(type){
+  // 默认隐藏
   $.ajax({
     url: '/index.php?g=user&m=HsWeixin&a=userinfo',
     data: {
@@ -155,6 +156,9 @@ common.prototype.wx_share = function(options){
         wx.showOptionMenu();
       });
     });
+    // wx.error(function(res){
+    //   $.toast(JSON.stringify(res), 50000);
+    // });
     } else {
       wx.config({
         debug: false,
