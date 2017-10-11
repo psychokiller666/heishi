@@ -72,7 +72,7 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
     placard.hide();
   }
   placard.on('click','.placard_close',function(){
-    $.post('/index.php?g=datatful&m=HsSystemNotice&a=disabled',{
+    $.post('/index.php?g=restful&m=HsSystemNotice&a=disabled',{
       notice_id:placard_id
     },function(res){
       if(res.status == 1 ){

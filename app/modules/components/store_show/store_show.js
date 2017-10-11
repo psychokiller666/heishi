@@ -57,6 +57,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   } else {
     placard.hide();
   }
+  // 关闭系统公告
   placard.on('click','.placard_close',function(){
     $.post('/index.php?g=restful&m=HsSystemNotice&a=disabled',{
       notice_id:placard_id
