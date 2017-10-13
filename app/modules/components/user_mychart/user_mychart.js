@@ -44,7 +44,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
           $(this).find('.itemMain').css('transform',"translateX(-2.5rem)");
           $(this).find('.itemMain').css('webkitTransform',"translateX(-2.5rem)");
         }else{
-          $(this).find('.delItem').css('width',"0rem");
+          $(this).find('.delItem').css('width',"0");
           $(this).find('.itemMain').css('transform',"translateX(0)");
           $(this).find('.itemMain').css('webkitTransform',"translateX(0)");
         }
@@ -54,7 +54,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
           return;
         }
         if(m <= 1){
-          $(this).find('.delItem').css('width',"0rem");
+          $(this).find('.delItem').css('width',"0");
           $(this).find('.itemMain').css('transform',"translateX(0)");
           $(this).find('.itemMain').css('webkitTransform',"translateX(0)");
         }else{
@@ -350,12 +350,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
     $.post('/index.php?g=restful&m=HsOrder&a=union_add',data,function(data){
       if(data.status == 1){
         var ok_url = GV.pay_url+'hsjsapi.php?order_number=' + data.order_number;
-        setTimeout(function(){
-          window.location.href = ok_url;
-        },500);
-        init.cnzz_push('下订单',{
-          '订单ID': data.order_number
-        });
+        window.location.href = ok_url;
       } else {
         $.toast(data.info);
       }

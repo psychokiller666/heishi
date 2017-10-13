@@ -12,18 +12,13 @@ $(document).on('pageInit','.jump', function(e, id, page){
   //支付成功
   if($('.success').length && status_pay == 0){
     $.showPreloader('确认支付中');
-    init.cnzz_push('完成订单',{
-      '订单ID': $(page).data('ordernumber'),
-      'value': $(page).data('price'),
-      '订单类型': $(page).data('actiontype')
-    });
     setTimeout(function(){
       $.hidePreloader();
       $('.no_data').text('支付成功');
-    },1800);
+    },1000);
     setTimeout(function(){
       window.location.href = $('.no_data').data('url');
-    },3000);
+    },2000);
   }
   //支付错误
   if($('.error').length) {
