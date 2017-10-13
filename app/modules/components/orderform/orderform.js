@@ -66,12 +66,7 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
     $.post('/index.php?g=restful&m=HsOrder&a=union_add',post_data,function(data){
       if(data.status == 1){
         var ok_url = GV.pay_url+'hsjsapi.php?order_number=' + data.order_number;
-        setTimeout(function(){
-          window.location.href = ok_url;
-        },500);
-        init.cnzz_push('下订单',{
-          '订单ID': data.order_number
-        });
+        window.location.href = ok_url;
       } else {
         $.toast(data.info);
       }

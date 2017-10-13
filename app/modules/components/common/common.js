@@ -40,7 +40,7 @@ var common = function(page){
     container: $(".content")
   });
 
-  this.cnzz_dplus();
+  // this.cnzz_dplus();
 
 };
 // 图片延时加载
@@ -132,9 +132,6 @@ common.prototype.wx_share = function(options){
           // 用户确认分享后执行的回调函数
           // 腾讯统计
           MtaH5.clickStat('wx_onMenuShareTimeline',{'title': options.title});
-          _this.cnzz_push('分享微信朋友圈',{
-            '标题':$.trim(options.title)
-          });
         }
       });
       wx.onMenuShareAppMessage({
@@ -146,10 +143,6 @@ common.prototype.wx_share = function(options){
           // 用户确认分享后执行的回调函数
           // 腾讯统计
           MtaH5.clickStat('wx_onMenuShareAppMessage',{'title': options.title});
-          
-          _this.cnzz_push('分享微信好友',{
-            '标题':$.trim(options.title)
-          });
         }
       });
       wx.ready(function(){
@@ -179,81 +172,81 @@ common.prototype.wx_share = function(options){
 
 }
 // dplus统计
-common.prototype.cnzz_dplus = function(){
-  !function(a,b){if(!b.__SV){var c,d,e,f;window.dplus=b,b._i=[],b.init=function(a,c,d){function g(a,b){var c=b.split(".");2==c.length&&(a=a[c[0]],b=c[1]),a[b]=function(){a.push([b].concat(Array.prototype.slice.call(arguments,0)))}}var h=b;for("undefined"!=typeof d?h=b[d]=[]:d="dplus",h.people=h.people||[],h.toString=function(a){var b="dplus";return"dplus"!==d&&(b+="."+d),a||(b+=" (stub)"),b},h.people.toString=function(){return h.toString(1)+".people (stub)"},e="disable track track_links track_forms register unregister get_property identify clear set_config get_config get_distinct_id track_pageview register_once track_with_tag time_event people.set people.unset people.delete_user".split(" "),f=0;f<e.length;f++)g(h,e[f]);b._i.push([a,c,d])},b.__SV=1.1,c=a.createElement("script"),c.type="text/javascript",c.charset="utf-8",c.async=!0,c.src="https://w.cnzz.com/dplus.php?id=1255604809",d=a.getElementsByTagName("script")[0],d.parentNode.insertBefore(c,d)}}(document,window.dplus||[]),dplus.init("1255604809", {
-    loaded: function() {
-      function GetQueryString(name) {
-        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-        var r = window.location.search.substr(1).match(reg);
-        if(r!=null)return  unescape(r[2]); return null;
-      }
-      var user_id = $('#cnzz_user_id').val();
-      var source = GetQueryString('from');
-      var source_list = {
-        "timeline":"微信朋友圈",
-        "singlemessage":"微信好友",
-        "groupmessage":"微信群",
-        "ontheroad":"公路商店_输入框按钮",
-        "ontheroadstore":"公路商店_微信文章",
-        "heishi":"黑市_输入框按钮",
-        "nbheishi":"黑市_微信文章"
-      }
-      for(var key in source_list) {
-        if(source == key) {
-          source = source_list[key];
-        }
-      }
-      dplus.register({
-        '来源入口' : source,
-        '用户ID' : user_id
-      });
-      // 标记id
-      if(!dplus.get_property("来源入口")){
-        dplus.identify(user_id);
-      }
-      // 点击头部导航栏
-      $('.hs-header a').on('click',function(e){
-        var title = $.trim($(this).text());
-        var href = $(this).attr('href');
-        // e.preventDefault();
-        // setTimeout(function(){
-        //   location.href = href;
-        // },300)
-        dplus.track("点击头部导航栏" , {
-          '按钮名称' : title
-        });
-      });
-      // 点击底部导航栏
-      $('.hs-footer a').on('click',function(e){
-        var title = $.trim($(this).text());
-        var href = $(this).attr('href');
-        // e.preventDefault();
-        // setTimeout(function(){
-        //   location.href = href;
-        // },300)
-        dplus.track("点击底部导航栏" , {
-          '按钮名称' : title
-        });
-      });
-      //点击商品页视频
-      $('.store-show').on('click',".video",function(e){
-        var title = $.trim($('.frontcover .title').text());
-        // console.log(title);
-        // e.preventDefault();
-        // setTimeout(function(){
-        //   location.href = href;
-        // },300)
-        dplus.track("点击商品页视频" , {
-          '商品标题' : title
-        });
-      });
-      dplus.track('页面浏览',{
-        '受访页面' : window.location.href
-      });
-    }
-  });
-  common.prototype.cnzz_push = function(pushdata){
-    dplus.track(pushdata);
-  }
-}
+// common.prototype.cnzz_dplus = function(){
+//   !function(a,b){if(!b.__SV){var c,d,e,f;window.dplus=b,b._i=[],b.init=function(a,c,d){function g(a,b){var c=b.split(".");2==c.length&&(a=a[c[0]],b=c[1]),a[b]=function(){a.push([b].concat(Array.prototype.slice.call(arguments,0)))}}var h=b;for("undefined"!=typeof d?h=b[d]=[]:d="dplus",h.people=h.people||[],h.toString=function(a){var b="dplus";return"dplus"!==d&&(b+="."+d),a||(b+=" (stub)"),b},h.people.toString=function(){return h.toString(1)+".people (stub)"},e="disable track track_links track_forms register unregister get_property identify clear set_config get_config get_distinct_id track_pageview register_once track_with_tag time_event people.set people.unset people.delete_user".split(" "),f=0;f<e.length;f++)g(h,e[f]);b._i.push([a,c,d])},b.__SV=1.1,c=a.createElement("script"),c.type="text/javascript",c.charset="utf-8",c.async=!0,c.src="https://w.cnzz.com/dplus.php?id=1255604809",d=a.getElementsByTagName("script")[0],d.parentNode.insertBefore(c,d)}}(document,window.dplus||[]),dplus.init("1255604809", {
+//     loaded: function() {
+//       function GetQueryString(name) {
+//         var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+//         var r = window.location.search.substr(1).match(reg);
+//         if(r!=null)return  unescape(r[2]); return null;
+//       }
+//       var user_id = $('#cnzz_user_id').val();
+//       var source = GetQueryString('from');
+//       var source_list = {
+//         "timeline":"微信朋友圈",
+//         "singlemessage":"微信好友",
+//         "groupmessage":"微信群",
+//         "ontheroad":"公路商店_输入框按钮",
+//         "ontheroadstore":"公路商店_微信文章",
+//         "heishi":"黑市_输入框按钮",
+//         "nbheishi":"黑市_微信文章"
+//       }
+//       for(var key in source_list) {
+//         if(source == key) {
+//           source = source_list[key];
+//         }
+//       }
+//       dplus.register({
+//         '来源入口' : source,
+//         '用户ID' : user_id
+//       });
+//       // 标记id
+//       if(!dplus.get_property("来源入口")){
+//         dplus.identify(user_id);
+//       }
+//       // 点击头部导航栏
+//       $('.hs-header a').on('click',function(e){
+//         var title = $.trim($(this).text());
+//         var href = $(this).attr('href');
+//         // e.preventDefault();
+//         // setTimeout(function(){
+//         //   location.href = href;
+//         // },300)
+//         dplus.track("点击头部导航栏" , {
+//           '按钮名称' : title
+//         });
+//       });
+//       // 点击底部导航栏
+//       $('.hs-footer a').on('click',function(e){
+//         var title = $.trim($(this).text());
+//         var href = $(this).attr('href');
+//         // e.preventDefault();
+//         // setTimeout(function(){
+//         //   location.href = href;
+//         // },300)
+//         dplus.track("点击底部导航栏" , {
+//           '按钮名称' : title
+//         });
+//       });
+//       //点击商品页视频
+//       $('.store-show').on('click',".video",function(e){
+//         var title = $.trim($('.frontcover .title').text());
+//         // console.log(title);
+//         // e.preventDefault();
+//         // setTimeout(function(){
+//         //   location.href = href;
+//         // },300)
+//         dplus.track("点击商品页视频" , {
+//           '商品标题' : title
+//         });
+//       });
+//       dplus.track('页面浏览',{
+//         '受访页面' : window.location.href
+//       });
+//     }
+//   });
+  // common.prototype.cnzz_push = function(pushdata){
+  //   dplus.track(pushdata);
+  // }
+// }
 module.exports = common;
