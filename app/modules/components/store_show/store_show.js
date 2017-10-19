@@ -721,6 +721,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   var comment_count = $('.comment_count');
   var comment_input = $('#comment_input');
   var reply_tpl = handlebars.compile($("#reply_tpl").html());
+  var comment_type = 0;
 
   // 弹出回复框
   function comment_box(id,ispic,username,element,is_father,is_wxinput,comment_data) {
@@ -731,7 +732,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     // comment_input.trigger('focus');
     var image_list = dialog_comment.find('.image_list');
     var image = dialog_comment.find('.image');
-    var type =0;
+    // var type =0;
     // 上传图片
     var uploader = WebUploader.create({
       fileNumLimit: 1,
@@ -791,7 +792,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
             post_id:id,
             to_uid:0,
             parentid:0,
-            type:type,
+            type: comment_type,
             url:window.location.origin + window.location.pathname
           }
         } else {
@@ -804,7 +805,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
               post_id:comment.data('id'),
               to_uid:comment_data.to_uid,
               parentid:comment_data.parentid,
-              type:type,
+              type: comment_type,
               url:window.location.origin + window.location.pathname
             }
           } else {
@@ -814,7 +815,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
               post_id:comment.data('id'),
               to_uid:element.data('uid'),
               parentid:element.data('id'),
-              type:type,
+              type: comment_type,
               url:window.location.origin + window.location.pathname
             }
           }
@@ -840,7 +841,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
                 // 回复直接添加底部
                 var reply_data = {
                  is_father:true,
-                 type:type,
+                 type: comment_type,
                  comment:comment_content,
                  username:comment.data('username'),
                  avatar:comment.data('avatar'),
@@ -850,7 +851,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
                } else {
                 var reply_data = {
                  is_father:false,
-                 type:type,
+                 type: comment_type,
                  comment:comment_content,
                  username:comment.data('username'),
                  parent_full_name:element.data('username'),
@@ -922,17 +923,19 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
     // 上传成功
     uploader.onUploadSuccess = function(file,response) {
+      // type状态等于4
+      comment_type = 4;
       // 添加关闭按钮
       image_list.append('<button class="close" data-id="'+file.id+'"></button>');
-      // 恢复提交按钮
       dialog_comment.find('.cancel').removeAttr('disabled','disabled');
-      dialog_comment.find('.submit').removeAttr('disabled','disabled');
       // 消除进度条
       image_list.find('.progress').remove();
       // 删除上传框
       dialog_comment.find('.image .updata_image_btn').remove();
-      // type状态等于4
-      type = 4;
+      // setTimeout(function(){
+        // 恢复提交按钮
+        dialog_comment.find('.submit').removeAttr('disabled','disabled');
+      // },1000)
       if(response.status == 1) {
        // comment_input.val(response.data);
        comment_input.attr('data-imgurl',response.data);
@@ -961,7 +964,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       comment_input.removeAttr('disabled');
       comment_input.attr('placeholder','随便说点什么');
       comment_input.show();
-      type = 0;
+      comment_type = 0;
     }
     // 选择时文件出错
     uploader.onError = function(type){
