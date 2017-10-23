@@ -145,13 +145,13 @@ common.prototype.wx_share = function(options){
           MtaH5.clickStat('wx_onMenuShareAppMessage',{'title': options.title});
         }
       });
-      wx.ready(function(){
-        wx.showOptionMenu();
-      });
+      // wx.ready(function(){
+      //   wx.showOptionMenu();
+      // });
     });
-    wx.error(function(res){
-      $.toast(JSON.stringify(res), 50000);
-    });
+    // wx.error(function(res){
+    //   $.toast(JSON.stringify(res), 50000);
+    // });
     } else {
       wx.config({
         debug: false,
