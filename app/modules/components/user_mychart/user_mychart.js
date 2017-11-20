@@ -209,8 +209,9 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
   function count () {
   	var num = 0;
   	$('.item').each(function () {
-  		var status = $(this).find('.checkbox').hasClass('affirm');
-  		if(status){
+      var status = $(this).find('.checkbox').hasClass('affirm');
+  		var noInventory = $(this).find('.checkbox').hasClass('noInventory');
+  		if(status && !noInventory){
   			var n = parseInt($(this).find('.unitPrice').text());
   			var m = parseInt($(this).find('.number').text());
   			num += n*m;
