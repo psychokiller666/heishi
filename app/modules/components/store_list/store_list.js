@@ -286,4 +286,37 @@ $(document).on('pageInit','.show-list', function (e, id, page) {
       $('.hs-footer').find('li a').eq(1).addClass('active');
     }
   }
+  // 获取卖家信息
+  user_info();
+  function user_info(){
+    var arr = [];
+    $('.store_list ul li').each(function() {
+      var id = $(this).find('.title').attr('data-objectId');
+      arr.push(id);
+    })
+    var data = {
+      object_id: arr
+    }
+    $.post('/index.php?g=portal&m=index&a=get_img',data,function(res){
+      if(res.status == 1){
+        $('.store_list ul li').each(function() {
+          var user_id = $(this).find('.user').attr('data-user_id');
+          var that = this;
+          $.each(res.data, function(index, item){
+            var img_src = item.avatar;
+            if(item.state == 0){
+              img_src += '/64';
+            }
+            if(user_id == index){
+              $(that).find('.user .user_info img').attr('src', img_src);
+              $(that).find('.user .user_info span').text(item.name);
+              return false;
+            }
+          })
+        })
+      } else {
+        $.toast(res.info);
+      }
+    })
+  }
 });
