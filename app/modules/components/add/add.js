@@ -250,6 +250,21 @@ $(document).on('pageInit','.add', function (e, id, page) {
     }
     return title_input;
   }
+  // 规格
+  $('.specification textarea').focus(function(){
+    $('.specification div').hide();
+  })
+  $('.specification textarea').blur(function(){
+    var num = $('.specification textarea').val().length;
+    if(!num){
+      $('.specification div').show();
+    }
+  })
+  function get_specification(){
+    var specification = $('.specification');
+    var specification_input = specification.find('textarea').val();
+    return specification_input;
+  }
   // 获取描述
   function get_excerpt(){
     var excerpt = $('.description');
@@ -381,6 +396,7 @@ $(document).on('pageInit','.add', function (e, id, page) {
             'post[post_pictures]':get_picture_list(),
             'post[post_title]':get_title(),
             'post[post_excerpt]':get_excerpt(),
+            'post[desc]': get_specification(),
             //重写
             'post[goods]':goods($('.select').attr("id")),
             'post[goods_size]':goods($('.select').data("type")).length,
@@ -396,6 +412,7 @@ $(document).on('pageInit','.add', function (e, id, page) {
           'post[post_pictures]':get_picture_list(),
           'post[post_title]':get_title(),
           'post[post_excerpt]':get_excerpt(),
+          'post[desc]': get_specification(),
           'post[post_keywords]':'',
         }
       }
