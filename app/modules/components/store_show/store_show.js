@@ -219,7 +219,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   var dialog_reward = $('.dialog_reward');
   var reward_btn = $('.reward_btn');
   page.on('click','.reward_btn',function(){
-    dialog_reward.find('input').val('');
+    // dialog_reward.find('input').val('');
     dialog_reward.show();
   });
   // 打赏框
