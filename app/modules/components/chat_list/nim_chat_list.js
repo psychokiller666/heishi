@@ -210,6 +210,7 @@ $(document).on('pageInit','.detail', function (e, id, page) {
           //用户不在线发推送
           if(user_line_status){
             messagePush($(that).data('touid'),'[图片]',1);
+            offlineMessage($('.recent_btn').attr('data-uid'));
           }
         }else if(msg.status == 'fail'){
           $.toast('发送失败');
@@ -273,6 +274,7 @@ $(document).on('pageInit','.detail', function (e, id, page) {
           //用户不在线发推送
           if(user_line_status){
             messagePush($(that).data('touid'), msg.text, 0);
+            offlineMessage($('.recent_btn').attr('data-uid'));
           }
         }else if(msg.status == 'fail'){
           $.toast('发送失败,请重新发送');
@@ -675,6 +677,21 @@ $(document).on('pageInit','.detail', function (e, id, page) {
       timeout: 4000,
       success: function(data){
         console.log(data);
+      }
+    });
+  }
+
+  // 用户不在线时拿到卖家离线留言显示
+  function offlineMessage(id){
+    $.ajax({
+      type: 'GET',
+      url: '/index.php?g=User&m=HsMessage&a=Offline_reply&id=' + id,
+      success: function(res){
+        if(res.status == 1 && res['data']['content'] != null){
+          var str = '<li class="user" data-id="'+id+'"><span class="date"></span><span class="avatar"></span><div class="content_bd">'+res['data']['content']+'</div></li>';
+          chat_list.find('ul').append(str);
+          $('.content').scrollTop($('.content ul').height());
+        }
       }
     });
   }
