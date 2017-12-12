@@ -4,6 +4,7 @@ var common = require('../common/common.js');
 var handlebars = require('../../../../node_modules/handlebars/dist/handlebars.min.js');
 
 $(document).on('pageInit','#user_people', function (e, id, page) {
+  require('../../../../node_not/SUI-Mobile/dist/js/sm-extend.min.js');
   if (page.selector == '.page'){
     return false;
   }
