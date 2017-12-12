@@ -80,7 +80,7 @@ common.prototype.msg_tip = function(){
 common.prototype.checkfollow = function(type){
   // 默认隐藏
   $.ajax({
-    url: '/index.php?g=user&m=HsWeixin&a=userinfo',
+    url: '/index.php?g=user&m=HsWeixin&a=userinfo&type=1',
     data: {
       type:type
     },
