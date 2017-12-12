@@ -1013,20 +1013,22 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     var comment_id = $(this).data('id');
     comment_box(comment_id,true,'',$(this),true,false);
   });
-  if(page.find('.comment').data('fast') == 1){
-    comment_box(page.find('.comment').data('id'),false,page.find('.comment').data('commenttouser'),'',false,true,{
-      to_uid:page.find('.comment').data('commenttouid'),
-      parentid:page.find('.comment').data('commentparentid')
-    });
-  }
+  $(document).ready(function(){
+    if(page.find('.comment').data('fast') == 1){
+      comment_box(page.find('.comment').data('id'),false,page.find('.comment').data('commenttouser'),'',false,true,{
+        to_uid:page.find('.comment').data('commenttouid'),
+        parentid:page.find('.comment').data('commentparentid')
+      });
+    }
+  }); 
   //适配pc端换行间距
   if(location.href.indexOf('culture') > 0 && IsPC()){
     $('.content_bd').find('p').css('line-height','0.5rem');
-    $('.content_bd').find('p').each(function(){
-      if($(this).html().length < 10){
-        $(this).css('height','10px');
-      }
-    })
+    // $('.content_bd').find('p').each(function(){
+    //   if($(this).html().length < 10){
+    //     $(this).css('height','10px');
+    //   }
+    // })
   }
   function IsPC() {
     var userAgentInfo = navigator.userAgent;
@@ -1051,5 +1053,15 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       return false;
     }
   })
-
+  // 遍历文章中关联的商品，对价格，图片标题进行更新
+  $('.article_content').each(function(i, item){
+    var id = $(item).attr('data-id');
+    $.get("/index.php?g=Portal&m=HsArticle&a=get_post_info&id="+id, function(data){
+      if(data.status == 1){
+        $(item).find('img').attr('src', GV.img_url + data.code.img + '@640w_1l');
+        $(item).find('.article_title').text(data.code.post_title);
+        $(item).find('.article_price').text('￥'+ data.code.price);
+      }
+    });
+  })
 });

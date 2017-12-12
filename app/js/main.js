@@ -97,3 +97,6 @@ require('../modules/components/user_recruitment/express_query.js');
 
 //购物车
 require('../modules/components/user_mychart/user_mychart.js');
+
+//注册 登录
+require('../modules/components/login/login.js');
