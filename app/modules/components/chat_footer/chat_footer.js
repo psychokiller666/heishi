@@ -9,7 +9,7 @@ var chat_list = $('.chat_list');
 
 var _chattpl = '<li class="me">'+
 '<span class="date">刚刚</span>'+
-'<span class="avatar" style="background-image:url(http://placeholder.qiniudn.com/108x108)"></span>'+
+'<span class="avatar" style="background-image:url(//placeholder.qiniudn.com/108x108)"></span>'+
 '<div class="content"><%=content%></div>'+
 '</li>';
 

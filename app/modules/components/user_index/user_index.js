@@ -25,8 +25,8 @@ $(document).on('pageInit','.center', function(e, id, page){
   init.msg_tip();
   // 高度补丁
   $('.hs-main').css('top','0');
-  // 发布
 
+  // 发布
   page.on('click','.add_posts a',function(e){
     e.preventDefault();
     $.showPreloader();
@@ -65,98 +65,168 @@ $(document).on('pageInit','.center', function(e, id, page){
           attention_btn.html('关注');
         }
       });
-    // 操作关注 & 取消关注
-    attention_btn.on('click',function(){
+      // 操作关注 & 取消关注
+      attention_btn.on('click',function(){
 
-      if($(this).hasClass('active')){
-        // 取消关注
-        $.post('/index.php?g=user&m=HsFellows&a=ajax_cancel',{
-          uid:$(this).data('id')
-        },function(data){
-          if(data.status == '1') {
-            attention_btn.text('关注');
-            attention_btn.removeClass('active');
-            $.toast(data.info);
-          } else {
-            $.toast(data.info);
-          }
-        });
-      } else {
-        // 关注
-        $.post('/index.php?g=user&m=HsFellows&a=ajax_add',{
-          uid:$(this).data('id')
-        },function(data){
-          if(data.status == '1') {
-            attention_btn.text('取消关注');
-            attention_btn.addClass('active');
-            $.toast(data.info);
-          } else {
-            $.toast(data.info);
-          }
-        });
-      }
-    });
-  }
-
-  if(store_list.find('li').length <= 19) {
-    $('.infinite-scroll-preloader').remove();
-  } else {
-    var loading = false;
-    var page_num = 2;
-    var pages;
-    var page_size = 20;
-    var post_id = store_list.data('id');
-    var store_list_tpl = handlebars.compile($("#store_list_tpl").html());
-    function add_data(page_size,page) {
-      $.ajax({
-        type: 'POST',
-        url: '/index.php?g=User&m=index&a=ajax_more_articles',
-        data: {
-          id:post_id,
-          page:page_num,
-          page_size:page_size
-        },
-        dataType: 'json',
-        timeout: 4000,
-        success: function(data){
-          if(data.status == 1){
-            store_list.find('ul').append(store_list_tpl(data.data));
-              // 更新最后加载的序号
-              pages = data.pages;
-              page_num++;
-              store_list.attr('pagenum',page_num);
-              store_list.attr('pages',data.pages);
-              init.loadimg();
+        if($(this).hasClass('active')){
+          // 取消关注
+          $.post('/index.php?g=user&m=HsFellows&a=ajax_cancel',{
+            uid:$(this).data('id')
+          },function(data){
+            if(data.status == '1') {
+              attention_btn.text('关注');
+              attention_btn.removeClass('active');
+              $.toast(data.info);
             } else {
-              $.toast('请求错误');
+              $.toast(data.info);
             }
-          },
-          error: function(xhr, type){
-            $.toast('网络错误 code:'+type);
-          }
-        });
-    }
-    // 监听滚动
-    page.on('infinite', function() {
-      // 如果正在加载，则退出
-      if (loading) return;
-      // 设置flag
-      loading = true;
-      setTimeout(function() {
-        loading = false;
-        if (page_num >= pages) {
-          // 加载完毕，则注销无限加载事件，以防不必要的加载
-          $.detachInfiniteScroll($('.infinite-scroll'));
-          // 删除加载提示符
-          $('.infinite-scroll-preloader').remove();
-          $.toast('😒 没有了');
-          return;
+          });
+        } else {
+          // 关注
+          $.post('/index.php?g=user&m=HsFellows&a=ajax_add',{
+            uid:$(this).data('id')
+          },function(data){
+            if(data.status == '1') {
+              attention_btn.text('取消关注');
+              attention_btn.addClass('active');
+              $.toast(data.info);
+            } else {
+              $.toast(data.info);
+            }
+          });
         }
-        // 请求数据
-        add_data(page_size,page);
-      },500);
-      $.refreshScroller();
-    });
+      });
+    }
+
+    if(store_list.find('li').length <= 19) {
+      $('.infinite-scroll-preloader').remove();
+    } else {
+      var loading = false;
+      var page_num = 2;
+      var pages;
+      var page_size = 20;
+      var post_id = store_list.data('id');
+      var store_list_tpl = handlebars.compile($("#store_list_tpl").html());
+      function add_data(page_size,page) {
+        $.ajax({
+          type: 'POST',
+          url: '/index.php?g=User&m=index&a=ajax_more_articles',
+          data: {
+            id:post_id,
+            page:page_num,
+            page_size:page_size
+          },
+          dataType: 'json',
+          timeout: 4000,
+          success: function(data){
+            if(data.status == 1){
+              store_list.find('ul').append(store_list_tpl(data.data));
+                // 更新最后加载的序号
+                pages = data.pages;
+                page_num++;
+                store_list.attr('pagenum',page_num);
+                store_list.attr('pages',data.pages);
+                init.loadimg();
+              } else {
+                $.toast('请求错误');
+              }
+            },
+            error: function(xhr, type){
+              $.toast('网络错误 code:'+type);
+            }
+          });
+      }
+      // 监听滚动
+      page.on('infinite', function() {
+        // 如果正在加载，则退出
+        if (loading) return;
+        // 设置flag
+        loading = true;
+        setTimeout(function() {
+          loading = false;
+          if (page_num >= pages) {
+            // 加载完毕，则注销无限加载事件，以防不必要的加载
+            $.detachInfiniteScroll($('.infinite-scroll'));
+            // 删除加载提示符
+            $('.infinite-scroll-preloader').remove();
+            $.toast('😒 没有了');
+            return;
+          }
+          // 请求数据
+          add_data(page_size,page);
+        },500);
+        $.refreshScroller();
+      });
+    }
+  }else{
+    // 弹出绑定手机窗口 自己的个人中心
+    var redirect_uri = null;
+    $.ajax({
+      url: '/index.php?g=restful&m=HsMobile&a=ajax_check_mobile_login&pagename=homepage',
+      type: 'GET',
+      success: function(data){
+        if(data.status == 1){
+          redirect_uri = data.redirect_uri;
+          $('.login').animate({'top': '0'}, 400);
+        }
+      }
+    })
+    $('.close').click(function(){
+      $('.login').animate({'top': '100%'}, 400);
+    })
+    $('.get_pass').click(function(){
+      var that = this;
+      $.post('/Api/HsChangeUserInfo/ajax_change_mobile',{
+        mobile: $('.tel').val()
+      },function(res){
+        if(res.status == 1){
+          $.toast(res.info);
+          $(that).attr('disabled', 'disabled');
+          count_down(that);
+        } else {
+          $.toast(res.info);
+        }
+      });
+    })
+    $('.bind_tel').click(function(){
+      var mobile = $('.tel').val();
+      var verify = $('.pass_num').val();
+      if(mobile == '' || verify == ''){
+        $.toast('请填写帐号密码');
+        return false;
+      }
+      $.ajax({
+        url: '/index.php?g=restful&m=HsMobile&a=ajax_mobile_verify',
+        type: 'POST',
+        data: {
+          newbie: 1,
+          mobile: mobile,
+          verify: verify
+        },
+        success: function(res) {
+          if(res.status == 1){
+            var str = redirect_uri + '&code=' + res.code;
+            location.href = str;
+          } else {
+            $.toast(res.info);
+            // console.log(res);
+          }
+        }
+      })
+    })
   }
-}
+  function count_down(that){
+    var clearTime = null;
+    var num = 59;
+    clearTime = setInterval(function(){
+      if(num == 0){
+        clearInterval(clearTime);
+        $(that).removeAttr('disabled');
+        $(that).text('获取验证码');
+      }else{
+        $(that).text(num + 's');
+      }
+      num--;
+    },1000)
+  }
 });

@@ -11,7 +11,7 @@ $(document).on('pageInit','.big_project', function (e, id, page) {
     title: '黑市 | '+ $('.project_name').val(),
     desc: '这里能让好事自然发生',
     link: GV.HOST+location.pathname,
-    img: 'http://img8.ontheroadstore.com/upload/170817/be6eec2c499df6bfbb41b132e0275759.png'
+    img: '//img8.ontheroadstore.com/upload/170817/be6eec2c499df6bfbb41b132e0275759.png'
   };
   init.wx_share(share_data);
   init.checkfollow(1);

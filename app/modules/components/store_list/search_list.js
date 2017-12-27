@@ -5,6 +5,7 @@ var handlebars = require('../../../../node_modules/handlebars/dist/handlebars.mi
 var common = require('../common/common.js');
 
 $(document).on('pageInit','.search-list', function (e, id, page) {
+  require('../../../../node_not/SUI-Mobile/dist/js/sm-extend.min.js');
   if (page.selector == '.page'){
     return false;
   }
@@ -15,7 +16,7 @@ $(document).on('pageInit','.search-list', function (e, id, page) {
     title: '黑市 | 美好而操蛋的东西',
     desc: '这里能让好事自然发生',
     link: GV.HOST+location.pathname,
-    img: 'http://jscache.ontheroadstore.com/tpl/simplebootx_mobile/Public/i/logo.png'
+    img: '//jscache.ontheroadstore.com/tpl/simplebootx_mobile/Public/i/logo.png'
   };
   init.wx_share(share_data);
   init.checkfollow(1);

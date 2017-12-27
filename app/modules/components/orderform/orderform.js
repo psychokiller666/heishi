@@ -65,7 +65,7 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
 
     $.post('/index.php?g=restful&m=HsOrder&a=union_add',post_data,function(data){
       if(data.status == 1){
-        var ok_url = GV.pay_url+'hsjsapi.php?order_number=' + data.order_number;
+        var ok_url = GV.pay_url+'hsjsapi.php?order_number=' + data.order_number + '&digital_goods=' + $('.goods_type').val();
         window.location.href = ok_url;
       } else {
         $.toast(data.info);

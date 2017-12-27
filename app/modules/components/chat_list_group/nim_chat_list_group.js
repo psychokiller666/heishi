@@ -134,7 +134,7 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
   //IM即时通讯
   var myId = $('#cnzz_user_id').val(),
   nim;
-  if(GV.HOST == 'http://hstest.ontheroadstore.com/'){
+  if(GV.HOST == '//hstest.ontheroadstore.com/'){
     myId = 'hstest'+myId;
   }
     $.ajax({
@@ -268,7 +268,7 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
             $('.chat_list_group_bd').find('ul li').each(function(){
               var id = $(this).data('id');
               var dataId = session.to;
-              if(GV.HOST == 'http://hstest.ontheroadstore.com/'){
+              if(GV.HOST == '//hstest.ontheroadstore.com/'){
                 id = 'hstest'+id;
               }
               if(id == dataId){
