@@ -1,8 +1,11 @@
 .login{
+  background-image: url(//img8.ontheroadstore.com/upload/171220/812e248b49ad89c1cdcabdfefa30cf9c.png);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  height: 100%;
+  position: absolute;
+  z-index: 999;
   .login_main{
-    background-image: url(/tpl/heishiv2_mobile/Public/img/login_bg.png);
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
     width: 100%;
     height: 100%;
     position: absolute;
@@ -17,6 +20,9 @@
         top: 0.76rem;
         left: 0.76rem;
         .font-dpr(24px);
+      }
+      .close:before{
+        content: "\e66b";
       }
       .intro{
         .font-dpr(13px);
@@ -44,6 +50,9 @@
             .font-dpr(16px);
             position: absolute;
             bottom: 0.13rem;
+          }
+          .mobile_tel:before{
+            content: "\e74f";
           }
           .tel{
             .font-dpr(14px);
@@ -74,6 +83,13 @@
             border: none;
             border-right: 0.02rem solid #b1b1b1;
           }
+          .speed:before{
+            content: "\e6ae";
+          }
+          .speed_pass:before{
+            content: "验证通过";
+            color: white;
+          }
         }
         .password{
           border-bottom: 0.02rem solid #b1b1b1;
@@ -82,6 +98,9 @@
             .font-dpr(16px);
             position: absolute;
             bottom: 0.13rem;
+          }
+          .password_info:before{
+            content: "\e54a";
           }
           .pass_num{
             .font-dpr(14px);
@@ -97,7 +116,7 @@
             border: none;
             background: none;
             color: white;
-            font-size: 28px;
+            .font-dpr(14px);
             position: absolute;
             right: 0;
             top: 0;
@@ -126,7 +145,7 @@
         }
         .agreement{
           margin-top: 0.6667rem;
-          .font-dpr(13px);
+          .font-dpr(12px);
           .title{
             float: left;
             color: #b1abab;

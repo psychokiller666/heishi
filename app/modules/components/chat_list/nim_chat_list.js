@@ -411,7 +411,7 @@ $(document).on('pageInit','.detail', function (e, id, page) {
   var reset_session = false,
   mineId = $('#cnzz_user_id').val(),
   nim;
-  if(GV.HOST == 'http://hstest.ontheroadstore.com/'){
+  if(GV.HOST == '//hstest.ontheroadstore.com/'){
     mineId = 'hstest'+mineId;
   }
   $.ajax({

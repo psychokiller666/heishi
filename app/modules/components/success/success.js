@@ -43,7 +43,7 @@ $(document).on('pageInit','.jump', function(e, id, page){
       success: function(data){
         $('.no_data').text(2);
         var digital = JSON.parse(data);
-        var str = '<div><p>爸爸</p><p>您已启动黑市秘籍</p><p>游戏过后可直接观看成功视频</p></div><a href="http://amuseddie.com/HeiShi/?hcode='+digital.data+'">前往体验</a>'
+        var str = '<div><p>爸爸</p><p>您已启动黑市秘籍</p><p>游戏过后可直接观看成功视频</p></div><a href="//amuseddie.com/HeiShi/?hcode='+digital.data+'">前往体验</a>'
         $('.no_data').html(str);
       }
     })

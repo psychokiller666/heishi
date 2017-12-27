@@ -11,7 +11,7 @@ $(document).on('pageInit','.discovery_seller', function (e, id, page) {
     title: page.data('desc'),
     desc: '这里能让好事自然发生',
     link: GV.HOST+location.pathname,
-    img: 'http://jscache.ontheroadstore.com/tpl/simplebootx_mobile/Public/i/logo.png'
+    img: '//jscache.ontheroadstore.com/tpl/simplebootx_mobile/Public/i/logo.png'
   };
   init.wx_share(share_data);
   init.checkfollow(1);

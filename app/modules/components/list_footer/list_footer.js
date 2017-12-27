@@ -2,7 +2,7 @@
 var hs_footer = $('.hs-footer');
 var newMessages = $('.newMessages');
 var myId = $('#cnzz_user_id').val();
-if(GV.HOST == 'http://hstest.ontheroadstore.com/'){
+if(GV.HOST == '//hstest.ontheroadstore.com/'){
     myId = 'hstest'+myId;
 }
 if(hs_footer.length){
