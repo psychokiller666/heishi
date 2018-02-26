@@ -21,15 +21,6 @@ $(document).on('pageInit','.culture_list', function (e, id, page) {
   // 检查是否有新的消息
   init.msg_tip();
 
-  // 打开ios对应页面
-  var system_query = init.system_query();
-  if(system_query == 'android'){
-    var system_query_url = GV.app_url;
-  }else if(system_query == 'ios'){
-    var system_query_url = GV.api_url + '/ios/subjectlist';
-  }
-  $('.open_app').find('.open_app_btn').attr('href', system_query_url);
-
   
   var culture_list = $('.culture_list');
   // 下拉加载更多

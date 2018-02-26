@@ -16,14 +16,6 @@ $(document).on('pageInit','.big_project', function (e, id, page) {
   init.wx_share(share_data);
   init.checkfollow();
 
-  // 打开ios对应页面
-    var system_query = init.system_query();
-  if(system_query == 'android'){
-    var system_query_url = GV.app_url;
-  }else if(system_query == 'ios'){
-    var system_query_url = GV.api_url + '/ios/project/'+ $('.big_project').attr('data-id');
-  }
-  $('.open_app').find('.open_app_btn').attr('href', system_query_url);
 
   // 检查是否有新的消息
   init.msg_tip();

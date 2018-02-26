@@ -27,14 +27,6 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     container: $(".culture_content")
   });
 
-  // 打开ios对应页面
-  var system_query = init.system_query();
-  if(system_query == 'android'){
-    var system_query_url = GV.app_url;
-  }else if(system_query == 'ios'){
-    var system_query_url = GV.api_url + '/ios/index/0';
-  }
-  $('.open_app').find('.open_app_btn').attr('href', system_query_url);
 
 
   // 检查是否有新的消息

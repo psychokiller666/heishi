@@ -11,16 +11,6 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
   init.checkfollow();
 
 
-  // 打开ios对应页面
-  var system_query = init.system_query();
-  if(system_query == 'android'){
-    var system_query_url = GV.app_url;
-  }else if(system_query == 'ios'){
-    var system_query_url = GV.api_url + '/ios/cart';
-  }
-  $('.open_app').find('.open_app_btn').attr('href', system_query_url);
-  $('.app_special_offer').attr('href', system_query_url);
-
   //初始加载
   var lis = $('.context li').length;
   $('.allPrice').css('bottom', $('.hs-footer').height() + 'px');

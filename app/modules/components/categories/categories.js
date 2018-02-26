@@ -10,20 +10,6 @@ $(document).on('pageInit','.categories', function(e, id, page){
   init.checkfollow();
   init.wx_share(false);
 
-  // 打开ios对应页面
-  var system_query = init.system_query();
-  if(system_query == 'android'){
-    var system_query_url = GV.app_url;
-  }
-  if($('.tag_index').length == 1 && system_query == 'ios'){
-    var system_query_url = GV.api_url + '/ios/tag/' + $('.tag_index').attr('data-id');
-  }else if($('.categories_index').length == 1 && system_query == 'ios'){
-    var system_query_url = GV.api_url + '/ios/category/' + $('.categories_index').attr('data-id');
-  }else if($('.tag_index').length != 1 && $('.categories_index').length != 1 && system_query == 'ios'){
-    var system_query_url = GV.api_url + '/ios/category';
-  }
-  $('.open_app').find('.open_app_btn').attr('href', system_query_url);
-
 
   // 初始化title
     $('title').text('分类');

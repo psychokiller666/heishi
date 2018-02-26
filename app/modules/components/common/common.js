@@ -19,7 +19,10 @@ var common = function(page){
     data_attribute:'layzr',
     container: $(".content")
   });
-
+  $('.actions-modal-group').on('click', function(){
+    $('.modal-overlay').remove();
+    $('.actions-modal').remove();
+  })
 };
 // 图片延时加载
 common.prototype.loadimg = function(){

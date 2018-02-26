@@ -49,16 +49,6 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   init.wx_share(share_data);
   // 检查是否关注
   init.checkfollow();
-  // 打开ios对应页面
-  var system_query = init.system_query();
-  if(system_query == 'android'){
-    var system_query_url = GV.app_url;
-  }else if(system_query == 'ios'){
-    var system_query_url = GV.api_url + '/ios/goods/' + $('.store-show').attr('data-id');
-  }
-  $('.open_app').find('.open_app_btn').attr('href', system_query_url);
-
-
   
   // 如果有视频就放在封面图位置
   $('.video').click(function(){

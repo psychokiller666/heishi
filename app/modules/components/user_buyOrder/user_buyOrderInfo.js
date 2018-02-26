@@ -8,19 +8,6 @@ $(document).on('pageInit','.order_info', function(e, id, page){
   var init = new common(page);
   init.wx_share(false);
   init.checkfollow();
-  var system_query = init.system_query();
-  if(system_query == 'android'){
-    var system_query_url = GV.app_url;
-  	$('.open_app').find('.open_app_btn').attr('href', system_query_url);
-  }else if(system_query == 'ios'){
-  	var order_view_status = $('.order_view_status').val();
-  	var system_query_url = GV.api_url + '/ios/ordersinfo/' + order_view_status;
-    $('.open_app').find('.open_app_btn').attr('href', system_query_url);
-  }
-  // 退款 售后
-	$('.batch_refund').attr('href', system_query_url);
-	$('.refund_status').attr('href', system_query_url);
-	$('.after_sale').attr('href', system_query_url);
 
   // 立即购买
   $('.payment_order').click(function(){

@@ -27,16 +27,6 @@ $(document).on('pageInit','.culture_details', function (e, id, page) {
   // 检查是否有新的消息
   init.msg_tip();
 
-  // 打开ios对应页面
-  var system_query = init.system_query();
-  if(system_query == 'android'){
-    var system_query_url = GV.app_url;
-  }else if(system_query == 'ios'){
-    var system_query_url = GV.api_url + '/ios/subject/' + $('.culture_details').attr('data-id');
-  }
-  $('.open_app').find('.open_app_btn').attr('href', system_query_url);
-
-
   //适配pc端换行间距
   if(location.href.indexOf('culture') > 0 && IsPC()){
     $('.content_bd').find('p').css('line-height','0.5rem');

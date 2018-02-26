@@ -8,14 +8,6 @@ $(document).on('pageInit','.join_hs', function (e, id, page) {
   }
   var init = new common(page);
   init.wx_share(false);
-  var system_query = init.system_query();
-  if(system_query == 'android'){
-    var system_query_url = GV.app_url;
-    $('.join_hs_open_app').attr('href', system_query_url);
-  }else if(system_query == 'ios'){
-    var system_query_url = GV.api_url + '/ios/ucenter';
-    $('.join_hs_open_app').attr('href', system_query_url);
-  }
 
   function getcode(btn){
     var second = 60;

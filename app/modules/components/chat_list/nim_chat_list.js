@@ -695,4 +695,37 @@ $(document).on('pageInit','.detail', function (e, id, page) {
       }
     });
   }
+  $('.report').show();
+  $('.report').click(function(){
+    $('.report_form').show();
+  })
+  $('.report_form_sub').click(function(){
+    var content = $('.report_form_content').val();
+    var uid = $(this).attr('data-uid');
+    if(!content){
+      return $.toast('请填写举报原因');
+    }
+    $.ajax({
+      type: 'POST',
+      url: '/index.php?g=restful&m=HsUserReporting&a=reporting',
+      data: {
+        be_reported_uid: uid,
+        content: content
+      },
+      success: function(data){
+        if(data.status == 1){
+          $.toast('举报成功');
+        }else{
+          $.toast(data.info);
+        }
+        $('.report_form').css('display', 'none');
+      }
+    })
+  })
+  $('.report_form_close').click(function(){
+    $('.report_form').css('display', 'none');
+  })
+  $('.report_form_keyword').click(function(){
+    $('.report_form_content').val($(this).text());
+  })
 });
