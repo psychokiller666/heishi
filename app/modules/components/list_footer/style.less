@@ -1,14 +1,13 @@
- // 通用底部
  footer {
     &.hs-footer {
         width: 10rem;
-        position: absolute;
+        position: fixed;
         z-index: 100;
         bottom: 0;
-        background-color: #1b181f;
-        // opacity: .98;
-        color: #58d996;
+        background-color: #FFF;
+        color: #E03B29;
         ul {
+            border-top: 0.013rem solid rgba(153,153,135,0.3);
             padding-left: 0.266667rem;
             padding-right: 0.266667rem;
             .hs-cf;
@@ -16,10 +15,10 @@
                 float: left;
                 width: 20%;
                 text-align: center;
-                padding: .16rem 0;
+                padding: .136rem 0;
                 overflow: hidden;
                 &.notice_btn.active {
-                    color: #58d996;
+                    color: #E03B29;
                     opacity: 1;
                 }
                 a {
@@ -29,62 +28,43 @@
                         text-decoration:none;
                     }
                     &.active span {
-                        color: #58d996;
+                        color: #E03B29;
                         opacity: 1;
                     }
                     span {
                         display: block;
-                        color: #bbbabc;
+                        color: #000000;
                         text-align: center;
                         &.text {
                             .font-dpr(12px);
+                            .font-line-height(10px);
+                            transform: scale(0.9);
                             line-height: 10px;
-                            [data-dpr="2"] & {
-                                line-height: 12 * 2px;
-                            }
-                            [data-dpr="3"] & {
-                                line-height: 10 * 3px;
-                            }
                         }
                         &.hs-icon {
-                            font-size: 32px;
-                            line-height: 30px;
-                            position: relative;
-                            [data-dpr="2"] & {
-                                font-size: 28 * 2px;
-                                line-height: 26 * 2px;
-                            }
-                            [data-dpr="3"] & {
-                                font-size: 28 * 3px;
-                                line-height: 28 * 3px;
-                            }
+                            .font-dpr(21px);
+                            .font-line-height(28px);
                             &.home:before {
-                                content: "\e612";
+                                content: "\e645";
                             }
                             &.culture:before {
-                                content: "\e614";
-                            }
-                            &.addhspost:before {
-                                content: "\e610";
+                                content: "\e646";
                             }
                             &.me:before {
-                                content: "\e611";
-                            }
-                            &.messages:before {
-                                content: "\e613";
+                                content: "\e64a";
                             }
                             &.explore:before {
-                                content: "\e647";
+                                content: "\e64b";
                             }
                             &.shopping:before {
-                                content: "\e6e4";
+                                content: "\e648";
                             }
                             &.new:after {
                                 content: "";
                                 width: .2rem;
                                 height: .2rem;
                                 border-radius: .3rem;
-                                background-color: red;
+                                background-color: #E03B29;
                                 position: absolute;
                                 top: -0.04rem;
                                 right: .6rem;
@@ -98,8 +78,8 @@
                         height: .25rem;
                         border-radius: 200%;
                         top: 0;
-                        right: 20%;
-                        background-color: #58d996;
+                        right: 30%;
+                        background-color: #E03B29;
                         display: none;
                     }
                     .information{
@@ -110,7 +90,7 @@
                         border-radius: 200%;
                         top: 0;
                         right: 28%;
-                        background-color: #58d996;
+                        background-color: #E03B29;
                         display: none;
                     }
                 }
@@ -142,7 +122,7 @@
             float: left;
             text-align: center;
             color: #dedede;
-            border-right: 1px solid #393939;
+            border-right: 0.013rem solid rgba(153,153,153,0.3);
             &:last-child {
                 border:none;
             }

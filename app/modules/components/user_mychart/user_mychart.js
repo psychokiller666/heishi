@@ -8,8 +8,22 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
   }
   var init = new common(page);
   init.wx_share(false);
+  init.checkfollow();
+
+
+  // 打开ios对应页面
+  var system_query = init.system_query();
+  if(system_query == 'android'){
+    var system_query_url = GV.app_url;
+  }else if(system_query == 'ios'){
+    var system_query_url = GV.api_url + '/ios/cart';
+  }
+  $('.open_app').find('.open_app_btn').attr('href', system_query_url);
+  $('.app_special_offer').attr('href', system_query_url);
+
   //初始加载
   var lis = $('.context li').length;
+  $('.allPrice').css('bottom', $('.hs-footer').height() + 'px');
   if(lis != 0){
  	  $('.allPrice').css('display','block');
     //删除本地缓存
@@ -17,6 +31,8 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
   }else{
   	$('.noData').css('display','block');
   }
+
+  
   //编辑商品 显示删除按钮 记录touch位置
   var touchclientX = 0,
   touchclientY = 0;
@@ -88,13 +104,53 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
         }
       })
   })
-  //列表删除
-  page.on("click",".delAll",function(){
+  // 编辑
+  page.on('click', '.edit_shopping_cart', function(){
+    $(this).css('display', 'none');
+    $('.edit_finish').css('display', 'block');
+    $('.purchase').css('display', 'none');
+    $('.deleteAll').css('display', 'block');
+    $('.hide_content').css('display', 'none');
+    $('.checkbox').each(function(){
+      var status = $(this).hasClass('noInventory');
+      $(this).removeClass('affirm');
+      if(status){
+        $(this).attr('data-noInventory', 1);
+        $(this).removeClass('noInventory');
+      }else{
+        $(this).attr('data-noInventory', 0);
+      }
+    })
+    count();
+  })
+  // 完成
+  page.on('click', '.edit_finish', function(){
+    $(this).css('display', 'none');
+    $('.edit_shopping_cart').css('display', 'block');
+    $('.purchase').css('display', 'block');
+    $('.deleteAll').css('display', 'none');
+    $('.hide_content').css('display', 'block');
+    
+    $('.checkbox').each(function(){
+      var status = $(this).attr('data-noInventory');
+      $(this).removeClass('affirm');
+      if(status == 1){
+        $(this).addClass('noInventory');
+      }
+      $(this).removeAttr('data-noInventory');
+    })
+  })
+  // 删除购物车商品
+  page.on('click', '.deleteAll', function(){
     //卖家列表 全选时
-    var that = this;
     var arr = [];
-    $(this).parents('.list').find('.item').each(function(){
-        arr.push($(this).data("cid"));
+    $('.affirm').each(function(){
+        if($(this).parents('.title').length >= 1 || $(this).parents('.allPrice').length >= 1){
+          return true;
+        }
+        if($(this).attr('data-noInventory') == 1 || $(this).attr('data-noInventory') == 0){
+          arr.push($(this).parents('.item').data("cid"));
+        }
     })
     var data = {
       cids: arr
@@ -102,8 +158,20 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
     $.confirm('确定要删除？', function () {
       clearShopping(data, "POST", function (data){
         if(data.status == 1){
-          $(that).parents('.list').remove();
-          count();
+          $('.affirm').each(function(){
+            if($(this).parents('.title').length >= 1 || $(this).parents('.allPrice').length >= 1){
+              return true;
+            }
+            if($(this).attr('data-noInventory') == 1 || $(this).attr('data-noInventory') == 0){
+              $(this).parents('.item').remove();
+            }
+          })
+          $('.list').each(function(){
+            var items = $(this).find('.item').length;
+            if(items == 0){
+              $(this).remove();
+            }
+          })
           clear();
           $.toast(data.info,800);
         } else {
@@ -115,74 +183,108 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
   //商品加减
   page.on("click",".minus",function(){
     //如果商品售空直接返回
-    var noInventory = $(this).parents('.item').find('.checkbox').hasClass('noInventory');
+    var that = this;
+    var noInventory = $(that).parents('.item').find('.checkbox').hasClass('noInventory');
     if(noInventory){
       return;
     }
-  	//数量
-  	var n = $(this).parents('.message').find('.countNum').text();
-  	n--;
-  	if(n < 1) return;
-  	$(this).parents('.message').find('.number').text(n);
-  	$(this).parents('.message').find('.countNum').text(n);
-  	count();
+    //数量
+    var n = $(that).parents('.message').find('.countNum').text();
+    n--;
+    if(n < 1) return;
+    $(that).parents('.message').find('.number').text(n);
+    $(that).parents('.message').find('.countNum').text(n);
+    editShoppingNum({
+      object_id: $(that).attr('data-id'),
+      mid: $(that).attr('data-mid'),
+      nums: -1,
+    },function(data){
+      $(that).parents('.message').find('.number').text(data.data);
+      $(that).parents('.message').find('.countNum').text(data.data);
+      count();
+    })
   })
   page.on("click",".add",function(){
     //如果商品售空直接返回
-    var noInventory = $(this).parents('.item').find('.checkbox').hasClass('noInventory');
+    var that = this;
+    var noInventory = $(that).parents('.item').find('.checkbox').hasClass('noInventory');
     if(noInventory){
       return;
     }
   	//数量
-    var n = $(this).parents('.message').find('.countNum').text();
-  	var m = $(this).parents('.message').find('.remain span').text();
+    var n = $(that).parents('.message').find('.countNum').text();
+  	var m = $(that).parents('.message').find('.remain span').text();
   	n++;
-    console.log(n+"/"+m)
   	if(n > m ) {
       $.toast('超过库存数量'+m);
       return;
     }
-  	$(this).parents('.message').find('.number').text(n);
-  	$(this).parents('.message').find('.countNum').text(n);
-  	count();
+  	$(that).parents('.message').find('.number').text(n);
+  	$(that).parents('.message').find('.countNum').text(n);
+    editShoppingNum({
+      object_id: $(that).attr('data-id'),
+      mid: $(that).attr('data-mid'),
+      nums: 1,
+    },function(data){
+      $(that).parents('.message').find('.number').text(data.data);
+      $(that).parents('.message').find('.countNum').text(data.data);
+  	  count();
+    })
   })
   //选择购买的商品
   page.on("click",".selectBox",function(){
+    var that = this;
+    var status = $(this).find('.checkbox').hasClass('affirm');
+    var el = $(this).find('.checkbox');
+	  var elClass = $(this).parent().attr("class");
+    // 删除商品
+    var inventory_status = $(this).find('.checkbox').attr('data-noInventory');
+    if(inventory_status == 1 || inventory_status == 0){
+      if(status){
+        el.removeClass("affirm");
+        select(0);
+      }else{
+        el.addClass("affirm");
+        select(1);
+      }
+      return false;
+    }
+
+    // 购买
     //若没有库存则锁死
     var inventory = $(this).find('.checkbox').hasClass('noInventory');
     if(inventory) return;
     //商品选择
-  	var el = $(this).find('.checkbox');
-  	var status = $(this).find('.checkbox').hasClass('affirm');
-  	if(status){
-  		el.removeClass("affirm");
-	  	var elClass = $(this).parent().attr("class");
-	  	if(elClass == 'title'){
-	  		$(this).parents('.list').find('.checkbox').each(function(){
-	  			$(this).removeClass("affirm");
-	  		})
-	  	}else if(elClass == 'allPrice'){
-	  		$('.checkbox').each(function(){
-	  			$(this).removeClass("affirm");
-	  		})
-	  	}
-  	}else{
-  		el.addClass("affirm");
-	  	var elClass = $(this).parent().attr("class");
-	  	if(elClass == 'title'){
-	  		$(this).parents('.list').find('.checkbox').each(function(){
-	  			$(this).addClass("affirm");
-	  		})
-	  	}else if(elClass == 'allPrice'){
-	  		$('.checkbox').each(function(){
-	  			$(this).addClass("affirm");
-	  		})
-	  	}
+    if(status){
+      el.removeClass("affirm");
+      select(0);
+    }else{
+      el.addClass("affirm");
+      select(1);
   	}
     //计算价格
   	count();
     //判断是否全选
     allOption(this);
+    function select(n){
+      if(elClass == 'title'){
+        $(that).parents('.list').find('.checkbox').each(function(){
+          if(n == 1){
+            $(this).addClass("affirm");
+          }else{
+            $(this).removeClass("affirm");
+          }
+        })
+      }else if(elClass == 'allPrice'){
+        $('.checkbox').each(function(){
+          if(n == 1){
+            $(this).addClass("affirm");
+          }else{
+            $(this).removeClass("affirm");
+          }
+        })
+      }
+    }
   })
   //点击购买前的判断
   page.on("click",".purchase",function(){
@@ -225,6 +327,9 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
     if(lis == 0){
       $('.allPrice').css('display','none');
       $('.noData').css('display','block');
+      $('.edit_shopping_cart').css('display', 'block');
+      $('.edit_finish').css('display', 'none');
+
     }
   }
   //删除购物车商品接口
@@ -268,20 +373,29 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
       $('.allPrice').find(".checkbox").removeClass('affirm');
     }
   }
-
+  function editShoppingNum(data, callBack){
+    $.ajax({
+      type: 'POST',
+      url: '/index.php?g=restful&m=HsShoppingCart&a=add',
+      data: data,
+      success: callBack,
+      error: function(xhr, type){
+        console.log(type);
+      }
+    })
+  }
 
 
   //buy页面 初始化
   if(sessionStorage.cid){
     var selectItems = JSON.parse(sessionStorage.cid);
-    $(".list").each(function(){
+    $(".goods_info").each(function(){
       var that = this;
       //标记 判断是否选中
       var status = false;
       $.each(selectItems, function (n, value){
         var cid = $(that).data("cid");
         if(value.cid == cid){
-          $(that).find(".numbers").text(value.num);
           status = true;
         }
       })
@@ -290,8 +404,8 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
       }
     })
     
-    $(".lists").each(function(){
-      if(!$(this).find('.list').length){
+    $(".order_item").each(function(){
+      if(!$(this).find('.goods_info').length){
         $(this).remove();
       }
     })
@@ -302,19 +416,19 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
   //buy 加邮费计算总价格
   function countCompletePrice(){
     var num = 0;
-    $(".list").each(function(){
-      var n = parseInt($(this).find('.unitPrice').text()),
-      m = parseInt($(this).find('.numbers').text());
+    $(".goods_info").each(function(){
+      var n = parseInt($(this).find('.price').attr('data-price')),
+      m = parseInt($(this).find('.conunt').attr('data-numbers'));
       num += n*m;
     })
-    $(".postage").each(function(){
-      var n = parseInt($(this).text());
+    $('.postage').each(function(){
+      var n = parseInt($(this).find('span').text());
       num += n;
     })
-    $('.completePrice').text(num);
+    $('.total_prices_num').text(num);
   }
   //下订单
-  page.on("click",".next",function(){
+  page.on("click",".orderform_submit",function(){
     $(this).addClass('disabled');
     var post_data = {
       // 'order[orders][0][object_id]': $(this).data('id'), //id
@@ -326,25 +440,27 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
       'order[payment_type]': 0
     };
     //组订单
-    $('.lists').each(function(index){
+    $('.order_item').each(function(index){
+      var that = this;
       var num = index;
       var seller_name = 'order[orders]['+num+'][seller_name]',
       attach = 'order[orders]['+num+'][attach]',
       seller_uid = 'order[orders]['+num+'][seller_uid]';
       post_data[seller_name] = $(this).data('name');
-      post_data[attach] = $(this).find('input').val();
-      post_data[seller_uid] = $(this).find('.list').data('seller_user_id');
+      post_data[attach] = $(this).find('.attach').val();
+      post_data[seller_uid] = $(this).find('.goods_info').data('seller_user_id');
       //子订单
-      $(this).find('.list').each(function(index){
+      $(this).find('.goods_info').each(function(index){
         var object_id = 'order[orders]['+num+'][goods]['+index+'][object_id]';
         var mid = 'order[orders]['+num+'][goods]['+index+'][mid]';
         var counts = 'order[orders]['+num+'][goods]['+index+'][counts]';
         post_data[object_id] = $(this).data('object_id');
-        post_data[counts] = $(this).find('.numbers').text();
-        post_data[mid] = $(this).find('.styles').data('mid');
+        post_data[counts] = $(that).find('.conunt').attr('data-numbers');
+        post_data[mid] = $(this).find('.type').attr('data-mid');
       })
     })
-    orders(post_data)
+    
+    orders(post_data);
   })
   //下单请求
   function orders (data) {
@@ -359,14 +475,15 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
   }
   //判读取最高邮费
   function postage(){
-    $('.lists').each(function(){
+    $('.order_item').each(function(){
       var maxPostage = 0;
       var that = this;
-      $(this).find(".list").each(function(){
+      $(that).find('.postage span').text(maxPostage);
+      $(this).find(".goods_info").each(function(){
         var n = $(this).data('postage');
         if(n > maxPostage){
           maxPostage = n;
-          $(that).find('.postage').text(maxPostage);
+          $(that).find('.postage span').text(maxPostage);
         }
       })
     })

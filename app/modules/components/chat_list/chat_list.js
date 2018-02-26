@@ -371,9 +371,11 @@ $(document).on('pageInit','.detail', function (e, id, page) {
   });
   // 预览图
   page.on('click','.image',function(){
+    var arr = [];
+    arr.push('http:'+ $(this).data('preview'));
     wx.previewImage({
-      current: $(this).data('preview'),
-      urls: [$(this).data('preview')]
+      current: 'http:'+ $(this).data('preview'),
+      urls: arr
     });
   });
 });

@@ -23,10 +23,20 @@ require('../../node_not/SUI-Mobile/dist/js/sm.min.js');
 
 // 首页(商品列表页)
 require('../modules/components/store_list/store_list.js');
-// 首页搜索列表
-require('../modules/components/store_list/search_list.js');
+// 首页(热门列表页)
+require('../modules/components/store_list/showall.js');
+// 首页(特卖)
+require('../modules/components/store_list/sale.js');
+// 首页(关注)
+require('../modules/components/store_list/atten.js');
+
+// 分类
+require('../modules/components/categories/categories.js');
+
+
 // 文化列表
 require('../modules/components/culture_list/culture_list.js');
+require('../modules/components/culture_list/culture_details.js');
 
 // 发布规则页面
 require('../modules/components/notice/notice.js');
@@ -100,3 +110,27 @@ require('../modules/components/user_mychart/user_mychart.js');
 
 //注册 登录
 require('../modules/components/login/login.js');
+
+
+//应用横栏
+require('../modules/components/streamer/streamer.js');
+//买家订单
+require('../modules/components/user_buyOrder/user_buyOrder.js');
+require('../modules/components/user_buyOrder/user_buyOrderInfo.js');
+//评论
+require('../modules/components/comment/comment.js');
+//点赞用户列表
+require('../modules/components/like_list/like_list.js');
+//收货地址
+require('../modules/components/user_address/user_address.js');
+require('../modules/components/user_address/user_address_order.js');
+// 加入城市选择器
+require('../../node_not/SUI-Mobile/dist/js/sm-city-picker.js');
+//搜索模块
+require('../modules/components/search_list/search_list.js');
+//加入黑市
+require('../modules/components/user_join_hs/user_join_hs.js');
+//浏览记录
+require('../modules/components/user_hisotories/user_hisotories.js');
+//浏览记录
+require('../modules/components/user_message/user_message.js');

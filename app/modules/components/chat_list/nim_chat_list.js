@@ -34,18 +34,16 @@ $(document).on('pageInit','.detail', function (e, id, page) {
       update_img_box.hide();
     }
   })
-  var interval;
-  var bfscrolltop = document.body.scrollTop;//获取软键盘唤起前浏览器滚动部分的高度
+
+
+  // 适配输入框
   chat_content.focus(function(){
-      update_img_box.hide();
-      update_img_btn.removeClass('active');
-      interval = setInterval(function(){//设置一个计时器，时间设置与软键盘弹出所需时间相近
-      document.body.scrollTop = document.body.scrollHeight;//获取焦点后将浏览器内所有内容高度赋给浏览器滚动部分高度
-      },100)
-  }).blur(function(){//设定输入框失去焦点时的事件
-      clearInterval(interval);//清除计时器
-      document.body.scrollTop = bfscrolltop;
-  });
+    $('.content').css('overflow-y', 'hidden');
+  })
+  chat_content.blur(function(){
+    $('.content').css('overflow-y', 'auto');
+  })
+
   update_img_box.on("change",'.webuploader-element-invisible', function(e) {
     var uid = $('.submit').data('touid'),
     that = this;
@@ -175,7 +173,7 @@ $(document).on('pageInit','.detail', function (e, id, page) {
                       },
                       done: sendMsgDoneFile
                   });
-                  messagePush($(that).data('touid'), '[图片]', 1);
+                  messagePush($(that).data('uid'), '[图片]', 1);
                 }else{
                   $.toast('发送失败,请重新发送');
                 }
@@ -209,7 +207,7 @@ $(document).on('pageInit','.detail', function (e, id, page) {
 
           //用户不在线发推送
           if(user_line_status){
-            messagePush($(that).data('touid'),'[图片]',1);
+            messagePush($(that).data('uid'),'[图片]',1);
             offlineMessage($('.recent_btn').attr('data-uid'));
           }
         }else if(msg.status == 'fail'){
@@ -247,7 +245,7 @@ $(document).on('pageInit','.detail', function (e, id, page) {
                     text: content,
                     done: sendMsgDone
                   });
-                  messagePush($(that).data('touid'), content, 0);
+                  messagePush($(that).data('uid'), content, 0);
                 }else{
                   $.toast('发送失败,请重新发送');
                 }
@@ -273,7 +271,7 @@ $(document).on('pageInit','.detail', function (e, id, page) {
 
           //用户不在线发推送
           if(user_line_status){
-            messagePush($(that).data('touid'), msg.text, 0);
+            messagePush($(that).data('uid'), msg.text, 0);
             offlineMessage($('.recent_btn').attr('data-uid'));
           }
         }else if(msg.status == 'fail'){
@@ -328,9 +326,11 @@ $(document).on('pageInit','.detail', function (e, id, page) {
   })
   // 预览图
   page.on('click','.image',function(){
+    var arr = [];
+    arr.push('http:'+ $(this).data('preview'));
     wx.previewImage({
-      current: $(this).data('preview'),
-      urls: [$(this).data('preview')]
+      current: 'http:'+ $(this).data('preview'),
+      urls: arr
     });
   });
 

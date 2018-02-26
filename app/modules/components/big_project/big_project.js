@@ -14,7 +14,17 @@ $(document).on('pageInit','.big_project', function (e, id, page) {
     img: '//img8.ontheroadstore.com/upload/170817/be6eec2c499df6bfbb41b132e0275759.png'
   };
   init.wx_share(share_data);
-  init.checkfollow(1);
+  init.checkfollow();
+
+  // 打开ios对应页面
+    var system_query = init.system_query();
+  if(system_query == 'android'){
+    var system_query_url = GV.app_url;
+  }else if(system_query == 'ios'){
+    var system_query_url = GV.api_url + '/ios/project/'+ $('.big_project').attr('data-id');
+  }
+  $('.open_app').find('.open_app_btn').attr('href', system_query_url);
+
   // 检查是否有新的消息
   init.msg_tip();
   // 初始ul width
@@ -187,6 +197,11 @@ $(document).on('pageInit','.big_project', function (e, id, page) {
             $('.project_list .active').append(str);
           })
           init.loadimg();
+        }else{
+          $.toast(data.info);
+          $('.project_list').find('ul').removeClass('active');
+          var ul = '<ul class="active" data-id="'+id+'"></ul>';
+          $('.project_list').append(ul);
         }
       }
     })

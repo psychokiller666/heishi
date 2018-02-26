@@ -488,7 +488,7 @@ $(document).on('pageInit','.add', function (e, id, page) {
       }
     })    
   })
-  $(".types").on("input",".styles",function(){
+  $(".types").on("change",".styles",function(){
       if($(this).find("input").val().length <=6){
         $(this).find("input").css("color","#383838");
       }

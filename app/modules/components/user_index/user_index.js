@@ -9,6 +9,7 @@ $(document).on('pageInit','.center', function(e, id, page){
     return false;
   }
   var init = new common(page);
+  init.checkfollow();
   if($('.user_inedx').length){
     var share_data = {
       title: '帮你发现点牛逼物件，爱点不点 | 黑市',
@@ -20,6 +21,16 @@ $(document).on('pageInit','.center', function(e, id, page){
   } else {
     init.wx_share(false);
   }
+
+  // 打开ios对应页面
+  var system_query = init.system_query();
+  if(system_query == 'android'){
+    var system_query_url = GV.app_url;
+  }else if(system_query == 'ios'){
+    var system_query_url = GV.api_url + '/ios/ucenter';
+  }
+  $('.open_app').find('.open_app_btn').attr('href', system_query_url);
+
 
   // 检查是否有新的消息
   init.msg_tip();

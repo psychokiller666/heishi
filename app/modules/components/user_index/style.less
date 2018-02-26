@@ -1,5 +1,4 @@
-.center {
-
+.user_index {
   .hs-main {
     padding-top: 0;
     background-color: #fff;
@@ -17,7 +16,7 @@
     .header {
       height: 4.506667rem;
       padding-top: 0.48rem;
-      background-image: url('../img/user_center_top.jpg');
+      background-image: url('//img8.ontheroadstore.com/upload/180110/a8e0ca6f97110dda7934cba1022686e3.png');
       background-color: #000;
       background-position: 50% 50%;
       background-repeat: no-repeat;
@@ -102,7 +101,7 @@
       }
     }
     ul.user_index_bd {
-      padding:0.12rem;
+      padding: 0.12rem 0.12rem 2rem 0.12rem;;
       .hs-cf;
       li {
         float: left;
@@ -142,7 +141,7 @@
             .hs-cf;
             .classify {
               float: left;
-              background-color: #6ac18e;
+              background-color: #E03B29;
               color: #fff;
               padding: 0 0.12rem;
               line-height: 0.52rem;
@@ -163,138 +162,120 @@
       }
     }
   }
-  .bd {
-    ul {
-      &.attention {
-        border-bottom: 0.133333rem solid rgba(211, 211, 211, .5);
-        background-color: #fff;
-        padding-top: 0.32rem;
-        padding-bottom: 0.37rem;
-        .hs-cf;
-        li {
-          float: left;
-          width: 33.333333%;
-          text-align: center;
-          a {
-            color: #000;
-            font-weight: bold;
-            display: block;
-            .hs-cf;
-            span {
-              display: block;
-              &.num {
-                .font-dpr(14px);
-                .font-line-height(14px);
-              }
-              &.text {
-                .font-dpr(15px);
-                .font-line-height(15px);
-                padding-top: 0.28rem;
-              }
-            }
-          }
-        }
-      }
-      &.list {
-        margin-top: 0.133333rem;
-        padding: 0 0.32rem;
-        background-color: #fff;
-        li {
-          border-bottom: 0.026667rem solid rgba(211, 211, 211, .5);
-          padding:0.4rem 0;
-          a {
-            .font-dpr(15px);
-            display: block;
-            position: relative;
-            .hs-cf;
-            color: #000;
-            padding-left: 3em;
-            .new {
-              position: relative;
-            }
-            .new:after {
-             content: "";
-             width: .2rem;
-             height: .2rem;
-             border-radius: .3rem;
-             background-color: red;
-             position: absolute;
-             top: 50%;
-             right: 0;
-             margin-top: -.1rem;
-             margin-right: -.3rem;
-           }
-           i {
-            font-style: normal;
-            display: inline-block;
-            margin-left: 0.266667rem;
-            margin-right: 0.293333rem;
-            .font-dpr(26px);
-            line-height: 0;
-            position: absolute;
-            top: 50%;
-            left: 0;
-            &.activate:before {
-              content: "\e620";
-            }
-            &.bought:before {
-              content: "\e623";
-            }
-            &.untreated:before {
-              content: "\e61e";
-            }
-            &.notice_btn:before {
-             content: "\e628";
-            }
-            &.mylike{
-              margin-left: 0.345rem;
-            }
-            &.mylike:before {
-              .font-dpr(20px);
-              content: "\e62c";
-            }
-            &.messages:before {
-              content: "\e613";
-            }
-         }
-         &:after {
-          .hs-icon;
-          position: absolute;
-          content: "\e605";
-          right: 0.506667rem;
-          color: #6f6f6f;
-          top: 0;
-          .font-dpr(18px);
-          .font-line-height(18px);
-        }
-        .newMessages {
-          position: absolute;
-          width: .25rem;
-          height: .25rem;
-          border-radius: 100%;
-          top: -0.38rem;
-          right: 0;
-          background-color: #58d996;
-          display: none;
+}
 
-          /*width: 0.4rem;
-          height: 0.4rem;
-          border-radius: 0.4rem;
-          background-color: #58d996;
-          color: white;
-          display: inline-block;
-          margin-left: 0.3rem;
-          text-align: center;
-          line-height: 0.4rem;
-          display: none;
-          .font-dpr(12px);
-*/        }
+.user{
+  .header {
+    height: 4.4rem;
+    background-image: url('//img8.ontheroadstore.com/upload/180110/a8e0ca6f97110dda7934cba1022686e3.png');
+    background-color: #000;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: center;
+    overflow: hidden;
+    .bg{
+      background: rgba(0,0,0,.4);
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    .avatar{
+      width: 1.44rem;
+      box-sizing: border-box;
+      height: 1.44rem;
+      border: 0.04rem solid #000;
+      margin: 1.2rem auto 0.45rem;
+    }
+    .username{
+      text-align: center;
+      .font-dpr(15px);
+      color: #fff;
+    }
+  }
+  .order{
+    border-top: 0.2rem solid #f5f5f5;
+    border-bottom: 0.2rem solid #f5f5f5;
+    padding: 0 0.2rem;
+    .all_order{
+      height: 1.31rem;
+      padding: 0 0.33rem 0 0.13rem;
+      position: relative;
+      .font-dpr(15px);
+      line-height: 1.31rem;
+      border-bottom: 0.013rem solid rgba(153,153,153,0.3);
+      display: block;
+      color: #000;
+      &:after{
+        position: absolute;
+        height: 100%;
+        content: "\e512";
+        color: #000;
+        right: 0;
       }
-      &:last-child {
-        border-bottom: none;
+    }
+    .orders{
+      display: flex;
+      justify-content: space-around;
+      a{
+        min-width: 1.2rem;
+        display: block;
+        text-align: center;
+        color: #000;
+        margin: 0.56rem 0;
+        .font-dpr(13px);
+        span{
+          display: block;
+        }
+        .hs-icon{
+          .font-dpr(23px);
+          margin-bottom: 0.3rem;
+        }
+        .payment:after{
+          content: "\e62f";
+        }
+        .deliver:after{
+          content: "\e612";
+        }
+        .receive:after{
+          content: "\e613";
+        }
+        .complete:after{
+          content: "\e64f";
+        }
       }
     }
   }
-}
-}
+  .list{
+    padding-bottom: 2.1rem;
+    li{
+      padding: 0 0.4rem;
+      a{
+        height: 1.45333rem;
+        line-height: 1.45333rem;
+        border-bottom: 0.013rem solid rgba(153,153,153,0.3);
+        .font-dpr(14px);
+        color: #000;
+        display: block;
+        span{
+          display: block;
+          float: left;
+          .font-dpr(29px);
+          margin-right: 0.3rem;
+        }
+        .collect:after{
+          content: "\e63f";
+        }
+        .address:after{
+          content: "\e621";
+        }
+        .record:after{
+          content: "\e650";
+        }
+        .join:after{
+          content: "\e640";
+        }
+      }
+    }
+  }
 }

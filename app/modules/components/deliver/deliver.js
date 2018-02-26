@@ -46,7 +46,7 @@ $(document).on('pageInit','.deliver', function (e, id, page) {
           $(".select").html("").css("height","auto");
         },300)
   })
-  page.on('input','.express_name',function(){
+  $('.express_name')[0].oninput = function(){
     var _this = $(this);
     var val = $(this).val();
     $.post("/index.php?g=restful&m=HsExpress&a=express_name_query",{
@@ -66,7 +66,7 @@ $(document).on('pageInit','.deliver', function (e, id, page) {
           $(".select").html("").css("height","auto");
         }
     });
-  })
+  }
   //下拉选项
   page.on("click",".express_select",function(){
     var str=$(this).val();

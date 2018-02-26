@@ -12,26 +12,26 @@ $(document).on('pageInit','.jump', function(e, id, page){
   //支付成功
   // if($('.success').length && status_pay == 0){
   if($('.success').length){
-    $.showPreloader('确认支付中');
-    setTimeout(function(){
-      $.hidePreloader();
-      $('.no_data').text('支付成功');
-    },1000);
-    setTimeout(function(){
-      window.location.href = $('.no_data').data('url');
-    },2000);
+    // $.showPreloader('确认支付中');
+    // setTimeout(function(){
+    //   $.hidePreloader();
+    //   $('.no_data').text('支付成功');
+    // },1000);
+    // setTimeout(function(){
+    //   window.location.href = $('.no_data').data('url');
+    // },2000);
   }
   //支付错误
   if($('.error').length) {
-    if($('.no_data').attr('data-url')){
-      setTimeout(function(){
-        window.location.href = $('.no_data').data('url');
-      },1800);
-    } else {
-      setTimeout(function(){
-        history.go(-1);
-      },3000);
-    }
+    // if($('.no_data').attr('data-url')){
+    //   setTimeout(function(){
+    //     window.location.href = $('.no_data').data('url');
+    //   },1800);
+    // } else {
+    //   setTimeout(function(){
+    //     history.go(-1);
+    //   },3000);
+    // }
 
   }
 

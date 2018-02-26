@@ -76,6 +76,7 @@ input::-webkit-inner-spin-button {
 @import "pages.less";
 @import "infinite.less";
 @import "../../../node_not/SUI-Mobile/less/preloader.less";
+@import "../../../node_not/SUI-Mobile/less/picker.less";
 @import "../../../node_not/SUI-Mobile/less/swiper.less";
 // @import "../../../node_not/SUI-Mobile/less/photo-browser.less";
 
@@ -100,31 +101,6 @@ input::-webkit-inner-spin-button {
     width: 8rem;
     transform: translateY(-100%);
     left: 1rem;
-    div{
-        border: 0.05rem solid black;
-        border-radius: 0.15rem;
-        text-align: center;
-        .font-dpr(16px);
-        margin-bottom: 0.4rem;
-        line-height: 1.5em;
-        color: black;
-        font-weight: 700;
-        padding: 0.5rem 0;
-    }
-    a{
-        border: 0.05rem solid black;
-        border-radius: 0.15rem;
-        text-align: center;
-        .font-dpr(14px);
-        margin: 0 auto;
-        display: block;
-        padding: 0 0.7rem;
-        color: #fff;
-        font-weight: 700;
-        line-height: 2.5em;
-        width: 5em;
-        background-color: red;
-    }
 }
 a:hover {
     text-decoration: none;
@@ -138,8 +114,8 @@ button {
 }
 
 }
-// 滚动公告
-.placard {
+/*滚动公告*/
+/*.placard {
     background-color: #fff;
     height: 1.08rem;
     background-color: #3f7355;
@@ -167,11 +143,11 @@ button {
         text-align:center;
         &:after {
             color: #3f7355;
-            content: "\e615";
+            content: "\e63b";
             font-size: .42rem;
         }
     }
-}
+}*/
 .phone_verify {
     display: none;
     .modal-overlay {
@@ -259,7 +235,7 @@ em{
             color: #68be8c;
             .hs-icon;
             &:before {
-                content: '\e615';
+                content: '\e63b';
             }
         }
     }
@@ -563,7 +539,7 @@ body > & {
             line-height: 1.02rem;
             color: #68be8c;
             &:before {
-                content: '\e615';
+                content: '\e63b';
             }
         }
     }

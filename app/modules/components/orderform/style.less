@@ -1,65 +1,168 @@
 .orderform {
   height: 100%;
-  .hs-footer {
-    button {
-      padding: 0.466667rem 0;
-      background-color: #68be8c;
-      color: #fff;
-      text-align: center;
-      width: 10rem;
-      border: none;
-      .font-dpr(16px);
-      font-weight: bold;
-    }
+  .hs-main{
+    height: 100%;
+    background: #F5F5F5;
   }
-  .hs-main {
-    background-color: #fff;
-    .orderform_bd {
-      padding:0.466667rem 0.413333rem;
-      h2 {
-        .font-dpr(16px);
-        font-weight: normal;
-        padding-bottom: 0.373333rem;
-        border-bottom: 1px solid #000
+  .orderform_bd{
+    .address{
+      position: relative;
+      min-height: 2.56rem;
+      padding: 0.48rem 0;
+      box-sizing: border-box;
+      border-bottom: 0.2rem solid #F5F5F5;
+      background: #FFF;
+      .add_address{
+        .font-dpr(15px);
+        line-height: 1.6rem;
+        padding: 0 1.05rem 0 1.33rem;
       }
-      .item {
-        padding: 0.386667rem 0;
-        .font-dpr(16px);
-        border-bottom: 0.013333rem solid rgba(211, 211, 211, .5);
+      .select_address{
         .hs-cf;
-        &:nth-last-child(2){
-          border-bottom: 0.013333rem solid #000;
+        .font-dpr(13px);
+        padding: 0 1.05rem 0 1.33rem;
+        .express_user{
+          float: left;
+          max-width: 5rem;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          font-weight: 500;
+          margin-bottom: 0.267rem;
         }
-        &:last-child {
-          border-bottom:none;
+        .express_tel{
+          float: right;
         }
-        &.pay_number span {
-          color: red;
+        .express_address{
+          clear: both;
+          width: 100%;
+          line-height: 1.2em;
         }
-        &.addr {
-          border-bottom: 1px solid #000;
-          labal {
-            width: 3rem;
+      }
+      .more_icon,
+      .address_icon{
+        width: 1.33rem;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        .font-dpr(24px);
+        text-align: center;
+      }
+      .address_icon{
+        left: 0;
+        &:after{
+          content: '\e621';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
+      .more_icon{
+        width: 1.05rem;
+        .font-dpr(16px);
+        right: 0;
+        color: #333;
+        &:after{
+          content: '\e512';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
+    }
+    .order_item{
+      padding: 0 0.334rem;
+      background: #FFF;
+      .user_info{
+        height: 1.24rem;
+        .hs-cf;
+        border-bottom: 0.013rem solid rgba(153,153,153,0.3);
+        .user_img{
+          width: 0.54rem;
+          height: 0.54rem;
+          margin: 0.35rem 0.467rem 0.35rem 0;
+          float: left;
+          border-radius: 50%;
+        }
+        .user_name{
+          .font-dpr(12px);
+          color: #333;
+          float: left;
+          display: block;
+          line-height: 1.24rem;
+        }
+      }
+      .goods_info{
+        .hs-cf;
+        padding: 0.334rem 0;
+        border-bottom: 0.013rem solid rgba(153,153,153,0.3);
+        .image{
+          float: left;
+          width: 3.81rem;
+          height: 1.93rem;
+        }
+        .goods_introduce{
+          float: right;
+          width: 5rem;
+          height: 1.93rem;
+          position: relative;
+          .title{
+            height: 2.4em;
+            .font-dpr(13px);
+            line-height: 1.2em;
+            overflow: hidden;
           }
-          span {
-            width: 7rem;
-            text-align: left;
-            .font-line-height(22px);
+          .type{
+            margin-top: 0.1rem;
+            width: 2rem;
+            .font-dpr(12px);
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            color: #8E8E8E;
+            line-height: 1em;
           }
+          .price{
+            .font-dpr(13px);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            color: #E03B29;
+          }
+          .conunt{
+            .font-dpr(13px);
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            color: #8E8E8E;
+          }
+        }
+      }
+      .item{
+        height: 1.14rem;
+        line-height: 1.14rem;
+        .font-dpr(13px);
+        border-bottom: 0.013rem solid rgba(153,153,153,0.3);
+        &:last-child{
+          border-bottom: none;
+        }
+        label{
+          font-weight: 500;
+          float: left;
         }
         .number {
           float: right;
           button {
-            border: 1px solid rgba(211, 211, 211, .5);
+            border: 1px solid #979797;
             background:none;
-            color: #6ac18e;
-            font-weight: bold;
-            width: .8rem;
-            height: .6rem;
-            line-height: 0.42rem;
+            width: 0.54rem;
+            .font-dpr(15px);
+            height: 0.54rem;
+            color: #979797;
             &#min {
               &:after {
-                font-size: 0.42rem;
                 width: 0.32rem;
                 height: 0.32rem;
                 content: "-";
@@ -67,7 +170,6 @@
             }
             &#add {
               &:after {
-                font-size: 0.42rem;
                 width: 0.32rem;
                 height: 0.32rem;
                 content: "+";
@@ -75,31 +177,60 @@
             }
           }
           input {
-            width:.8rem;
+            width: 1.23rem;
             padding: 0 0.133333rem;
             border: none;
             .font-dpr(14px);
             text-align: center;
+            color: #333;
           }
         }
-
-        labal {
-          float: left;
-          width: 1rem;
-        }
-        span {
+        .postage{
+          font-weight: 500;
           float: right;
-          i {
-            font-style: normal;
-            margin-right: 0.133333rem;
-          }
         }
-        textarea {
-          float: right;
-          width: 8rem;
-          border: none;
+        #attach{
+          width: 7.7rem;
+          line-height: 1.14rem;
+          padding-left: 0.3rem;
           .font-dpr(14px);
+          border: none;
+          float: left;
         }
+      }
+    }
+  }
+  .footer{
+    height: 1.28rem;
+    position: fixed;
+    bottom: 0;
+    color: #e03b29;
+    z-index: 99;
+    width: 100%;
+    background: #FFF;
+    border-top: 0.013rem solid rgba(153,153,153,0.3);
+    .orderform_submit{
+      float: right;
+      height: 0.96rem;
+      line-height: 0.96rem;
+      text-align: center;
+      width: 2.3rem;
+      .font-dpr(13px);
+      background: #E03B29;
+      color: #FFF;
+      border: none;
+      margin-top: 0.16rem;
+      margin-right: 0.334rem;
+    }
+    .total_prices{
+      float: right;
+      .font-dpr(12px);
+      margin-right: 0.334rem;
+      line-height: 1.28rem;
+      color: #333;
+      span{
+        .font-dpr(13px);
+        color: #E03B29;
       }
     }
   }
