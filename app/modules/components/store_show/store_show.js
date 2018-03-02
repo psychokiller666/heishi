@@ -51,8 +51,23 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   init.checkfollow();
   
   // 如果有视频就放在封面图位置
+  var video_status = 0;
   $('.video').click(function(){
-    $('.video').find('.image')[0].play();
+    if(video_status == 0){
+      video_status = 1;
+      $('.video').find('.image')[0].play();
+      $.showPreloader('视频加载中');
+    }
+  })
+  $('.image')[0].addEventListener('playing',function(){
+    $.hidePreloader();
+    $('.image').css('opacity', 1);
+    $('.video').addClass('video_play');
+  })
+  $('.image')[0].addEventListener('pause',function(){
+    $('.image').css('opacity', 0);
+    $('.video').removeClass('video_play');
+    video_status = 0;
   })
 
   if($('.hs-store-show-header').length){
