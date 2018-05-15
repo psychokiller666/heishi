@@ -1,12 +1,8 @@
 // 私信聊天
 // 微信jssdk
 var wx = require('weixin-js-sdk');
-// handlebars
-var handlebars = require('../../../../node_modules/handlebars/dist/handlebars.min.js');
 // 过滤关键词
 var esc = require('../../../../node_modules/chn-escape/escape.js');
-// 百度上传组件
-var WebUploader = require('../../../../node_modules/tb-webuploader/dist/webuploader.min.js');
 // 初始化
 var common = require('../common/common.js');
 
@@ -16,574 +12,321 @@ $(document).on('pageInit','.detail', function (e, id, page) {
   }
   var init = new common(page);
   init.wx_share(false);
-  // 回复私信
-  var chat_list = $('.chat_list');
-  var update_img_btn = $('.update_img_btn');
-  var update_img_box = $('.update_img_box');
-  var chat_content = $('.chat_content');
-  var chat_footer = $('.chat-footer');
-  var image_list = update_img_box.find('.image_list');
-  var chat_footer_bd = $('.chat-footer-bd');
+  // 初始底部
+  $('.hs-main').css('bottom', $('.reply_content').height() + 'px');
 
-  update_img_btn.on('click',function(e) {
-    if(!$(this).hasClass('active')){
-      $(this).addClass('active');
-      update_img_box.show();
-    } else {
-      $(this).removeClass('active');
-      update_img_box.hide();
-    }
-  })
-  var interval;
-  var bfscrolltop = document.body.scrollTop;//获取软键盘唤起前浏览器滚动部分的高度
-  chat_content.focus(function(){
-      update_img_box.hide();
-      update_img_btn.removeClass('active');
-      interval = setInterval(function(){//设置一个计时器，时间设置与软键盘弹出所需时间相近
-      document.body.scrollTop = document.body.scrollHeight;//获取焦点后将浏览器内所有内容高度赋给浏览器滚动部分高度
-      },100)
-  }).blur(function(){//设定输入框失去焦点时的事件
-      clearInterval(interval);//清除计时器
-      document.body.scrollTop = bfscrolltop;
-  });
-  update_img_box.on("change",'.webuploader-element-invisible', function(e) {
-    var uid = $('.submit').data('touid'),
-    that = this;
-    nim.previewFile({
-      type: 'image',
-      fileInput: that,
-      uploadprogress: function(obj) {
-          $('.updata_image_btn').find('button').text(obj.percentage);
-          chat_content.attr('disabled','disabled');
-          chat_footer_bd.find('button').attr('disabled','disabled');
-      },
-      done: function(error, file) {
-          chat_footer_bd.find('button').removeAttr('disabled','disabled');
-          chat_content.val('').attr('placeholder','文字和图片只能选一个');
-          chat_footer.find('.submit').attr('data-status',1);
-          update_img_box.find('.updata_image_btn').hide();
-          // 添加关闭按钮
-          image_list.css('height','3.16rem');
-          image_list.append('<button class="close"></button>');
-          image_list.append('<img src="'+file.url+'"/>');
-      }
-    });
-  });
-  image_list.on('click','.close',function(){
-    update_img_box.find('.updata_image_btn').show();
-    chat_content.removeAttr('disabled','disabled').removeAttr('placeholder','文字和图片只能选一个');
-    chat_footer.find('.submit').attr('data-status',0);
-    chat_footer_bd.find('button').removeAttr('disabled','disabled');
-    image_list.empty();
-    $('.updata_image_btn').find('button').text('+');
-    image_list.css('height','0');
-  })
-  // 提交私信
-  chat_footer.find('.submit').on('click',function(){
-    // 过滤关键词
-    var text_list = [
-    '燃料',
-    '大麻',
-    '叶子',
-    '淘宝',
-    'taobao.com',
-    '有飞',
-    '想飞',
-    '要飞',
-    '加我',
-    '大妈',
-    '飞吗',
-    '飞嘛',
-    'qq',
-    '拿货',
-    'weed',
-    '机长',
-    'thc',
-    '蘑菇',
-    '邮票',
-    'LSD',
-    'taobao',
-    'tb',
-    '操你妈',
-    '草你妈',
-    '🍃'
-    ];
-    esc.init(text_list);
-    var content;
-    var that = this;
-    var status_message_status = $(this).data('status');
-    content = chat_content.val();
-    if(esc.find(chat_content.val()).length){
-      $.toast('🚔 请文明用语');
-      return;
-    }
-    if($(that).data('touid') == $(that).data('id')){
-      $.toast('自己玩呢?');
-      return false;
-    }
-    if(status_message_status){
-      //上传图片
-      nim.sendFile({
-          scene: 'p2p',
-          to: $(that).data('touid'),
-          type: 'image',
-          fileInput: $('.webuploader-element-invisible')[0],
-          beginupload: function(upload) {
-              // - 如果开发者传入 fileInput, 在此回调之前不能修改 fileInput
-              // - 在此回调之后可以取消图片上传, 此回调会接收一个参数 `upload`, 调用 `upload.abort();` 来取消文件上传
-          },
-          uploadprogress: function(obj) {
-              //在上传
-          },
-          uploaddone: function(error, file) {
-            //完成回调
-          },
-          beforesend: function(msg) {
-            //接受消息
-          },
-          done: sendMsgDoneFile
-      });
-      function sendMsgDoneFile(error, msg){
-        //发送图片时，如果用户不存在 则注册用户 
-        if(error){
-          if(error.code == 404){
-            var url = '/index.php?g=api&m=HsNeteasyIM&a=register_new_user&user_id=' + $(that).data('touid');
-            $.ajax({
-              type: 'GET',
-              url: url,
-              timeout: 4000,
-              success: function(data){
-                var date = JSON.parse(data);
-                if(date.status == 1){
-                  nim.sendFile({
-                      scene: 'p2p',
-                      to: $(that).data('touid'),
-                      type: 'image',
-                      fileInput: $('.webuploader-element-invisible')[0],
-                      beginupload: function(upload) {
-                          // - 如果开发者传入 fileInput, 在此回调之前不能修改 fileInput
-                          // - 在此回调之后可以取消图片上传, 此回调会接收一个参数 `upload`, 调用 `upload.abort();` 来取消文件上传
-                      },
-                      uploadprogress: function(obj) {
-                          //在上传
-                      },
-                      uploaddone: function(error, file) {
-                        //完成回调
-                      },
-                      beforesend: function(msg) {
-                        //接受消息
-                      },
-                      done: sendMsgDoneFile
-                  });
-                  messagePush($(that).data('touid'), '[图片]', 1);
-                }else{
-                  $.toast('发送失败,请重新发送');
-                }
-              },
-              error: function(){
-                $.toast('发送失败,请重新发送');
-              }
-            });
-            return false;
-          }else{
-            return $.toast(error);
-          }
-        }
-        //用户存在，没有错误
-        if(msg.status == 'success'){
-          var str = '<li class="me" data-id="'+$(that).data('id')+'"><span class="date">'+messageTime(msg['time'])+'</span><span class="avatar"></span><div class="content_bd">'
-          +'<div class="image" data-layzr="'+msg['file']['url']+'" data-preview="'+msg['file']['url']+'"></div></div></li>';
-          chat_list.find('ul').append(str);
-          //如果用户没有消息，则清空提示
-          $('.no_session').hide();
-          getUserImg($(that).data('id'));
-          chat_content.val('').removeAttr('disabled','disabled');
-          update_img_box.hide();
-          chat_footer.find('.submit').attr('data-status',0);
-          chat_footer_bd.find('button').removeAttr('disabled','disabled');
-          image_list.empty();
-          $('.updata_image_btn').css('display','block').find('button').text('+');
-          image_list.css('height','0');
-          init.loadimg();
-          $('.content').scrollTop($('.content ul').height());
 
-          //用户不在线发推送
-          if(user_line_status){
-            messagePush($(that).data('touid'),'[图片]',1);
-            offlineMessage($('.recent_btn').attr('data-uid'));
-          }
-        }else if(msg.status == 'fail'){
-          $.toast('发送失败');
-        }else if(msg.status == 'sending'){
-          $.toast('发送中');
-        }
-      }
+  var uploadingStatus = false;
+  $('.uploading').click(function(){
+    if(uploadingStatus){
+      uploadingStatus = false;
+      $('.more').css('height', '0');
+      $('.hs-main').css('top', '0');
     }else{
-      if(!content){
-        chat_content.attr('placeholder','😒 内容不能为空');
-        return;
-      }
-      var msg = nim.sendText({
-        scene: 'p2p',
-        to: $(that).data('touid'),
-        text: content,
-        done: sendMsgDone
-      });
-      function sendMsgDone(error, msg) {
-        //发送文字时，如果用户不存在 则注册用户 
-        if(error){
-          if(error.code == 404){
-            var url = '/index.php?g=api&m=HsNeteasyIM&a=register_new_user&user_id=' + $(that).data('touid');
-            $.ajax({
-              type: 'GET',
-              url: url,
-              timeout: 4000,
-              success: function(data){
-                var date = JSON.parse(data);
-                if(date.status == 1){
-                  var msg = nim.sendText({
-                    scene: 'p2p',
-                    to: $(that).data('touid'),
-                    text: content,
-                    done: sendMsgDone
-                  });
-                  messagePush($(that).data('touid'), content, 0);
-                }else{
-                  $.toast('发送失败,请重新发送');
-                }
-              },
-              error:function(){
-                $.toast('发送失败,请重新发送');
-              }
-            });
-            return false;
-          }else{
-            return $.toast(error);
-          }
-        }
-        //用户存在，没有错误
-        if(msg.status == 'success'){
-          var str = '<li class="me" data-id="'+$(that).data('id')+'"><span class="date">'+messageTime(msg['time'])+'</span><span class="avatar"></span><div class="content_bd">'+msg.text+'</div></li>';
-          chat_list.find('ul').append(str);
-          //如果用户没有消息，则清空提示
-          $('.no_session').hide();
-          getUserImg($(that).data('id'));
-          chat_content.val('');
-          $('.content').scrollTop($('.content ul').height());
-
-          //用户不在线发推送
-          if(user_line_status){
-            messagePush($(that).data('touid'), msg.text, 0);
-            offlineMessage($('.recent_btn').attr('data-uid'));
-          }
-        }else if(msg.status == 'fail'){
-          $.toast('发送失败,请重新发送');
-        }else if(msg.status == 'sending'){
-          $.toast('发送中');
-        }
-      }
-    }
-  });
-
-  // 最后一次购买
-  var chat_header_bd = $('.chat-header-bd');
-  var recent_box = $('.recent_box');
-  var recent_tpl = handlebars.compile($("#recent_tpl").html());
-  recent_box.css('top',$('.chat-header').height());
-  var recent_btn = $('.recent_btn');
-  recent_btn.on('click',function(e) {
-    var _this = $(this);
-    if(!$(this).hasClass('active')){
-      $(this).addClass('active');
-      $.ajax({
-        type: 'POST',
-        url: '/index.php?g=User&m=HsMessage&a=ajax_query_order',
-        data: {
-          object_owner_uid: $(this).data('id'),
-          user_id: $(this).data('uid')
-        },
-        dataType: 'json',
-        timeout: 4000,
-        success: function(data){
-          if(data.status == 1){
-            recent_box.html(recent_tpl(data.data));
-            recent_box.show();
-            chat_header_bd.css('background-color','#ededed');
-          } else {
-            $.toast(data.info);
-            recent_btn.off('click');
-            _this.remove();
-          }
-
-        },
-        error: function(xhr, type){
-          $.toast('网络错误 code:'+xhr);
-        }
-      });
-    } else {
-      $(this).removeClass('active');
-      recent_box.hide();
-      chat_header_bd.css('background-color','#fff');
+      uploadingStatus = true;
+      $('.more').css('height', '5.73rem');
+      $('.hs-main').css('top', '-5.73rem');
     }
   })
-  // 预览图
-  page.on('click','.image',function(){
-    wx.previewImage({
-      current: $(this).data('preview'),
-      urls: [$(this).data('preview')]
-    });
-  });
+  $('.more').on('click', '.order', function(){
+    location.href = '/user/HsBuyorder/order_all.html';
+  })
+  $('.more').on('click', '.history', function(){
+    location.href = '/user/History/index.html';
+  })
+  $('.more').on('click', '.complain', function(){
+    $('.report_form').show();
+  })
+  $('.chat_list').click(function(){
+    uploadingStatus = false;
+    $('.more').css('height', '0');
+    $('.hs-main').css('top', '0');
+  })
 
-  // 初始化下拉
-  var loading = false,
-  idServer = 0,
-  updateTime = 0;
-  $('.pull-to-refresh-layer').css('display','none');
-  // 监听下拉
-  setTimeout(function() {
-  page.on('refresh', '.pull-to-refresh-content',function(e) {
-   if (loading ) return;
-    // 设置flag
-    loading = true;
-    setTimeout(function() {
-      // 重置加载flag
-      loading = false;
-      // 添加数据
-      add_data(idServer);
-    }, 500);
-  });
-  }, 500);
-
-  function add_data(idServerdef){
-    var uid = $('.submit').data('touid'),
-    myId = $('.submit').data('id');
-    nim.getHistoryMsgs({
-        scene: 'p2p',
-        to: uid,
-        limit: 20,
-        reverse: false,
-        endTime: parseInt(updateTime),
-        lastMsgId: parseInt(idServerdef),
-        done: getHistoryMsgsDone
-    });
-    function getHistoryMsgsDone(error, obj) {
-        if(error){
-          return $.toast(error);
-        }
-        var data = obj.msgs;
-        if(data.length == 0){
-          $.toast('找不到更多记录了',500);
-          $.pullToRefreshDone('.pull-to-refresh-content');
-          $.destroyPullToRefresh('.pull-to-refresh-content');
-          $('.pull-to-refresh-layer').css('display','none');
-          return false;
-        }
-        for(var i in data){
-          if(myId == data[i]['from']){
-            if(data[i]['type'] == 'text'){
-              var str = '<li class="me" data-id="'+myId+'"><span class="date">'+messageTime(data[i]['time'])+'</span><span class="avatar"></span><div class="content_bd">'+data[i]['text']+'</div></li>';
-            }else if(data[i]['type'] == 'image'){
-              var str = '<li class="me" data-id="'+myId+'"><span class="date">'+messageTime(data[i]['time'])+'</span><span class="avatar"></span><div class="content_bd">'
-              +'<div class="image" data-layzr="'+data[i]['file']['url']+'" data-preview="'+data[i]['file']['url']+'"></div></div></li>';
-            }
-          }else{
-            if(data[i]['type'] == 'text'){
-              var str = '<li class="user" data-id="'+uid+'"><span class="date">'+messageTime(data[i]['time'])+'</span><span class="avatar"></span><div class="content_bd">'+data[i]['text']+'</div></li>';
-            }else if(data[i]['type'] == 'image'){
-              var str = '<li class="user" data-id="'+uid+'"><span class="date">'+messageTime(data[i]['time'])+'</span><span class="avatar"></span><div class="content_bd">'
-              +'<div class="image" data-layzr="'+data[i]['file']['url']+'" data-preview="'+data[i]['file']['url']+'"></div></div></li>';
-            }
-          }
-          chat_list.find('ul').prepend(str);
-          //设置下次获取聊天记录的参数idServer updateTime
-          idServer = data[i]['idServer'];
-          updateTime = data[i]['time'];
-        }
-        getUserImg(uid);
-        getUserImg(myId);
-        $.pullToRefreshDone('.pull-to-refresh-content');
-        init.loadimg();
+  // 投诉
+  $('.report_form_sub').click(function(){
+    var content = $('.report_form_content').val();
+    var uid = $(this).attr('data-uid');
+    if(!content){
+      return $.toast('请填写举报原因');
     }
+    $.ajax({
+      type: 'POST',
+      url: '/index.php?g=restful&m=HsUserReporting&a=reporting',
+      data: {
+        be_reported_uid: uid,
+        content: content
+      },
+      success: function(data){
+        if(data.status == 1){
+          $.toast('举报成功');
+        }else{
+          $.toast(data.info);
+        }
+        $('.report_form').css('display', 'none');
+      }
+    })
+  })
+  $('.report_form_close').click(function(){
+    $('.report_form').css('display', 'none');
+  })
+  $('.report_form_keyword').click(function(){
+    $('.report_form_content').val($(this).text());
+  })
+
+  // 关闭更多
+  var navigator_activity = navigator.userAgent;
+  var isiOS = !!navigator_activity.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+  var replyTextChange = false;
+  $('.reply_text').focus(function(){
+    $('.content').css('overflow-y', 'hidden');
+    uploadingStatus = false;
+    $('.more').css('height', '0');
+    $('.hs-main').css('top', '0');
+    if(replyTextChange && isiOS){
+      $('.reply_input').css('padding-bottom', '1.2rem');
+      replyTextChange = false;
+    }
+  })
+  $('.reply_text').blur(function(){
+    $('.content').css('overflow-y', 'auto');
+    $('.reply_input').css('padding-bottom', '0');
+  })
+  if(isiOS){
+    $('.reply_text').change(function(){
+      replyTextChange = true;
+    })
   }
 
 
+
+
+
+
+
+  // 回复私信
+  var chat_list = $('.chat_list');
+
+  var myId = $('#my_id').val();
+  var IMmyId = $('#my_id').val();
+
+  var userId = $('#user_id').val();
+  var IMuserId = $('#user_id').val();
+
+  // 用户头像
+  var myAvatar = $('#my_avatar').val();
+  var userAvatar = $('#user_avatar').val();
+
+  var IMnim = null;
   //重置会话 初始参数
-  var reset_session = false,
-  mineId = $('#cnzz_user_id').val(),
-  nim;
-  if(GV.HOST == '//hstest.ontheroadstore.com/'){
-    mineId = 'hstest'+mineId;
+  var reset_session = false;
+  // 获取用户在线状态
+  var user_line_status = true;
+  // 默认用户ID 为网易IM ID
+  // 测试环境 网易id加hstest
+  if(GV.HOST != 'http://hs.ontheroadstore.com/'){
+    IMmyId = 'hstest' + IMmyId;
+    IMuserId = 'hstest' + IMuserId;
   }
   $.ajax({
     type: 'POST',
     url: '/index.php?g=api&m=HsNeteasyIM&a=get_token_by_user_id',
-    timeout: 4000,
     data: {
-      user_id: mineId
+      user_id: myId
     },
     success: function(res){
       var data = JSON.parse(res);
-      var token = data.data.token;
-      var appKey = data.data.app_key;
-      nim = NIM.getInstance({
+      if(data.status == 1){
+        var token = data.data.token;
+        var appKey = data.data.app_key;
+        IMnim = NIM.getInstance({
           appKey: appKey,
-          account: mineId,
+          account: IMmyId,
           token: token,
           syncSessionUnread: true,
           onconnect: onConnect,
-          onwillreconnect: onWillReconnect,
           ondisconnect: onDisconnect,
-          onerror: onError,
           onsessions: onSessions,
           onupdatesession: onUpdateSession,
           onpushevents: onPushEvents,
           db: true
-      });
+        });
+      }else{
+        $.toast('登录失败');
+      }
     },
     error: function(xhr, type){
-        // $.toast(xhr.info);
-        console.log(type);
-      // $.toast('网络错误 code:'+xhr);
+      $.toast('登录失败');
     }
   });
-  //获取用户在线状态
-  var user_line_status = true;
-  function onPushEvents (param) {
-    // console.log(param,20170606);
-    //ios只有在退出登录才会离线
-    var touid = $('.submit').data('touid');
-    if (param.msgEvents) {
-      param.msgEvents.forEach(function(data){
-        if(data.account == touid && data.value == 1){
-          user_line_status = false;
 
-        }else if(data.account == touid && data.value != 1){
-          user_line_status = true;
-        }
-      })
+
+
+
+  // 图片回复
+  $('.uploader').on("change", function(e) {
+    var that = this;
+    if(myId == userId){
+      $.toast('自己玩呢?');
+      return false;
     }
-  }
-  function onConnect() {
-      console.log('连接成功');
-      //订阅用户
-      var uid = $('.submit').data('touid');
-      nim.subscribeEvent({
-        type: 1,
-        accounts: [uid],
-        subscribeTime: 3600,
-        sync: true,
-        done: function(err, res){
-          if (err) {
-            // console.error('订阅好友事件失败', err);
-          } else {
-            // console.info('订阅好友事件', res);
-          }
-        }
-      });
-  }
-  // 重连
-  function onWillReconnect(obj) {
-      // 此时说明 SDK 已经断开连接, 请开发者在界面上提示用户连接已断开, 而且正在重新建立连接
-      // console.log('即将重连');
-      // console.log(obj.retryCount);
-      // console.log(obj.duration);
-  }
-  // 断开
-  function onDisconnect(error) {
-      // 此时说明 SDK 处于断开状态, 开发者此时应该根据错误码提示相应的错误信息, 并且跳转到登录页面
-      // console.log('丢失连接');
-      if (error) {
-          switch (error.code) {
-          // 账号或者密码错误, 请跳转到登录页面并提示错误
-
-          case 302:
-              $.ajax({
-                  type: 'POST',
-                  url: '/index.php?g=api&m=HsNeteasyIM&a=refresh_token',
-                  data:{
-                      user_id: mineId
-                  },
-                  timeout: 4000,
-                  success: function(data){
-                      console.log(data);
-                  },
-                  error: function(xhr, type){
-                      // $.toast(xhr.info);
-                      console.log(type);
-                  }
-              });
-              break;
-          // 重复登录, 已经在其它端登录了, 请跳转到登录页面并提示错误
-          case 417:
-              break;
-          // 被踢, 请提示错误后跳转到登录页面
-          case 'kicked':
-              break;
-          default:
-              break;
-          }
-      }
-  }
-  // 错误
-  function onError(error) {
-        // console.log(error);
-  }
-  //初始加载
-  function onSessions(sessions) {
-    var uid = $('.submit').data('touid'),
-    myId = $('.submit').data('id');
-        nim.getHistoryMsgs({
-            scene: 'p2p',
-            to: uid,
-            limit: 20,
-            lastMsgId:0,
-            reverse: false,
-            done: getHistoryMsgsDone
-        });
-    //获取历史消息
-    function getHistoryMsgsDone(error, obj) {
+    $.showPreloader("图片发送中");
+    IMnim.previewFile({
+      type: 'image',
+      fileInput: that,
+      done: function(error, file) {
+        $.hidePreloader();
         if(error){
           return $.toast(error);
         }
-        var data = obj.msgs;
-        //如果用户没有消息
-        if(!data.length){
-          $('.no_session').text('暂时没有消息');
-          return false;
-        }
-        $('.pull-to-refresh-layer').css('display','block');
-        //如果用户有历史消息
-        $('.no_session').hide();
-        for(var i in data){
-          if(myId == data[i]['from']){
-            if(data[i]['type'] == 'text'){
-              var str = '<li class="me" data-id="'+myId+'"><span class="date">'+messageTime(data[i]['time'])+'</span><span class="avatar"></span><div class="content_bd">'+data[i]['text']+'</div></li>';
-            }else if(data[i]['type'] == 'image'){
-              var str = '<li class="me" data-id="'+myId+'"><span class="date">'+messageTime(data[i]['time'])+'</span><span class="avatar"></span><div class="content_bd">'
-              +'<div class="image" data-layzr="'+data[i]['file']['url']+'" data-preview="'+data[i]['file']['url']+'"></div></div></li>';
-            }
-          }else{
-            if(data[i]['type'] == 'text'){
-              var str = '<li class="user" data-id="'+uid+'"><span class="date">'+messageTime(data[i]['time'])+'</span><span class="avatar"></span><div class="content_bd">'+data[i]['text']+'</div></li>';
-            }else if(data[i]['type'] == 'image'){
-              var str = '<li class="user" data-id="'+uid+'"><span class="date">'+messageTime(data[i]['time'])+'</span><span class="avatar"></span><div class="content_bd">'
-              +'<div class="image" data-layzr="'+data[i]['file']['url']+'" data-preview="'+data[i]['file']['url']+'"></div></div></li>';
+        // 上传成功直接发送给用户
+        IMnim.sendFile({
+          scene: 'p2p',
+          to: IMuserId,
+          type: 'image',
+          fileInput: $('.uploader')[0],
+          done: sendMsgDoneFile
+        });
+        function sendMsgDoneFile(error, msg){
+          uploadingStatus = false;
+          $('.more').css('height', '0');
+          $('.hs-main').css('top', '0');
+          $('.reply_text').val('');
+          //发送图片时，如果用户不存在 则注册用户 
+          if(error){
+            if(error.code == 404){
+              registerUser();
+              return false;
+            }else{
+              return $.toast(error);
             }
           }
-          chat_list.find('ul').prepend(str);
-          //设置下次获取聊天记录的参数idServer updateTime
-          idServer = data[i]['idServer'];
-          updateTime = data[i]['time'];
+          $.toast('发送成功');
+          //用户存在，没有错误
+          if(msg.status == 'success'){
+            var str = '<li class="me"><span class="avatar" style="background-image: url('+myAvatar+')"></span><div class="content_bd">'
+            +'<div class="image" data-layzr="'+msg['file']['url']+'" data-preview="'+msg['file']['url']+'"></div></div><span class="date">'+messageTime(msg['time'])+'</span></li>';
+            chat_list.find('ul').append(str);
+            init.loadimg();
+            $('.content').scrollTop($('.content ul').height());
+            //用户不在线发推送
+            if(user_line_status){
+              messagePush(userId,'[图片]',1);
+              offlineMessage(userId);
+            }
+          }else if(msg.status == 'fail'){
+            $.toast('发送失败');
+          }else if(msg.status == 'sending'){
+            $.toast('发送中');
+          }
         }
-        //获取自己和别人的用户头像
-        getUserImg(uid);
-        getUserImg(myId);
-        //图片初始化
-        init.loadimg();
-        // 设置页面高度到最新聊天位置
-        $('.content').scrollTop($('.content ul').height());
-        //重置未读数
-        resetSession(uid);
+      }
+    });
+  });
+
+
+
+
+
+
+
+
+
+  // 登录成功
+  function onConnect() {
+    //订阅用户
+    IMnim.subscribeEvent({
+      type: 1,
+      accounts: [IMuserId],
+      subscribeTime: 3600,
+      sync: true,
+      done: function(err, res){
+        // console.log(res)
+      }
+    });
+  }
+  // 断开
+  function onDisconnect(error) {
+    // 此时说明 SDK 处于断开状态, 开发者此时应该根据错误码提示相应的错误信息, 并且跳转到登录页面
+    if (error) {
+      switch (error.code) {
+      // 账号或者密码错误, 重置token 密码
+      case 302:
+          $.ajax({
+              type: 'POST',
+              url: '/index.php?g=api&m=HsNeteasyIM&a=refresh_token',
+              data:{
+                  user_id: myId
+              },
+              timeout: 4000,
+              success: function(data){
+                // console.log(data);
+                $.toast('登录过期，请刷新页面重新登录');
+              }
+          });
+          break;
+      // 重复登录, 已经在其它端登录了, 请跳转到登录页面并提示错误
+      case 417:
+          break;
+      // 被踢, 请提示错误后跳转到登录页面
+      case 'kicked':
+          break;
+      default:
+          break;
+      }
+    }
+  }
+  // 初始加载
+  function onSessions(sessions) {
+    IMnim.getHistoryMsgs({
+        scene: 'p2p',
+        to: IMuserId,
+        limit: 20,
+        lastMsgId:0,
+        reverse: false,
+        done: getHistoryMsgsDone
+    });
+    //获取历史消息
+    function getHistoryMsgsDone(error, obj) {
+      // 添加下拉事件
+      setRefresh();
+      // 错误直接返回
+      if(error){
+        return $.toast(error);
+      }
+      var data = obj.msgs;
+      //如果用户没有消息
+      if(data.length == 0){
+        return $.toast('近期没有聊天记录，请下拉查看历史记录');
+      }
+      //如果用户有消息
+      for(var i in data){
+        if(IMmyId == data[i]['from']){
+          if(data[i]['type'] == 'text'){
+            var str = '<li class="me"><span class="avatar" style="background-image: url('+myAvatar+')"></span><div class="content_bd">'+data[i]['text']+'</div><span class="date">'+messageTime(data[i]['time'])+'</span></li>';
+          }else if(data[i]['type'] == 'image'){
+            var str = '<li class="me"><span class="avatar" style="background-image: url('+myAvatar+')"></span><div class="content_bd">'
+            +'<div class="image" data-layzr="'+data[i]['file']['url']+'" data-preview="'+data[i]['file']['url']+'"></div></div><span class="date">'+messageTime(data[i]['time'])+'</span></li>';
+          }
+        }else{
+          if(data[i]['type'] == 'text'){
+            var str = '<li class="user"><span class="avatar" style="background-image: url('+userAvatar+')"></span><div class="content_bd">'+data[i]['text']+'</div><span class="date">'+messageTime(data[i]['time'])+'</span></li>';
+          }else if(data[i]['type'] == 'image'){
+            var str = '<li class="user"><span class="avatar" style="background-image: url('+userAvatar+')"></span><div class="content_bd">'
+            +'<div class="image" data-layzr="'+data[i]['file']['url']+'" data-preview="'+data[i]['file']['url']+'"></div></div><span class="date">'+messageTime(data[i]['time'])+'</span></li>';
+          }
+        }
+        chat_list.find('ul').prepend(str);
+        //设置下次获取聊天记录的参数idServer updateTime
+        idServer = data[i]['idServer'];
+        updateTime = data[i]['time'];
+      }
+      //图片初始化
+      init.loadimg();
+      // 设置页面高度到最新聊天位置
+      $('.content').scrollTop($('.content ul').height());
+      //重置未读数
+      resetSession(IMuserId);
     }
   }
   // 收到数据调用
@@ -597,55 +340,34 @@ $(document).on('pageInit','.detail', function (e, id, page) {
       return false;
     }
     //收到会话处理
-    var uid = $('.submit').data('touid'),
-    myId = $('.submit').data('id');
-    if(session['lastMsg']['from'] == uid){
+    if(session['lastMsg']['from'] == IMuserId){
       if(session['lastMsg']['type'] == 'text'){
-        var str = '<li class="user" data-id="'+session['lastMsg']['from']+'"><span class="date">'+messageTime(session['lastMsg']['time'])+'</span><span class="avatar"></span><div class="content_bd">'
+        var str = '<li class="user"><span class="date">'+messageTime(session['lastMsg']['time'])+'</span><span class="avatar" style="background-image: url('+userAvatar+')"></span><div class="content_bd">'
         +session['lastMsg']['text']+'</div></li>';
       }else if(session['lastMsg']['type'] == 'image'){
-        var str = '<li class="user" data-id="'+session['lastMsg']['from']+'"><span class="date">'+messageTime(session['lastMsg']['time'])+'</span><span class="avatar"></span><div class="content_bd">'
+        var str = '<li class="user"><span class="date">'+messageTime(session['lastMsg']['time'])+'</span><span class="avatar" style="background-image: url('+userAvatar+')"></span><div class="content_bd">'
           +'<div class="image" data-layzr="'+session['lastMsg']['file']['url']+'" data-preview="'+session['lastMsg']['file']['url']+'"></div></div></li>';
       }
       chat_list.find('ul').append(str);
-      getUserImg(uid);
       $('.content').scrollTop($('.content ul').height());
       init.loadimg();
       //清除未读数
-      resetSession(uid);
+      resetSession(IMuserId);
     }
   }
-  //获取自己头像
-  function getUserImg(id){
-    nim.getUser({
-        account: id,
-        done: getUserDone
-    });
-    function getUserDone(error, user) {
-      var str = 'url('+user['avatar']+') no-repeat';
-      $('.chat_list li').each(function(){
-        var userId = $(this).data('id');
-        if(id == userId){
-          $(this).find('.avatar').css('background',str).css('background-size','100%');
+  //获取用户在线状态
+  function onPushEvents (param) {
+    //ios只有在退出登录才会离线
+    if (param.msgEvents) {
+      param.msgEvents.forEach(function(data){
+        if(data.account == IMuserId && data.value == 1){
+          user_line_status = false;
+
+        }else if(data.account == IMuserId && data.value != 1){
+          user_line_status = true;
         }
       })
     }
-  }
-  //时间戳格式化
-  Date.prototype.Format = function (fmt) {
-    var o = {
-        "M+": this.getMonth() + 1,  // 月份
-        "d+": this.getDate(),   // 日
-        "h+": this.getHours(),    // 小时
-        "m+": this.getMinutes(),  // 分
-        "s+": this.getSeconds(),  // 秒
-        "q+": Math.floor((this.getMonth() + 3) / 3), // 季度
-        "S": this.getMilliseconds() // 毫秒
-    };
-        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-        for (var k in o)
-        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-        return fmt;
   }
   //时间戳格式优化
   function messageTime(times){
@@ -660,12 +382,12 @@ $(document).on('pageInit','.detail', function (e, id, page) {
   //清除未读数
   function resetSession(uid){
     var session_id = 'p2p-'+uid;
-    nim.resetSessionUnread(session_id);
+    IMnim.resetSessionUnread(session_id);
     reset_session = true;
   }
-
-  //如果用户不在线则发微信推送
+    //如果用户不在线则发微信推送
   function messagePush(id,content,type){
+    // 用户id
     $.ajax({
       type: 'POST',
       url: '/index.php?g=restful&m=HsMessage&a=push_message',
@@ -680,19 +402,188 @@ $(document).on('pageInit','.detail', function (e, id, page) {
       }
     });
   }
-
   // 用户不在线时拿到卖家离线留言显示
   function offlineMessage(id){
+    // 用户id
     $.ajax({
       type: 'GET',
       url: '/index.php?g=User&m=HsMessage&a=Offline_reply&id=' + id,
       success: function(res){
         if(res.status == 1 && res['data']['content'] != null){
-          var str = '<li class="user" data-id="'+id+'"><span class="date"></span><span class="avatar"></span><div class="content_bd">'+res['data']['content']+'</div></li>';
+          var str = '<li class="user"><span class="date"></span><span class="avatar" style="background-image: url('+userAvatar+')"></span><div class="content_bd">'+res['data']['content']+'</div></li>';
           chat_list.find('ul').append(str);
           $('.content').scrollTop($('.content ul').height());
         }
       }
     });
   }
+  //时间戳格式化
+  Date.prototype.Format = function (fmt) {
+    var o = {
+      "M+": this.getMonth() + 1,  // 月份
+      "d+": this.getDate(),   // 日
+      "h+": this.getHours(),    // 小时
+      "m+": this.getMinutes(),  // 分
+      "s+": this.getSeconds(),  // 秒
+      "q+": Math.floor((this.getMonth() + 3) / 3), // 季度
+      "S": this.getMilliseconds() // 毫秒
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+  }
+  // 注册网易用户
+  function registerUser() {
+    var url = '/index.php?g=api&m=HsNeteasyIM&a=register_new_user&user_id=' + userId;
+    $.ajax({
+      type: 'GET',
+      url: url,
+      success: function(data){
+        $.toast('发送失败,请重新发送');
+      }
+    });
+  }
+  
+
+  
+  // 提交私信
+  $('.submit').on('click',function(){
+    var that = this;
+    var submitStatus = $(that).hasClass('underway');
+    var replyText = $('.reply_text').val();
+    if(submitStatus){
+      return $.toast('正在发送消息，请稍等');
+    }
+    $(that).addClass('underway');
+    // 过滤关键词
+    var text_list = ['燃料','大麻','叶子','淘宝','taobao.com','有飞','想飞','要飞','加我','大妈','飞吗','飞嘛','qq','拿货','weed','机长','thc','蘑菇','邮票','LSD','taobao','tb','操你妈','草你妈','🍃'];
+    esc.init(text_list);
+    if(esc.find(replyText).length){
+      $.toast('🚔 请文明用语');
+      $('.submit').removeClass('underway');
+      return false;
+    }
+    if(myId == userId){
+      $.toast('自己玩呢?');
+      $('.submit').removeClass('underway');
+      return false;
+    }
+    if(!replyText){
+      $.toast('内容不能为空');
+      $('.submit').removeClass('underway');
+      return false;
+    }
+    var msg = IMnim.sendText({
+      scene: 'p2p',
+      to: IMuserId,
+      text: replyText,
+      done: sendMsgDone
+    });
+    function sendMsgDone(error, msg) {
+      //发送文字时，如果用户不存在 则注册用户
+      $('.submit').removeClass('underway');
+      if(error){
+        if(error.code == 404){
+          registerUser();
+          return false;
+        }else{
+          return $.toast(error);
+        }
+      }
+      //用户存在，没有错误
+      if(msg.status == 'success'){
+        var str = '<li class="me"><span class="avatar"></span><div class="content_bd">'+msg.text+'</div><span class="date">'+messageTime(msg['time'])+'</span></li>';
+        chat_list.find('ul').append(str);
+        $('.reply_text').val('');
+        $('.content').scrollTop($('.content ul').height());
+        //用户不在线发推送
+        if(user_line_status){
+          messagePush(userId, msg.text, 0);
+          offlineMessage(userId);
+        }
+      }else if(msg.status == 'fail'){
+        $.toast('发送失败,请重新发送');
+      }else if(msg.status == 'sending'){
+        $.toast('发送中');
+      }
+    }
+  });
+
+  // 预览图
+  page.on('click','.image',function(){
+    wx.previewImage({
+      current: $(this).data('preview'),
+      urls: [$(this).data('preview')]
+    });
+  });
+
+  // 初始化下拉
+  var loading = false;
+  var idServer = 0;
+  var updateTime = 0;
+  // 监听下拉 数据获取完成后添加 
+  function setRefresh() {
+    page.on('refresh', '.pull-to-refresh-content',function(e) {
+     if (loading ) return;
+      // 设置flag
+      loading = true;
+      setTimeout(function() {
+        // 重置加载flag
+        loading = false;
+        // 添加数据
+        add_data(idServer);
+      }, 500);
+    });
+  }
+
+  function add_data(){
+    IMnim.getHistoryMsgs({
+      scene: 'p2p',
+      to: IMuserId,
+      limit: 20,
+      reverse: false,
+      endTime: parseInt(updateTime),
+      lastMsgId: parseInt(idServer),
+      done: getHistoryMsgsDoneAll
+    });
+    function getHistoryMsgsDoneAll(error, obj) {
+      if(error){
+        return $.toast(error);
+      }
+      var data = obj.msgs;
+      if(data.length == 0){
+        $.toast('找不到更多记录了');
+        $('.no_more').css('height', '1rem');
+        $.pullToRefreshDone('.pull-to-refresh-content');
+        $.destroyPullToRefresh('.pull-to-refresh-content');
+        $('.pull-to-refresh-layer').css('display','none');
+        return false;
+      }
+      for(var i in data){
+        if(IMmyId == data[i]['from']){
+          if(data[i]['type'] == 'text'){
+            var str = '<li class="me"><span class="avatar" style="background-image: url('+myAvatar+')"></span><div class="content_bd">'+data[i]['text']+'</div><span class="date">'+messageTime(data[i]['time'])+'</span></li>';
+          }else if(data[i]['type'] == 'image'){
+            var str = '<li class="me"><span class="avatar" style="background-image: url('+myAvatar+')"></span><div class="content_bd">'
+            +'<div class="image" data-layzr="'+data[i]['file']['url']+'" data-preview="'+data[i]['file']['url']+'"></div></div><span class="date">'+messageTime(data[i]['time'])+'</span></li>';
+          }
+        }else{
+          if(data[i]['type'] == 'text'){
+            var str = '<li class="user"><span class="avatar" style="background-image: url('+userAvatar+')"></span><div class="content_bd">'+data[i]['text']+'</div><span class="date">'+messageTime(data[i]['time'])+'</span></li>';
+          }else if(data[i]['type'] == 'image'){
+            var str = '<li class="user"><span class="avatar" style="background-image: url('+userAvatar+')"></span><div class="content_bd">'
+            +'<div class="image" data-layzr="'+data[i]['file']['url']+'" data-preview="'+data[i]['file']['url']+'"></div></div><span class="date">'+messageTime(data[i]['time'])+'</span></li>';
+          }
+        }
+        chat_list.find('ul').prepend(str);
+        //设置下次获取聊天记录的参数idServer updateTime
+        idServer = data[i]['idServer'];
+        updateTime = data[i]['time'];
+      }
+      $.pullToRefreshDone('.pull-to-refresh-content');
+      init.loadimg();
+    }
+  }
+
 });

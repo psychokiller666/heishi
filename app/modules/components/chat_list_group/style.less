@@ -6,10 +6,23 @@
     background-color: #fff;
     .chat_list_group_bd {
       .no_session{
+        width: 100%;
+        .font-dpr(15px);
         height: 100%;
-        line-height: 80vh;
+        box-sizing: border-box;
+        padding-top: 6rem;
+        display: none;
         text-align: center;
-        .font-dpr(14px);
+        .no_session_title{
+          line-height: 1.2em;
+        }
+        .no_session_btn{
+          border-radius: 0.16rem;
+          border: 0.04rem solid #000;
+          width: 3.89rem;
+          line-height: 0.88rem;
+          margin: 0.4rem auto;
+        }
       }
       .return_index{
         position: absolute;
@@ -40,10 +53,10 @@
               width: 0.28rem;
               height: 0.28rem;
               position: absolute;
-              background-color: red;
+              background-color: #AE2121;
               border-radius: 0.28rem;
               right: 0;
-              border: 0.04rem solid #fff;
+              border: 0.04rem solid #FFF;
             }
           }
           &.active {
@@ -61,14 +74,15 @@
           a {
             display: block;
             transition: all 0.3s;
-            width: 10rem;
+            width: 9.2rem;
+            margin: 0 0.4rem;
             padding-top: .2rem;
+            border-bottom: 0.0133rem solid #E8E8E8;
             .hs-cf();
             .avatar {
               width: 1.12rem;
               height: 1.12rem;
               float:left;
-              margin-left: 0.38rem;
               position: relative;
               &.new {
                 overflow: inherit;
@@ -81,14 +95,13 @@
                 border-radius: 200%;
                 top: 0;
                 right: 0;
-                background-color: #58d996;
+                background-color: #AE2121;
               }
             }
             .info {
               .hs-cf();
               float: right;
-              width: 8.02rem;
-              border-bottom: .026667rem solid rgba(211,211,211,.5);
+              width: 7.6rem;
               .username {
                .hs-cf();
                h3 {
@@ -111,8 +124,6 @@
               .font-dpr(14px);
               color: #979797;
               padding: 0.29rem 0;
-              padding-top: .29rem;
-              padding-right: .38rem;
               overflow: hidden;
               white-space: nowrap;
               text-overflow: ellipsis;

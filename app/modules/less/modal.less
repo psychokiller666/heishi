@@ -349,8 +349,6 @@ html.with-statusbar-overlay {
     left: 0;
     bottom: 0;
     width: 100%;
-    height: 13rem;
-    z-index: 11500;
     display: none;
     transition-property: transform;
     background: #cfd5da;
@@ -387,6 +385,45 @@ html.with-statusbar-overlay {
         .toolbar {
             .hairline-remove(top);
             .hairline(bottom, @color-text-gray);
+        }
+    }
+    /*修改样式*/
+    .picker-center-highlight{
+        &:before{
+            transform: scaleY(1);
+        }
+        &:after{
+            transform: scaleY(1);
+        }
+        margin-top: -0.36rem;
+        height: 0.72rem;
+    }
+    .picker-item{
+        .font-dpr(18px);
+        font-weight: 700;
+        height: 0.7rem;
+        line-height: 0.7rem;
+    }
+    .bar-nav{
+        overflow: hidden;
+        .hs-cf;
+        &:after{
+            transform: scaleY(1);
+        }
+        h1{
+            display: none;
+        }
+        .close-picker{
+            .font-dpr(14px);
+            margin: 0.2rem;
+            display: block;
+            float: right;
+            padding: 0.15rem 0.2rem;
+            background: #4A569D;
+            border-radius: 6px;
+            color: #fff;
+            line-height: 1em;
+
         }
     }
 }

@@ -1,6 +1,7 @@
-// 通用头部
-header {
-    &.hs-header {
+/*通用头部*/
+header{
+    &.hs-header{
+        background-color: #fff;
         width: 10rem;
         overflow: hidden;
         z-index: 100;
@@ -8,38 +9,53 @@ header {
         margin: 0;
         padding: 0;
         top: 0;
-        ul {
-         background-color: #1b181f;
-         color: #5d5c61;
-         padding: 0 1.133333rem;
-         .hs-cf;
-         li {
-            float: left;
-            width: 33.333333%;
-            text-align: center;
+        ul{
+            background-color: #FFF;
+            color: #000;
+            padding-left: 0.4rem;
+            padding-right: 0.4rem;
             position: relative;
-        }
-        li a {
-            display: block;
-            padding: 0.376rem 0;
-            color: #bbbabc;
-            .font-dpr(16px);
-            .font-line-height(16px);
-        }
-        li a.active {
-            color: #68be8c;
-            opacity: 1;
-        }
-        li a.active:after {
-            content: "";
-            display: block;
-            height: 0.08rem;
-            width: 100%;
+            border-bottom: 0.0133rem solid #E8E8E8;
+            .hs-cf;
+            li{
+                float: left;
+                position: relative;
+                margin-right: 0.64rem;
+                a{
+                    .font-dpr(14px);
+                    display: block;
+                    color: #000;
+                    height: 1.17rem;
+                    line-height: 1.17rem;
+                    font-weight: 500;
+                    &.active{
+                        color: #AE2121;
+                    }
+                    &.active:after{
+                        content: "";
+                        display: block;
+                        height: 0.08rem;
+                        width: 0.32rem;
+                        position: absolute;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        -webkit-transform: translateX(-50%);
+                        bottom: 0.16rem;
+                        background-color: #AE2121;
+                        border-radius: 0.08rem;
+                    }
+                }
+            }
+        .search_btn{
             position: absolute;
-            bottom: 0;
-            background-color: #68be8c;
+            right: 0.54rem;
+            margin-right: 0;
+            .hs-icon:before{
+                .font-dpr(20px);
+                content: "\e65f";
+                color: #333333;
+            }
+        }
         }
     }
-}
-
 }

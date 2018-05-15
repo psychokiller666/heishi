@@ -10,8 +10,6 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
   }
   var init = new common(page);
   init.wx_share(false);
-  // 检查是否有新的消息
-  init.msg_tip();
   // 列表首页_通用底部发布
   var hs_footer = $('.hs-footer');
   var notice_box = $('.notice_box');

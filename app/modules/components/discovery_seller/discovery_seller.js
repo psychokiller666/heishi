@@ -8,10 +8,11 @@ $(document).on('pageInit','.discovery_seller', function (e, id, page) {
   var init = new common(page);
   // 调用微信分享sdk
   var share_data = {
-    title: page.data('desc'),
+    title: '公路商店 — 为你不着边际的企图心',
     desc: '这里能让好事自然发生',
-    link: GV.HOST+location.pathname,
-    img: '//jscache.ontheroadstore.com/tpl/simplebootx_mobile/Public/i/logo.png'
+    link: window.location.href,
+    url: window.location.href,
+    img: 'http://jscache.ontheroadstore.com/tpl/simplebootx_mobile/Public/i/logo.png'
   };
   init.wx_share(share_data);
   init.checkfollow(1);

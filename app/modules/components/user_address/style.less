@@ -1,0 +1,372 @@
+.shipping_address.address_index{
+	li{
+		border-bottom: 0.213rem solid #F8F8F8;
+		&:last-child{
+			border-bottom: none;
+			padding-bottom: 2rem;
+		}
+		.address_info{
+			padding: 0.334rem;
+			border-bottom: 0.02rem solid #F8F8F8;
+			.user_info{
+				.font-dpr(13px);
+				padding-bottom: 0.467rem;
+				.hs-cf;
+				.user_name{
+					float: left;
+					display: block;
+					width: 5rem;
+					overflow: hidden;
+			        white-space: nowrap;
+			        text-overflow: ellipsis;
+			        font-weight: 700;
+				}
+				.user_tel{
+					float: right;
+				}
+			}
+			.address_details{
+				.font-dpr(12px);
+			}
+		}
+		.default_address{
+			.font-dpr(13px);
+			.hs-cf;
+			padding: 0.334rem;
+			.set_default{
+				float: left;
+				.select_address{
+					width: 0.43rem;
+					height: 0.43rem;
+					background-image: url(//img8.ontheroadstore.com/upload/180131/eb61438cc9d8eeb92a707f43f6efd427.png);
+					background-size: 100% 100%;
+					display: inline-block;
+					vertical-align: middle;
+					margin-right: 0.467rem;
+					&.active{
+						background-image: url(//img8.ontheroadstore.com/upload/180131/de0a1485a92bad497200b030319a42f5.png);
+					}
+				}
+			}
+			.btn{
+				float: right;
+				display: block;
+				.font-dpr(13px);
+				color: #000;
+				.hs-icon{
+					padding-right: 0.16rem;
+				}
+				.hs-icon:before{
+					content: '\e64e';
+				}
+			}
+			.delete_address{
+				padding-right: 0.53rem;
+				.hs-icon:before{
+					content: '\e64c';
+				}
+			}
+		}
+	}
+	.operation_box{
+		height: 1.55rem;
+        width: 10rem;
+        position: fixed;
+        z-index: 11;
+        bottom: 0;
+        .add_address{
+        	line-height: 1.06rem;
+        	height: 1.06rem;
+        	text-align: center;
+        	background: #333;
+        	.font-dpr(13px);
+        	width: 9.04rem;
+        	margin-left: 0.48rem;
+        	color: #FFF;
+        	display: block;
+        }
+	}
+}
+
+
+.shipping_address.up_address,
+.shipping_address.creat_address{
+	.user_name,
+	.user_tel,
+	.postcode,
+	.address_region{
+		.font-dpr(15px);
+		.hs-cf;
+		margin: 0 0.334rem;
+		height: 1.23rem;
+		line-height: 1.23rem;
+		border-bottom: 0.013rem solid rgba(153,153,153,0.3);
+		position: relative;
+		span{
+			float: left;
+			display: block;
+			width: 7.332rem;
+			height: 100%;
+			input{
+				width: 100%;
+				height: 100%;
+				border: none;
+				display: block;
+			}
+		}
+		.label{
+			width: 2rem;
+			font-weight: 700;
+		}
+	}
+	.address_region{
+		.hs-icon:after{
+			content: "\e512";
+			.font-dpr(16px);
+			position: absolute;
+			right: 0.3rem;
+			top: 0;
+		}
+		input{
+			position: relative;
+			z-index: 1;
+			background: none;
+		}
+	}
+	.detailed_address{
+		margin: 0.334rem;
+		textarea{
+			width: 100%;
+			border: none;
+			.font-dpr(13px);
+			text-align: left;
+		}
+	}
+	.add_address{
+		.font-dpr(12px);
+		.hs-cf;
+		padding: 0 0.334rem;
+		height: 1.3rem;
+		line-height: 1.3rem;
+        width: 10rem;
+        box-sizing: border-box;
+        position: absolute;
+        bottom: 0;
+        border-top: 0.013rem solid rgba(153,153,153,0.3);
+		.set_default{
+			float: left;
+			.select_address{
+				width: 0.43rem;
+				height: 0.43rem;
+				background-image: url(//img8.ontheroadstore.com/upload/180131/eb61438cc9d8eeb92a707f43f6efd427.png);
+				background-size: 100% 100%;
+				display: inline-block;
+				vertical-align: middle;
+				margin-right: 0.467rem;
+				&.active{
+					background-image: url(//img8.ontheroadstore.com/upload/180131/de0a1485a92bad497200b030319a42f5.png);
+				}
+			}
+		}
+		.preserve{
+			float: right;
+			border: 0.026rem solid #AE2121;
+			color: #AE2121;
+			.font-dpr(13px);
+			width: 2.29rem;
+			height: 0.9rem;
+			line-height: 0.9rem;
+			text-align: center;
+			margin-top: 0.2rem;
+		}
+	}
+}
+/*设置picker样式*/
+.picker-modal{
+	.font-dpr(13px);
+	.picker-center-highlight{
+		.picker-item{
+			.font-dpr(13px);
+		}
+	}
+}
+
+
+
+.address_order.address_show{
+	li{
+		position: relative;
+		.address_info{
+			padding: 0.334rem 1.36rem 0.334rem 0.334rem;
+			border-bottom: 0.013rem solid rgba(153,153,153,0.3);
+			.user_info{
+				.font-dpr(13px);
+				padding-bottom: 0.467rem;
+				.hs-cf;
+				.user_name{
+					float: left;
+					display: block;
+					width: 5rem;
+					overflow: hidden;
+			        white-space: nowrap;
+			        text-overflow: ellipsis;
+			        font-weight: 500;
+				}
+				.user_tel{
+					float: right;
+				}
+			}
+			.address_details{
+				.font-dpr(13px);
+			}
+		}
+		.update_address{
+			position: absolute;
+			height: 100%;
+			width: 1.36rem;
+			top: 0;
+			right: 0;
+			color: #333;
+			&:after{
+				content: '\e62f';
+				.font-dpr(15px);
+				position: absolute;
+				top: 50%;
+				right: 0.334rem;
+				transform: translateY(-50%);
+			}
+		}
+	}
+	.operation_box{
+		height: 1.55rem;
+        width: 10rem;
+        position: fixed;
+        z-index: 11;
+        bottom: 0;
+        .add_address{
+        	line-height: 1.06rem;
+        	height: 1.06rem;
+        	text-align: center;
+        	background: #333;
+        	.font-dpr(15px);
+        	width: 9.04rem;
+        	margin-left: 0.48rem;
+        	color: #FFF;
+        	display: block;
+        }
+	}
+	.open_wx_address{
+		height: 1.28rem;
+		border-bottom: 0.013rem solid rgba(153,153,153,0.3);
+        .font-dpr(13px);
+		padding-left: 1.14rem;
+		line-height: 1.28rem;
+		font-weight: 500;
+		position: relative;
+		margin-bottom: 2rem;
+		&:before{
+			content: '\e6b8';
+	        .font-dpr(24px);
+	        position: absolute;
+	        left: 0.334rem;
+	        top: 0;
+	        height: 100%;
+	        line-height: 1.28rem;
+		}
+	}
+}
+
+.address_order.update,
+.address_order.creat{
+	.user_name,
+	.user_tel,
+	.postcode,
+	.address_region{
+		.font-dpr(15px);
+		.hs-cf;
+		margin: 0 0.334rem;
+		height: 1.23rem;
+		line-height: 1.23rem;
+		border-bottom: 0.013rem solid rgba(153,153,153,0.3);
+		position: relative;
+		span{
+			float: left;
+			display: block;
+			width: 7.332rem;
+			height: 100%;
+			input{
+				width: 100%;
+				height: 100%;
+				border: none;
+				display: block;
+			}
+		}
+		.label{
+			width: 2rem;
+			font-weight: 700;
+		}
+	}
+	.address_region{
+		.hs-icon:after{
+			content: "\e512";
+			.font-dpr(16px);
+			position: absolute;
+			right: 0.3rem;
+			top: 0;
+		}
+		input{
+			position: relative;
+			z-index: 1;
+			background: none;
+		}
+	}
+	.detailed_address{
+		margin: 0.334rem;
+		textarea{
+			width: 100%;
+			border: none;
+			.font-dpr(13px);
+			text-align: left;
+		}
+	}
+	.add_address{
+		.font-dpr(12px);
+		.hs-cf;
+		padding: 0 0.334rem;
+		height: 1.3rem;
+		line-height: 1.3rem;
+        width: 10rem;
+        box-sizing: border-box;
+        position: absolute;
+        bottom: 0;
+        border-top: 0.013rem solid rgba(153,153,153,0.3);
+		.set_default{
+			float: left;
+			.select_address{
+				display: inline-block;
+				border: 0.02rem solid #979797;
+				border-radius: 50%;
+				width: 0.3rem;
+				height: 0.3rem;
+				vertical-align: sub;
+				margin-right: 0.467rem;
+				display: none;
+				&.active{
+					background: #AE2121;
+					border-color: #AE2121;
+				}
+			}
+		}
+		.preserve{
+			float: right;
+			border: 0.026rem solid #AE2121;
+			color: #AE2121;
+			.font-dpr(13px);
+			width: 2.29rem;
+			height: 0.9rem;
+			line-height: 0.9rem;
+			text-align: center;
+			margin-top: 0.2rem;
+		}
+	}
+}

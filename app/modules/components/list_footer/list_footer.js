@@ -1,15 +1,18 @@
-// 私信聊天顶部
+// 公用底部
 var hs_footer = $('.hs-footer');
-var newMessages = $('.newMessages');
-var myId = $('#cnzz_user_id').val();
-if(GV.HOST == '//hstest.ontheroadstore.com/'){
-    myId = 'hstest'+myId;
-}
 if(hs_footer.length){
+
+    var myId = $('#my_id').val();
+    var IMmyId = $('#my_id').val();
+
+    var IMnim = null;
+    // 测试环境 网易id加hstest
+    if(GV.HOST != 'http://hs.ontheroadstore.com/'){
+        IMmyId = 'hstest' + IMmyId;
+    }
     $.ajax({
         type: 'GET',
         url: '/index.php?g=api&m=HsNeteasyIM&a=get_token_by_user_id',
-        timeout: 4000,
         data: {
             user_id: myId
         },
@@ -17,29 +20,20 @@ if(hs_footer.length){
             var data = JSON.parse(res);
             var token = data.data.token;
             var appKey = data.data.app_key;
-            callbackIM(token, myId, appKey);
-        },
-        error: function(xhr, type){
-            // $.toast(xhr.info);
-            console.log(type);
+            IMnim = NIM.getInstance({
+                appKey: appKey,
+                account: IMmyId,
+                token: token,
+                onconnect: onConnect,
+                syncSessionUnread: true,
+                onsessions: onSessions,
+                ondisconnect: onDisconnect,
+                db: true
+            });
         }
     });
-    var callbackIM = function(token, myId, appKey){
-        var nim = NIM.getInstance({
-            appKey: appKey,
-            account: myId,
-            token: token,
-            onconnect: onConnect,
-            syncSessionUnread: true,
-            onsessions: onSessions,
-            onupdatesession: onUpdateSession,
-            ondisconnect: onDisconnect,
-            db: true
-        });
-    }
-    
     function onConnect() {
-        console.log('连接成功');
+        console.log('IM连接成功');
     }
     function onSessions(sessions) {
         var data = sessions;
@@ -49,22 +43,13 @@ if(hs_footer.length){
                 num++;
             }
         }
-        if(num){
-            $('.information').css('display','block');
+        if(num > 1){
+            newMessages();
         }
-        if(newMessages.length && num){
-            newMessages.css('display','block');
-        }
-    }
-    function onUpdateSession(){
-        $('.information').css('display','block');
-        newMessages.css('display','block');
     }
     function onDisconnect(error) {
-        // 此时说明 SDK 处于断开状态, 开发者此时应该根据错误码提示相应的错误信息, 并且跳转到登录页面
-        $.toast('丢失连接');
-        console.log(error);
         if (error) {
+            console.log(error);
             switch (error.code) {
             // 账号或者密码错误, 请跳转到登录页面并提示错误
             case 302:
@@ -77,10 +62,6 @@ if(hs_footer.length){
                     timeout: 4000,
                     success: function(data){
                         console.log(data);
-                    },
-                    error: function(xhr, type){
-                        // $.toast(xhr.info);
-                        console.log(type);
                     }
                 });
                 break;
@@ -105,9 +86,6 @@ if(hs_footer.length){
                     $('.newComment').css('display','block');
                 }
             }
-        },
-        error: function(xhr, type){
-        // $.toast('网络错误 code:'+type);
         }
     });
     //购物车数量监控
@@ -121,10 +99,14 @@ if(hs_footer.length){
             if(data.numbers > 0 && $('.shopping-num').length == 1){
                 $('.shopping-num').css('display','block');
             }
-        },
-        error: function(xhr, type){
-        // $.toast('网络错误 code:'+type);
         }
     });
-    
+    function newMessages() {
+        if($('.newMessages').length >= 1){
+            $('.newMessages').css('display','block');
+        }
+        if($('.information').length >= 1){
+            $('.information').css('display','block');
+        }
+    }
 }

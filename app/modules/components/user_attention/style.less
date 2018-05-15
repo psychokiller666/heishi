@@ -1,0 +1,255 @@
+.user_attention{
+  .tab{
+    position: relative;
+    height: 1.17rem;
+    border-bottom: 0.0133rem solid #E8E8E8;
+    .font-dpr(14px);
+    .hs-cf;
+    span{
+      display:  block;
+      width: 50%;
+      float: left;
+      text-align: center;
+      line-height: 1.17rem;
+    }
+    .active{
+      color: #AE2121;
+      position: relative;
+      &:after{
+        content: '';
+        display: block;
+        height: 0.08rem;
+        width: 0.32rem;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+        bottom: 0.1rem;
+        background-color: #AE2121;
+        border-radius: 0.08rem;
+      }
+    }
+  }
+  .seller_user_goods{
+    .recommend_users,
+    .my_fans{
+      .title{
+        position: relative;
+        &:after{
+          content: "";
+          display: block;
+          clear: both;
+        }
+        img{
+          border-radius: 50%;
+          width: 1.07rem;
+          height: 1.07rem;
+          display: block;
+          margin-right: 0.267rem;
+          float: left;
+        }
+        .signature,
+        .user_nicename{
+          width: 6rem;
+          float: left;
+          overflow: hidden;
+          float: left;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          color: #000;
+          .font-dpr(12px);
+        }
+        .user_nicename{
+          .font-dpr(14px);
+          font-weight: 600;
+          line-height: 0.533rem;
+        }
+        .signature{
+          .font-dpr(12px);
+          color: #8E8E8E;
+          margin-top: 0.13rem;
+          line-height: 1em;
+        }
+        .attention{
+          position: absolute;
+          right: 0;
+          line-height: 1em;
+          padding: 0.133rem 0.267rem;
+          border: 0.0267rem solid #000;
+          border-radius: 0.106rem;
+          .font-dpr(12px);
+          font-weight: 700;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+      }
+      .goods_content{
+        padding-top: 0.4rem;
+        width: 9.6rem;
+        height: 4.48rem;
+        overflow: hidden;
+        .goods_list{
+          height: 6rem;
+          overflow-x: auto;
+          white-space: nowrap;
+          a{
+            margin-right: 0.267rem;
+            display: inline-block;
+            width: 7.23rem;
+            .image {
+              background-color: #F5F5F5;
+              background-position: 50% 50%;
+              background-repeat: no-repeat;
+              background-size: 100%;
+              width: 100%;
+              height: 3.68rem;
+              border-radius: 0.16rem;
+            }
+            .post_title{
+              .font-dpr(14px);
+              padding-top: 0.4rem;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              width: 100%;
+              line-height: 1em;
+              color: #000;
+              font-weight: 600;
+            }
+          }
+        }
+      }
+    }
+    .my_fans_content,
+    .recommend_users_content{
+      padding: 0.533rem 0.4rem 0.533rem 0;
+      border-bottom: 0.0133rem solid #E8E8E8;
+      margin-left: 0.4rem;
+      &:last-child{
+        margin-bottom: 0;
+        border-bottom: 0;
+      }
+    }
+  }
+  .commodity_goods{
+    display: none;
+    ul {
+      li {
+        border-bottom: 0.0133rem solid #E8E8E8;
+        margin: 0.533rem 0.4rem 0;
+        position: relative;
+        .hs-cf;
+        .articles{
+          display: block;
+          color: #212121;
+          position: relative;
+          .bg_gradient{
+            width: 9.2rem;
+            height: 4.693rem;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            background: linear-gradient(rgba(1,1,1,0), rgba(0,0,0,0.6));
+            border-radius: 0.16rem;
+          }
+          .image {
+            width: 100%;
+            height: 4.693rem;
+            background-color: #F5F5F5;
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            background-size: 100%;
+            border-radius: 0.16rem;
+          }
+          .title {
+            .font-dpr(14px);
+            line-height: 1em;
+            font-weight: bold;
+            padding: 0.267rem 0;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+        }
+        .clear_collect{
+          position: absolute;
+          top: 3.6rem;
+          right: 0;
+          z-index: 2;
+          width: 1rem;
+          height: 1rem;
+          &:after{
+            content: '\e651';
+            .font-dpr(21px);
+            color: #FFF;
+          }
+        }
+        .user {
+          padding-bottom: 0.533rem;
+          color: #b7b7b7;
+          .hs-cf;
+          .classify{
+            float: right;
+          }
+          .classify_keyword {
+            display: block;
+            .font-dpr(12px);
+            padding: 0 0.133rem;
+            border-radius: 0.107rem;
+            color: #8E8E8E;
+            height: 0.533rem;
+            line-height: 0.533rem;
+            background: #F5F5F5;
+          }
+          .classify_keyword_none{
+            opacity: 0;
+          }
+          .user_info{
+            float: left;
+            line-height: 0.533rem;
+            img{
+              width: 0.533rem;
+              height: 0.533rem;
+              float: left;
+              border-radius: 50%;
+            }
+            span{
+              .font-dpr(12px);
+              float: left;
+              padding-left: 0.213rem;
+              color: #8E8E8E;
+              display: block;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              max-width: 6rem;
+            }
+          }
+        }
+      }
+    }
+  }
+  .relevance{
+    margin-left: 0.4rem;
+    padding: 0.533rem 0.4rem 0 0;
+    border-bottom: 0.0133rem solid #E8E8E8;
+    h4{
+      line-height: 1em;
+      .font-dpr(18px);
+      font-weight: 700;
+      margin-bottom: 0.16rem;
+    }
+    span{
+      line-height: 1em;
+      .font-dpr(12px);
+      color: #8E8E8E;
+    }
+  }
+  .relevance_good{
+    margin: 0 0.4rem;
+    padding: 0.533rem 0 0 0;
+    border-top: none;
+    border-bottom: none;
+  }
+}

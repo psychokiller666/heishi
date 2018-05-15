@@ -1,115 +1,289 @@
-// 聊天
+/*私信详情*/
 .chat {
-  .hs-main {
-    background-color: #ededed;
-    .chat_list {
+  .hs-main{
+    transition: all 0.3s;
+  }
+  .store{
+    height: 1.173rem;
+    background: #FFF;
+    width: 10rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    .user_name{
+      .font-dpr(14px);
+      line-height: 1.17rem;
+      padding-left: 0.4rem;
+    }
+    .user_store{
+      .font-dpr(13px);
+      color: #F9F9F9;
+      width: 1.147rem;
+      height: 0.507rem;
+      border-radius: 0.507rem;
+      background: #AE2121;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 0.4rem;
+      line-height: 0.507rem;
+      text-align: center;
+    }
+  }
+  .reply_content{
+    min-height: 1.306rem;
+    width: 10rem;
+    position: absolute;
+    bottom: 0;
+    z-index: 11;
+    background: #FFF;
+    .reply_input{
+      height: 1.306rem;
+      width: 10rem;
+      .hs-cf;
+      .reply_text{
+        border: none;
+        float: left;
+        width: 6.75rem;
+        height: 0.8rem;
+        .font-dpr(14px);
+        background: #F5F5F5;
+        padding-left: 0.4rem;
+        border-radius: 0.1rem;
+        margin-top: 0.253rem;
+      }
+      .uploading{
+        float: left;
+        display: block;
+        width: 0.64rem;
+        height: 0.64rem;
+        margin-top: 0.33rem;
+        .font-dpr(20px);
+        text-align: center;
+        line-height: 0.64rem;
+        padding-left: 0.4rem;
+        padding-right: 0.4rem;
+        position: relative;
+        &:after{
+          content: '\e65c';
+        }
+      }
+      .submit{
+        position: absolute;
+        top: 0.33rem;
+        right: 0.4rem;
+        .font-dpr(20px);
+        text-align: center;
+        line-height: 0.64rem;
+        &:after{
+          content: '\e663';
+        }
+        &.underway{
+          color: #E8E8E8;
+        }
+      }
+    }
+    .uploader{
+      top: 3rem;
+      left: 0.613rem;
+      position: absolute;
+      width: 1.6rem;
+      height: 2rem;
+      z-index: 99;
+      opacity: 0;
+    }
+    .more{
+      height: 0;
+      transition: all 0.3s;
+      overflow: hidden;
+      .more_select{
+        border-top: 0.0133rem solid #E8E8E8;
+        padding: 1.76rem 0.613rem 0;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        justify-content: space-between;
+        .bts{
+          width: 1.6rem;
+          position: relative;
+          .hs-icon{
+            .font-dpr(22px);
+            width: 1.6rem;
+            height: 1.6rem;
+            box-sizing: border-box;
+            border-radius: 0.16rem;
+            border: 0.0133rem solid #E8E8E8;
+            line-height: 1.6rem;
+            text-align: center;;
+          }
+          &.image .hs-icon:after{
+            content: '\e657';
+          }
+          &.order .hs-icon:after{
+            content: '\e658';
+          }
+          &.history .hs-icon:after{
+            content: '\e65b';
+          }
+          &.complain .hs-icon:after{
+            content: '\e65a';
+          }
+          .title{
+            .font-dpr(13px);
+            text-align: center;
+            margin-top: 0.16rem;
+            line-height: 0.48rem;
+          }
+        }
+      }
+    }
+  }
+  .report_form{
+    position: absolute;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    display: none;
+    .report_content{
+      background: #FFF;
+      .font-dpr(14px);
+      padding: 0.28rem 0.3rem;
+      textarea{
+        display: block;
+        border: none;
+        resize: none;
+        font-size: 0.4rem;
+        width: 100%;
+      }
+      .report_keywords{
+        float: left;
+        .report_form_keyword{
+          padding: 0.3rem .44rem;
+          margin-top: 0.5rem;
+          display: inline-block;
+        }
+      }
+      .btns{
+        text-align: right;
+        .report_form_close{
+          padding: 0.3rem .44rem;
+          color: #9d9d9d;
+          border-radius: 3px;
+          margin-top: 0.5rem;
+          display: inline-block;
+        }
+        .report_form_sub{
+          padding: 0.3rem .44rem;
+          background-color: #AE2121;
+          color: #fff;
+          border-radius: 0.1rem;
+          display: inline-block;
+        }
+      }
+    }
+  }
+  .hs-main{
+    background-color: #F5F5F5;
+    .chat_list{
+      top: 0;
+      .no_more{
+        height: 0;
+        width: 10rem;
+      }
       ul {
-        padding: 0 0.4rem;
-        .hs-cf();
+        padding: 0.6rem 0.4rem 0;
         li {
           padding-top: 0.293333rem;
           width: 100%;
-          .hs-cf();
+          .hs-cf;
           &:last-child {
             padding-bottom: 0.293333rem;
           }
-          &.others {
-            .avatar {
-              float: left;
-            }
-            .content_bd {
-              background-color: #fff;
-              float: left;
-              margin-left: 0.333333rem;
-              color: #111;
-
-              &:after {
-                left: -0.22rem;
-                top: 0;
-                width: 0;
-                height: 0;
-                border-top: 0 solid transparent;
-                border-right: 0.24rem solid #fff;
-                border-bottom: 0.16rem solid transparent;
-              }
-            }
+          .avatar{
+            width: 1.07rem;
+            height: 1.07rem;
           }
-          &.me {
-            .avatar {
-              float:right;
-            }
-            .content_bd {
-              background-color: #68be8d;
-              float:right;
-              margin-right: 0.333333rem;
-              color: #fff;
-              &:after {
-                right: -0.22rem;
-                top: 0;
-                border-top: 0.16rem solid #68be8d;
-                border-right: 0.24rem solid transparent;
-              }
-            }
-          }
-          &.user {
-            .avatar {
-              float:left;
-            }
-            .content_bd {
-              background-color: #68be8d;
-              float:left;
-              margin-left: 0.333333rem;
-              color: #fff;
-              &:after {
-                left: -0.22rem;
-                top: 0;
-                border-top: 0.16rem solid #68be8d;
-                border-left: 0.24rem solid transparent;
-              }
-            }
-          }
-          .date{
-            text-align: center;
-            .font-dpr(12px);
-            color: #9a9a9a;
-            display: block;
-          }
-          .avatar {
-            width: 0.906667rem;
-            height: 0.906667rem;
-          }
-          .content_bd {
-            .font-dpr(14px);
-            max-width: 5.973333rem;
-            padding: 0.266667rem 0.333333rem;
-            border-radius: 0.066667rem;
-            margin-top: 0.213333rem;
+          .content_bd{
+            .font-dpr(13px);
+            max-width: 5.98rem;
+            padding: 0.3rem;
+            border-radius: 0.08rem;
+            margin-top: 0;
             position: relative;
-            word-wrap:break-word;
+            word-wrap: break-word;
             .image {
               width: 2rem;
               height: 2rem;
+              border-radius: 0.08rem;
               background-position: 50% 50%;
               background-repeat: no-repeat;
               -webkit-background-size: cover;
             }
             &:after {
-              position: absolute;
               content: '';
-              width: 0.213333rem;
-              height: 0.186667rem;
+              position: absolute;
+            }
+          }
+          .date{
+            .font-dpr(12px);
+            transform: scale(0.8);
+            color: #8E8E8E;
+            display: block;
+            width: 7.5rem;
+            clear: both;
+            margin: 0 auto;
+          }
+          &.me{
+            .avatar{
+              background-image: url(//dev.ontheroadstore.com/tpl/simplebootx_mobile/Public/images/headicon_128.png);
+              float:right;
+            }
+            .content_bd{
+              background-color: #E8E8E8;
+              float:right;
+              margin-right: 0.6rem;
+              color: #000;
+              &:after{
+                right: -0.3rem;
+                top: 0.26rem;
+                border-top: 0.3rem solid transparent;
+                border-left: 0.4rem solid #E8E8E8;
+                border-bottom: 0.3rem solid transparent;
+              }
+            }
+            .date{
+              text-align: right;
+            }
+          }
+          &.user{
+            .avatar{
+              background-image: url(//dev.ontheroadstore.com/tpl/simplebootx_mobile/Public/images/headicon_128.png);
+              float:left;
+            }
+            .content_bd{
+              background-color: #FFF;
+              float:left;
+              margin-left: 0.6rem;
+              color: #000;
+              &:after{
+                left: -0.3rem;
+                top: 0.26rem;
+                border-top: 0.3rem solid transparent;
+                border-right: 0.4rem solid #FFF;
+                border-bottom: 0.3rem solid transparent;
+              }
+            }
+            .date{
+              text-align: left;
             }
           }
         }
       }
     }
   }
-  /*没有消息时*/
-  .no_session{
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    line-height: 70vh;
-    .font-dpr(15px);
-  }
 }
+

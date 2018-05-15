@@ -9,20 +9,28 @@ $(document).on('pageInit','.center', function(e, id, page){
     return false;
   }
   var init = new common(page);
+  var desc = $('.desc').hasClass('no_desc');
+  if(desc){
+    desc = '为你不着边际的企图心';
+  }else{
+    desc = $('.desc').text();
+  }
   if($('.user_inedx').length){
     var share_data = {
-      title: '帮你发现点牛逼物件，爱点不点 | 黑市',
-      desc: '这里能让好事自然发生',
-      link: window.location.href,
-      img: $('.avatar').data('layzr')
+      title: $('.username').text() + ' — 帮你发现点牛逼物件，爱点不点',
+      desc: desc,
+      link: GV.HOST + 'User/index/index/id/' + $('.user_inedx').attr('data-id') + '.html',
+      url: GV.HOST + 'User/index/index/id/' + $('.user_inedx').attr('data-id') + '.html',
+      img: $('.avatar').data('share')
     };
     init.wx_share(share_data);
   } else {
     init.wx_share(false);
   }
 
-  // 检查是否有新的消息
-  init.msg_tip();
+
+
+
   // 高度补丁
   $('.hs-main').css('top','0');
 
@@ -49,54 +57,49 @@ $(document).on('pageInit','.center', function(e, id, page){
 
   // 别人的个人中心
   var store_list = $('.user_inedx');
-  var attention_btn = $('.attention-btn');
+  var attention = $('.attention');
   if(store_list.length){
     // 检查是否关注
-    if(attention_btn.length){
-      $.post('/index.php?g=user&m=HsFellows&a=ajax_relations',{
-        my_uid:attention_btn.data('myuid'),
-        other_uid:attention_btn.data('id')
-      },function(data){
-        if(data.relations == '2' || data.relations == '3') {
-          attention_btn.addClass('active');
-          attention_btn.text('取消关注');
-        } else if(data.relations == '1' || data.relations == '0') {
-          attention_btn.removeClass('active');
-          attention_btn.html('关注');
-        }
-      });
-      // 操作关注 & 取消关注
-      attention_btn.on('click',function(){
 
-        if($(this).hasClass('active')){
-          // 取消关注
-          $.post('/index.php?g=user&m=HsFellows&a=ajax_cancel',{
-            uid:$(this).data('id')
-          },function(data){
-            if(data.status == '1') {
-              attention_btn.text('关注');
-              attention_btn.removeClass('active');
-              $.toast(data.info);
-            } else {
-              $.toast(data.info);
-            }
-          });
+    $.post('/index.php?g=user&m=HsFellows&a=ajax_relations',{
+      my_uid: attention.data('myuid'),
+      other_uid: attention.data('id')
+    },function(data){
+      if(data.relations == '2' || data.relations == '3') {
+        $('.cancel_attention').show();
+      } else if(data.relations == '1' || data.relations == '0') {
+        attention.show();
+      }
+    });
+    attention.click(function(){
+      // 关注
+      $.post('/index.php?g=user&m=HsFellows&a=ajax_add',{
+        uid: $(this).data('id')
+      },function(data){
+        if(data.status == '1') {
+          $('.cancel_attention').show();
+          $('.attention').hide();
+          $.toast(data.info);
         } else {
-          // 关注
-          $.post('/index.php?g=user&m=HsFellows&a=ajax_add',{
-            uid:$(this).data('id')
-          },function(data){
-            if(data.status == '1') {
-              attention_btn.text('取消关注');
-              attention_btn.addClass('active');
-              $.toast(data.info);
-            } else {
-              $.toast(data.info);
-            }
-          });
+          $.toast(data.info);
         }
       });
-    }
+    })
+    $('.cancel_attention').click(function(){
+      // 取消关注
+      $.post('/index.php?g=user&m=HsFellows&a=ajax_cancel',{
+        uid: $(this).data('id')
+      },function(data){
+        if(data.status == '1') {
+          $('.cancel_attention').hide();
+          $('.attention').show();
+          $.toast(data.info);
+        } else {
+          $.toast(data.info);
+        }
+      });
+    })
+
 
     if(store_list.find('li').length <= 19) {
       $('.infinite-scroll-preloader').remove();
@@ -158,7 +161,11 @@ $(document).on('pageInit','.center', function(e, id, page){
         $.refreshScroller();
       });
     }
-  }else{
+  }
+
+
+
+  if(store_list.length == 0){
     // 弹出绑定手机窗口 自己的个人中心
     var redirect_uri = null;
     $.ajax({
@@ -168,6 +175,9 @@ $(document).on('pageInit','.center', function(e, id, page){
         if(data.status == 1){
           redirect_uri = data.redirect_uri;
           $('.login').animate({'top': '0'}, 400);
+        }
+        if(data.status == 3){
+          $('.binding').css('display', 'none');
         }
       }
     })
@@ -213,6 +223,10 @@ $(document).on('pageInit','.center', function(e, id, page){
           }
         }
       })
+    })
+
+    $('.binding').click(function(){
+      $('.login').css('top',0);
     })
   }
   function count_down(that){

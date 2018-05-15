@@ -24,11 +24,11 @@ html {
   /*李晓峰使用iconfont*/
   @font-face {
     font-family: 'iconfont';  /* project id 254858 */
-    src: url('//at.alicdn.com/t/font_254858_d9t74bsnmqd50zfr.eot');
-    src: url('//at.alicdn.com/t/font_254858_d9t74bsnmqd50zfr.eot?#iefix') format('embedded-opentype'),
-    url('//at.alicdn.com/t/font_254858_d9t74bsnmqd50zfr.woff') format('woff'),
-    url('//at.alicdn.com/t/font_254858_d9t74bsnmqd50zfr.ttf') format('truetype'),
-    url('//at.alicdn.com/t/font_254858_d9t74bsnmqd50zfr.svg#iconfont') format('svg');
+    src: url('//at.alicdn.com/t/font_254858_stsdv6eqk2qbmx6r.eot');
+    src: url('//at.alicdn.com/t/font_254858_stsdv6eqk2qbmx6r.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_254858_stsdv6eqk2qbmx6r.woff') format('woff'),
+    url('//at.alicdn.com/t/font_254858_stsdv6eqk2qbmx6r.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_254858_stsdv6eqk2qbmx6r.svg#iconfont') format('svg');
   }
   a {
     text-decoration: none;
@@ -50,9 +50,29 @@ html {
     -webkit-overflow-scrolling: touch;
   }
 }
+/*iphoneX适配*/
+@media (device-width: 375px) and (device-height: 812px){
+ .iphoneX_footer{
+  padding-bottom: 0.9067rem;
+ }
+ .iphoneX_btn_padding{
+  bottom: 0.9067rem !important;
+ }
+ .iphoneX_padding{
+  padding-bottom: 2.213rem !important;
+ }
+ .iphoneX_padding_bottom{
+  padding-bottom: 0.9067rem !important;
+ }
+ .iphoneX_btn{
+  bottom: 3.136rem !important;
+ }
+ .iphoneX_btn_index{
+  bottom: 1.856rem !important;
+ }
+}
 /* 包含 */
 @import "../modules/less/common.less";
-@import "../modules/components/btn/style.less";
 @import "../modules/components/form/style.less";
 
 /* 头部 */
@@ -66,6 +86,11 @@ html {
 @import "../modules/components/notice/style.less";
 /* 商品发布 */
 @import "../modules/components/add/style.less";
+
+
+/* 分类 */
+@import "../modules/components/categories/style.less";
+
 
 /* 文化 */
 /* 文化列表 */
@@ -88,19 +113,6 @@ html {
 
 
 /* 用户 */
-/* 提现 */
-@import "../modules/components/user_withdraw/style.less";
-/* 发货 */
-/* 头部 */
-@import "../modules/components/already_header/style.less";
-/* 未发货 */
-@import "../modules/components/already_list/style.less";
-/* 填写快递 */
-@import "../modules/components/deliver/style.less";
-/* 发过的帖子 */
-@import "../modules/components/posts/style.less";
-/* 提现列表 */
-@import "../modules/components/user_withdraw_list/style.less";
 /* 投诉 */
 @import "../modules/components/user_complaints/style.less";
 /* 投诉结果 */
@@ -108,33 +120,19 @@ html {
 
 
 /* 私信 */
-/* 头部 */
-@import "../modules/components/chat_header/style.less";
-/* 底部 */
-@import "../modules/components/chat_footer/style.less";
 /* 聊天列表 */
 @import "../modules/components/chat_list/style.less";
 /* 私信列表 */
 @import "../modules/components/chat_list_group/style.less";
 
 /* 用户 */
-/* 别人的用户中心 */
-@import "../modules/components/user_index_header/style.less";
-/* 我的用户中心 */
+/* 用户中心(我的，他人) */
 @import "../modules/components/user_index/style.less";
 /* 我的消息 */
 @import "../modules/components/user_message/style.less";
 @import "../modules/components/user_comment/style.less";
-/* 粉丝列表 */
-@import "../modules/components/fans_list/style.less";
 /* 卖家动态 */
 @import "../modules/components/seller_list/style.less";
-/* 买过的东西 */
-@import "../modules/components/bought/style.less";
-/* 退款 */
-@import "../modules/components/refund/style.less";
-/* 退款详细 */
-@import "../modules/components/refund_detail/style.less";
 
 @import "../modules/components/user_personal/style.less";
 
@@ -150,11 +148,31 @@ html {
 /* 支付 */
 /* 打赏 */
 @import "../modules/components/pay_reward/style.less";
-/* 未关注遮罩框 */
-@import "../modules/components/checkfollow/style.less";
 /* 物流 */
 @import "../modules/components/user_recruitment/style.less";
 /*购物车*/
 @import "../modules/components/user_mychart/style.less";
 /*购物车*/
 @import "../modules/components/login/style.less";
+
+/*应用横栏*/
+@import "../modules/components/streamer/style.less";
+
+/*买家订单*/
+@import "../modules/components/user_buyOrder/style.less";
+
+/*评论*/
+@import "../modules/components/comment/style.less";
+
+/*点赞用户列表*/
+@import "../modules/components/like_list/style.less";
+/*收货地址*/
+@import "../modules/components/user_address/style.less";
+/*搜索模块*/
+@import "../modules/components/search_list/style.less";
+/*加入黑市*/
+@import "../modules/components/user_join_hs/style.less";
+/*我关注的*/
+@import "../modules/components/user_attention/style.less";
+/*浏览记录*/
+@import "../modules/components/user_hisotories/style.less";

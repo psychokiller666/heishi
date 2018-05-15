@@ -1,82 +1,330 @@
-// 文化列表
+/*文化列表*/
 .culture_list {
+    .headline{
+        h4{
+            padding: .533rem .4rem 0;
+            .font-dpr(20px);
+            font-weight: 600;
+        }
+        span{
+            display: block;
+            .font-dpr(12px);
+            color: #8E8E8E;
+            padding: .16rem .4rem .133rem;
+            line-height: 1em;
+        }
+    }
     ul {
-        /*padding: 0.32rem 0.32rem 0 0.32rem;*/
-        padding: 0.16rem;
+        padding: 0.4rem;
         li {
+            width: 9.2rem;
             position: relative;
             background-color: #fff;
-            padding-bottom: 0.26rem;
-            margin-bottom: 0.26rem;
-            border-bottom: 1px solid rgba(211, 211, 211, .8);
             a {
-                color: #282828;
-                display: block;
+                color: #000;
                 .font-dpr(15px);
                 .hs-cf;
+                display: block;
+                position: relative;
             }
-            .img {
-                width: 3.173333rem;
-                height: 2.32rem;
+            .image {
+                width: 9.2rem;
+                height: 3.84rem;
                 overflow: hidden;
-                float: left;
-                background-image: url(../img/index_loading.gif);
+                background-color: #F5F5F5;
                 background-position: 50% 50%;
                 background-repeat: no-repeat;
                 background-size: cover;
+                border-radius: 0.16rem;
+                box-shadow: 0 0.213rem  0.467rem rgba(0,0,0,0.15);
             }
-            .img img {
-                min-width: 100%;
-            }
-            .text {
-                width: 5.76rem;
-                float: right;
-                h2 {
-                    display: -webkit-box;
+            .text{
+                margin-bottom: 0.85rem;
+                position: relative;
+                .hs-cf;
+                .title{
+                    width: 6.5rem;
+                    height: 0.96rem;
+                    line-height: 0.48rem;
+                    .font-dpr(14px);
                     overflow: hidden;
-                    text-overflow: ellipsis;
-                    -webkit-box-orient: vertical;
-                    -webkit-line-clamp: 2;
-                }
-            }
-            .info {
-                position: absolute;
-                right: 0;
-                bottom: 0.266667rem;
-                .font-line-height(14px);
-                span {
-                   .font-dpr(12px);
-                   text-align: left;
-                   margin-left: .28rem;
-                   position: relative;
-                   padding-left: .7rem;
-                   display: block;
-                   float: left;
-                   text-align: right;
-                   i {
-                    font-style: normal;
-                    .font-dpr(18px);
+                    left: 2.453rem;
+                    top: 0.4rem;
+                    font-weight: 600;
                     position: absolute;
-                    left: 0;
-                    &.views:before {
-                        content: "\e60f";
+                }
+                .time{
+                    float: left;
+                    margin-top: 0.32rem;
+                    .creat_d{
+                        .font-dpr(40px);
+                        float: left;
+                        line-height: 1em;
                     }
-                    &.comments:before {
-                        content: "\e60e";
-                    }
-                    &.praises:before {
-                        content: "\e60d";
+                    .creat_m{
+                        .font-dpr(17px);
+                        line-height: 1.4em;
+                        float: left;
+                        margin-left: 0.12rem;
                     }
                 }
             }
         }
-        &:last-child {
-                // padding-bottom:0;
-                margin-bottom: 0;
+    }
+}
+
+/*文化详情*/
+.culture_details{
+    .frontcover{
+        width: 100%;
+        height: 5.6rem;
+        position: relative;
+        color: #FFF;
+        &:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: inherit;
+            background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 0.8)), color-stop(0.2, rgba(0, 0, 0, 0)));
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0.8) 100%);
+            z-index: 1;
+        }
+        .image {
+            height: 5.6rem;
+            width: 10rem;
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-color: #F5F5F5;
+        }
+        .title{
+            position: absolute;
+            top: 2.53rem;
+            line-height: 1.2em;
+            .font-dpr(18px);
+            z-index: 2;
+            padding: 0 0.334rem;
+        }
+        .culture_info{
+            z-index: 2;
+            position: absolute;
+            bottom: 0.54rem;
+            padding-left: 0.334rem;
+            .font-dpr(13px);
+            width: 100%;
+            div{
+                float: left;
+            }
+            img{
+                display: inline-block;
+                height: 0.46rem;
+                vertical-align: top;
+                margin-right: 0.15rem;
             }
         }
-        .dropload-down {
-            border: none;
+    }
+    .content_bd {
+        padding: 0.346667rem 0.413333rem;
+        .font-dpr(15px);
+        color: #212121;
+        overflow: hidden;
+        text-align: justify;
+        word-break: break-all;
+        p{
+            line-height: 0.65rem;
+            letter-spacing: 1px;
         }
+        h1{
+            .font-dpr(32px);
+            font-weight: 400;
+        }
+        h2{
+            .font-dpr(24px);
+            font-weight: 400;
+        }
+        h3{
+            .font-dpr(18px);
+            font-weight: 400;
+        }
+        h4{
+            .font-dpr(16px);
+            font-weight: 400;
+        }
+        h5{
+            .font-dpr(13px);
+            font-weight: 400;
+        }
+        h6{
+            .font-dpr(12px);
+            font-weight: 400;
+        }
+        strong{
+            font-weight: 700 !important;
+        }
+        p {
+            overflow: hidden;
+            padding-bottom: 0.16rem;
+        }
+        img {
+            width: 100%;
+            display: block;
+            padding: 0.2rem 0;
+        }
+    }
+    /* 点赞 */
+    .praise {
+        border-bottom: 0.2rem solid #F5F5F5;
+        padding-bottom: 0.46rem;
+        .hs-cf;
+        .header {
+            color: #878787;
+            height: 1.173333rem;
+            position: relative;
+            margin: 0 0.333333rem;
+            padding: 0;
+            &:after {
+                position: absolute;
+                width: 100%;
+                height: 1px;
+                top: 50%;
+                left: 0;
+                content: "";
+                border-top: 0.013rem solid rgba(153,153,153,0.3);
+            }
+            h2 {
+                .font-dpr(14px);
+                z-index: 10;
+                color: #878787;
+                position: absolute;
+                display: block;
+                background-color: #fff;
+                .hs-cf;
+                line-height: 1.15rem;
+                height: 1.15rem;
+                left: 50%;
+                padding: 0 .4rem;
+                top: 1px;
+                text-align: center;
+                transform: translateX(-50%);
+            }
+        }
+        /* 点赞列表 */
+        .like_list{
+            display: flex;
+            justify-content: space-between;
+            padding: 0 0.334rem;
+            a {
+                display: block;
+                width: 1rem;
+                height: 1rem;
+                background-repeat: no-repeat;
+                -webkit-background-size: cover;
+                border-radius: 50%;
+                position: relative;
+            }
+            .external{
+                background-image: url(//img8.ontheroadstore.com/upload/180117/e2cf78b9c74f2d82053afd2b842ad7a7.png);
+            }
+            .praise_btn{
+                background: none;
+                text-align: center;
+            }
+            .praise_btn:after{
+                content: "\e656";
+                .font-dpr(20px);
+                line-height: 1rem;
+                text-align: center;
+            }
+            .praise_btn_success:after{
+                content: "\e660";
+                .font-dpr(20px);
+                line-height: 1rem;
+                text-align: center;
+                color: #AE2121;
+            }
+            .success{
+                color: #AE2121;
+            }
+            .more:after{
+                content: "";
+                background-image: url(//img8.ontheroadstore.com/upload/171227/0b340ed9beec108febe3397c7037ae15.png);
+                background-size: 100% 100%;
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                border-radius: 50%;
+            }
+        }
+    }
+    /*评论*/
+    .comment{
+        margin: 0 0.334rem;
+        position: relative;
+        h2{
+            padding: 0.4rem 0 0.533rem 0;
+            .font-dpr(16px);
+            line-height: 0.64rem;
+            font-weight: 700;
+            line-height: 0.4267rem;
+        }
+        .comment_btn{
+            margin-bottom: 0.4rem;
+            text-align: center;
+            .font-dpr(13px);
+            line-height: 0.933rem;
+            color: #919191;
+            background: #F5F5F5;
+            border-radius: 0.18rem;
+        }
+        .comment_all{
+            height: 1.44rem;
+            line-height: 1.44rem;
+            text-align: center;
+            font-weight: 700;
+            color: #000;
+            .font-dpr(14px);
+            display: none;
+        }
+    }
+    /*相关阅读*/
+    .correlation{
+        border-top: 0.2rem solid #F5F5F5;
+        padding: 0 0.334rem;
+        h2{
+            padding: 0.4rem 0 0.533rem 0;
+            .font-dpr(16px);
+            line-height: 0.64rem;
+            font-weight: 700;
+            line-height: 0.4267rem;
+        }
+        .correlation_list{
+            .hs-cf;
+            color: #000;
+            margin-bottom: 0.34rem;
+            display: block;
+            .image{
+                float: left;
+                width: 4.13rem;
+                height: 2.3rem;
+                background-size: cover;
+                background-color: #F5F5F5;
+                border-radius: 0.16rem;
+            }
+            .title{
+                width: 4.9rem;
+                .font-dpr(14px);
+                height: 1rem;
+                overflow: hidden;
+                float: right;
+            }
+
+        }
+    }
+    .return_top{
+        bottom: 3.7rem;
     }
 }
