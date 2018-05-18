@@ -412,7 +412,7 @@ $(document).on('pageInit','.user_comment_list', function (e, id, page) {
           init.loadimg();
         }
         // 评论数不足一屏幕
-        if($('.comment_bd').height() < 800){
+        if($('.comment_bd').height() < $('body').height()){
           $('.infinite-scroll-preloader').remove();
           $('.bottom_alert').css('display', 'block');
         }

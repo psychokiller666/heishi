@@ -1,6 +1,8 @@
 // 关注
 // 初始化
 var common = require('../common/common.js');
+// 搜索
+var SearchInit = require('../search_list/search_list.js');
 
 $(document).on('pageInit','.atten', function(e, id, page){
 	if (page.selector == '.page'){
@@ -10,7 +12,8 @@ $(document).on('pageInit','.atten', function(e, id, page){
   	init.checkfollow();
   	init.wx_share(false);
 
-
+  	// 搜索初始
+	SearchInit();
 	//当用户下拉时
 	var hs_footer_height = $('.hs-footer').height() + 'px';
 	$(".content").on('scroll',function(){

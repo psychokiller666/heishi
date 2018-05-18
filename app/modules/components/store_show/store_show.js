@@ -417,20 +417,62 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
 
 
 
-
-
-
-
-
-
-
   // 特价跳转
   $('.special_offer').click(function(){
     location.href= GV.app_url;
   })
   // 卖家全部商品
-  $('.user_info').click(function(){
+  $('.user_img').click(function(){
     location.href= '/User/index/index/id/'+$(this).attr('data-id')+'.html';
+  })
+  // 卖家全部商品
+  $('.user_name').click(function(){
+    location.href= '/User/index/index/id/'+$(this).attr('data-id')+'.html';
+  })
+  // 卖家全部商品
+  $('.user_signature').click(function(){
+    location.href= '/User/index/index/id/'+$(this).attr('data-id')+'.html';
+  })
+
+  // 是否关注当前卖家
+  var attention = $('.attention');
+  $.post('/index.php?g=user&m=HsFellows&a=ajax_relations',{
+    my_uid: attention.data('meid'),
+    other_uid: attention.data('uid')
+  },function(data){
+    if(data.relations == '2' || data.relations == '3') {
+      $('.cancel_attention').show();
+    } else if(data.relations == '1' || data.relations == '0') {
+      attention.show();
+    }
+  });
+  attention.click(function(){
+    // 关注
+    $.post('/index.php?g=user&m=HsFellows&a=ajax_add',{
+      uid: $(this).data('uid')
+    },function(data){
+      if(data.status == '1') {
+        $('.cancel_attention').show();
+        $('.attention').hide();
+        $.toast(data.info);
+      } else {
+        $.toast(data.info);
+      }
+    });
+  })
+  $('.cancel_attention').click(function(){
+    // 取消关注
+    $.post('/index.php?g=user&m=HsFellows&a=ajax_cancel',{
+      uid: $(this).data('uid')
+    },function(data){
+      if(data.status == '1') {
+        $('.cancel_attention').hide();
+        $('.attention').show();
+        $.toast(data.info);
+      } else {
+        $.toast(data.info);
+      }
+    });
   })
 
   // 微信预览图片

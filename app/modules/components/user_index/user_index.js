@@ -167,13 +167,11 @@ $(document).on('pageInit','.center', function(e, id, page){
 
   if(store_list.length == 0){
     // 弹出绑定手机窗口 自己的个人中心
-    var redirect_uri = null;
     $.ajax({
       url: '/index.php?g=restful&m=HsMobile&a=ajax_check_mobile_login&pagename=homepage',
       type: 'GET',
       success: function(data){
         if(data.status == 1){
-          redirect_uri = data.redirect_uri;
           $('.login').animate({'top': '0'}, 400);
         }
         if(data.status == 3){
@@ -215,11 +213,10 @@ $(document).on('pageInit','.center', function(e, id, page){
         },
         success: function(res) {
           if(res.status == 1){
-            var str = redirect_uri + '&code=' + res.code;
+            var str = res.redirect_uri + '&code=' + res.code;
             location.href = str;
           } else {
             $.toast(res.info);
-            // console.log(res);
           }
         }
       })

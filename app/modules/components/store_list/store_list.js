@@ -1,6 +1,8 @@
 // 商品列表
 // 初始化
 var common = require('../common/common.js');
+// 搜索
+var SearchInit = require('../search_list/search_list.js');
 
 $(document).on('pageInit','.index_list', function (e, id, page) {
   if (page.selector == '.page'){
@@ -18,6 +20,9 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
   };
   init.wx_share(share_data);
   init.checkfollow();
+
+  // 搜索初始
+  SearchInit();
 
   var mySwiper = new Swiper('.swiper-container',{
     loop: true,

@@ -1,7 +1,5 @@
 // 搜索
-$(function(){
-  if($('.search_list').length == 1){
-
+var SearchInit = function () {
   	var start_num = 0;
 	var search_content = null;
 	var last_page = null;
@@ -208,7 +206,7 @@ $(function(){
 							        <div class="user">\
 							          <div class="user_info">\
 							            <a href="/User/index/index/id/'+item.goods_author_uid+'.html" class="external">\
-							              <img src="'+item.goods_author_avatar+'">\
+							              <img src="'+item.goods_author_avatar+'" />\
 							              <span>'+item.goods_author_nickname+'</span>\
 							            </a>\
 							          </div>\
@@ -228,5 +226,6 @@ $(function(){
 		    }
 		});
 	}
-  }
-})
+}
+
+module.exports = SearchInit;
