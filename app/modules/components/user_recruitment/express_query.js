@@ -10,6 +10,5 @@ $(document).on('pageInit', '.logistique', function (e, id, page) {
     return false;
   }
   var init = new common(page);
-  init.wx_share(false);
 
 });

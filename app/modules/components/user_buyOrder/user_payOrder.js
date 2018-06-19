@@ -6,7 +6,6 @@ $(document).on('pageInit','.pay_order', function(e, id, page){
     return false;
   }
   var init = new common(page);
-  init.wx_share(false);
   init.checkfollow();
   $('.pay_btn').on( 'click',function() {
     if($('.is_normal').val() != 1){

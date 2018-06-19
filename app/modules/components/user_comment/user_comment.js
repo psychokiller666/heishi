@@ -8,7 +8,6 @@ $(document).on('pageInit','.user_message_list', function (e, id, page) {
     return false;
   }
   var init = new common(page);
-  init.wx_share(false);
   page.on('click', '.openComment', function(){
     var id = $(this).attr('data-id');
     $(this).find('.avatar').removeClass('new');

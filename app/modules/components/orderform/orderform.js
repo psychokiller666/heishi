@@ -9,7 +9,6 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
     return false;
   }
   var init = new common(page);
-  init.wx_share(false);
 
   $('.min').click(function(){
     var num = parseInt($('.countNum').attr('data-num'));

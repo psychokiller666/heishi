@@ -9,7 +9,6 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
     return false;
   }
   var init = new common(page);
-  init.wx_share(false);
   
   // 判断链接 显示回到首页
   if(location.pathname != '/user/HsMessage/lists.html'){

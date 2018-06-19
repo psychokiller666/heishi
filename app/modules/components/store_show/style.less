@@ -715,7 +715,7 @@
     z-index: 99999;
     .buy_content{
         width: 100%;
-        height: 10.4rem;
+        height: 12.9rem;
         position: absolute;
         bottom: 0;
         background: #FFF;
@@ -774,11 +774,14 @@
         }
     }
     .style{
-        margin: 0 0.4rem;
-        max-height: 4rem;
+        max-height: 7.1rem;
         overflow-y: auto;
         box-sizing: border-box;
+        -webkit-overflow-scrolling: touch;
         padding-bottom: 0.4rem;
+        .style_content{
+            margin: 0 0.4rem;
+        }
         .presell_item,
         .good_num,
         .types{
@@ -846,6 +849,10 @@
         .presell_item{
             margin-bottom: 0.533rem;
             display: none;
+        }
+        .types .label{
+            top: 0;
+            transform: translateY(0);
         }
         .good_num{
             margin-top: 0.213rem;

@@ -9,7 +9,6 @@ $(document).on('pageInit','#user_people', function (e, id, page) {
     return false;
   }
   var init = new common(page);
-  init.wx_share(false);
 
   var commodity_list_tpl = handlebars.compile($('#commodity_list_tpl').html());
   var loading = false;

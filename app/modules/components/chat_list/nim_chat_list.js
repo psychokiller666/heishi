@@ -11,7 +11,6 @@ $(document).on('pageInit','.detail', function (e, id, page) {
     return false;
   }
   var init = new common(page);
-  init.wx_share(false);
   // 初始底部
   $('.hs-main').css('bottom', $('.reply_content').height() + 'px');
 

@@ -15,7 +15,6 @@ $(document).on('pageInit','.detail', function (e, id, page) {
     return false;
   }
   var init = new common(page);
-  init.wx_share(false);
 
   // 回复私信
   var chat_list = $('.chat_list');

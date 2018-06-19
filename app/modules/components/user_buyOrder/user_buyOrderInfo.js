@@ -6,7 +6,6 @@ $(document).on('pageInit','.order_info', function(e, id, page){
     return false;
   }
   var init = new common(page);
-  init.wx_share(false);
   init.checkfollow();
 
   // 立即购买

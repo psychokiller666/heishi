@@ -7,19 +7,17 @@ $(document).on('pageInit','.jump', function(e, id, page){
     return false;
   }
   var init = new common(page);
-  init.wx_share(false);
   var status_pay = $('.status_pay').val();
   //支付成功
   // if($('.success').length && status_pay == 0){
   if($('.success').length){
-    $.showPreloader('确认支付中');
-    setTimeout(function(){
-      $.hidePreloader();
-      $('.no_data').text('支付成功');
-    },1000);
-    setTimeout(function(){
-      window.location.href = $('.no_data').data('url');
-    },2000);
+    $.toast('支付成功');
+    $('.return_index_btn').click(function(){
+      window.location.href = '/Portal/Index/index.html';
+    })
+    $('.return_order_list').click(function(){
+      window.location.href = '/user/HsBuyorder/order_deliver.html';
+    })
   }
   //支付错误
   if($('.error').length) {
@@ -32,7 +30,6 @@ $(document).on('pageInit','.jump', function(e, id, page){
         history.go(-1);
       },3000);
     }
-
   }
 
   //活动 支付成功

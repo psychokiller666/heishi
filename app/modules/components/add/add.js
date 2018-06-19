@@ -9,7 +9,6 @@ $(document).on('pageInit','.add', function (e, id, page) {
     return false;
   }
   var init = new common(page);
-  init.wx_share(false);
   // 上传图片
   var images = $('.images');
   var submit_btn = $('.hs-footer .submit');

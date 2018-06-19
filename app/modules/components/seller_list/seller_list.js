@@ -8,8 +8,6 @@ $(document).on('pageInit','.seller_list', function(e, id, page){
     return false;
   }
   var init = new common(page);
-  // 调用微信分享sdk
-  init.wx_share(false);
   // 检查是否有新的消息
   init.msg_tip();
   // 列表首页_通用底部发布

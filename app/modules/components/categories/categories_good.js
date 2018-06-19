@@ -13,7 +13,6 @@ $(document).on('pageInit','.categories_good', function(e, id, page){
     title: $('.categories_name').val() + ' - 公路商店',
     desc: '这里能让好事自然发生',
     link: window.location.href,
-    url: window.location.href,
     img: $('.categories_icon').val()
   };
   init.wx_share(share_data);

@@ -7,7 +7,6 @@ $(document).on('pageInit','.user_attention', function (e, id, page) {
 		return false;
 	}
 	var init = new common(page);
-	init.wx_share(false);
 	init.checkfollow();
 	$('.tab').on('click', '.user', function(){
 		$('.commodity_goods').css('display', 'none');

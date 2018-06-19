@@ -4,7 +4,11 @@ if(hs_footer.length){
 
     var myId = $('#my_id').val();
     var IMmyId = $('#my_id').val();
-
+    // 如果是卖家中心
+    if($('.user_index').length){
+        myId = $('.attention').attr('data-myuid');
+        IMmyId = $('.attention').attr('data-myuid');
+    }
     var IMnim = null;
     // 测试环境 网易id加hstest
     if(GV.HOST != 'http://hs.ontheroadstore.com/'){

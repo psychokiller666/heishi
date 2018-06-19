@@ -6,7 +6,6 @@ $(document).on('pageInit','.login', function(e, id, page){
     return false;
   }
   var init = new common(page);
-  init.wx_share(false);
   $('.hs-main').css('height',"100%");
   //  登录初始化
   $('.get_pass').attr('disabled','disabled');

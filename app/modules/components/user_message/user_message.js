@@ -7,6 +7,5 @@ $(document).on('pageInit','.user_message', function (e, id, page) {
     return false;
   }
   var init = new common(page);
-  init.wx_share(false);
   init.checkfollow();
 })

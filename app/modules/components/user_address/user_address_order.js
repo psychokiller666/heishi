@@ -7,7 +7,6 @@ $(document).on('pageInit','.address_order', function(e, id, page){
     return false;
   }
   var init = new common(page);
-  init.wx_share(false);
 
   $('.address_info').click(function(){
     var that = this;

@@ -10,8 +10,6 @@ $(document).on('pageInit','.atten', function(e, id, page){
 	}
   	var init = new common(page);
   	init.checkfollow();
-  	init.wx_share(false);
-
   	// 搜索初始
 	SearchInit();
 	//当用户下拉时

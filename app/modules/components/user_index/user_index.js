@@ -11,7 +11,7 @@ $(document).on('pageInit','.center', function(e, id, page){
   var init = new common(page);
   var desc = $('.desc').hasClass('no_desc');
   if(desc){
-    desc = '为你不着边际的企图心';
+    desc = '商品、发货、物流有问题直接私信问我';
   }else{
     desc = $('.desc').text();
   }
@@ -19,13 +19,10 @@ $(document).on('pageInit','.center', function(e, id, page){
     var share_data = {
       title: $('.username').text() + ' — 帮你发现点牛逼物件，爱点不点',
       desc: desc,
-      link: GV.HOST + 'User/index/index/id/' + $('.user_inedx').attr('data-id') + '.html',
-      url: GV.HOST + 'User/index/index/id/' + $('.user_inedx').attr('data-id') + '.html',
+      link: window.location.href,
       img: $('.avatar').data('share')
     };
     init.wx_share(share_data);
-  } else {
-    init.wx_share(false);
   }
 
 
@@ -60,7 +57,14 @@ $(document).on('pageInit','.center', function(e, id, page){
   var attention = $('.attention');
   if(store_list.length){
     // 检查是否关注
-
+    // 增加handlebars判断
+    handlebars.registerHelper('eq', function(v1, v2, options) {
+      if(v1 == v2){
+        return options.fn(this);
+      } else {
+        return options.inverse(this);
+      }
+    });
     $.post('/index.php?g=user&m=HsFellows&a=ajax_relations',{
       my_uid: attention.data('myuid'),
       other_uid: attention.data('id')
@@ -101,14 +105,14 @@ $(document).on('pageInit','.center', function(e, id, page){
     })
 
 
-    if(store_list.find('li').length <= 19) {
+    if($('.user_index_bd').find('li').length <= 19) {
       $('.infinite-scroll-preloader').remove();
     } else {
       var loading = false;
       var page_num = 2;
       var pages;
       var page_size = 20;
-      var post_id = store_list.data('id');
+      var post_id = $('.user_index_bd').data('id');
       var store_list_tpl = handlebars.compile($("#store_list_tpl").html());
       function add_data(page_size,page) {
         $.ajax({
@@ -122,19 +126,21 @@ $(document).on('pageInit','.center', function(e, id, page){
           dataType: 'json',
           timeout: 4000,
           success: function(data){
+            loading = false;
             if(data.status == 1){
-              store_list.find('ul').append(store_list_tpl(data.data));
+              $('.user_index_bd').find('ul').append(store_list_tpl(data.data));
                 // 更新最后加载的序号
                 pages = data.pages;
                 page_num++;
-                store_list.attr('pagenum',page_num);
-                store_list.attr('pages',data.pages);
+                $('.user_index_bd').attr('pagenum',page_num);
+                $('.user_index_bd').attr('pages',data.pages);
                 init.loadimg();
               } else {
                 $.toast('请求错误');
               }
             },
             error: function(xhr, type){
+              loading = false;
               $.toast('网络错误 code:'+type);
             }
           });
@@ -146,7 +152,6 @@ $(document).on('pageInit','.center', function(e, id, page){
         // 设置flag
         loading = true;
         setTimeout(function() {
-          loading = false;
           if (page_num >= pages) {
             // 加载完毕，则注销无限加载事件，以防不必要的加载
             $.detachInfiniteScroll($('.infinite-scroll'));

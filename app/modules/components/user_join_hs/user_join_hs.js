@@ -6,7 +6,6 @@ $(document).on('pageInit','.join_hs', function (e, id, page) {
     return false;
   }
   var init = new common(page);
-  init.wx_share(false);
 
   function getcode(btn){
     var second = 60;

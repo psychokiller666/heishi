@@ -6,6 +6,5 @@ $(document).on('pageInit','.discovery_classify', function (e, id, page) {
     return false;
   }
   var init = new common(page);
-  init.wx_share(false);
 
 })

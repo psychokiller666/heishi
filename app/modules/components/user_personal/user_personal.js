@@ -8,7 +8,6 @@ $(document).on('pageInit','#personal', function (e, id, page) {
     return false;
   }
   var init = new common(page);
-  init.wx_share(false);
 
 });
 $(document).on('pageInit','#revise_username', function (e, id, page) {
@@ -16,7 +15,6 @@ $(document).on('pageInit','#revise_username', function (e, id, page) {
     return false;
   }
   var init = new common(page);
-  init.wx_share(false);
   // 过滤关键词
   var text_list = [
   '燃料',
@@ -84,7 +82,6 @@ $(document).on('pageInit','#revise_telphone', function (e, id, page) {
     return false;
   }
   var init = new common(page);
-  init.wx_share(false);
   function getcode(btn){
     var second = 120;
     var timer = null;

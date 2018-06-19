@@ -11,7 +11,6 @@ $(document).on('pageInit','.big_project', function (e, id, page) {
     title: $('.project_name').attr('data-name') + ' — 公路商店',
     desc: $('.desc').text(),
     link: window.location.href,
-    url: window.location.href,
     img: 'http://jscache.ontheroadstore.com/tpl/simplebootx_mobile/Public/i/logo.png'
   };
 

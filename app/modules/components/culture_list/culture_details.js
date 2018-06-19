@@ -17,7 +17,6 @@ $(document).on('pageInit','.culture_details', function (e, id, page) {
     title: $('.frontcover').find('.title').text(),
     desc: '为你不着边际的企图心',
     link: window.location.href,
-    url: window.location.href,
     img: $('.frontcover').find('.image').attr('data-share')
   };
   init.wx_share(share_data);

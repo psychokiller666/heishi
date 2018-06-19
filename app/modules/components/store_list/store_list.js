@@ -15,7 +15,6 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     title: '公路商店 — 为你不着边际的企图心',
     desc: '这里能让好事自然发生',
     link: window.location.href,
-    url: window.location.href,
     img: 'http://jscache.ontheroadstore.com/tpl/simplebootx_mobile/Public/i/logo.png'
   };
   init.wx_share(share_data);
@@ -73,7 +72,43 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
       }
     })
   }
-
+  $('.attentionUser').click(function(){
+    var that = this;
+    var isAtten = $(this).data('isatten');
+    if(isAtten == 0){
+      $.ajax({
+        type: 'POST',
+        url: '/index.php?g=user&m=HsFellows&a=ajax_add',
+        data: {
+          uid:$(that).data('uid')
+        },
+        success: function(data){
+          $.toast(data.info);
+          $(that).text('已关注').attr('data-isatten', 1);
+        },
+        error: function(xhr, type){
+          console.log(xhr);
+        }
+      });
+    } else {
+      $.confirm('确定取消吗？', function () {
+        $.ajax({
+          type: 'POST',
+          url: '/index.php?g=user&m=HsFellows&a=ajax_cancel',
+          data: {
+            uid:$(that).data('uid')
+          },
+          success: function(data){
+            $.toast(data.info);
+            $(that).text('关注').attr('data-isatten', 0);
+          },
+          error: function(xhr, type){
+            console.log(xhr);
+          }
+        });
+      });
+    }
+  })
   // 监听滚动增加返回顶部按钮
   var hs_footer_height = $('.hs-footer').height() + 'px';
   $(".content").on('scroll',function(){

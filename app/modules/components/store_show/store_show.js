@@ -21,8 +21,9 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   }
   $('title').text('公路商店Store');
 
+  // 设置分享url 
+  var share_url = window.location.href;
   // 需要解锁商品在分享时添加字段 当出现解锁字段时请求
-  var share_url = GV.HOST + 'Portal/HsArticle/index/id/' + $('.store-show').attr('data-id') + '.html';
   if($('.disabled_btn').length){
     $.ajax({
       type: 'get',
@@ -41,12 +42,13 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       }
     });
   }
+
+
   var init = new common(page);
   var share_data = {
     title: page.find('.frontcover .title').text(),
     desc: page.find('.content_details').find('div').text(),
     link: share_url,
-    url: GV.HOST + 'Portal/HsArticle/index/id/' + $('.store-show').attr('data-id') + '.html',
     img: page.find('.frontcover .image').data('share')
   };
   init.wx_share(share_data);
@@ -94,11 +96,12 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   page.on("click",".select_type",function(){
     $('.buy').css('display', 'block');
     $('.buy').find('.countNum').attr('data-num',1).text(1);
-
+    $('.content').css('overflow-y', 'hidden');
   })
   page.on("click",".buy",function(e){
     var el = $(e.target).hasClass('buy');
     if(el){
+      $('.content').css('overflow-y', 'auto');
       $(this).css('display', 'none');
       $('.buy').find('.confirm').removeClass('add_chart').removeClass('buy_btn');
       if($('.buy .type_item').find('.active').length == 1){
@@ -120,6 +123,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       location.href = url;
     }else{
       $('.buy').css('display', 'block');
+      $('.content').css('overflow-y', 'hidden');
       $('.buy').find('.countNum').attr('data-num',1).text(1);
       $('.buy').find('.confirm').addClass('buy_btn');
     }
@@ -135,6 +139,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       shopping(article_id, styles_id, 1);
     }else{
       $('.buy').css('display', 'block');
+      $('.content').css('overflow-y', 'hidden');
       $('.buy').find('.countNum').attr('data-num',1).text(1);
       $('.buy').find('.confirm').addClass('add_chart');
     }
@@ -171,6 +176,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     $('.buy').find('.countNum').attr('data-num', 1);
     $('.buy').find('.countNum').text(1);
   })
+
 
   // 加减
   $('.buy').find('.min').click(function() {
@@ -210,6 +216,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       return $.toast('请输入正确的数量');
     }
     $('.buy').css('display', 'none');
+    $('.content').css('overflow-y', 'auto');
     if(type == 0){
       shopping(article_id, styles_id, num);
     }else if(type == 1){

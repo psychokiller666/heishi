@@ -67,7 +67,6 @@ common.prototype.checkfollow = function(){
       $('.open_hs').show();
       if($('.show-list').length == 1){
         $('.show-list').find('.return_top').css('bottom', '0.946rem');
-        $('.show-list').find('.return_top').removeClass('iphoneX_btn').addClass('iphoneX_btn_index');
       }
       $('.open_hs_close').click(function(){
         $('.open_hs').hide();
@@ -80,7 +79,6 @@ common.prototype.checkfollow = function(){
       $('.open_app').show();
       if($('.show-list').length == 1){
         $('.show-list').find('.return_top').css('bottom', '0.946rem');
-        $('.show-list').find('.return_top').removeClass('iphoneX_btn').addClass('iphoneX_btn_index');
       }
       $('.open_app_close').click(function(){
         $('.open_app').hide();
@@ -94,7 +92,6 @@ common.prototype.checkfollow = function(){
   function close() {
     if($('.show-list').length == 1){
       $('.return_top').css('bottom', '2.226rem');
-      $('.return_top').addClass('iphoneX_btn').removeClass('iphoneX_btn_index');
     }
     $.ajax({
       url: '/index.php?g=user&m=HsWeixin&a=userinfo&type=2',
@@ -108,17 +105,11 @@ common.prototype.checkfollow = function(){
 // 微信jssdk分享
 common.prototype.wx_share = function(options){
   var _this = this;
-  var locationHref = null;
-  if(options){
-    locationHref = options.url
-  }else{
-    locationHref = window.location.href;
-  }
   $.ajax({
     url: '/index.php?g=restful&m=HsJsapi&a=jssign',
     type: 'POST',
     data: {
-      url: encodeURIComponent(locationHref.split('#')[0])
+      url: encodeURIComponent(options.link.split('#')[0])
     }
   }).done(function(data){
 

@@ -9,7 +9,6 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
     return false;
   }
   var init = new common(page);
-  init.wx_share(false);
   // 列表首页_通用底部发布
   var hs_footer = $('.hs-footer');
   var notice_box = $('.notice_box');
