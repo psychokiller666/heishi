@@ -307,7 +307,28 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
 
   
 
+  //预留狠人说中图片的宽高
+  setDescImgWH();
+  function setDescImgWH(){
+    var $imgWrap = $('.post_desc_img');
 
+    if($imgWrap.length>0){
+      var $descWrap = $imgWrap.parents('.js_desc_wrap');
+      var descW = $descWrap.width();
+      if(descW>0){
+          $imgWrap.each(function(){
+              var $this = $(this);
+              var imgW = $this.attr('imgwidth');
+              var imgH = $this.attr('imgheight');
+              // var width = imgW < descW ? imgW : descW; //如果最大宽度大于父元素宽度，则显示为父元素宽度，否则为自身宽度。
+              var width = descW; //应要求改为100%宽
+              var height = width * imgH / imgW;
+              this.style.width = width + 'px';
+              this.style.height = height + 'px';
+          });
+      }
+    }
+  }
 
 
 

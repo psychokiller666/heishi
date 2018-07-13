@@ -442,7 +442,8 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
       // 'order[orders][0][seller_name]':$(this).data('username'), //卖家name
       // 'order[orders][0][mid]':$(this).data('mid'),    //类型
       'order[type]': 1,
-      'order[payment_type]': 0
+      'order[payment_type]': 0,
+      'order[address_id]':$(this).attr('data-address_id'),
     };
     //组订单
     $('.lists').each(function(index){

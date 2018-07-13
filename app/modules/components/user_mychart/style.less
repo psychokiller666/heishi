@@ -562,6 +562,61 @@
 	.listOrder{
 		border-top: 0.0133rem solid #E8E8E8;
 		padding-bottom: 1.31rem;
+
+		/*地址选择器*/
+		.addr_sel_wrap{
+			//padding: 0.196667rem 0 0.386667rem;
+			border-bottom: 0.0133rem solid #E8E8E8;
+			background: #fff;
+			.font-dpr(15px);
+			line-height: 0.5rem;
+
+			.addr_sel{
+				padding: 0.4rem;
+			}
+
+			.left{
+				padding-top: 0.28rem;
+				max-width: 29%;
+			}
+			.title{
+				float: right;
+				.font-dpr(12px);
+				height: 0.5rem;
+				color: #999;
+				padding-top: 0.28rem;
+				width: 70%;
+			}
+
+			.right{
+				max-width: 70%;
+				padding-top: 0.28rem;
+				line-height: 0.5rem;
+
+				i{
+					word-wrap: break-word;
+					word-break: break-all;
+					font-style: normal;
+					line-height: 0.5rem;
+					display: block;
+
+				}
+			}
+
+			.left{
+				float: left;
+			}
+			.right{
+				float: right;
+			}
+			.clear:after{
+				content: "";
+				display: block;
+				clear: both;
+			}
+		}
+
+
 		.lists{
 			padding: 0 0.4rem;
 			background: #FFF;

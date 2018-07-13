@@ -62,7 +62,9 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
       'order[orders][0][goods][0][counts]': number,
       'order[orders][0][goods][0][mid]':$(this).data('mid'),
       'order[type]': 1,
-      'order[payment_type]': 0
+      'order[payment_type]': 0,
+      'order[address_id]':$(this).attr('data-address_id'),
+
     };
     $.post('/index.php?g=restful&m=HsOrder&a=union_add',post_data,function(data){
       payment_status = false;
@@ -74,4 +76,4 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
       }
     })
   })
-})
+});
