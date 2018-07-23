@@ -426,7 +426,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
     })
     all_price += all_postage;
     $('.all_price_num').text(all_price);
-    $('.all_postage_num').text(all_postage);
+    // $('.all_postage_num').text(all_postage); //总运费初始化为"请填写地址"所以不需要初始化。
   }
   //下订单
   var payment_status = false;
@@ -490,7 +490,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
           maxPostage = n;
         }
       })
-      $(that).find('.express .postage').text(maxPostage);
+      // $(that).find('.express .postage').text(maxPostage); //总运费初始化为"请填写地址"所以不需要初始化。
       $(that).attr('data-maxpostage', maxPostage);
     })
   }

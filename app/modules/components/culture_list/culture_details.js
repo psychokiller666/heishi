@@ -196,9 +196,9 @@ $(document).on('pageInit','.culture_details', function (e, id, page) {
     if(e.srcElement.className == 'comment_image') {
       // 调用微信图片
       var arr = [];
-      arr.push('http:'+ $(e.srcElement).data('preview'));
+      arr.push($(e.srcElement).data('preview'));
       wx.previewImage({
-        current: 'http:'+ $(e.srcElement).data('preview'),
+        current: $(e.srcElement).data('preview'),
         urls: arr
       });
     }

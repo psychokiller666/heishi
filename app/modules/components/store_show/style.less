@@ -405,17 +405,21 @@
         }
         /* 点赞列表 */
         .like_list{
-            display: flex;
-            justify-content: space-between;
+            //display: flex;
+            //justify-content: space-between;
+            font-size: 0;
+            white-space: nowrap;
             padding: 0 0.334rem;
+            text-align: center;
             a {
-                display: block;
+                display: inline-block;
                 width: 1rem;
                 height: 1rem;
                 background-repeat: no-repeat;
                 -webkit-background-size: cover;
                 border-radius: 50%;
                 position: relative;
+                margin-right: 0.18rem;
             }
             .external{
                 background-image: url(//img8.ontheroadstore.com/upload/180117/e2cf78b9c74f2d82053afd2b842ad7a7.png);
@@ -437,7 +441,9 @@
                 text-align: center;
                 color: #AE2121;
             }
-
+            .more{
+                margin-right:0;
+            }
             .more:after{
                 content: "";
                 background-image: url(//img8.ontheroadstore.com/upload/171227/0b340ed9beec108febe3397c7037ae15.png);

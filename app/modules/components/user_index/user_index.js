@@ -55,6 +55,7 @@ $(document).on('pageInit','.center', function(e, id, page){
   // 别人的个人中心
   var store_list = $('.user_inedx');
   var attention = $('.attention');
+  var $pushMsg = $('#pushMsg');
   if(store_list.length){
     // 检查是否关注
     // 增加handlebars判断
@@ -73,6 +74,7 @@ $(document).on('pageInit','.center', function(e, id, page){
         $('.cancel_attention').show();
       } else if(data.relations == '1' || data.relations == '0') {
         attention.show();
+        $pushMsg.hide();
       }
     });
     attention.click(function(){
@@ -83,6 +85,7 @@ $(document).on('pageInit','.center', function(e, id, page){
         if(data.status == '1') {
           $('.cancel_attention').show();
           $('.attention').hide();
+          $pushMsg.show().attr('push',1);
           $.toast(data.info);
         } else {
           $.toast(data.info);
@@ -97,6 +100,7 @@ $(document).on('pageInit','.center', function(e, id, page){
         if(data.status == '1') {
           $('.cancel_attention').hide();
           $('.attention').show();
+          $pushMsg.hide();
           $.toast(data.info);
         } else {
           $.toast(data.info);
@@ -104,10 +108,290 @@ $(document).on('pageInit','.center', function(e, id, page){
       });
     })
 
+    $pushMsg.click(function(){
+      //取消、恢复推送
+        $.post('/index.php?g=restful&m=HsShoppingCart&a=ajax_cancle_push',{
+            uid: $(this).data('myuid'),
+            seller_id: $(this).data('id'),
+        },function(data){
+            if(data.status == '1') {
+                $('.cancel_attention').show();
+                $('.attention').hide();
+                $pushMsg.show();
+                if($pushMsg.attr('push')=='1'){
+                    $pushMsg.attr('push',0);
+                }else{
+                    $pushMsg.attr('push',1);
+                }
+                $.toast(data.info);
+            } else {
+                $.toast(data.info);
+            }
+        });
+
+    })
+
+
+    /****店铺首页 分类及加载 -start ****/
+      var HostName = location.hostname;
+
+      var ApiBaseUrl = 'http://apitest.ontheroadstore.com';
+
+      if(HostName==="hs.ontheroadstore.com"){
+          ApiBaseUrl = 'https://api.ontheroadstore.com';
+      }
+
+
+      var $classifyWrap = $('.classify_wrap');
+      var uid = $classifyWrap.attr('uid');
+      var img_root = $classifyWrap.attr('img_root');
+
+      var $classifyTabWrap = $('.classify_tab_wrap');
+      var $classifyPageWrap = $('.classify_page_wrap');
+      var $classifyLoading = $('.classify_loading');
+
+      //属性名是sortid,值是对象,保存nowpage,totalpage,ifover,ifloading
+      var goodsSort = {
+          0:{
+              nowPage:1,
+              totalPage:2,
+              ifOver:false,
+              ifLoading:false,
+              pageSize:10,
+          }
+      };
+
+      getHomePage(uid);
+
+      //获取初始化的分类数据
+      function getHomePage(uid){
+          var url = ApiBaseUrl + '/appv5_2/user/homepage'
+          $.ajax({
+              type: "GET",
+              url: url,
+              dataType: 'json',
+              data: {uid:uid},
+
+              success: function(data){
+                  if(data.status == 1){
+                      createHomePage(data.data);
+                  }
+              },
+              error: function(e){
+                  console.log('homepage err: ',e);
+              }
+          });
+
+      }
+
+
+      //生成商品列表，传参是数据数组
+      function createGoodsLists(lists){
+
+          if(!(lists instanceof Array)){
+              return '';
+          }
+
+          var html = '';
+          for(var i=0;i<lists.length;i++){
+              html+= '<li>'
+              html+= '<a href="/Portal/HsArticle/index/id/'+ lists[i].id +'.html" class="filepath external">'
+              html+= '<div class="image" data-layzr="'+ lists[i].cover +'@640w_1l"></div>'
+              html+= '</a>'
+              html+= '<a href="/Portal/HsArticle/index/id/'+ lists[i].id +'.html" class="post_title external">'+ lists[i].title +'</a>'
+              html+= '<a class="keywords keywords_none"></a>'
+              html+= '<div class="price font_din">'+ lists[i].price +'</div>'
+              html+= '</li>'
+          }
+
+          return html;
+      }
+
+      //生成初始化的分类值
+      function createHomePage(data){
+
+          data = data;
+
+          var html = '';
+          html += '<div class="classify_page classify_page_act">'+ createGoodsLists(data.goodsnew) +'</div>'
+          html += '<div class="classify_page ">'+ createGoodsLists(data.seller_recommended) +'</div>'
+          html += '<div class="classify_page ">'+ createGoodsLists(data.goodspopular) +'</div>'
+          html += '<div class="classify_page " scroll="1" sortid="0">'+ createGoodsLists(data.goodsall) +'</div>'
+
+          $classifyPageWrap.html(html);
+
+          getGoodsSort();
+
+          if(!data.seller_recommended || !(data.seller_recommended >0)){
+              $('.js_seller_recommended').hide();
+          }
+
+      }
+
+      //获取店铺分类
+      function getGoodsSort(){
+          var url = ApiBaseUrl + '/appv5_2/sort/getGoodsSort';
+          $.ajax({
+              type: "GET",
+              url: url,
+              dataType: 'json',
+              data: {uid:uid,status:1},
+
+              success: function(data){
+                  if(data.status==1){
+                      addGoodsSort(data.data);
+                      addChangeEvent();
+                      addScrollEvent();
+                  }
+              },
+              error: function(e){
+                  console.log('getGoodsSort err: ',e);
+              }
+          });
+      }
+
+      //把分类添加进去
+      function addGoodsSort(data){
+
+          var tabHtml = '';
+          var pageHtml = '';
+          for(var i=0;i<data.length;i++){
+              tabHtml+= '<div class="classify_tab" sortid="'+ data[i].id +'" loaddata="0">'+ data[i].sort_name +'</div>'
+              pageHtml += '<div class="classify_page " scroll="1" sortid="'+ data[i].id +'"></div>'
+              goodsSort[data[i].id]={
+                  nowPage:0,
+                  totalPage:Math.ceil(data[i].goods_num/10),
+                  ifOver:false,
+                  ifLoading:false,
+                  pageSize:20,
+              }
+          }
+          $classifyTabWrap.append($(tabHtml));
+          $classifyPageWrap.append($(pageHtml));
+      }
+
+      //在每次请求前都设置goodsSort相应的值,判断是否可以请求
+      //获取分类商品列表
+      function getGoodsSortInfo(sortid,page){
+
+          var gSort = goodsSort[sortid];
+
+          if(!gSort){
+              return false;
+          }
+          if(gSort.ifOver){
+              return false;
+          }
+          if(gSort.ifLoading){
+              return false;
+          }
+          gSort.ifLoading=true;
+
+          page = page || gSort.nowPage + 1;
+
+          var obj = {
+              uid: uid,
+              page: page,
+              size: gSort.pageSize || 10,
+              sortid: sortid
+          };
+          var url = ApiBaseUrl + '/appv5_2/user/goodsSortInfo';
+          $.ajax({
+              type: "GET",
+              url: url,
+              dataType: 'json',
+              data: obj,
+
+              success: function(data){
+                  if(data.status == 1){
+
+                      addGoodsList(sortid,data.data.goodslist);
+                      gSort.nowPage= obj.page;
+                      gSort.totalPage=data.data.totalPages;
+                      gSort.ifOver= obj.page>=data.data.totalPages;
+                  }
+                  gSort.ifLoading=false;
+              },
+              error: function(e){
+                  console.log('getGoodsSortInfo err: ',e);
+                  gSort.ifLoading=false;
+              }
+          });
+
+      }
+
+      //追加商品列表
+      function addGoodsList(sortid,data){
+          var $page = $('.classify_page[sortid="'+ sortid +'"]');
+          var html = createGoodsLists(data);
+
+          $page.append($(html));
+      }
+
+      //添加点击事件
+      function addChangeEvent(){
+          changeTab('classify_tab','classify_page','classify_tab_act','classify_page_act',function($o){
+              var loadData = $o.attr('loaddata');
+              var sortid = $o.attr('sortid');
+              if(loadData!=='0'){
+                  return false;
+              }
+              $o.attr('loaddata',1);
+              getGoodsSortInfo(sortid,1);
+          });
+      }
+
+      //添加滚动事件
+      function addScrollEvent(){
+          //获取滚动元素
+          $('.content').on('scroll',function(ev){
+              var cwTop = $classifyWrap.offset().top;
+              var cLTop = $classifyLoading.offset().top;
+              // if(cwTop<5){
+              //     $classifyTabWrap.css('position','fixed');
+              // }else{
+              //     $classifyTabWrap.css('position','absolute');
+              // }
+              var bodyH =  document.documentElement.clientHeight;
+              var diffH = cLTop - bodyH;
+              if(diffH<300){
+                  //尝试加载
+                  var $classifyPageAct = $('.classify_page_act');
+                  var sortId = $classifyPageAct.attr('sortid');
+
+                  if(typeof sortId === 'string'){
+                      getGoodsSortInfo(sortId)
+                  }
+
+              }
+          })
+      }
+
+
+    /*点击tab切换对应标签*/
+      function changeTab(tabClass,pageClass,tabActClass,pageActClass,callback){
+          var $tabs = $('.' + tabClass);
+          var $pages = $('.' + pageClass);
+
+          $tabs.off('click').on('click',function(ev){
+              var index = $(this).index();
+              $tabs.removeClass(tabActClass);
+              $tabs.eq(index).addClass(tabActClass);
+              $pages.removeClass(pageActClass);
+              $pages.eq(index).addClass(pageActClass);
+              if(typeof callback === "function"){
+                  callback($(this),ev);
+              }
+          })
+      }
+
+    /****店铺首页 分类及加载 -end ****/
+
 
     if($('.user_index_bd').find('li').length <= 19) {
       $('.infinite-scroll-preloader').remove();
-    } else {
+    } else
+      {
       var loading = false;
       var page_num = 2;
       var pages;

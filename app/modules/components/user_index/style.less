@@ -126,26 +126,204 @@
         background: rgba(255,255,255,0.4);
       }
     }
+      /*店铺首页取关按钮等样式 -start*/
+      #cancelAttention{
+          width:0.56rem;
+          height: 0.56rem;
+          right: 1.906rem
+      }
+      .push_button{
+          color: #fff;
+          height: .56rem;
+          width: 1.9rem;
+          line-height: .56rem;
+          position: absolute;
+          top: 2.5337rem;
+          right: 2.806rem;
+          border: .0267rem solid #fff;
+          border-color: rgba(255,255,255,.1);
+          border-radius: .1rem;
+          text-align: center;
+          background: rgba(255,255,255,.4);
+          font-size: 0.34666rem;
+      }
+      .push_button[push="0"]{
+          border: .0267rem solid #fff;
+          background: none;
+      }
+      .push_button:after{
+          content: '取消推送';
+      }
+      .push_button[push="0"]:after{
+          content: '上新推送';
+      }
+      .cancelClose{
+          width: 0.37rem;
+          height: 0.37rem;
+          margin-top: 0.1rem;
+      }
+
+      /*店铺首页取关按钮等样式 -end*/
+
     .announcement{
-      margin: 0.533rem 0.185rem 0 0.185rem;
-      width: 9.63rem;
-      background-image: url(//img8.ontheroadstore.com/upload/180606/942975b1d4e4cdb618d157432fa9b6d6.png);
-      background-size: 100% 100%;
-      h4{
-        .font-dpr(16px);
-        text-align: center;
-        font-size: 600;
-        padding: 0.5rem 0 0.267rem;
-        line-height: 1em;
+      padding: 0.4rem;
+      background: #fff;
+      border-bottom: 0.24rem solid #F2F2F2;
+      white-space:nowrap;
+      .ann_icon{
+        display: inline-block;
+        width: 0.533rem;
+        height:0.533rem;
+        vertical-align: middle;
+        img{
+          display: block;
+          width: 100%;
+          height: 100%;
+        }
       }
-      .announcement_text{
-        width: 6.4rem;
-        margin: 0 auto;
-        .font-dpr(13px);
-        text-align: center;
-        padding-bottom: 1rem;
+      .ann_text{
+        display: inline-block;
+        width: 8.2rem;
+        height:0.96rem;
+        vertical-align: middle;
+        margin-left: 0.4rem;
+        overflow: hidden;
+
+        .ann_text_in{
+          display: table;
+          width: 100%;
+          height: 100%;
+        }
+        .announcement_text{
+          white-space:normal;
+          display: table-cell;
+          width: 100%;
+          height: 100%;
+          .font-dpr(13px);
+          line-height: 0.48rem;
+          vertical-align: middle;
+        }
       }
+
     }
+
+      .classify_wrap {
+          width: 100%;
+          position: relative;
+          padding-top: 1.17333rem;
+          background: #fff;
+
+          .classify_tab_wrap {
+              position: absolute;
+              top: 0;
+              left: 0;
+              z-index: 99999;
+              background: #fff;
+              font-size: 0;
+              width: 100%;
+              height: 1.17333rem;
+              padding: 0 0.4rem;
+              overflow-x: auto;
+              overflow-y:hidden;
+              white-space: nowrap;
+              border-bottom: 1px solid #E8E8E8;
+              box-sizing: border-box;
+
+              .classify_tab {
+                  font-size: 0.34666rem;
+                  line-height: 1.17333rem;
+                  color: #000;
+                  display: inline-block;
+                  margin: 0 0.4rem;
+                  position: relative;
+              }
+              .classify_tab_act {
+                  font-weight: bold;
+                  color: #AE2121;
+              }
+              .classify_tab_act:after{
+                  content: '';
+                  display: block;
+                  width: 0.53333rem;
+                  height: 0.10666rem;
+                  position: absolute;
+                  left: 50%;
+                  bottom: 0.1rem;
+                  transform: translateX(-50%);
+                  background: #AE2121;
+                  border-radius: 0.05333rem;
+              }
+          }
+          .classify_tab_wrap::-webkit-scrollbar {
+              display: none;
+          }
+
+          .classify_page_wrap {
+              padding: 0.53333rem 0.4rem;
+              box-sizing: border-box;
+              .classify_page {
+                  display: none;
+              }
+              .classify_page_act {
+                  display: block;
+              }
+              li{
+                  margin-bottom: 0.533rem;
+                  position: relative;
+                  list-style : none;
+                  .hs-cf;
+                  .filepath{
+                      width: 4.48rem;
+                      height: 2.293rem;
+                      float: left;
+                      margin-right: 0.4rem;
+                      .image {
+                          background-color: #F5F5F5;
+                          background-position: 50% 50%;
+                          background-repeat: no-repeat;
+                          background-size: 100%;
+                          width: 100%;
+                          height: 100%;
+                          border-radius: 0.16rem;
+                      }
+                  }
+                  .post_title{
+                      color: #000000;
+                      width: 4.29rem;
+                      height: 2.4em;
+                      line-height: 1.2em;
+                      font-size: 0.373rem;
+                      overflow: hidden;
+                      float: left;
+                      .font-dpr(14px);
+                      font-weight: 500;
+                  }
+                  .keywords{
+                      color: #8E8E8E;
+                      .font-dpr(12px);
+                      float: left;
+                      margin-top: 0.16rem;
+                      padding: 0.08rem 0.133rem;
+                      border-radius: 0.107rem;
+                      background: #F5F5F5;
+                  }
+                  .keywords_none{
+                      opacity: 0;
+                  }
+                  .price{
+                      position: absolute;
+                      bottom: 0;
+                      .font-dpr(16px);
+                      left: 4.88rem;
+                      line-height: 1em;
+                  }
+              }
+          }
+
+      }
+
+
+
     .new_product{
       margin: 0.293rem 0 0 0.4rem;
       height: 6.16rem;
@@ -401,4 +579,8 @@
       }
     }
   }
+}
+//隐藏滚动条显示
+::-webkit-scrollbar {
+    display: none;
 }
