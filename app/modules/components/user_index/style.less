@@ -209,9 +209,11 @@
 
       .classify_wrap {
           width: 100%;
+          height: 100%;
           position: relative;
           padding-top: 1.17333rem;
           background: #fff;
+          box-sizing: border-box;
 
           .classify_tab_wrap {
               position: absolute;
@@ -222,13 +224,12 @@
               font-size: 0;
               width: 100%;
               height: 1.17333rem;
-              padding: 0 0.4rem;
-              overflow-x: auto;
-              overflow-y:hidden;
+              padding: 0 0 0 0.29333rem;
+              overflow:hidden;
               white-space: nowrap;
               border-bottom: 1px solid #E8E8E8;
               box-sizing: border-box;
-
+              visibility: hidden;
               .classify_tab {
                   font-size: 0.34666rem;
                   line-height: 1.17333rem;
@@ -253,15 +254,30 @@
                   background: #AE2121;
                   border-radius: 0.05333rem;
               }
+              .classify_more{
+                  display: none;
+                  position: absolute;
+                  right: 0.4rem;
+                  top: 0.29333rem;
+                  width: 0.58666rem;
+                  height: 0.58666rem;
+
+                  .classify_more_ico{
+                      display: block;
+                      width: 100%;
+                      height: 100%;
+                  }
+              }
           }
           .classify_tab_wrap::-webkit-scrollbar {
               display: none;
           }
 
           .classify_page_wrap {
-              padding: 0.53333rem 0.4rem;
+              padding: 0 0 0.53333rem 0;
               box-sizing: border-box;
               .classify_page {
+                  padding: 0 0.4rem;
                   display: none;
               }
               .classify_page_act {
@@ -271,6 +287,9 @@
                   margin-bottom: 0.533rem;
                   position: relative;
                   list-style : none;
+                  &:first-child{
+                    padding-top: 0.53333rem;
+                  }
                   .hs-cf;
                   .filepath{
                       width: 4.48rem;

@@ -123,7 +123,7 @@ $(document).on('pageInit','.detail', function (e, id, page) {
   var user_line_status = true;
   // 默认用户ID 为网易IM ID
   // 测试环境 网易id加hstest
-  if(GV.HOST != 'http://hs.ontheroadstore.com/'){
+  if((GV.HOST != 'http://hs.ontheroadstore.com/') && (GV.HOST != 'https://hs.ontheroadstore.com/')){
     IMmyId = 'hstest' + IMmyId;
     IMuserId = 'hstest' + IMuserId;
   }

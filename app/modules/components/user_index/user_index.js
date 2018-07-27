@@ -56,6 +56,7 @@ $(document).on('pageInit','.center', function(e, id, page){
   var store_list = $('.user_inedx');
   var attention = $('.attention');
   var $pushMsg = $('#pushMsg');
+
   if(store_list.length){
     // 检查是否关注
     // 增加handlebars判断
@@ -66,32 +67,37 @@ $(document).on('pageInit','.center', function(e, id, page){
         return options.inverse(this);
       }
     });
-    $.post('/index.php?g=user&m=HsFellows&a=ajax_relations',{
-      my_uid: attention.data('myuid'),
-      other_uid: attention.data('id')
-    },function(data){
-      if(data.relations == '2' || data.relations == '3') {
-        $('.cancel_attention').show();
-      } else if(data.relations == '1' || data.relations == '0') {
-        attention.show();
-        $pushMsg.hide();
-      }
-    });
-    attention.click(function(){
-      // 关注
-      $.post('/index.php?g=user&m=HsFellows&a=ajax_add',{
-        uid: $(this).data('id')
-      },function(data){
-        if(data.status == '1') {
-          $('.cancel_attention').show();
-          $('.attention').hide();
-          $pushMsg.show().attr('push',1);
-          $.toast(data.info);
-        } else {
-          $.toast(data.info);
-        }
-      });
-    })
+    //当前用户如果是自己,不显示关注按钮,下面的代码不应该执行.
+    if(attention.length>0 && attention.data('myuid')){
+        $.post('/index.php?g=user&m=HsFellows&a=ajax_relations',{
+            my_uid: attention.data('myuid'),
+            other_uid: attention.data('id')
+        },function(data){
+            if(data.relations == '2' || data.relations == '3') {
+                $('.cancel_attention').show();
+            } else if(data.relations == '1' || data.relations == '0') {
+                attention.show();
+                $pushMsg.hide();
+            }
+        });
+
+        attention.click(function(){
+            // 关注
+            $.post('/index.php?g=user&m=HsFellows&a=ajax_add',{
+                uid: $(this).data('id')
+            },function(data){
+                if(data.status == '1') {
+                    $('.cancel_attention').show();
+                    $('.attention').hide();
+                    $pushMsg.show().attr('push',1);
+                    $.toast(data.info);
+                } else {
+                    $.toast(data.info);
+                }
+            });
+        })
+    }
+
     $('.cancel_attention').click(function(){
       // 取消关注
       $.post('/index.php?g=user&m=HsFellows&a=ajax_cancel',{
@@ -135,7 +141,7 @@ $(document).on('pageInit','.center', function(e, id, page){
     /****店铺首页 分类及加载 -start ****/
       var HostName = location.hostname;
 
-      var ApiBaseUrl = 'http://apitest.ontheroadstore.com';
+      var ApiBaseUrl = 'https://apitest.ontheroadstore.com';
 
       if(HostName==="hs.ontheroadstore.com"){
           ApiBaseUrl = 'https://api.ontheroadstore.com';
@@ -162,6 +168,7 @@ $(document).on('pageInit','.center', function(e, id, page){
       };
 
       getHomePage(uid);
+      getGoodsSort();//判断是否展示更多分类的小图标
 
       //获取初始化的分类数据
       function getHomePage(uid){
@@ -219,12 +226,16 @@ $(document).on('pageInit','.center', function(e, id, page){
           html += '<div class="classify_page " scroll="1" sortid="0">'+ createGoodsLists(data.goodsall) +'</div>'
 
           $classifyPageWrap.html(html);
-
-          getGoodsSort();
-
-          if(!data.seller_recommended || !(data.seller_recommended >0)){
-              $('.js_seller_recommended').hide();
+          $('.content').scrollTop(1).scrollTop(0);
+          // 原本的商品分类不再加载
+          // getGoodsSort();
+          //不加载原本的分类后直接添加点击事件和滚动事件
+          addChangeEvent();
+          addScrollEvent();
+          if(data.seller_recommended || data.seller_recommended >0){
+              $('.js_seller_recommended').css('display','inline-block');
           }
+          $('.classify_tab_wrap').css('visibility','visible');
 
       }
 
@@ -239,9 +250,13 @@ $(document).on('pageInit','.center', function(e, id, page){
 
               success: function(data){
                   if(data.status==1){
-                      addGoodsSort(data.data);
-                      addChangeEvent();
-                      addScrollEvent();
+                      // 如果有店铺分类,展示列表按钮
+                      if(data.data && data.data.length>0){
+                          $('.classify_more').show();
+                      }
+                      // addGoodsSort(data.data);
+                      // addChangeEvent();
+                      // addScrollEvent();
                   }
               },
               error: function(e){
@@ -260,7 +275,7 @@ $(document).on('pageInit','.center', function(e, id, page){
               pageHtml += '<div class="classify_page " scroll="1" sortid="'+ data[i].id +'"></div>'
               goodsSort[data[i].id]={
                   nowPage:0,
-                  totalPage:Math.ceil(data[i].goods_num/10),
+                  totalPage:Math.ceil(data[i].goods_num/20),
                   ifOver:false,
                   ifLoading:false,
                   pageSize:20,
@@ -326,11 +341,22 @@ $(document).on('pageInit','.center', function(e, id, page){
           var html = createGoodsLists(data);
 
           $page.append($(html));
+
+          //延迟触发一次页面scroll事件,防止图片懒加载没有生效.
+          setTimeout(function(){
+              $('.content').trigger('scroll');
+          },500);
       }
 
       //添加点击事件
       function addChangeEvent(){
           changeTab('classify_tab','classify_page','classify_tab_act','classify_page_act',function($o){
+
+              /*if($o.attr('scroll_top')){
+                  var scrollTop = $o.attr('scroll_top');
+                  $('.classify_page_act').scrollTop(scrollTop);
+              }*/
+
               var loadData = $o.attr('loaddata');
               var sortid = $o.attr('sortid');
               if(loadData!=='0'){
@@ -338,6 +364,10 @@ $(document).on('pageInit','.center', function(e, id, page){
               }
               $o.attr('loaddata',1);
               getGoodsSortInfo(sortid,1);
+          },function($o){
+              //切换标签之前先保存当前标签的scroll top
+              /*var scrollTop = $('.classify_page_act').scrollTop();
+              $o.siblings('.classify_tab_act').attr('scroll_top',scrollTop)*/
           });
       }
 
@@ -347,11 +377,14 @@ $(document).on('pageInit','.center', function(e, id, page){
           $('.content').on('scroll',function(ev){
               var cwTop = $classifyWrap.offset().top;
               var cLTop = $classifyLoading.offset().top;
-              // if(cwTop<5){
-              //     $classifyTabWrap.css('position','fixed');
-              // }else{
-              //     $classifyTabWrap.css('position','absolute');
-              // }
+              if(cwTop<5){
+                  $('.classify_page').css('overflow-y','auto');
+                  $classifyTabWrap.css('position','fixed');
+              }else{
+                  $('.classify_page').css('overflow-y','hidden');
+                  $classifyTabWrap.css('position','absolute');
+              }
+
               var bodyH =  document.documentElement.clientHeight;
               var diffH = cLTop - bodyH;
               if(diffH<300){
@@ -364,23 +397,53 @@ $(document).on('pageInit','.center', function(e, id, page){
                   }
 
               }
-          })
+          });
+
+/*          $('.classify_page[scroll="1"]').on('scroll',function(){
+              var $this = $(this);
+              //获取自己的scrollHeight,scrollTop
+              var clientHeight = $this.height();
+              var scrollHeight = $this[0].scrollHeight;
+              var scrollTop = $this.scrollTop();
+
+              //判断距离底部的px
+              var diff = scrollHeight - clientHeight - scrollTop <= 300;
+              if(diff){
+
+                  var sortId = $this.attr('sortid');
+
+                  if(typeof sortId === 'string'){
+                      getGoodsSortInfo(sortId)
+                  }
+              }
+          });
+
+          $('.classify_page').on('scroll',function(){
+              $('.content').trigger('scroll');
+          });*/
+
       }
 
 
     /*点击tab切换对应标签*/
-      function changeTab(tabClass,pageClass,tabActClass,pageActClass,callback){
+      function changeTab(tabClass,pageClass,tabActClass,pageActClass,endback,preback){
           var $tabs = $('.' + tabClass);
           var $pages = $('.' + pageClass);
 
           $tabs.off('click').on('click',function(ev){
               var index = $(this).index();
+              if($(this).hasClass(tabActClass)){
+                  return;
+              }
+              if(typeof preback === "function"){
+                  preback($(this),ev);
+              }
               $tabs.removeClass(tabActClass);
               $tabs.eq(index).addClass(tabActClass);
               $pages.removeClass(pageActClass);
               $pages.eq(index).addClass(pageActClass);
-              if(typeof callback === "function"){
-                  callback($(this),ev);
+              if(typeof endback === "function"){
+                  endback($(this),ev);
               }
           })
       }

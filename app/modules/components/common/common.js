@@ -26,6 +26,7 @@ var common = function(page){
       }
     })
   }
+  this.lazyLoad = Lazyload;
 };
 common.prototype.loadimg = function(){
   var contentHeight = $('.content').height();

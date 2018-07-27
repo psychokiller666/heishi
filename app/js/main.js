@@ -128,3 +128,9 @@ require('../modules/components/user_join_hs/user_join_hs.js');
 require('../modules/components/user_hisotories/user_hisotories.js');
 //消息通知
 require('../modules/components/user_message/user_message.js');
+
+//商家分类标签页
+require('../modules/components/seller_tag/seller_tag.js');
+//商家分类商品列表
+require('../modules/components/tag_goods/tag_goods.js');
+
