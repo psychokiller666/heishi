@@ -381,7 +381,7 @@ $(document).on('pageInit','.user_comment_list', function (e, id, page) {
     return false;
   }
   var init = new common(page);
-  $('title').text('哆嗦列表');
+  $('title').text('评论列表');
   var comment_box = $('#comment');
   var comment_bd = comment_box.find('.comment_bd');
   var comment_manage = new Comment();

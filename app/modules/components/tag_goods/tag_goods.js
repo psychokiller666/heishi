@@ -101,7 +101,7 @@ $(document).on('pageInit','.tag_goods', function(e, id, page) {
         for(var i=0;i<lists.length;i++){
             html+= '<li>'
             html+= '<a href="/Portal/HsArticle/index/id/'+ lists[i].id +'.html" class="filepath external">'
-            html+= '<div class="image" data-layzr="'+ lists[i].cover +'@640w_1l"></div>'
+            html+= '<div class="image" data-layzr="'+ transHttps(lists[i].cover) +'@640w_1l"></div>'
             html+= '</a>'
             html+= '<a href="/Portal/HsArticle/index/id/'+ lists[i].id +'.html" class="post_title external">'+ lists[i].title +'</a>'
             html+= '<a class="keywords keywords_none"></a>'
@@ -216,7 +216,7 @@ $(document).on('pageInit','.tag_goods', function(e, id, page) {
             if(diff){
 
                 var sortId = $this.attr('sortid');
-                console.log('sortid',sortId)
+                // console.log('sortid',sortId)
                 if(typeof sortId === 'string'){
                     getGoodsSortInfo(sortId)
                 }
@@ -262,6 +262,13 @@ $(document).on('pageInit','.tag_goods', function(e, id, page) {
         if (r != null) return unescape(r[2]); return null;
     }
 
+    // 链接 http --> https
+    function transHttps(url){
+        if(typeof url === 'string'){
+            url = url.replace('http://','https://');
+        }
+        return url;
+    }
 
 });
 

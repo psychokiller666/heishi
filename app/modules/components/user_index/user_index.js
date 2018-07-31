@@ -203,7 +203,7 @@ $(document).on('pageInit','.center', function(e, id, page){
           for(var i=0;i<lists.length;i++){
               html+= '<li>'
               html+= '<a href="/Portal/HsArticle/index/id/'+ lists[i].id +'.html" class="filepath external">'
-              html+= '<div class="image" data-layzr="'+ lists[i].cover +'@640w_1l"></div>'
+              html+= '<div class="image" data-layzr="'+ transHttps(lists[i].cover) +'@640w_1l"></div>'
               html+= '</a>'
               html+= '<a href="/Portal/HsArticle/index/id/'+ lists[i].id +'.html" class="post_title external">'+ lists[i].title +'</a>'
               html+= '<a class="keywords keywords_none"></a>'
@@ -253,6 +253,7 @@ $(document).on('pageInit','.center', function(e, id, page){
                       // 如果有店铺分类,展示列表按钮
                       if(data.data && data.data.length>0){
                           $('.classify_more').show();
+                          // $('.classify_more_button').show();//分类页按钮
                       }
                       // addGoodsSort(data.data);
                       // addChangeEvent();
@@ -262,6 +263,7 @@ $(document).on('pageInit','.center', function(e, id, page){
               error: function(e){
                   console.log('getGoodsSort err: ',e);
               }
+
           });
       }
 
@@ -448,6 +450,13 @@ $(document).on('pageInit','.center', function(e, id, page){
           })
       }
 
+    // 链接 http --> https
+    function transHttps(url){
+      if(typeof url === 'string'){
+          url = url.replace('http://','https://');
+      }
+      return url;
+    }
     /****店铺首页 分类及加载 -end ****/
 
 
