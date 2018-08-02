@@ -142,3 +142,5 @@ require('../modules/components/search_goods/search_goods.js');
 require('../modules/components/mobile_bind/login.js');
 
 
+//新人有礼活动页
+require('../modules/components/gift_for_new/gift_for_new');
