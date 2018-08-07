@@ -253,7 +253,7 @@ $(document).on('pageInit','.center', function(e, id, page){
                       // 如果有店铺分类,展示列表按钮
                       if(data.data && data.data.length>0){
                           $('.classify_more').show();
-                          // $('.classify_more_button').show();//分类页按钮
+                          $('.classify_more_button').show();//分类页按钮
                       }
                       // addGoodsSort(data.data);
                       // addChangeEvent();

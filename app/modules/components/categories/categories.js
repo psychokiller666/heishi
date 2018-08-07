@@ -2,7 +2,7 @@
 var common = require('../common/common.js');
 var handlebars = require('../../../../node_modules/handlebars/dist/handlebars.min.js');
 // 搜索
-var SearchInit = require('../search_list/search_list.js');
+// var SearchInit = require('../search_list/search_list.js');
 
 $(document).on('pageInit','.categories', function(e, id, page){
   if (page.selector == '.page'){
@@ -12,7 +12,7 @@ $(document).on('pageInit','.categories', function(e, id, page){
   init.checkfollow();
 
   // 搜索初始
-  SearchInit();
+  // SearchInit();
   // 初始化title
   $('title').text('分类');
   // 存储每个子分类位置
