@@ -2,7 +2,7 @@
 // 初始化
 var common = require('../common/common.js');
 // 搜索
-var SearchInit = require('../search_list/search_list.js');
+// var SearchInit = require('../search_list/search_list.js');
 
 $(document).on('pageInit','.showall', function (e, id, page) {
   require('../../../../node_not/SUI-Mobile/dist/js/sm-extend.min.js');
@@ -23,7 +23,7 @@ $(document).on('pageInit','.showall', function (e, id, page) {
 
 
   // 搜索初始
-  SearchInit();
+  // SearchInit();
   // 获取卖家信息
   user_info();
   function user_info(){

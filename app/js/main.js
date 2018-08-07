@@ -122,6 +122,7 @@ require('../modules/components/user_address/user_address_order.js');
 require('../../node_not/SUI-Mobile/dist/js/sm-city-picker.js');
 //搜索模块
 require('../modules/components/search_list/search_list.js');
+require('../modules/components/search_list/search_list_2.js');
 //加入黑市
 require('../modules/components/user_join_hs/user_join_hs.js');
 //浏览记录
@@ -134,3 +135,5 @@ require('../modules/components/seller_tag/seller_tag.js');
 //商家分类商品列表
 require('../modules/components/tag_goods/tag_goods.js');
 
+//搜索页
+require('../modules/components/search_goods/search_goods.js');
