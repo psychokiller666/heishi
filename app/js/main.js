@@ -137,3 +137,8 @@ require('../modules/components/tag_goods/tag_goods.js');
 
 //搜索页
 require('../modules/components/search_goods/search_goods.js');
+
+//手机号绑定新页面
+require('../modules/components/mobile_bind/login.js');
+
+

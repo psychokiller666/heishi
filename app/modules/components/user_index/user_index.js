@@ -574,7 +574,7 @@ $(document).on('pageInit','.center', function(e, id, page){
         },
         success: function(res) {
           if(res.status == 1){
-            var str = res.redirect_uri + '&code=' + res.code;
+            var str = res.redirect_uri;
             location.href = str;
           } else {
             $.toast(res.info);
