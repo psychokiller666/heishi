@@ -1,4 +1,11 @@
 // 用户中心页
+/**
+* 注意!!!:
+* 这个js是 卖家中心页: /User/index/index/id/163.html 和 用户中心页: /index.php/User/Center/index.html
+* 两个页面共同使用的js,由于以前的开发人员将两个页面同时使用了 .center 这个class 作为页面的class,所以现在将就着用吧.
+* 其中大部分代码均为卖家中心页的js.
+* 添加某些功能时需要先判断当前是哪个页面.
+* */
 // handlebars
 var handlebars = require('../../../../node_modules/handlebars/dist/handlebars.min.js');
 // 初始化
@@ -139,13 +146,7 @@ $(document).on('pageInit','.center', function(e, id, page){
 
 
     /****店铺首页 分类及加载 -start ****/
-      var HostName = location.hostname;
-
-      var ApiBaseUrl = 'https://apitest.ontheroadstore.com';
-
-      if(HostName==="hs.ontheroadstore.com"){
-          ApiBaseUrl = 'https://api.ontheroadstore.com';
-      }
+      var ApiBaseUrl = init.getApiBaseUrl();
 
 
       var $classifyWrap = $('.classify_wrap');
@@ -380,11 +381,11 @@ $(document).on('pageInit','.center', function(e, id, page){
               var cwTop = $classifyWrap.offset().top;
               var cLTop = $classifyLoading.offset().top;
               if(cwTop<5){
-                  $('.classify_page').css('overflow-y','auto');
-                  $classifyTabWrap.css('position','fixed');
+                  // $('.classify_page').css('overflow-y','auto');
+                  $classifyTabWrap.addClass('fixed_top');
               }else{
-                  $('.classify_page').css('overflow-y','hidden');
-                  $classifyTabWrap.css('position','absolute');
+                  // $('.classify_page').css('overflow-y','hidden');
+                  $classifyTabWrap.removeClass('fixed_top');
               }
 
               var bodyH =  document.documentElement.clientHeight;
@@ -524,7 +525,35 @@ $(document).on('pageInit','.center', function(e, id, page){
     }
   }
 
+  //判断是否展示用户中心页的新人领取优惠券
+    var $coupon_for_new = $('.coupon_for_new');
+    if($coupon_for_new.length>0){
+        var PHPSESSID = init.getCookie('PHPSESSID');
+        var ApiBaseUrl = init.getApiBaseUrl();
+        var url = ApiBaseUrl + '/appv6/coupon/getNewUserCouponStatus';
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType: 'json',
+            data: {},
+            headers: {
+                'phpsessionid': PHPSESSID
+            },
+            success: function (data) {
 
+                if (data.status == 1) {
+                    if(data.data.status==1){
+                        $coupon_for_new.find('.coupon_price').html(data.data.total_price);
+                        $coupon_for_new.show();
+                    }
+                }
+            },
+            error: function (e) {
+                console.log('getOrderReturnCoupon err: ', e);
+            }
+
+        });
+    }
 
   if(store_list.length == 0){
     // 弹出绑定手机窗口 自己的个人中心

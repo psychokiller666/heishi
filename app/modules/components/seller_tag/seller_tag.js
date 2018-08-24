@@ -9,12 +9,7 @@ $(document).on('pageInit','.seller_tag', function(e, id, page) {
     }
     var init = new common(page);
 
-    var HostName = location.hostname;
-    var ApiBaseUrl = 'https://apitest.ontheroadstore.com';
-
-    if(HostName==="hs.ontheroadstore.com"){
-        ApiBaseUrl = 'https://api.ontheroadstore.com';
-    }
+    var ApiBaseUrl = init.getApiBaseUrl();
 
     var uid = getUrlParam('id');
 

@@ -1,0 +1,352 @@
+.get_coupon {
+
+  .hs-page {
+    position: relative;
+    background: #F2F2F2;
+
+    .all_wrap{
+      padding: 0.4rem 0.4rem 0;
+
+      .coupon_li{
+        position: relative;
+        margin-bottom: 0.4rem;
+        list-style : none;
+        background: #fff;
+        border-radius: .16rem;
+
+        .coupon_top{
+          box-sizing: border-box;
+          padding: 0.26667rem 0;
+          border-radius: 0.16000rem;
+          height: 2.45333rem;
+          width: 100%;
+          box-shadow:0px 2px 3px 0px rgba(0,0,0,0.04);
+          position: relative;
+          z-index: 10;
+        }
+
+        .left{
+          float: left;
+          width: 2.96rem;
+          height: 100%;
+          text-align: center;
+          border-right: 0.02667rem dashed #979797;
+          .coupon_price{
+            height:0.69333rem;
+            font-size:0.69333rem;
+            font-family:'din';
+            color:#AE2121;
+            line-height:1;
+            padding: 0.34667rem 0 0.29333rem;
+          }
+          .coupon_desc{
+            font-size:0.26667rem;
+            font-family:PingFangSC-Light;
+            color:#202123;
+            line-height: 1;
+          }
+        }
+        .right_top{
+          float: left;
+
+          .center{
+            float: left;
+            width: 3.57333rem;
+            box-sizing: border-box;
+            padding: 0.13333rem 0 0 0.50667rem;
+            .title{
+              font-size:0.37333rem;
+              font-family:PingFangSC-Semibold;
+              color:#202123;
+              line-height:1;
+              height: 0.88rem;
+
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+            .time{
+              height: 0.26667rem;
+              font-size:0.26667rem;
+              font-family:PingFangSC-Regular;
+              color:#8E8E8E;
+              line-height:1;
+              white-space: nowrap;
+            }
+          }
+          .right{
+            float: left;
+
+            .btn{
+              width: 1.81333rem;
+              height: 0.56rem;
+              background:#AE2121;
+              border-radius:0.29333rem;
+              margin: 0.69333rem 0 0 0.4rem;
+              font-size:0.34667rem;
+              font-family:PingFangSC-Medium;
+              color: #fff;
+              line-height:0.56rem;
+              text-align: center;
+
+              &[get_status='1']{
+                background: #D8D8D8;
+              }
+              &[get_status='0']:after{
+                content: '立即领取';
+              }
+              &[get_status='1']:after{
+                content: '已领取';
+              }
+              &[get_status='2']:after{
+                content: '查看商品';
+              }
+            }
+
+
+          }
+        }
+        .right_btm{
+          float: left;
+
+          position: relative;
+          width: 5.28rem;
+          .open_wrap{
+            position: absolute;
+            left: 0.50667rem;
+            top: 0.16000rem;
+            width: 5.28rem;
+            height: 0.69333rem;
+            border-top: 0.02667rem dashed #979797;
+            line-height: 0.69333rem;
+            font-size: 0;
+            white-space: nowrap;
+            .title{
+              font-size: 0.26667rem;
+              display: inline-block;
+              vertical-align: middle;
+              width: 4.90667rem;
+              box-sizing: border-box;
+              padding-right: 0.4rem;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              color: #8E8E8E;
+            }
+            .open_ico{
+              width: 0.37333rem;
+              height: 0.37333rem;
+              vertical-align: middle;
+            }
+          }
+        }
+
+        .coupon_btm{
+          box-sizing: border-box;
+          width: 100%;
+          padding: 0.10667rem 0.4rem;
+          background: #fff;
+          border-radius:0.16rem;
+          line-height: 0.48rem;
+          color: #8E8E8E;
+          font-size: 0.26667rem;
+          display: none;
+        }
+
+        &[status='0']{
+          .coupon_price{
+            color: #8E8E8E;
+          }
+          .btn{
+            display: none;
+          }
+          .coupon_desc{
+            color: #8E8E8E;
+          }
+        }
+        &[open='1']{
+
+          .open_ico{
+            transform: rotateZ(180deg);
+          }
+          .coupon_btm{
+            display: block;
+          }
+        }
+      }
+
+    }
+
+
+    .seller_wrap{
+      padding: 0 0.4rem 0;
+      .seller_out{
+        margin-bottom: 0.4rem;
+
+        .seller_info{
+          padding: 0 0.4rem;
+          height: 1.12rem;
+          background: #fff;
+          box-shadow:0 0.05333rem 0.08rem 0 rgba(0,0,0,0.04);
+          border-radius: 0.16rem;
+          position: relative;
+          z-index: 10;
+
+          .seller_avatar{
+            width: 0.48rem;
+            height: 0.48rem;
+            border-radius: 50% ;
+            vertical-align: middle;
+          }
+          .seller_name{
+            font-size: 0.32rem;
+            font-family:PingFangSC-Medium;
+            color:#202123;
+            line-height: 1.12rem;
+            vertical-align: middle;
+            margin-left: 0.26667rem;
+          }
+          .go_seller_store{
+            float: right;
+            font-size: 0.32rem;
+            font-family:PingFangSC-Medium;
+            color:#8E8E8E;
+            line-height: 1.12rem;
+            vertical-align: middle;
+            a{
+              color: inherit;
+              display: block;
+              &:after{
+                content: '\e512';
+                display: inline-block;
+                vertical-align: middle;
+                font-size: 0.37333rem;
+                margin-left: 0.26667rem;
+              }
+            }
+          }
+        }
+
+        .seller_coupon_ul{
+
+          border-radius: 0 0 0.16rem 0.16rem;
+          overflow: hidden;
+
+          li{
+            //margin-bottom: 0.4rem;
+            box-sizing: border-box;
+            padding: 0.26667rem 0;
+            background: #fff;
+            //border-radius: 0.16000rem;
+            height: 2.45333rem;
+            width: 100%;
+            position: relative;
+            &:not(:last-child):after{
+              content: '';
+              display: block;
+              width: 8.4rem;
+              opacity: 0.5;
+              border-bottom: .02667rem dashed #979797;
+              position: absolute;
+              left: 0.4rem;
+              bottom: 0;
+            }
+            .left{
+              float: left;
+              width: 2.96rem;
+              height: 100%;
+              text-align: center;
+              //border-right: 0.02667rem dashed #979797;
+              .coupon_price{
+                height:0.69333rem;
+                font-size:0.69333rem;
+                font-family:'din';
+                color:#AE2121;
+                line-height:1;
+                padding: 0.34667rem 0 0.29333rem;
+              }
+              .coupon_desc{
+                font-size:0.26667rem;
+                font-family:PingFangSC-Light;
+                color:#202123;
+                line-height: 1;
+              }
+            }
+            .center{
+              float: left;
+              width: 3.57333rem;
+              box-sizing: border-box;
+              padding: 0.34667rem 0 0 0.50667rem;
+              .title{
+                font-size:0.37333rem;
+                font-family:PingFangSC-Semibold;
+                color:#202123;
+                line-height:1;
+                height: 0.98667rem;
+
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              }
+              .time{
+                font-size:0.26667rem;
+                font-family:PingFangSC-Regular;
+                color:#8E8E8E;
+                line-height:1;
+                white-space: nowrap;
+              }
+            }
+            .right{
+              float: left;
+
+              .btn{
+                width: 1.81333rem;
+                height: 0.56rem;
+                background:#AE2121;
+                border-radius:0.29333rem;
+                margin: 0.69333rem 0 0 0.4rem;
+                font-size:0.34667rem;
+                font-family:PingFangSC-Medium;
+                color: #fff;
+                line-height:0.56rem;
+                text-align: center;
+
+                &[get_status='1']{
+                  background: #D8D8D8;
+                }
+                &[get_status='0']:after{
+                  content: '立即领取';
+                }
+                &[get_status='1']:after{
+                  content: '已领取';
+                }
+                &[get_status='2']:after{
+                  content: '查看商品';
+                }
+              }
+
+
+            }
+          }
+        }
+      }
+
+    }
+
+
+    .no_coupon_tip{
+      display: none;
+      position: absolute;
+      top: 40%;
+      font-size: 0.34667rem;
+      line-height: 1;
+      text-align: center;
+      width: 100%;
+    }
+
+
+
+  }
+
+
+}

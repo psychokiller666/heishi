@@ -11,7 +11,7 @@ $(document).on('pageInit','.jump', function(e, id, page){
   //支付成功
   // if($('.success').length && status_pay == 0){
   if($('.success').length){
-    $.toast('支付成功');
+    // $.toast('支付成功');
     $('.return_index_btn').click(function(){
       window.location.href = '/Portal/Index/index.html';
     })
@@ -31,6 +31,95 @@ $(document).on('pageInit','.jump', function(e, id, page){
       },3000);
     }
   }
+
+    //商家返券
+    var PHPSESSID = init.getCookie('PHPSESSID');
+    var ApiBaseUrl = init.getApiBaseUrl();
+
+    var orderId = $('[data-ordernumber]').attr('data-ordernumber');
+    // orderId = 'VR20180817154816FZ5CNN'
+
+    if(orderId){
+      getOrderReturnCoupon(orderId);
+    }
+
+    function getOrderReturnCoupon(id) {
+
+        var url = ApiBaseUrl + '/appv6/coupon/' + id + '/returnOrder';
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType: 'json',
+            data: {},
+            headers: {
+                'phpsessionid': PHPSESSID
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    initBackCouponPopup(data.data);
+                }
+            },
+            error: function (e) {
+                console.log('getOrderReturnCoupon err: ', e);
+            }
+
+        });
+    }
+
+    function initBackCouponPopup(data){
+        if(!(data instanceof Array && data.length>0)){
+          return;
+        }
+
+        var html = '';
+
+        html += '<div class="back_coupon_popup_wrap" multi="'+ (data.length>1 ? 1 : 0) +'">'
+        html += '<div class="tip">'+ (data.length>1 ? data.length+'张优惠券' : '') +'</div>'
+        html += '<div class="coupon_wrap">'
+        html += '<div class="left">'
+        html += '<div class="coupon_price">¥<b>'+ data[0].coupon_price +'</b></div>'
+        html += '<div class="coupon_desc">'+ (data[0].min_price > 0 ? '满'+data[0].min_price+'可用':'消费任意金额可用') +'</div>'
+        html += '</div>'
+        html += '<div class="center">'
+        html += '<div class="title">'+ data[0].title +'</div>'
+        html += '<div class="time">'+ fmtTime(data[0].apply_time_start) + ' - ' + fmtTime(data[0].apply_time_end) +'</div>'
+        html += '</div>'
+        html += '</div>'
+        html += '<div class="bottom">'
+        html += '<div class="top_img"></div>'
+        html += '<div class="btn_wrap">'
+        html += '<div class="btn"><a external href="/index.php/Portal/Coupon/userCoupon.html">查看优惠券</a></div>'
+        html += '</div>'
+        html += '</div>'
+        html += '</div>'
+
+        $('.back_coupon_popup_mask').html(html)
+            .show()
+            .on('click',function(ev){
+                if(this === ev.target){
+                    $(this).hide();
+                }
+            });
+
+    }
+
+    function fmtTime(time){
+
+        function fixNum(v){
+            return v<10 ? '0'+v : v;
+        }
+
+        time = String(time).length === 10 ? time*1000 : time;
+
+        var t = new Date(time);
+        var y = fixNum(t.getFullYear());
+        var m = fixNum(t.getMonth());
+        var d = fixNum(t.getDate());
+
+        return y + '.' + m + '.' + d;
+    }
+
+
 
   //活动 支付成功
   // if(status_pay == 1){

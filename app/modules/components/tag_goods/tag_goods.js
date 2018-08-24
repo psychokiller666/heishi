@@ -1,4 +1,4 @@
-//卖家店铺分类商品列表页
+//标签分类商品页
 
 // 初始化
 var common = require('../common/common.js');
@@ -10,13 +10,7 @@ $(document).on('pageInit','.tag_goods', function(e, id, page) {
     var init = new common(page);
     var lazyLoad = init.lazyLoad;
 
-    var HostName = location.hostname;
-    var ApiBaseUrl = 'https://apitest.ontheroadstore.com';
-
-
-    if(HostName==="hs.ontheroadstore.com"){
-        ApiBaseUrl = 'https://api.ontheroadstore.com';
-    }
+    var ApiBaseUrl = init.getApiBaseUrl();
 
     var uid = getUrlParam('id');
     var sortid = getUrlParam('sortid') || 0;

@@ -1,145 +1,74 @@
-.tag_goods {
+.seller_tag {
 
   .hs-page {
-
-    .classify_wrap {
-      width: 100%;
+    background: #F2F2F2;
+    padding: 0.4rem;
+    box-sizing: border-box;
+    
+    .tag_wrap{
       height: 100%;
-      position: relative;
-      padding-top: 1.17333rem;
-      background: #fff;
+      background-color: #fff;
+      border-radius: 0.16rem;
       box-sizing: border-box;
+      padding-bottom: 0.32rem;
+      position: relative;
 
-      .classify_tab_wrap {
+      .tag_header{
         position: absolute;
-        top: 0;
         left: 0;
-        z-index: 99999;
-        background: #fff;
-        font-size: 0;
+        top: 0;
+        z-index: 100;
         width: 100%;
-        height: 1.17333rem;
-        padding: 0 0 0 0.29333rem;
-        overflow-y:hidden;
-        overflow-x:auto;
-        white-space: nowrap;
-        border-bottom: 1px solid #E8E8E8;
+        line-height: 1.22666rem;
+        height: 1.22666rem;
+        font-size: 0.42666rem;
+        color: #000;
+        background-color: #fff;
+        padding: 0 0.32rem 0 0.4rem;
         box-sizing: border-box;
-        visibility: hidden;
-        .classify_tab {
-          font-size: 0.34666rem;
-          line-height: 1.17333rem;
-          color: #000;
-          display: inline-block;
-          margin: 0 0.4rem;
-          position: relative;
-        }
-        .classify_tab_act {
-          font-weight: bold;
-          color: #AE2121;
-        }
-        .classify_tab_act:after{
-          content: '';
-          display: block;
-          width: 0.53333rem;
-          height: 0.10666rem;
-          position: absolute;
-          left: 50%;
-          bottom: 0.1rem;
-          transform: translateX(-50%);
-          background: #AE2121;
-          border-radius: 0.05333rem;
-        }
-        .classify_more{
-          display: block;
-          position: absolute;
-          right: 0.4rem;
-          top: 0.29333rem;
-          width: 0.58666rem;
-          height: 0.58666rem;
 
-          .classify_more_ico{
-            display: block;
-            width: 100%;
-            height: 100%;
-          }
-        }
-      }
-      .classify_tab_wrap::-webkit-scrollbar {
-        display: none;
-      }
-
-      .classify_page_wrap {
-        height: 100%;
-        box-sizing: border-box;
-        .classify_page {
-          padding: 0 0.4rem;
+        a{
+          display: block;
           height: 100%;
-          overflow-y: auto;
-          overflow-x: hidden;
-          display: none;
-        }
-        .classify_page_act {
-          display: block;
-        }
-        li{
-          margin-bottom: 0.533rem;
-          position: relative;
-          list-style : none;
-          &:first-child{
-            padding-top: 0.53333rem;
-          }
-          .hs-cf;
-          .filepath{
-            width: 4.48rem;
-            height: 2.293rem;
-            float: left;
-            margin-right: 0.4rem;
-            .image {
-              background-color: #F5F5F5;
-              background-position: 50% 50%;
-              background-repeat: no-repeat;
-              background-size: 100%;
-              width: 100%;
-              height: 100%;
-              border-radius: 0.16rem;
-            }
-          }
-          .post_title{
-            color: #000000;
-            width: 4.29rem;
-            height: 2.4em;
-            line-height: 1.2em;
-            font-size: 0.373rem;
-            overflow: hidden;
-            float: left;
-            .font-dpr(14px);
-            font-weight: 500;
-          }
-          .keywords{
-            color: #8E8E8E;
-            .font-dpr(12px);
-            float: left;
-            margin-top: 0.16rem;
-            padding: 0.08rem 0.133rem;
-            border-radius: 0.107rem;
-            background: #F5F5F5;
-          }
-          .keywords_none{
-            opacity: 0;
-          }
-          .price{
-            position: absolute;
-            bottom: 0;
-            .font-dpr(16px);
-            left: 4.88rem;
-            line-height: 1em;
+          color: inherit;
+
+          img{
+            float: right;
+            width: 0.32rem;
+            height: 0.32rem;
+            margin-top: 0.45333rem;
           }
         }
       }
 
+      .tag_ul{
+        height:100%;
+        box-sizing: border-box;
+        padding: 1.36rem 0.32rem 0 0.4rem;
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        .tag_li{
+          background:#F2F2F2;
+          border-radius: 0.16rem;
+          height: 0.90666rem;
+          line-height: 0.90666rem;
+          color: #8E8E8E;
+          font-size: 0.37333rem;
+          margin-bottom: 0.32rem;
+
+          a{
+            display: block;
+            padding: 0 0.32rem;
+            color: inherit;
+            height: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+        }
+      }
     }
   }
-
 
 }

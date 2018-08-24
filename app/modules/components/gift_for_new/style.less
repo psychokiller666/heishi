@@ -1,11 +1,11 @@
 .gift_for_new {
-
+  background: #fff;
   .hs-page {
+    background: #fff;
 
     .gift_banner{
       width: 100%;
-      height: 5.44rem;
-      background: #fff885;
+      height: 5.17333rem;
       margin-bottom: -0.4rem;
       img{
         display: block;
@@ -38,6 +38,8 @@
       padding-bottom: 1.06667rem;
       background: #fff;
       border-radius: 0.4rem 0.4rem 0 0;
+      position: relative;
+      z-index: 2;
       .get_coupon{
         position: absolute;
         right: 0;
@@ -64,7 +66,7 @@
         margin-top: 0.42667rem;
         width: 100%;
         height: 2.45333rem;
-        background: #ccc;
+        background: url("https://img8.ontheroadstore.com/static/image/coupon_icon/bg_2x.png") no-repeat center center;
         background-size: cover;
         border-radius: 0.18667rem;
 
@@ -97,6 +99,16 @@
           line-height: 0.53333rem;
           text-align: center;
           font-family:PingFangSC-Semibold,sans-serif;
+          &:after{
+            content: '立即领取';
+          }
+
+          &[status='1']{
+            background: #d8d8d8;
+            &:after{
+              content: '已领取';
+            }
+          }
         }
       }
     }
@@ -183,6 +195,9 @@
           height: 100%;
           overflow-x: auto;
           white-space: nowrap;
+          &::-webkit-scrollbar {
+            display:none;
+          }
           .item{
             width: 4.32rem;
             height: 5.84rem;
@@ -264,6 +279,16 @@
                 line-height: 0.56rem;
                 border-radius: 0.1rem;
                 box-sizing: border-box;
+                &[isatten='0']{
+                  &:after{
+                    content: '关注';
+                  }
+                }
+                &[isatten='1']{
+                  &:after{
+                    content: '已关注';
+                  }
+                }
               }
             }
           }
@@ -304,9 +329,12 @@
         overflow-x: auto;
         overflow-y: hidden;
         white-space: nowrap;
-        border-bottom: 1px solid #E8E8E8;
+        border-bottom: 0.02667rem solid #E8E8E8;
         box-sizing: border-box;
         visibility: hidden;
+        &::-webkit-scrollbar {
+          display:none;
+        }
         .classify_tab {
           font-size: 0.34666rem;
           line-height: 1.17333rem;
@@ -354,6 +382,9 @@
           height: 4.21333rem;
           list-style: none;
           margin-top: 0.4rem;
+          box-shadow:0px 0px 0.08rem 0px rgba(0,0,0,0.08);
+          border-radius: 0.16rem;
+          overflow: hidden;
           &:nth-child(odd){
             margin-right: 0.4rem;
           }
