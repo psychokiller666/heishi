@@ -250,6 +250,37 @@ common.prototype.toLogin = function(){
     location.href = url;
     return false;
 };
+//优惠券的格式化时间，显示为2001.11.11
+common.prototype.couponFmtTime = function (time){
+
+    function fixNum(v){
+        return v<10 ? '0'+v : v;
+    }
+
+    time = String(time).length === 10 ? time*1000 : time;
+
+    var t = new Date(time);
+    var y = fixNum(t.getFullYear());
+    var m = fixNum(t.getMonth()+1);
+    var d = fixNum(t.getDate());
+
+    return y + '.' + m + '.' + d;
+};
+//获取 几天 后的时间戳（默认10位）天、时、分、秒、是否13位
+common.prototype.getTimestamp = function (day, hour, min, sec, full){
+    day = isNaN(parseInt(day)) ? 0 : parseInt(day);
+    hour = isNaN(parseInt(hour)) ? 0 : parseInt(hour);
+    min = isNaN(parseInt(min)) ? 0 : parseInt(min);
+    sec = isNaN(parseInt(sec)) ? 0 : parseInt(sec);
+
+    var delay = ( day * 86400 + hour * 3600 + min * 60 + sec ) * 1000;//毫秒
+    var now = (new Date()).getTime();   //当前13位时间戳
+    var stp = +now + delay;
+    if(!full){
+        stp = parseInt(stp / 1000) ;
+    }
+    return stp;
+};
 
 
 

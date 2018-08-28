@@ -828,7 +828,12 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
             liHtml += '</div>'
             liHtml += '<div class="center">'
             liHtml += '<div class="title">'+ data[j].title +'</div>'
-            liHtml += '<div class="time">'+ fmtTime(data[j].apply_time_start) + ' - ' + fmtTime(data[j].apply_time_end) +'</div>'
+
+            if (data[j].apply_time_type==2){
+                liHtml += '<div class="time">'+ init.couponFmtTime(init.getTimestamp()) + ' - ' + init.couponFmtTime(init.getTimestamp(data[j].apply_time_length)) +'</div>'
+            }else{
+                liHtml += '<div class="time">'+ init.couponFmtTime(data[j].apply_time_start) + ' - ' + init.couponFmtTime(data[j].apply_time_end) +'</div>'
+            }
             liHtml += '</div>'
             liHtml += '<div class="right">'
             liHtml += '<div class="btn" coupon_id="'+ data[j].coupon_id +'" get_status="'+ data[j].receiveStatus +'"></div>'
@@ -918,7 +923,12 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
             liHtml += '</div>'
             liHtml += '<div class="center">'
             liHtml += '<div class="title">'+ data[j].title +'</div>'
-            liHtml += '<div class="time">'+ fmtTime(data[j].apply_time_start) + ' - ' + fmtTime(data[j].apply_time_end) +'</div>'
+
+            if(data[j].apply_time_type==2){
+                liHtml += '<div class="time">'+ init.couponFmtTime(init.getTimestamp()) + ' -- ' + init.couponFmtTime(init.getTimestamp(data[j].apply_time_length)) +'</div>'
+            }else{
+                liHtml += '<div class="time">'+ init.couponFmtTime(data[j].apply_time_start) + ' -- ' + init.couponFmtTime(data[j].apply_time_end) +'</div>'
+            }
             liHtml += '</div>'
             liHtml += '<div class="right">'
             liHtml += '<div class="btn" coupon_id="'+ data[j].coupon_id +'" get_status="2" issue_by="'+ data[j].issue_by +'"></div>'
@@ -965,21 +975,6 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
 
     }
 
-    function fmtTime(time){
-
-        function fixNum(v){
-            return v<10 ? '0'+v : v;
-        }
-
-        time = String(time).length === 10 ? time*1000 : time;
-
-        var t = new Date(time);
-        var y = fixNum(t.getFullYear());
-        var m = fixNum(t.getMonth());
-        var d = fixNum(t.getDate());
-
-        return y + '.' + m + '.' + d;
-    }
 
 
 });

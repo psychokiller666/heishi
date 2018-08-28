@@ -82,7 +82,12 @@ $(document).on('pageInit','.jump', function(e, id, page){
         html += '</div>'
         html += '<div class="center">'
         html += '<div class="title">'+ data[0].title +'</div>'
-        html += '<div class="time">'+ fmtTime(data[0].apply_time_start) + ' - ' + fmtTime(data[0].apply_time_end) +'</div>'
+
+        if (data[0].apply_time_type==2){
+            html += '<div class="time">'+ init.couponFmtTime(init.getTimestamp()) + ' - ' + init.couponFmtTime(init.getTimestamp(data[0].apply_time_length)) +'</div>'
+        }else{
+            html += '<div class="time">'+ init.couponFmtTime(data[0].apply_time_start) + ' - ' + init.couponFmtTime(data[0].apply_time_end) +'</div>'
+        }
         html += '</div>'
         html += '</div>'
         html += '<div class="bottom">'
@@ -103,21 +108,6 @@ $(document).on('pageInit','.jump', function(e, id, page){
 
     }
 
-    function fmtTime(time){
-
-        function fixNum(v){
-            return v<10 ? '0'+v : v;
-        }
-
-        time = String(time).length === 10 ? time*1000 : time;
-
-        var t = new Date(time);
-        var y = fixNum(t.getFullYear());
-        var m = fixNum(t.getMonth());
-        var d = fixNum(t.getDate());
-
-        return y + '.' + m + '.' + d;
-    }
 
 
 

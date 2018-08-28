@@ -68,7 +68,12 @@ $(document).on('pageInit', '.get_coupon', function (e, id, page) {
             html += '<div class="right_top">'
             html += '<div class="center">'
             html += '<div class="title">' + lists[i].title + '</div>'
-            html += '<div class="time">'+ fmtTime(lists[i].apply_time_start) + ' - ' + fmtTime(lists[i].apply_time_end) +'</div>'
+
+            if (lists[i].apply_time_type==2){
+                html += '<div class="time">'+ init.couponFmtTime(init.getTimestamp()) + ' - ' + init.couponFmtTime(init.getTimestamp(lists[i].apply_time_length)) +'</div>'
+            }else{
+                html += '<div class="time">'+ init.couponFmtTime(lists[i].apply_time_start) + ' - ' + init.couponFmtTime(lists[i].apply_time_end) +'</div>'
+            }
             html += '</div>'
             html += '<div class="right">'
             html += '<div class="btn" couponid="'+ lists[i].coupon_id +'">立即领取</div>'
@@ -121,7 +126,12 @@ $(document).on('pageInit', '.get_coupon', function (e, id, page) {
                 html += '</div>'
                 html += '<div class="center">'
                 html += '<div class="title">'+ coupon[j].title +'</div>'
-                html += '<div class="time">'+ fmtTime(coupon[j].apply_time_start) + ' - ' + fmtTime(coupon[j].apply_time_end) +'</div>'
+
+                if (coupon[j].apply_time_type==2){
+                    html += '<div class="time">'+ init.couponFmtTime(init.getTimestamp()) + ' - ' + init.couponFmtTime(init.getTimestamp(coupon[j].apply_time_length)) +'</div>'
+                }else{
+                    html += '<div class="time">'+ init.couponFmtTime(coupon[j].apply_time_start) + ' - ' + init.couponFmtTime(coupon[j].apply_time_end) +'</div>'
+                }
                 html += '</div>'
                 html += '<div class="right">'
                 html += '<div class="btn" couponid="'+ coupon[j].coupon_id +'" get_status="0"></div>'
@@ -207,22 +217,6 @@ $(document).on('pageInit', '.get_coupon', function (e, id, page) {
         });
     }
 
-
-    function fmtTime(time){
-
-        function fixNum(v){
-            return v<10 ? '0'+v : v;
-        }
-
-        time = String(time).length === 10 ? time*1000 : time;
-
-        var t = new Date(time);
-        var y = fixNum(t.getFullYear());
-        var m = fixNum(t.getMonth());
-        var d = fixNum(t.getDate());
-
-        return y + '.' + m + '.' + d;
-    }
 
     // 链接 http --> https
     function transHttps(url) {

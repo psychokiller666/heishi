@@ -73,15 +73,20 @@ $(document).on('pageInit', '.user_coupon', function (e, id, page) {
             html += '<div class="right_top">'
             html += '<div class="center">'
             html += '<div class="title">' + lists[i].title + '</div>'
-            html += '<div class="time">'+ fmtTime(lists[i].apply_time_start) + ' - ' + fmtTime(lists[i].apply_time_end) +'</div>'
+
+            if (lists[i].apply_time_type==2){
+                html += '<div class="time">'+ init.couponFmtTime(init.getTimestamp()) + ' - ' + init.couponFmtTime(init.getTimestamp(lists[i].apply_time_length)) +'</div>'
+            }else{
+                html += '<div class="time">'+ init.couponFmtTime(lists[i].apply_time_start) + ' - ' + init.couponFmtTime(lists[i].apply_time_end) +'</div>'
+            }
             html += '</div>'
             html += '<div class="right">'
-            html += '<div class="btn"><a external href="/index.php/Portal/Coupon/useCoupon.html">立即使用</a></div>'
+            html += '<div class="btn"><a external href="/Portal/Coupon/useCoupon.html">立即使用</a></div>'
             html += '</div>'
             html += '</div>'
             html += '<div class="right_btm">'
             html += '<div class="open_wrap">'
-            html += '<span class="title">"'+lists[i].coupon_note+'</span>'
+            html += '<span class="title">'+lists[i].coupon_note+'</span>'
             html += '<img class="open_ico" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAC0klEQVRIS72WTU8UQRCG651BV3HPGhUPJELXwEETIHrwZEwkIKLRxIvEm/ob/AH+BvGoXjgYwQ+iifFkoomQqMky3WACiQT0jhsHd6dMjzubYXb2A1ip0yRd9T5d1dXTBdpjw3Z4IuKsrKwcDoKgS0QEwLpS6geAsFWdpkAR6TDGXCWi6yIyCuBQUlxEfgGYFZEpZp4BUGoErwu0CRhj7hLRPSLqajGDVSK6r5R6AECyYjKBhUIh77ruFBGNtAhKu82Wy+Ub/f39G+mFGuDy8vKBIAg+EtGpHcLisK+5XO5Md3f376RODdD3/UkAt3cJi8MnmdkeS9W2AI0xIyLyqk2wSMZxnEu9vb1VzSpQRFyttQZwsp1AEfnGzAygbHWrQK31TSJ63E5YQmuCmZ+kgc+I6Erqjs0TkQegs5WNiEiRiHwAAyn/aWa2d/lfhpVyFgHsjx1FpJDP54eKxeJAGIZvmkEtzHGci6VS6bPrup+IiBNam8zcacsaARcWFo46jrOWyq4E4BozPzfGnGsEjWFKqfda68si8hRAR1IvDMNjfX196xHQ9/0BAHPpsonIFqiIvCWiXMovAHChEaxSxUHP8+YjoNZ6kIhsGWosCdVanyei2QQ0sH8jZn5XL7OE4BAzz0XApaWlrnK5/L1eY1SgY8z8OgG17jFsWERepMuY1HNd90RPT89q3DT7tNYbyabJKO8mgPEKdNiux98iYl+JasNlxTJzHsCf5D2cJqLxRu0vIlVo5ShsZg1hFb0ZZo6uXBVojJkQkUfN7lsMrTRCKzACcEspFWnv9Ndmm8VaumOzmi7712Y9FxcXR8MwfNksy+2sAxhVStnOjuy/Pk8i8tDzvDvJDdZ7gD8Q0entZJLh+yWXy51t+gDbwD0dMeKd7ukQlSxPckwkojEiOphab8+YmHV+dhD2ff+I4zjH7SAsImue5/1s6yC8y8apCf8LwgGQLJSQQMMAAAAASUVORK5CYII=">'
             html += '</div>'
             html += '</div>'
@@ -226,21 +231,6 @@ $(document).on('pageInit', '.user_coupon', function (e, id, page) {
         })
     }
 
-    function fmtTime(time){
-
-        function fixNum(v){
-            return v<10 ? '0'+v : v;
-        }
-
-        time = String(time).length === 10 ? time*1000 : time;
-
-        var t = new Date(time);
-        var y = fixNum(t.getFullYear());
-        var m = fixNum(t.getMonth());
-        var d = fixNum(t.getDate());
-
-        return y + '.' + m + '.' + d;
-    }
 
 
 
