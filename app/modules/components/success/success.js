@@ -93,7 +93,7 @@ $(document).on('pageInit','.jump', function(e, id, page){
         html += '<div class="bottom">'
         html += '<div class="top_img"></div>'
         html += '<div class="btn_wrap">'
-        html += '<div class="btn"><a external href="/index.php/Portal/Coupon/userCoupon.html">查看优惠券</a></div>'
+        html += '<div class="btn"><a external href="/Portal/Coupon/userCoupon.html">查看优惠券</a></div>'
         html += '</div>'
         html += '</div>'
         html += '</div>'
