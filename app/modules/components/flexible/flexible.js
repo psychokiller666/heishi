@@ -8,7 +8,7 @@
 
         var divW = $('#FixRemDom')[0].clientWidth;
 
-        if(docW != divW){
+        if(docW < divW){
             var fixFontSize = docW * parseFloat(fs) / divW;
             document.documentElement.style.fontSize=fixFontSize+'px'
         }
