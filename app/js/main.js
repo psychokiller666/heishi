@@ -151,3 +151,8 @@ require('../modules/components/user_coupon/user_coupon');
 require('../modules/components/coupon_goods/coupon_goods');
 //领取优惠券
 require('../modules/components/get_coupon/get_coupon');
+
+
+//鬼市
+//鬼市商品详情
+require('../modules/components/ghost_market_article/ghost_market_article');
