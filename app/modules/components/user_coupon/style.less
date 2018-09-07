@@ -1,0 +1,522 @@
+.user_coupon {
+
+  .hs-page {
+
+    .classify_wrap {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      padding-top: 1.17333rem;
+      padding-bottom: 1.92rem;
+      background: #fff;
+      box-sizing: border-box;
+
+      .classify_tab_wrap {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 999;
+        background: #fff;
+        font-size: 0;
+        width: 100%;
+        height: 1.17333rem;
+        padding: 0 0 0 0.29333rem;
+        overflow-y:hidden;
+        overflow-x:auto;
+        white-space: nowrap;
+        border-bottom: 1px solid #E8E8E8;
+        box-sizing: border-box;
+        visibility: hidden;
+        .classify_tab {
+          font-size: 0.34666rem;
+          line-height: 1.17333rem;
+          color: #000;
+          display: inline-block;
+          margin: 0 0.4rem;
+          position: relative;
+        }
+        .classify_tab_act {
+          font-weight: bold;
+          color: #AE2121;
+        }
+        .classify_tab_act:after{
+          content: '';
+          display: block;
+          width: 0.53333rem;
+          height: 0.10666rem;
+          position: absolute;
+          left: 50%;
+          bottom: 0.1rem;
+          transform: translateX(-50%);
+          background: #AE2121;
+          border-radius: 0.05333rem;
+        }
+        .classify_more{
+          display: block;
+          position: absolute;
+          right: 0.4rem;
+          top: 0.29333rem;
+          width: 0.58666rem;
+          height: 0.58666rem;
+
+          .classify_more_ico{
+            display: block;
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+      .classify_tab_wrap::-webkit-scrollbar {
+        display: none;
+      }
+
+      .classify_page_wrap {
+        background: #F5F5F5;
+        height: 100%;
+        box-sizing: border-box;
+        .classify_page {
+          height: 100%;
+          overflow-y: auto;
+          overflow-x: hidden;
+          display: none;
+          position: relative;
+        }
+        .classify_page_act {
+          display: block;
+        }
+
+        .coupon_wrap{
+          /*
+          height: 7.46667rem;
+          overflow-x: hidden;
+          overflow-y: auto;
+          width: 100%;
+          box-sizing: border-box;
+          padding: 0 0.4rem;
+          -webkit-overflow-scrolling:touch;
+          */
+          padding: 0.4rem;
+        }
+
+        .coupon_li{
+
+          position: relative;
+          margin-bottom: 0.4rem;
+          list-style : none;
+          background: #fff;
+          border-radius: .16rem;
+
+          .coupon_top{
+            box-sizing: border-box;
+            padding: 0.26667rem 0;
+            border-radius: 0.16000rem;
+            height: 2.45333rem;
+            width: 100%;
+            box-shadow:0px 2px 3px 0px rgba(0,0,0,0.04);
+            position: relative;
+            z-index: 10;
+          }
+
+          .left{
+            float: left;
+            width: 2.96rem;
+            height: 100%;
+            text-align: center;
+            border-right: 0.02667rem dashed #979797;
+            .coupon_price{
+              height:0.69333rem;
+              font-size:0.69333rem;
+              font-family:'din';
+              color:#AE2121;
+              line-height:1;
+              padding: 0.34667rem 0 0.29333rem;
+            }
+            .coupon_desc{
+              font-size:0.26667rem;
+              font-family:PingFangSC-Light;
+              color:#202123;
+              line-height: 1;
+            }
+          }
+          .right_top{
+            float: left;
+
+            .center{
+              float: left;
+              width: 3.57333rem;
+              box-sizing: border-box;
+              padding: 0.13333rem 0 0 0.50667rem;
+              .title{
+                font-size:0.37333rem;
+                font-family:PingFangSC-Semibold;
+                color:#202123;
+                line-height:1;
+                height: 0.88rem;
+
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              }
+              .time{
+                height: 0.26667rem;
+                font-size:0.26667rem;
+                font-family:PingFangSC-Regular;
+                color:#8E8E8E;
+                line-height:1;
+                white-space: nowrap;
+              }
+            }
+            .right{
+              float: left;
+
+              .btn{
+                width: 1.81333rem;
+                height: 0.56rem;
+                background:#AE2121;
+                border-radius:0.29333rem;
+                margin: 0.69333rem 0 0 0.4rem;
+                font-size:0.34667rem;
+                font-family:PingFangSC-Medium;
+                color: #fff;
+                line-height:0.56rem;
+                text-align: center;
+
+                &[get_status='1']{
+                  background: #D8D8D8;
+                }
+                &[get_status='0']:after{
+                  content: '立即领取';
+                }
+                &[get_status='1']:after{
+                  content: '已领取';
+                }
+                &[get_status='2']:after{
+                  content: '查看商品';
+                }
+
+                a{
+                  display: block;
+                  width: 100%;
+                  height: 100%;
+                  color: inherit;
+                }
+              }
+
+
+            }
+          }
+          .right_btm{
+            float: left;
+
+            position: relative;
+            width: 5.28rem;
+            .open_wrap{
+              position: absolute;
+              left: 0.50667rem;
+              top: 0.16000rem;
+              width: 5.28rem;
+              height: 0.69333rem;
+              border-top: 0.02667rem dashed #979797;
+              line-height: 0.69333rem;
+              font-size: 0;
+              white-space: nowrap;
+              .title{
+                font-size: 0.26667rem;
+                display: inline-block;
+                vertical-align: middle;
+                width: 4.90667rem;
+                box-sizing: border-box;
+                padding-right: 0.4rem;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                color: #8E8E8E;
+              }
+              .open_ico{
+                width: 0.37333rem;
+                height: 0.37333rem;
+                vertical-align: middle;
+              }
+            }
+          }
+
+          .coupon_btm{
+            box-sizing: border-box;
+            width: 100%;
+            padding: 0.10667rem 0.4rem;
+            background: #fff;
+            border-radius:0.16rem;
+            line-height: 0.48rem;
+            color: #8E8E8E;
+            font-size: 0.26667rem;
+            display: none;
+          }
+
+          &[status='0']{
+            .coupon_price{
+              color: #8E8E8E;
+            }
+            .btn{
+              display: none;
+            }
+            .coupon_desc{
+              color: #8E8E8E;
+            }
+          }
+          &[open='1']{
+
+            .open_ico{
+              transform: rotateZ(180deg);
+            }
+            .coupon_btm{
+              display: block;
+            }
+          }
+        }
+
+        .no_coupon_tip{
+          display: none;
+          position: absolute;
+          top: 40%;
+          font-size: 0.34667rem;
+          line-height: 1;
+          text-align: center;
+          width: 100%;
+        }
+
+      }
+
+      .coupon_go_get{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1.92rem;
+        background: #fff;
+        box-sizing: border-box;
+        padding: 0.32rem 0.48rem 0.53333rem;
+        .btn{
+          width: 100%;
+          height: 100%;
+          background:#AE2121;
+          border-radius:0.16rem;
+          a{
+            display: block;
+            width: 100%;
+            height: 100%;
+            color: #fff;
+            font-size:0.42667rem;
+            font-family:PingFangSC-Semibold;
+            text-align: center;
+            line-height: 1.06667rem;
+          }
+        }
+      }
+
+    }
+  }
+
+
+}
+
+
+//优惠券弹窗
+.back_coupon_popup_mask{
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 99999;
+  background: rgba(0,0,0,.3);
+
+  .back_coupon_popup_wrap{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 8.50667rem;
+    height: 6.64000rem;
+    border-radius: 0.32000rem;
+    overflow: hidden;
+    &[multi='0']{
+      background: url("https://img8.ontheroadstore.com/static/image/coupon_icon/bg_single_coupon_2x.png") no-repeat;
+      background-size: cover;
+      .coupon_wrap{
+        top: 2.24rem;
+        left: 0.58667rem;
+        width: 7.33333rem;
+        height: 2.05333rem;
+        background: url("https://img8.ontheroadstore.com/static/image/coupon_icon/single_coupon_2x.png");
+        background-size: cover;
+      }
+
+    }
+    &[multi='1']{
+      background: url("https://img8.ontheroadstore.com/static/image/coupon_icon/bg_multi_coupon_2x.png") no-repeat;
+      background-size: cover;
+      .coupon_wrap{
+        top: 1.89333rem;
+        left: 0.58667rem;
+        width: 7.33333rem;
+        height: 2.42667rem;
+        background: url("https://img8.ontheroadstore.com/static/image/coupon_icon/multi_coupon_2x.png");
+        background-size: cover;
+        padding-top: 0.64rem;
+      }
+      .tip{
+        display: block;
+      }
+
+    }
+
+    .tip{
+      display: none;
+      position: absolute;
+      top: 1.25333rem;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      line-height: 1;
+      font-size: 0.37333rem;
+      color: #fff;
+    }
+    .coupon_wrap{
+      position: absolute;
+
+      box-sizing: border-box;
+      padding: 0.26667rem 0;
+      .left{
+        float: left;
+        width: 2.96000rem;
+        height: 100%;
+        text-align: center;
+        border-right: 0.02667rem dashed #979797;
+        .coupon_price{
+          height:0.69333rem;
+          font-size:0.69333rem;
+          font-family:'din';
+          color:#AE2121;
+          line-height:1;
+          padding: 0.13333rem 0 0.29333rem;
+        }
+        .coupon_desc{
+          font-size:0.26667rem;
+          font-family:PingFangSC-Light;
+          color:#202123;
+          line-height: 1;
+        }
+      }
+      .center{
+        float: left;
+        width: 3.92rem;
+        box-sizing: border-box;
+        padding: 0.13333rem 0 0 0.50667rem;
+        .title{
+          font-size:0.37333rem;
+          font-family:PingFangSC-Semibold;
+          color:#202123;
+          line-height:1;
+          height: 0.98667rem;
+
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .time{
+          font-size:0.26667rem;
+          font-family:PingFangSC-Regular;
+          color:#8E8E8E;
+          line-height:1;
+          white-space: nowrap;
+        }
+      }
+    }
+
+    .bottom{
+      position: absolute;
+      top: 3.2rem;
+      left: 0;
+      width: 8.50667rem;
+
+      .top_img{
+        width: 100%;
+        height: 1.12rem;
+        background: url("https://img8.ontheroadstore.com/static/image/coupon_icon/front_coupon_2x.png") no-repeat;
+        background-size: cover;
+      }
+      .btn_wrap{
+        width: 100%;
+        height: 2.32rem;
+        background: #AE2121;
+        padding: 0.72rem 0.58667rem 0.53333rem;
+        box-sizing: border-box;
+        .btn{
+          width: 100%;
+          height: 100%;
+          background: #E4A821;
+          color: #FEFEFE;
+          text-align: center;
+          font-size:0.37333rem;
+          line-height: 1.06667rem;
+          font-family:PingFangSC-Semibold;
+          border-radius: 0.16rem;
+
+          a{
+            display: block;
+            color: inherit;
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+//使用优惠券页
+.use_coupon{
+  .hs-main{
+    top: 0;
+    bottom: 0;
+    .hs-page{
+      .wrap{
+        position: relative;
+        height: 100%;
+        background: url("https://img8.ontheroadstore.com/static/image/coupon_icon/bg_to_app_2x.png") no-repeat;
+        background-size: cover;
+
+        .title{
+          position: absolute;
+          top: 3.33333rem;
+          text-align: center;
+          width: 100% ;
+          font-size: 0.45333rem;
+          font-family:PingFangSC-Semibold;
+          line-height:1;
+        }
+        .go_to_app{
+          position: absolute;
+          top: 4.50667rem;
+          width: 100%;
+          text-align: center;
+          a{
+            display: inline-block;
+            width: 4.05333rem;
+            height: 1.04000rem;
+            line-height: 1.04000rem;
+            color: #000;
+            font-size: 0.4rem;
+            text-align: center;
+            border: 0.08rem solid #000;
+            border-radius: 0.10667rem;
+          }
+        }
+      }
+
+    }
+  }
+
+}
+

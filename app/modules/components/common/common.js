@@ -185,4 +185,103 @@ common.prototype.system_query = function() {
   }
   return null;
 }
+
+//获取url中的参数
+common.prototype.getUrlParam = function(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]); return null;
+};
+
+common.prototype.setCookie = function (name,value,days) {
+    var Days = parseFloat(days)>0 ? parseFloat(days) : 30;
+    var exp = new Date();
+    exp.setTime(exp.getTime() + Days*24*60*60*1000);
+    document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString() + ';path=/;';
+};
+common.prototype.getCookie = function (name) {
+    var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+    if(arr=document.cookie.match(reg))
+        return unescape(arr[2]);
+    else
+        return null;
+};
+common.prototype.delCookie = function (name) {
+    var exp = new Date();
+    exp.setTime(exp.getTime() - 1);
+    var cval=getCookie(name);
+    if(cval!=null)
+        document.cookie= name + "="+cval+";expires="+exp.toGMTString();
+};
+
+common.prototype.getApiBaseUrl = function(){
+    var HostName = location.hostname;
+    var ApiBaseUrl = 'https://apitest.ontheroadstore.com';
+
+    if (HostName === "hs.ontheroadstore.com") {
+        ApiBaseUrl = 'https://api.ontheroadstore.com';
+    }
+    return ApiBaseUrl;
+};
+
+//判断是否登录，如果参数toLogin==true，未登录则跳往登录页
+common.prototype.ifLogin = function(toLogin){
+    var $current_user_id = $('.current_user_id');
+    var uid='';
+    if($current_user_id.length>0){
+        uid = $current_user_id.attr('uid');
+        if(typeof uid === 'string' && uid.length>0){
+            //已登录
+            return uid;
+        }
+    }
+    if(toLogin){
+        this.toLogin();
+    }
+    return false;
+};
+
+//去往登录页
+common.prototype.toLogin = function(){
+    var appid = 'null';
+    var nowUrl = encodeURI(location.href);
+    var url = '/Api/Oauth/login?type=weixin&login_http_referer='+nowUrl;
+    // var url = '/User/Login/mobile?appid='+appid+'&redirect_uri='+nowUrl+'&type=mobile&response_type=code';
+    location.href = url;
+    return false;
+};
+//优惠券的格式化时间，显示为2001.11.11
+common.prototype.couponFmtTime = function (time){
+
+    function fixNum(v){
+        return v<10 ? '0'+v : v;
+    }
+
+    time = String(time).length === 10 ? time*1000 : time;
+
+    var t = new Date(time);
+    var y = fixNum(t.getFullYear());
+    var m = fixNum(t.getMonth()+1);
+    var d = fixNum(t.getDate());
+
+    return y + '.' + m + '.' + d;
+};
+//获取 几天 后的时间戳（默认10位）天、时、分、秒、是否13位
+common.prototype.getTimestamp = function (day, hour, min, sec, full){
+    day = isNaN(parseInt(day)) ? 0 : parseInt(day);
+    hour = isNaN(parseInt(hour)) ? 0 : parseInt(hour);
+    min = isNaN(parseInt(min)) ? 0 : parseInt(min);
+    sec = isNaN(parseInt(sec)) ? 0 : parseInt(sec);
+
+    var delay = ( day * 86400 + hour * 3600 + min * 60 + sec ) * 1000;//毫秒
+    var now = (new Date()).getTime();   //当前13位时间戳
+    var stp = +now + delay;
+    if(!full){
+        stp = parseInt(stp / 1000) ;
+    }
+    return stp;
+};
+
+
+
 module.exports = common;

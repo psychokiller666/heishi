@@ -215,6 +215,7 @@
             position: relative;
             padding: 0.4rem 1.78667rem 0.4rem 0.4rem;
             min-height: 1.28rem;
+            text-align: justify;
             .to_buyer_list{
                 position: absolute;
                 right: 0;
@@ -295,24 +296,28 @@
             transform: translateY(-50%);
         }
     }
-    .select{
+    .select_wrap{
         height: 1.173rem;
         line-height: 1.173rem;
         border-bottom: 0.0133rem solid #E8E8E8;
         .font-dpr(14px);
         margin: 0 0.4rem;
         width: 9.2rem;
+        &.select_hide{
+            display: none;
+        }
         .hs-cf;
         .label{
             color: #AFAFAF;
             width: 1.28rem;
             float: left;
         }
-        .select_type{
+        .select_r{
             float: left;
             position: relative;
             display: inline-block;
             width: 7.78rem;
+            height: 100%;
             &:after{
                 content: '\e512';
                 display: block;
@@ -321,6 +326,28 @@
                 top: 50%;
                 right: 0;
                 transform: translateY(-50%);
+            }
+
+            .coupon_tag{
+                display: inline-block;
+                font-size: 0.32rem;
+                height: 0.32rem;
+                color: #fff;
+                line-height:1;
+                padding: .08rem .21333rem 0.10667rem;
+                background: #AE2121;
+                border-radius: 0.10667rem;
+                margin-right: 0.4rem;
+
+                &.coupon_back{
+                    background: #202123;
+                }
+            }
+            .tip{
+                float: right;
+                color: #8E8E8E;
+                font-size: 0.37333rem;
+                margin-right: 0.48rem;
             }
         }
     }
@@ -1003,3 +1030,140 @@
     z-index: 999999 !important;
 }
 
+.popup_coupon_mask{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: none;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 99999;
+    .get_coupon_wrap{
+        width: 100%;
+        height: 11.09333rem;
+        position: absolute;
+        bottom: 0;
+        background: #F5F5F5;
+        border-top-right-radius: 0.16rem;
+        border-top-left-radius: 0.16rem;
+        box-sizing: border-box;
+        .get_coupon_title{
+            font-size: 0.42667rem;
+            color: #000;
+            text-align: center;
+            height: 1.49333rem;
+            line-height: 1.49333rem;
+            font-family:PingFangSC-Semibold;
+            font-weight: bold;
+        }
+        .get_coupon_ul{
+            height: 7.46667rem;
+            overflow-x: hidden;
+            overflow-y: auto;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 0 0.4rem;
+            -webkit-overflow-scrolling:touch;
+            li{
+                margin-bottom: 0.4rem;
+                box-sizing: border-box;
+                padding: 0.26667rem 0;
+                background: #fff;
+                border-radius: 0.16000rem;
+                height: 2.45333rem;
+                width: 100%;
+                .left{
+                    float: left;
+                    width: 2.96rem;
+                    height: 100%;
+                    text-align: center;
+                    border-right: 0.02667rem dashed #979797;
+                    .coupon_price{
+                        height:0.69333rem;
+                        font-size:0.69333rem;
+                        font-family:'din';
+                        color:#AE2121;
+                        line-height:1;
+                        padding: 0.34667rem 0 0.29333rem;
+                    }
+                    .coupon_desc{
+                        font-size:0.26667rem;
+                        font-family:PingFangSC-Light;
+                        color:#202123;
+                        line-height: 1;
+                    }
+                }
+                .center{
+                    float: left;
+                    width: 3.57333rem;
+                    box-sizing: border-box;
+                    padding: 0.34667rem 0 0 0.50667rem;
+                    .title{
+                        font-size:0.37333rem;
+                        font-family:PingFangSC-Semibold;
+                        color:#202123;
+                        line-height:1;
+                        height: 0.98667rem;
+
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                    .time{
+                        font-size:0.26667rem;
+                        font-family:PingFangSC-Regular;
+                        color:#8E8E8E;
+                        line-height:1;
+                        white-space: nowrap;
+                    }
+                }
+                .right{
+                    float: left;
+
+                    .btn{
+                        width: 1.81333rem;
+                        height: 0.56rem;
+                        background:#AE2121;
+                        border-radius:0.29333rem;
+                        margin: 0.69333rem 0 0 0.4rem;
+                        font-size:0.34667rem;
+                        font-family:PingFangSC-Medium;
+                        color: #fff;
+                        line-height:0.56rem;
+                        text-align: center;
+
+                        &[get_status='1']{
+                            background: #D8D8D8;
+                        }
+                        &[get_status='0']:after{
+                            content: '立即领取';
+                        }
+                        &[get_status='1']:after{
+                            content: '已领取';
+                        }
+                        &[get_status='2']:after{
+                            content: '查看商品';
+                        }
+                    }
+
+
+                }
+            }
+        }
+
+        .ok{
+            width: 9.04000rem;
+            height: 1.06667rem;
+            background: #AE2121;
+            color: #fff;
+            border-radius: 0.16rem;
+            font-family:PingFangSC-Semibold;
+            font-weight: bold;
+            font-size: 0.42667rem;
+            line-height: 1.06667rem;
+            text-align: center;
+            margin: 0.53333rem auto 0;
+        }
+    }
+}

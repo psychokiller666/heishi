@@ -54,6 +54,10 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   init.wx_share(share_data);
   // 检查是否关注
   init.checkfollow();
+
+  //判断是否登录
+  var loginStatus = init.ifLogin();
+
   
   // 如果有视频就放在封面图位置
   var video_status = 0;
@@ -144,6 +148,10 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
   })
   $('.footer_nav').on("click",".add_chart",function() {
+      if(!loginStatus){
+          init.toLogin();
+          return false;
+      }
     if($(this).hasClass('no_repertory')){
       return $.toast('当前商品没有库存');
     }
@@ -160,6 +168,10 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
   })
   $('.buy').on("click",".add_chart",function() {
+      if(!loginStatus){
+          init.toLogin();
+          return false;
+      }
     operation(this, 0);
   })
   $('.buy').on("click",".buy_btn",function() {
@@ -783,5 +795,219 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         url: '/index.php?g=restful&m=HsArticle&a=ajax_hits&id='+user_id
     });
   },300)
+
+
+    //优惠券部分
+    var ApiBaseUrl = init.getApiBaseUrl();
+    var PHPSESSID = init.getCookie('PHPSESSID');
+
+    var goodsId = $('.store-show').attr('data-id');
+    getGoodsCoupon()
+    function getGoodsCoupon(){
+        var url = ApiBaseUrl + '/appv6/coupon/getPostsCouponList';
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType: 'json',
+            data: {'post_id[]':goodsId},
+
+            success: function(data){
+                if(data.status==1){
+                    console.log(data.data)
+                    setGoodsCoupon(data.data)
+                }
+            },
+            error: function(e){
+                console.log('getGoodsCoupon err: ',e);
+            }
+
+        });
+
+    }
+
+    //设置商品优惠券
+    function setGoodsCoupon(data){
+        var couponGet = data.coupon;
+        var couponBack = data.returnCoupon;
+
+
+        if(couponGet && couponGet.length>0){
+            showCouponGet(couponGet);
+        }
+        if(couponBack && couponBack.length>0){
+            showCouponBack(couponBack);
+        }
+    }
+
+    //显示领券按钮及弹窗
+    function showCouponGet(data){
+        var $jsCouponGet= $('.js_coupon_get');
+        var $couponGetRight = $jsCouponGet.find('.select_r');
+        var html = '';
+        for(var i=0;i<data.length && i<2;i++){
+            html += '<div class="coupon_tag coupon_get">'+ data[i].desc +'</div>'
+        }
+        $couponGetRight.html(html);
+        $jsCouponGet.show();
+
+        var $getCouponMask = $('.get_coupon_mask');
+        var $getCouponUl = $getCouponMask.find('.get_coupon_ul');
+        var liHtml = '';
+        for (var j=0;j<data.length;j++){
+            liHtml += '<li>'
+            liHtml += '<div class="left">'
+            liHtml += '<div class="coupon_price">¥<b>'+ data[j].coupon_price +'</b></div>'
+            liHtml += '<div class="coupon_desc">'+ (data[j].min_price > 0 ? '满'+data[j].min_price+'可用':'消费任意金额可用') +'</div>'
+            liHtml += '</div>'
+            liHtml += '<div class="center">'
+            liHtml += '<div class="title">'+ data[j].title +'</div>'
+
+            if (data[j].apply_time_type==2){
+                liHtml += '<div class="time">'+ init.couponFmtTime(init.getTimestamp()) + ' - ' + init.couponFmtTime(init.getTimestamp(data[j].apply_time_length)) +'</div>'
+            }else{
+                liHtml += '<div class="time">'+ init.couponFmtTime(data[j].apply_time_start) + ' - ' + init.couponFmtTime(data[j].apply_time_end) +'</div>'
+            }
+            liHtml += '</div>'
+            liHtml += '<div class="right">'
+            liHtml += '<div class="btn" coupon_id="'+ data[j].coupon_id +'" get_status="'+ data[j].receiveStatus +'"></div>'
+            liHtml += '</div>'
+            liHtml += '</li>'
+        }
+        $getCouponUl.html(liHtml);
+
+        $couponGetRight.on('click',function(){
+            $getCouponMask.show();
+        });
+        $getCouponMask.on('click',function(ev){
+            if($(ev.target).hasClass('get_coupon_mask')){
+                $getCouponMask.hide();
+            }
+        });
+        $getCouponMask.find('.ok').on('click',function(){
+            $getCouponMask.hide();
+        });
+        $getCouponUl.on('click','.btn',function(ev){
+            if(!loginStatus){
+                init.toLogin();
+                return false;
+            }
+            var $this = $(this);
+            if($this.attr('get_status')==='1'){
+               return;
+            }
+            if($this.attr('clicked')==='1'){
+                return;
+            }else{
+                $this.attr('clicked','1');
+            }
+            var id = $this.attr('coupon_id');
+            getACoupon($this,id);
+            ev.stopPropagation();
+        });
+
+
+        function getACoupon($btn,id){
+            var url = ApiBaseUrl + '/appv6/coupon/'+ id +'/receive';
+            $.ajax({
+                type: "POST",
+                url: url,
+                dataType: 'json',
+                data: {},
+                headers: {
+                    'phpsessionid': PHPSESSID
+                },
+
+                success: function(data){
+                    if(data.status==1){
+                        $btn.attr('get_status','1');
+                        $.toast('领取成功');
+                    }else{
+                        $.toast(data.info);
+                        $btn.attr('clicked','0');
+                    }
+                },
+                error: function(e){
+                    $btn.attr('clicked','0');
+                    $.toast('领取失败,请稍后重试');
+                    console.log('getACoupon err: ',e);
+                }
+
+            });
+        }
+    }
+    //显示返券按钮
+    function showCouponBack(data){
+        var $jsCouponBack= $('.js_coupon_back');
+        var $couponBackRight = $jsCouponBack.find('.select_r');
+        var html = '';
+        for(var i=0;i<data.length && i<2;i++){
+            html += '<div class="coupon_tag coupon_back">'+ data[i].desc +'</div>'
+        }
+        $jsCouponBack.find('.select_r').html(html);
+        $jsCouponBack.show();
+        var $backCouponMask = $('.back_coupon_mask');
+        var $getCouponUl = $backCouponMask.find('.get_coupon_ul');
+        var liHtml = '';
+        for (var j=0;j<data.length;j++){
+            liHtml += '<li>'
+            liHtml += '<div class="left">'
+            liHtml += '<div class="coupon_price">¥<b>'+ data[j].coupon_price +'</b></div>'
+            liHtml += '<div class="coupon_desc">'+ (data[j].min_price > 0 ? '满'+data[j].min_price+'可用':'消费任意金额可用') +'</div>'
+            liHtml += '</div>'
+            liHtml += '<div class="center">'
+            liHtml += '<div class="title">'+ data[j].title +'</div>'
+
+            if(data[j].apply_time_type==2){
+                liHtml += '<div class="time">'+ init.couponFmtTime(init.getTimestamp()) + ' -- ' + init.couponFmtTime(init.getTimestamp(data[j].apply_time_length)) +'</div>'
+            }else{
+                liHtml += '<div class="time">'+ init.couponFmtTime(data[j].apply_time_start) + ' -- ' + init.couponFmtTime(data[j].apply_time_end) +'</div>'
+            }
+            liHtml += '</div>'
+            liHtml += '<div class="right">'
+            liHtml += '<div class="btn" coupon_id="'+ data[j].coupon_id +'" get_status="2" issue_by="'+ data[j].issue_by +'"></div>'
+            liHtml += '</div>'
+            liHtml += '</li>'
+        }
+        $getCouponUl.html(liHtml);
+
+        $couponBackRight.on('click',function(){
+            $backCouponMask.show();
+        });
+        $backCouponMask.on('click',function(ev){
+            if($(ev.target).hasClass('back_coupon_mask')){
+                $backCouponMask.hide();
+            }
+        });
+        $backCouponMask.find('.ok').on('click',function(){
+            $backCouponMask.hide();
+        });
+        $backCouponMask.find('.btn').on('click',function(){
+            var issueBy = $(this).attr('issue_by');
+            var coupon_id = $(this).attr('coupon_id');
+            // 5=去商品列表页; 6=去分类页; 7=去店铺首页
+            switch(issueBy){
+                case '5' :
+                    location.href='/Portal/Coupon/couponGoods?couponid='+coupon_id;
+                    break;
+                case '6' :
+                    location.href='/index.php/Portal/HsCategories/index.html';
+                    break;
+                case '7' :
+                    var href = $('.user_intro a').attr('href') || '/index.php/Portal/Index/index.html';
+                    location.href= href;
+                    break;
+                default  :
+                    location.href='/index.php/Portal/Index/index.html';
+                    break;
+            }
+
+        });
+
+
+
+
+    }
+
+
 
 });

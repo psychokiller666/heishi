@@ -494,4 +494,47 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
       $(that).attr('data-maxpostage', maxPostage);
     })
   }
+
+
+/*
+  //优惠券
+  var ApiBaseUrl = init.getApiBaseUrl();
+  var phpsessionid = init.getCookie('PHPSESSID');
+  var sellerCoupon = {};
+  var $showCoupon = page.find('.show_coupon');
+  $showCoupon.each(function(){
+      var $this = $(this);
+      var sellerid = $this.attr('sellerid');
+      getSellerCouponList(sellerid,$this);
+
+  });
+  page.on('click','.show_coupon',function(){
+      var $this = $(this);
+      var sellerid = $this.attr('sellerid');
+  });
+
+  function getSellerCouponList(id,$btn){
+      var url = ApiBaseUrl + '/appv6/coupon/'+ id +'/getSellerCouponList';
+
+      $.ajax({
+          type: "GET",
+          url: url,
+          dataType: 'json',
+          data: {},
+          // headers: {
+          //     'phpsessionid': phpsessionid,
+          // },
+          success: function(data){
+              if(data.status==1){
+                  console.log(data.data)
+              }
+          },
+          error: function(e){
+              console.log('getGoodsCoupon err: ',e);
+          }
+      });
+
+  }
+*/
+
 });

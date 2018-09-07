@@ -144,3 +144,10 @@ require('../modules/components/mobile_bind/login.js');
 
 //新人有礼活动页
 require('../modules/components/gift_for_new/gift_for_new');
+
+//我的优惠券
+require('../modules/components/user_coupon/user_coupon');
+//优惠券商品
+require('../modules/components/coupon_goods/coupon_goods');
+//领取优惠券
+require('../modules/components/get_coupon/get_coupon');
