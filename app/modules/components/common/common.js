@@ -3,7 +3,7 @@
 // 微信sdk
 var wx = require('weixin-js-sdk');
 
-var common = function(page){
+function common(page){
   this.page = page;
   // 控制.hs-page高度
   this.countHeight();

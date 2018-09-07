@@ -156,3 +156,8 @@ require('../modules/components/get_coupon/get_coupon');
 //鬼市
 //鬼市商品详情
 require('../modules/components/ghost_market_article/ghost_market_article');
+//鬼市评论
+require('../modules/components/comment/gs_comment');
+
+
+

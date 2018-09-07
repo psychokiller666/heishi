@@ -5,7 +5,7 @@
     .banner {
       width: 100%;
       height: 10.66667rem;
-
+      margin-bottom: -0.53333rem;
       .swiper-container {
         width: 100%;
         height: 100%;
@@ -24,7 +24,7 @@
 
       }
       .swiper-container-horizontal>.swiper-pagination{
-        bottom: 0.8rem;
+        bottom: 1.2rem;
       }
       .swiper-pagination-bullet.swiper-pagination-bullet-active{
         background-color: #fff;
@@ -32,6 +32,8 @@
     }
 
     .content_wrap {
+      position: relative;
+      z-index: 10;
       background: #212021;
       border-radius: 0.32rem 0.32rem 0 0;
       padding: 0.53333rem 0.4rem 2.6rem;
@@ -97,6 +99,11 @@
           width: 0.53333rem;
           height: 0.53333rem;
           margin-top: 0.21333rem;
+          color: #fff;
+          font-size: 0.4rem;
+          &:after{
+            content: '\e661';
+          }
         }
       }
 
@@ -115,6 +122,11 @@
           color:#fff;
           line-height:0.42667rem;
           opacity: 0.6;
+          img{
+            display: block;
+            width: 100%;
+            margin: 0.4rem 0;
+          }
         }
       }
 
@@ -206,17 +218,21 @@
           background:rgba(0,0,0,0.2);
           border-radius:0.10667rem;
           height: 0.93333rem;
-          input{
-            display: block;
-            height: 100%;
-            width: 100%;
-            text-align: center;
-            background: none;
-            font-size: 0.32rem;
-            color: #fff;
-            border: none;
-            margin-top: 0.72rem;
+          line-height: 0.93333rem;
+
+          text-align: center;
+          font-size: 0.32rem;
+          color: #fff;
+          margin-top: 0.72rem;
+          span{
+            opacity: 0.6;
+            &:before{
+              content: '\e6e5';
+              font-size: 0.4rem;
+              margin-right: 0.2rem;
+            }
           }
+
         }
 
         .comment_ul{
@@ -251,6 +267,13 @@
                   float: right;
                 }
               }
+              .comment_img{
+                margin-top: 0.32rem;
+                img{
+                  display: block;
+                  max-width: 100%;
+                }
+              }
               .comment_txt{
                 font-size:0.34667rem;
                 font-weight:600;
@@ -263,6 +286,9 @@
                 background:rgba(255,255,255,0.2);
                 border-radius:0.10667rem;
                 margin-top: 0.4rem;
+                &.comment_reply_none{
+                  display: none;
+                }
                 .name{
                   padding-top: 0.4rem;
                   height: 0.32000rem;
@@ -274,6 +300,9 @@
                   white-space: nowrap;
                   text-overflow:ellipsis;
                   opacity: 0.6;
+                  span{
+                    padding: 1em;
+                  }
                 }
                 .txt{
                   font-size:0.34667rem;
