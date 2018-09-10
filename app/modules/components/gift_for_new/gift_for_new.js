@@ -118,6 +118,8 @@ $(document).on('pageInit','.gift_for_new', function(e, id, page) {
                 if(data.status==1){
                     $.toast('领取成功');
                     $btn.attr('status','1');
+                }else{
+                    $.toast(data.info || '领取失败');
                 }
             },
             error: function(e){
