@@ -82,6 +82,9 @@
             font-size: 0.37333rem;
             font-weight:600;
             line-height: 1;
+            &.single_line{
+              line-height: 0.96rem;
+            }
           }
           .intro{
             font-size: 0.32rem;
@@ -97,10 +100,11 @@
         .to_seller_center{
           float: right;
           width: 0.53333rem;
-          height: 0.53333rem;
-          margin-top: 0.21333rem;
+          height: 0.96rem;
           color: #fff;
           font-size: 0.4rem;
+          line-height: 0.96rem;
+          text-align: center;
           &:after{
             content: '\e661';
           }
@@ -165,6 +169,22 @@
         text-align: center;
         white-space: nowrap;
         margin: 0.8rem 0 0 0;
+        .end_liker{
+          position: relative;
+          &:after{
+            content:"···";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1.01333rem;
+            height: 1.01333rem;
+            font-size: 1.01333rem;
+            text-align: center;
+            line-height: 1.01333rem;
+            color: #fff;
+            background-color: rgba(0,0,0,0.5);
+          }
+        }
         a{
           display: inline-block;
           width: 1.01333rem;

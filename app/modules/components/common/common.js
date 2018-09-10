@@ -27,6 +27,9 @@ function common(page){
     })
   }
   this.lazyLoad = Lazyload;
+
+  //上传图片的base url
+  this.ImgBaseUrl = 'https://img8.ontheroadstore.com/'
 };
 common.prototype.loadimg = function(){
   var contentHeight = $('.content').height();
