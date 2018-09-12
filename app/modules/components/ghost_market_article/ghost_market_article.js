@@ -60,7 +60,7 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
         initSeller(data.user);
         initLiker(data.like);
         initComment(data.comment);
-
+        initGuessLike(data.favorited);
         initEvent();
     }
 
@@ -205,6 +205,12 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
             });
         });
 
+        //去评论列表页
+        $content_wrap.on('click','.js_to_comment_list',function () {
+            var url = '/Portal/GhostMarket/comment_list.html?id=' + goodsId;
+            location.href = url;
+        });
+
     }
 
     //点赞
@@ -340,6 +346,22 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
                 $.toast('网络错误 code:'+xhr);
             }
         });
+    }
+
+
+    //猜你喜欢
+    function initGuessLike(data) {
+        var html = '';
+        for(var i=0;i<data.length;i++){
+            html+= '<li class="guess_like_li">'
+            html+= '<a href="/Portal/HsArticle/index/id/'+ data[i].id +'.html">'
+            html+= '<img src="'+ data[i].image +'">'
+            html+= '<div class="goods_title">'+ data[i].post_title +'</div>'
+            html+= '</a>'
+            html+= '</li>'
+        }
+        $content_wrap.find('.guess_like_ul').html(html);
+
     }
 
 
