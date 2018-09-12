@@ -18,46 +18,43 @@ $(document).on('pageInit','.ghost_market_comment_list', function(e, id, page) {
     var ajaxHeaders = {
         'phpsessionid': PHPSESSID
     };
-    var ImgBaseUrl = init.ImgBaseUrl;
-    //2018090315365152249
 
     var goodsId = init.getUrlParam('id');
 
     var $content_wrap = $('.content_wrap');
+    var $comment_load = $content_wrap.find('.comment_load');
 
-    // var userInfo = null;
-    // getUserInfo();
+    var commentObj = {
+        over: false,
+        loading: false,
+        page: 0,    //当前页码
+        skip: 0,    //当前已有数量
+        num: 5,     //每页数量
+    };
 
-
-
-    getGoodsDetail(goodsId);
-
-    function getGoodsDetail(id) {
-
-        var url = ApiBaseUrl + '/ghostmarket/goods/' + id + '/getDetail';
-        $.ajax({
-            type: "GET",
-            url: url,
-            dataType: 'json',
-            data: {},
-            headers: ajaxHeaders,
-            success: function (data) {
-                if (data.status == 1) {
-                    console.log(data.data);
-                    initPage(data.data);
-
-                }
-            },
-            error: function (e) {
-                console.log('getGoodsDetail err: ', e);
-            }
-
-        });
+    initCommentList();
+    function initCommentList(){
+        getCommentList(commentObj.skip,commentObj.num,true);
+        initEvent();
     }
 
 
     //初始化评论
     function initComment(com){
+
+        var html = createCommentHtml(com);
+        $content_wrap.find('.comment_ul').html(html);
+
+    }
+
+    //增加评论
+    function addComment(com) {
+        var html = createCommentHtml(com);
+        $content_wrap.find('.comment_ul').append(html);
+    }
+
+    //生成评论html
+    function createCommentHtml(com) {
         var html = '';
 
         if(com && com.length>0){
@@ -74,7 +71,7 @@ $(document).on('pageInit','.ghost_market_comment_list', function(e, id, page) {
                 html+= '<div class="name">'+com[i].nickname+'</div>'
                 html+= '</div>'
                 if(com[i].gc_commen_img){
-                    html+= '<div class="comment_img"><img class="wx_preview" src="'+ ImgBaseUrl + com[i].gc_commen_img +'"></div>'
+                    html+= '<div class="comment_img"><img class="wx_preview" src="' + init.fixImgUrl(com[i].gc_commen_img) +'"></div>'
                 }else{
                     html+= '<div class="comment_txt">'+ com[i].gc_comment +'</div>'
                 }
@@ -95,13 +92,9 @@ $(document).on('pageInit','.ghost_market_comment_list', function(e, id, page) {
                 html+= '</li>'
             }
 
-            $content_wrap.find('.comment_ul').html(html);
-            $content_wrap.find('.comment_more').show();
-
         }
 
-
-
+        return html;
     }
 
 
@@ -115,13 +108,37 @@ $(document).on('pageInit','.ghost_market_comment_list', function(e, id, page) {
             // 调用微信图片
             var arr = [];
             arr.push($(this).attr('src'));
-            console.log('pre: ',wx.previewImage);
 
             wx.previewImage({
                 current: arr[0],
                 urls: arr
             });
         });
+
+
+        $('.content').on('scroll',function(ev){
+            var $this = $(this);
+
+            if(commentObj.over){
+                $this.off('scroll');
+                return;
+            }
+            if(commentObj.loading){
+                return;
+            }
+            //获取自己的scrollHeight,scrollTop
+            var clientHeight = $this.height();
+            var scrollHeight = $this[0].scrollHeight;
+            var scrollTop = $this.scrollTop();
+
+            //判断距离底部的px
+            var diff = scrollHeight - clientHeight - scrollTop <= 300;
+            if(diff){
+                getCommentList(commentObj.skip,commentObj.num,true);
+
+            }
+
+        })
 
     }
 
@@ -219,23 +236,40 @@ $(document).on('pageInit','.ghost_market_comment_list', function(e, id, page) {
 
 
     //获取评论列表
-    function getCommentList(){
+    //@skip 跳过几条； @num 读取几条； @record 是否修改commentObj
+    function getCommentList(skip,num,record){
+        console.log(skip ,num)
+
+        if(commentObj.loading || commentObj.over){
+            return;
+        }else{
+            commentObj.loading = true;
+        }
         $.ajax({
-            type: 'POST',
+            type: 'GET',
             url: ApiBaseUrl+'/ghostmarket/getList',
             data: {
                 goodsId:goodsId,
-                skip: '0',//跳过几条
-                num: '5',
+                skip: skip||'0',//跳过几条
+                num: num||'5',
             },
             dataType: 'json',
             headers: ajaxHeaders,
             success: function(data){
                 if(data.status == 1){
-                    initComment(data.data);
+                    if(record){
+                        commentObj.skip = +skip + +num;
+                        if(data.data.length<num){
+                            commentObj.over = true;
+                            $('.comment_load').attr('status','1');
+                        }
+                    }
+                    addComment(data.data);
                 }
+                commentObj.loading = false;
             },
             error: function(xhr, type){
+                commentObj.loading = false;
                 $.toast('网络错误 code:'+xhr);
             }
         });

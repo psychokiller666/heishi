@@ -7,26 +7,14 @@
       position: relative;
       z-index: 10;
       background: #212021;
-      border-radius: 0.32rem 0.32rem 0 0;
-      padding: 0.53333rem 0.4rem 2.6rem;
+      padding: 0.4rem;
+      min-height: 100%;
 
 
       .comment_wrap{
-        background:rgba(255,255,255,0.1);
+        //background:rgba(255,255,255,0.1);
         border-radius: 0.16rem;
-        padding: 0.53333rem 0.4rem;
-        .comment_top{
-          font-size:0.48rem;
-          font-weight:600;
-          color:#fff;
-          line-height:1;
-          .left{
-            float: left;
-          }
-          .right{
-            float: right;
-          }
-        }
+        padding:0 0.4rem;
         .comment_input{
           background:rgba(0,0,0,0.2);
           border-radius:0.10667rem;
@@ -36,7 +24,7 @@
           text-align: center;
           font-size: 0.32rem;
           color: #fff;
-          margin-top: 0.72rem;
+
           span{
             opacity: 0.6;
             &:before{
@@ -96,7 +84,8 @@
               }
               .comment_reply{
                 padding: 0 0.4rem 0.4rem;
-                background:rgba(255,255,255,0.2);
+                //background:rgba(255,255,255,0.2);
+                background: rgba(255,255,255,0.1);
                 border-radius:0.10667rem;
                 margin-top: 0.4rem;
                 &.comment_reply_none{
@@ -129,13 +118,58 @@
           }
         }
 
-        .comment_more{
-          display: none;
-          font-size: 0.37333rem;
-          line-height: 1;
-          color: #fff;
+        .comment_load {
+          width: 100%;
+          padding: 0.8rem 0;
           text-align: center;
-          margin-top: 0.53333rem;
+          color: #fff;
+          font-size: 0.37333rem;
+
+          &[status="0"]{
+            .load_over{
+              display: none;
+            }
+            .preloader {
+              width: 0.5rem;
+              height: 0.5rem;
+              display: block;
+              margin: 0 auto;
+            }
+          }
+          &[status="1"] {
+            .preloader{
+              display: none;
+            }
+            .load_over {
+              display: block;
+              span {
+                position: relative;
+                color: #D6D6D6;
+                &:before {
+                  content: "";
+                  width: 0.08rem;
+                  height: 0.08rem;
+                  background: #D6D6D6;
+                  position: absolute;
+                  top: 50%;
+                  left: -0.3rem;
+                  transform: translateY(-50%);
+                  border-radius: 50%;
+                }
+                &:after {
+                  content: "";
+                  width: 0.08rem;
+                  height: 0.08rem;
+                  background: #D6D6D6;
+                  position: absolute;
+                  top: 50%;
+                  right: -0.3rem;
+                  transform: translateY(-50%);
+                  border-radius: 50%;
+                }
+              }
+            }
+          }
         }
       }
 

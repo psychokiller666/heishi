@@ -18,10 +18,11 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
     var ajaxHeaders = {
         'phpsessionid': PHPSESSID
     };
-    var ImgBaseUrl = init.ImgBaseUrl;
+
     //2018090315365152249
 
     var goodsId = init.getUrlParam('id');
+    // var theme = init.getUrlParam('theme');//活动主题，暂时没用
 
     var $content_wrap = $('.content_wrap');
 
@@ -97,13 +98,13 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
     //初始化卖家信息
     function initSeller(user){
         $content_wrap.find('.to_seller_center').attr('href','/User/index/index/id/'+user.id+'.html');
-        $content_wrap.find('.avatar').attr('src',user.avatar)
+        $content_wrap.find('.avatar').attr('src',user.avatar);
 
         if(user.announcement){
-            $content_wrap.find('.name').html(user.nicename);
+            $content_wrap.find('.name').html(user.nickname);
             $content_wrap.find('.intro').html(user.announcement);
         }else{
-            $content_wrap.find('.name').html(user.nicename).addClass('single_line');
+            $content_wrap.find('.name').html(user.nickname).addClass('single_line');
             $content_wrap.find('.intro').hide();
         }
 
@@ -149,7 +150,7 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
                 html+= '<div class="name">'+com[i].nickname+'</div>'
                 html+= '</div>'
                 if(com[i].gc_commen_img){
-                    html+= '<div class="comment_img"><img class="wx_preview" src="'+ ImgBaseUrl + com[i].gc_commen_img +'"></div>'
+                    html+= '<div class="comment_img"><img class="wx_preview" src="'+ init.fixImgUrl(com[i].gc_commen_img) +'"></div>'
                 }else{
                     html+= '<div class="comment_txt">'+ com[i].gc_comment +'</div>'
                 }
@@ -321,7 +322,7 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
     //获取评论列表
     function getCommentList(){
         $.ajax({
-            type: 'POST',
+            type: 'GET',
             url: ApiBaseUrl+'/ghostmarket/getList',
             data: {
                 goodsId:goodsId,

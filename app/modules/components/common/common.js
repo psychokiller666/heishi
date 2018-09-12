@@ -29,7 +29,7 @@ function common(page){
   this.lazyLoad = Lazyload;
 
   //上传图片的base url
-  this.ImgBaseUrl = 'https://img8.ontheroadstore.com/'
+  this.ImgBaseUrl = 'https://img8.ontheroadstore.com'
 };
 common.prototype.loadimg = function(){
   var contentHeight = $('.content').height();
@@ -285,6 +285,31 @@ common.prototype.getTimestamp = function (day, hour, min, sec, full){
     return stp;
 };
 
+
+//补全评论上传图片的imgUrl(因为不确定接口返回的imgurl是否是完整路径)
+common.prototype.fixImgUrl = function (url,ImgBaseUrl) {
+
+    ImgBaseUrl = ImgBaseUrl || this.ImgBaseUrl || 'https://img8.ontheroadstore.com';
+
+    if(typeof url === 'string' && url.length>0){
+
+        var arr = ['http://','https://','//'];
+
+        for(var i=0;i<arr.length;i++){
+            if(url.indexOf(arr[i])===0){
+                return url;
+            }
+        }
+
+        if(url.indexOf('/')===0){
+            return ImgBaseUrl + url;
+        }else{
+            return ImgBaseUrl + '/' + url;
+        }
+
+    }
+
+}
 
 
 module.exports = common;
