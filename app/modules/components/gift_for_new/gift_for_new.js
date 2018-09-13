@@ -20,6 +20,16 @@ $(document).on('pageInit','.gift_for_new', function(e, id, page) {
         'phpsessionid': PHPSESSID
     };
 
+    // 调用微信分享sdk
+    var share_data = {
+        title: '公路商店 — 新人礼遇',
+        desc: '为你不着边际的企图心',
+        link: window.location.href,
+        img: 'https://jscache.ontheroadstore.com/tpl/simplebootx_mobile/Public/i/logo.png'
+    };
+    init.wx_share(share_data);
+
+
     //判断是否是app，如果是app，领取中心url 卖家中心url 商品标签url都需要做处理，ajax headers携带身份不一样
     var isApp = false;
     var $isApp = $('.is_app');
