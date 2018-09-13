@@ -206,4 +206,14 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     }, opts.delay);
     return _this;
   };
+
+
+  //鬼市首页入口
+  // function openGS() {
+  //     $('.ghost_store_ad_wrap').on('click',function(){
+  //
+  //     })
+  // }
+
+
 });
