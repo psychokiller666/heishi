@@ -111,6 +111,8 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
         $content_wrap.find('.like_ico').attr('status',user.likeStatus);
         $('.footer .contact a').attr('href','/User/HsMessage/detail/from_uid/'+user.id);
 
+        //初始化举报
+        initReport(user.id,goodsId);
     }
 
 
@@ -121,10 +123,10 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
 
             var len = like.length>=7 ? 7 : like.length;
             for(var i=0;i<len;i++){
-                html += '<a href="javascript:;"><img src="'+like[i].avatar+'"></a>'
+                html += '<a external href="javascript:;"><img src="'+like[i].avatar+'"></a>'
             }
             if(like.length>=8){
-                html += '<a href="javascript:;" class="end_liker"><img src="'+like[7].avatar+'"></a>'
+                html += '<a external href="javascript:;" class="end_liker"><img src="'+like[7].avatar+'"></a>'
             }
 
             $content_wrap.find('.liker_wrap').html(html).show();
@@ -354,7 +356,7 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
         var html = '';
         for(var i=0;i<data.length;i++){
             html+= '<li class="guess_like_li">'
-            html+= '<a href="/Portal/HsArticle/index/id/'+ data[i].id +'.html">'
+            html+= '<a external href="/Portal/HsArticle/index/id/'+ data[i].id +'.html">'
             html+= '<img src="'+ data[i].image +'">'
             html+= '<div class="goods_title">'+ data[i].post_title +'</div>'
             html+= '</a>'
@@ -364,6 +366,38 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
 
     }
 
+
+    //初始化举报
+
+    function initReport(uid,goodsId) {
+        //举报
+        $('.report_btn').on('click',function(){
+            $.confirm('你确定要举报吗？', function () {
+                reportGoods(uid,goodsId);
+            });
+        })
+    }
+
+    //举报
+    function reportGoods(uid,goodsId) {
+
+        $.ajax({
+            type: 'POST',
+            url: '/index.php?g=restful&m=HsUserReporting&a=reporting',
+            data: {
+                be_reported_uid: uid,
+                content: '鬼市商品id：'+ goodsId,
+            },
+            success: function(data){
+                if(data.status == 1){
+                    $.toast('举报成功');
+                }else{
+                    $.toast(data.info);
+                }
+            }
+        })
+
+    }
 
 
 });
