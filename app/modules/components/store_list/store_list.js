@@ -208,12 +208,83 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
   };
 
 
-  //鬼市首页入口
-  // function openGS() {
-  //     $('.ghost_store_ad_wrap').on('click',function(){
-  //
-  //     })
-  // }
+  // 鬼市首页入口
+  openGS();
+  function openGS() {
+
+      var $ghost_store_iframe_wrap = $('.ghost_store_iframe_wrap')
+
+      $('.ghost_store_ad_wrap').on('click', '.ghost_store_ad_img', function () {
+          var $img = $(this);
+
+          if ($img.attr('openstatus') === '1') {
+              $ghost_store_iframe_wrap.show().animate({opacity: 1}, 500, 'linear');
+              return;
+          }
+
+          var css = {
+              position: 'fixed',
+              'z-index': 1000,
+              width: $img.css('width'),
+              height: $img.css('height'),
+              top: $img.offset().top,
+              left: $img.offset().left,
+          }
+
+          var windowW = $(window).width();
+          var windowH = $(window).height();
+          var imgW = $img.width();
+          var imgH = $img.height();
+
+          var top1 = (windowH - imgH) / 2;
+          var left1 = (windowW - imgW) / 2;
+
+          var width2 = 0;
+          var height2 = 0;
+          var top2 = 0;
+          var left2 = 0;
 
 
-});
+          height2 = 1.2 * windowH;
+          width2 = height2 * imgW / imgH;
+
+          top2 = (windowH - height2) / 2;
+          left2 = (windowW - width2) / 2;
+
+
+          var $o = $img.clone().css(css);
+          $('.container').append($o);
+
+          $o.animate({
+              left: left1,
+              top: top1,
+          }, 400, 'linear', function () {
+              $o.animate({
+                  left: left2,
+                  top: top2,
+                  width: width2,
+                  height: height2,
+              }, 500, 'linear', function () {
+                  $ghost_store_iframe_wrap.show().animate({opacity: 1}, 600, 'linear', function () {
+                      $o.remove();
+                  });
+                  $img.attr('openstatus', '1');
+              })
+          })
+
+      });
+
+      //关闭按钮事件
+      $('.ghost_store_iframe_close').off('click').on('click', function () {
+          $ghost_store_iframe_wrap.animate({opacity: 0}, 600, 'linear', function () {
+              $ghost_store_iframe_wrap.hide();
+          });
+      });
+
+    }
+
+
+  });
+
+
+

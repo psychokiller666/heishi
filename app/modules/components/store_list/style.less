@@ -706,7 +706,36 @@
             border-radius: 0.18667rem;
         }
     }
+
+
 }
+
+//首页鬼市iframe
+.ghost_store_iframe_wrap{
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: #000;
+    opacity: 0;
+    .ghost_store_iframe{
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+    .ghost_store_iframe_close{
+        position: absolute;
+        right: 0.48rem;
+        top: 0.48rem;
+        width: 0.72rem;
+        height: 0.72rem;
+        border-radius: 50%;
+    }
+}
+
 /*特卖*/
 .sale{
     img{
