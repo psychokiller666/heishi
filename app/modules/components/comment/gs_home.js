@@ -36,7 +36,7 @@ function checkGoodsHtml(arr){
             '                    <div class="gs_goods_mes">' +
             '                        <p class="gs_goods_name"><a class="external" href="/Portal/GhostMarket/article.html?id='+ item.gg_id +'">'+ item.gg_title +'</a></p>' +
             '                        <div class="gs_goods_store">' +
-            '                            <a href="/Portal/GhostMarket/seller.html?gg_ghost_id='+ item.gg_ghost_id +'" class="gs_goods_store_mes external"' +
+            '                            <a href="/Portal/GhostMarket/seller.html?gg_ghost_id='+ item.gg_ghost_id +'" class="gs_goods_store_mes external">' +
             '                                <img src="'+ item.avatar +'">' +
             '                                <span>'+ item.nickname +'</span>' +
             '                            </a>' +
