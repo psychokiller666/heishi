@@ -97,7 +97,7 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
 
     //初始化卖家信息
     function initSeller(user){
-        $content_wrap.find('.to_seller_center').attr('href','/User/index/index/id/'+user.id+'.html');
+        $content_wrap.find('.to_seller_center').attr('href','/Portal/GhostMarket/seller.html?gg_ghost_id='+user.id);
         $content_wrap.find('.avatar').attr('src',user.avatar);
 
         if(user.announcement){

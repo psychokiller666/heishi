@@ -2,7 +2,7 @@
 
 // 初始化
 var common = require('../common/common.js');
-var gsHome = require('../comment/gs_home.js');
+var gsHome = require('../ghost_market_article_home/gs_home.js');
 // 微信jssdk
 var wx = require('weixin-js-sdk');
 

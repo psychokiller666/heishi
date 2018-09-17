@@ -7,6 +7,9 @@ var velocity = require('../plugin/velocity.min.js');
 // 搜索
 // var SearchInit = require('../search_list/search_list.js');
 
+//鬼市首页
+var gsHome = require('../ghost_market_article_home/gs_home.js');
+
 $(document).on('pageInit','.index_list', function (e, id, page) {
   if (page.selector == '.page'){
     return false;
@@ -215,7 +218,10 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
   openGS();
   function openGS() {
 
-      var $ghost_store_iframe_wrap = $('.ghost_store_iframe_wrap')
+      //初始化鬼市home页
+      gsHome({});
+
+      var $ghost_store_iframe_wrap = $('.ghost_store_iframe_wrap');
 
       $('.ghost_store_ad_wrap').on('click', '.ghost_store_ad_img', function () {
           var $img = $(this);
@@ -272,7 +278,20 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
                       $o.remove();
                   });
                   $img.attr('openstatus', '1');
-              })
+              });
+
+          var iframeIn =  $('.ghost_store_iframe')[0].contentWindow.document;
+          var $iframeInA = $(iframeIn).find('a');
+          $iframeInA.forEach(function (item,index) {
+              if(!$(this).attr('target')){
+                  $(this).attr('target','_parent');
+              }
+          });
+
+
+
+          console.log(iframeIn)
+
 
 
       });
