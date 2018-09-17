@@ -1,6 +1,9 @@
 // 商品列表
 // 初始化
 var common = require('../common/common.js');
+
+// velocity动画插件，使用方法同jquery.animate。引入的原因是使用animate在ios上动画速度过快。
+var velocity = require('../plugin/velocity.min.js');
 // 搜索
 // var SearchInit = require('../search_list/search_list.js');
 
@@ -255,28 +258,28 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
           var $o = $img.clone().css(css);
           $('.container').append($o);
 
-          $o.animate({
-              left: left1,
-              top: top1,
-          }, 400, 'linear', function () {
-              $o.animate({
+          $o.velocity({
+                  left: left1,
+                  top: top1,
+              }, 400)
+              .velocity({
                   left: left2,
                   top: top2,
                   width: width2,
                   height: height2,
               }, 500, 'linear', function () {
-                  $ghost_store_iframe_wrap.show().animate({opacity: 1}, 600, 'linear', function () {
+                  $ghost_store_iframe_wrap.show().velocity({opacity: 1}, 600, 'linear', function () {
                       $o.remove();
                   });
                   $img.attr('openstatus', '1');
               })
-          })
+
 
       });
 
       //关闭按钮事件
       $('.ghost_store_iframe_close').off('click').on('click', function () {
-          $ghost_store_iframe_wrap.animate({opacity: 0}, 600, 'linear', function () {
+          $ghost_store_iframe_wrap.velocity({opacity: 0}, 600, 'linear', function () {
               $ghost_store_iframe_wrap.hide();
           });
       });

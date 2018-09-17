@@ -161,5 +161,8 @@ require('../modules/components/comment/gs_comment');
 //鬼市评论列表页
 require('../modules/components/ghost_market_comment_list/index');
 
+//velocity动画插件
+require('../modules/components/plugin/velocity.min');
+
 
 
