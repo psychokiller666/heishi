@@ -166,3 +166,8 @@ require('../modules/components/plugin/velocity.min');
 
 
 
+
+//鬼市首页
+require('../modules/components/ghost_market_article_home/index');
+//鬼市卖家详情页
+require('../modules/components/ghost_market_seller/index');

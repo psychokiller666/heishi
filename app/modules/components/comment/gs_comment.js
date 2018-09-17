@@ -11,7 +11,7 @@ var wx = require('weixin-js-sdk');
 var sensitiveWord = ['燃料','大麻','叶子','淘宝','taobao.com','共产党','有飞','想飞','要飞','微信','加我','大妈','飞吗','飞嘛','qq','拿货','weed','机长','thc','V信','wechat','VX','蘑菇','邮票','LSD','taobao','tb','操你妈','草你妈','🍃'];
 // 过滤关键词插件esc初始化
 var ApiBaseUrl = common.prototype.getApiBaseUrl();
-var PHPSESSID = common.prototype.getCookie('PHPSESSID');
+var PHPSESSID = common.prototype.getCookie('PHPSESSID');//访问来源
 var ajaxHeaders = {
     'phpsessionid': PHPSESSID
 };
