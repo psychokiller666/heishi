@@ -428,14 +428,41 @@
         float: right;
         width: 5.2rem;
         height: 1.01333rem;
-        background:rgba(174,33,33,1);
-        box-shadow:0 0.05333rem 0.26667rem 0 rgba(133,5,5,0.73);
+
         border-radius: 0.16rem;
+        //status:1可以购买，2不可购买，3卖光了
+        &[status='1']{
+          background:rgba(174,33,33,1);
+          box-shadow:0 0.05333rem 0.26667rem 0 rgba(133,5,5,0.73);
+        }
+        &[status='2']{
+          background: #4C4D4F;
+          color: rgba(255,255,255,.4);
+        }
+        &[status='3']{
+          background: #4C4D4F;
+          .chat{
+            display: none;
+          }
+          .txt{
+            display: none;
+          }
+          .sold_out{
+            display: inline;
+            color: rgba(255,255,255,.4);
+            font-size: 0.37333rem;
+          }
+        }
+        .sold_out{
+          display: none;
+        }
+      }
+      .chat{
+        vertical-align: middle;
+        font-size: 0.48rem;
       }
       .chat:before{
-        font-size: 0.48rem;
         content: "\e654";
-        vertical-align: middle;
       }
       .txt{
         font-size: 0.37333rem;

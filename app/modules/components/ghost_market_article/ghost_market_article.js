@@ -72,6 +72,21 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
 
         initBanner(detail.gg_img);
 
+        //购买按钮 status:1可以购买，2不可购买，3卖光了
+        var status = 1;
+        if(detail.gg_status==1 && detail.gg_num>0){
+            status = 1;
+        }
+        if(detail.gg_status!=1){
+            status = 2;
+        }
+        if(detail.gg_status==1 && detail.gg_num==0){
+            status = 3;
+        }
+
+
+        $('.footer_buy').attr('status',status);
+
     }
 
     function initBanner(imgs){
@@ -212,6 +227,13 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
             var url = '/Portal/GhostMarket/comment_list.html?id=' + goodsId;
             location.href = url;
         });
+
+        //购买
+        $('.footer_buy').on('click',function(){
+            if($(this).attr('status')==='1'){
+                location.href = '/Portal/GhostMarket/buy_goods.html?id='+goodsId;
+            }
+        })
 
     }
 

@@ -16,6 +16,12 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
   }
   var init = new common(page);
 
+    var ApiBaseUrl = init.getApiBaseUrl();
+    var PHPSESSID = init.getCookie('PHPSESSID');
+    var ajaxHeaders = {
+        'phpsessionid': PHPSESSID
+    };
+
   // 调用微信分享sdk
   var share_data = {
     title: '公路商店 — 为你不着边际的企图心',
@@ -215,93 +221,186 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
 
 
   // 鬼市首页入口
-  openGS();
-  function openGS() {
+    setGS();
+    function setGS(){
+        var url = ApiBaseUrl + '/ghostmarket/getSetting';
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType: 'json',
+            data: {},
+            headers: ajaxHeaders,
+            success: function (data) {
+                if (data.status == 1) {
+                    if(data.data.secondFloorStatus){
+                        $('.ghost_store_ad_wrap').show();
+                        initGS();
+                    }
+                }
+            },
+            error: function (e) {
+                console.log('getSetting err: ', e);
+            }
 
-      //初始化鬼市home页
-      gsHome({});
+        });
+    }
 
-      var $ghost_store_iframe_wrap = $('.ghost_store_iframe_wrap');
+    function initGS() {
 
-      $('.ghost_store_ad_wrap').on('click', '.ghost_store_ad_img', function () {
-          var $img = $(this);
+        //初始化鬼市home页
+        gsHome({});
 
-          if ($img.attr('openstatus') === '1') {
-              $ghost_store_iframe_wrap.show().animate({opacity: 1}, 500, 'linear');
-              return;
-          }
+        var $ghost_store_iframe_wrap = $('.ghost_store_iframe_wrap');
 
-          var css = {
-              position: 'fixed',
-              'z-index': 1000,
-              width: $img.css('width'),
-              height: $img.css('height'),
-              top: $img.offset().top,
-              left: $img.offset().left,
-          }
-
-          var windowW = $(window).width();
-          var windowH = $(window).height();
-          var imgW = $img.width();
-          var imgH = $img.height();
-
-          var top1 = (windowH - imgH) / 2;
-          var left1 = (windowW - imgW) / 2;
-
-          var width2 = 0;
-          var height2 = 0;
-          var top2 = 0;
-          var left2 = 0;
-
-
-          height2 = 1.2 * windowH;
-          width2 = height2 * imgW / imgH;
-
-          top2 = (windowH - height2) / 2;
-          left2 = (windowW - width2) / 2;
+        var gs_share_data = {
+            title: '公路商店 — 鬼市',
+            desc: '为你不着边际的企图心',
+            link: window.location.origin + '/Portal/GhostMarket/home.html',
+            img: 'http://jscache.ontheroadstore.com/tpl/simplebootx_mobile/Public/i/logo.png'
+        };
 
 
-          var $o = $img.clone().css(css);
-          $('.container').append($o);
+        //鬼市首页泼墨动画
 
-          $o.velocity({
-                  left: left1,
-                  top: top1,
-              }, 400)
-              .velocity({
-                  left: left2,
-                  top: top2,
-                  width: width2,
-                  height: height2,
-              }, 500, 'linear', function () {
-                  $ghost_store_iframe_wrap.show().velocity({opacity: 1}, 600, 'linear', function () {
-                      $o.remove();
-                  });
-                  $img.attr('openstatus', '1');
-              });
+        var modalTrigger = $('.cd-modal-trigger'),
+            transitionLayer = $('.ghost_store_animate_wrap'),
+            transitionBackground = transitionLayer.children(),
+            modalWindow = $('.cd-modal');
 
-          var iframeIn =  $('.ghost_store_iframe')[0].contentWindow.document;
-          var $iframeInA = $(iframeIn).find('a');
-          $iframeInA.forEach(function (item,index) {
-              if(!$(this).attr('target')){
-                  $(this).attr('target','_parent');
-              }
-          });
+        var frameProportion = 1.78, //png frame aspect ratio
+            frames = 25, //number of png frames
+            resize = false;
+
+        //设置过渡背景尺寸
+        setLayerDimensions();
+        $(window).on('resize', function(){
+            if( !resize ) {
+                resize = true;
+                (!window.requestAnimationFrame) ? setTimeout(setLayerDimensions, 300) : window.requestAnimationFrame(setLayerDimensions);
+            }
+        });
 
 
+        //close modal window
+        modalWindow.on('click', '.modal-close', function(event){
+            event.preventDefault();
+            transitionLayer.addClass('closing');
+            // modalWindow.removeClass('visible');
+            transitionBackground.one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(){
+                transitionLayer.removeClass('closing opening visible');
+                transitionBackground.off('webkitAnimationEnd oanimationend msAnimationEnd animationend');
+            });
+        });
 
-          console.log(iframeIn)
+        function setLayerDimensions() {
+            var windowWidth = $(window).width(),
+                windowHeight = $(window).height(),
+                layerHeight, layerWidth;
+
+            if( windowWidth/windowHeight > frameProportion ) {
+                layerWidth = windowWidth;
+                layerHeight = layerWidth/frameProportion;
+            } else {
+                layerHeight = windowHeight*1.2;
+                layerWidth = layerHeight*frameProportion;
+            }
+
+            transitionBackground.css({
+                'width': layerWidth*frames+'px',
+                'height': layerHeight+'px',
+            });
+
+            resize = false;
+        }
+
+
+        $('.ghost_store_ad_wrap').on('click', '.ghost_store_ad_img', function () {
+            var $img = $(this);
+
+            //设置分享
+            setShare();
+
+            // if ($img.attr('openstatus') === '1') {
+            //     //直接打开鬼市home页
+            //     $ghost_store_iframe_wrap.show().animate({opacity: 1}, 500, 'linear');
+            //     return;
+            // }
+
+            //对鬼市广告图做动画及打开鬼市home页
+
+            transitionLayer.addClass('visible opening');
+
+            var delay =  600;
+            setTimeout(function(){
+                $ghost_store_iframe_wrap.show().velocity({opacity: 1}, 600, 'linear', function () {});
+            }, delay);
+
+            $img.attr('openstatus', '1');
+
+        });
+
+        //关闭按钮事件
+        $('.ghost_store_iframe_close').off('click').on('click', function () {
+
+            //设置分享
+            setShare(true);
+
+            transitionLayer.addClass('closing');
+            modalWindow.removeClass('visible');
+            transitionBackground.one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(){
+                transitionLayer.removeClass('closing opening visible');
+                transitionBackground.off('webkitAnimationEnd oanimationend msAnimationEnd animationend');
+            });
+
+
+            $ghost_store_iframe_wrap.velocity({opacity: 0}, 600, 'linear', function () {
+                $ghost_store_iframe_wrap.hide();
+            });
+        });
+
+        //设置分享信息
+        function setShare(restore) {
+            if (restore) {
+                init.wx_share(share_data);
+            } else {
+                init.wx_share(gs_share_data);
+            }
+        }
+        //如果鬼市正在进行，自动打开
+        gsGoing();
+        function gsGoing(){
+            var url = ApiBaseUrl + '/ghostmarket/goods/getGhostMarketGoods';
+            $.ajax({
+                type: "GET",
+                url: url,
+                dataType: 'json',
+                data: {},
+                headers: ajaxHeaders,
+                success: function (data) {
+                    if (data.status == 1) {
+                        //ga_type 类型1 开市中 2活动未开始 3活动已结束 0没有活动
+                        if(data.data.avtivity && data.data.avtivity.ga_type==1){
+
+                            if(localStorage.getItem('ga_id')==data.data.avtivity.ga_id){
+                                return;
+                            }
+
+                            localStorage.setItem('ga_id', data.data.avtivity.ga_id);
+                            //打开鬼市home页
+                            $ghost_store_iframe_wrap.show().animate({opacity: 1}, 500, 'linear');
+                        }
+                    }
+                },
+                error: function (e) {
+                    console.log('getSetting err: ', e);
+                }
+
+            });
+        }
 
 
 
-      });
 
-      //关闭按钮事件
-      $('.ghost_store_iframe_close').off('click').on('click', function () {
-          $ghost_store_iframe_wrap.velocity({opacity: 0}, 600, 'linear', function () {
-              $ghost_store_iframe_wrap.hide();
-          });
-      });
 
     }
 

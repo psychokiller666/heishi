@@ -525,7 +525,7 @@ $(document).on('pageInit','.center', function(e, id, page){
     }
   }
 
-  //判断是否展示用户中心页的新人领取优惠券
+    //判断是否展示用户中心页的新人领取优惠券
     var $coupon_for_new = $('.coupon_for_new');
     if($coupon_for_new.length>0){
         var PHPSESSID = init.getCookie('PHPSESSID');
@@ -555,6 +555,36 @@ $(document).on('pageInit','.center', function(e, id, page){
         });
     }
 
+    //鬼市条展示
+    var $guishi_wrap = $('.guishi_wrap');
+    if($guishi_wrap.length>0){
+        var ApiBaseUrl = init.getApiBaseUrl();
+        var PHPSESSID = init.getCookie('PHPSESSID');
+        var ajaxHeaders = {
+            'phpsessionid': PHPSESSID
+        };
+        var url = ApiBaseUrl + '/ghostmarket/getSetting';
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType: 'json',
+            data: {},
+            headers: ajaxHeaders,
+            success: function (data) {
+                if (data.status == 1) {
+                    if(data.data.userCenterStatus){
+                        $guishi_wrap.show();
+                    }
+
+                }
+            },
+            error: function (e) {
+                console.log('getSetting err: ', e);
+            }
+        });
+    }
+
+  //  个人用户中心页
   if(store_list.length == 0){
     // 弹出绑定手机窗口 自己的个人中心
     $.ajax({
