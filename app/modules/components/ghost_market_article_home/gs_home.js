@@ -2,7 +2,7 @@ var common = require('../common/common.js');
 var ApiBaseUrl = common.prototype.getApiBaseUrl();
 var activeId = '';
 var page = 1;
-var row = 10;
+var row = 14;
 var over = true;
 var loading = false;
 var gsStatus;//鬼市状态
@@ -75,7 +75,7 @@ function getGoods(option){
                 if(over){
                     checkGoodsHtml(goodsArr);
                 }
-                if(goodsArr.length<10){
+                if(goodsArr.length<14){
                     over = false;
                 }
             }
@@ -105,7 +105,6 @@ function getGoods(option){
                 }else if(timeDifference <= 86400 && timeDifference>0){
                     timer = setInterval(function(){
                         timeDifference--;
-                        console.log(timeDifference)
                         if (timeDifference > 0) {
                             let h = Math.floor(timeDifference / 60 / 60 % 24);
                             let m = Math.floor(timeDifference / 60 % 60);
@@ -154,7 +153,7 @@ function gsFun(option) {
         var scrollTop = $this.scrollTop();
 
         //判断距离底部的px
-        var diff = scrollHeight - clientHeight - scrollTop <= 300;
+        var diff = scrollHeight - clientHeight - scrollTop <= 800;
 
         if(diff){
             page++;

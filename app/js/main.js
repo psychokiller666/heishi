@@ -171,3 +171,7 @@ require('../modules/components/plugin/velocity.min');
 require('../modules/components/ghost_market_article_home/index');
 //鬼市卖家详情页
 require('../modules/components/ghost_market_seller/index');
+//鬼市创建订单页面
+require('../modules/components/ghost_market_buy/index');
+//鬼市支付页面
+require('../modules/components/ghost_market_payment/index');
