@@ -44,7 +44,11 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
                 if (data.status == 1) {
                     console.log(data.data);
                     initPage(data.data);
-
+                }else{
+                    $.toast(data.info);
+                    setTimeout(function(){
+                        location.href = '/Portal/Index/index.html';
+                    },1300)
                 }
             },
             error: function (e) {
@@ -93,7 +97,9 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
         var html = '';
         for(var i=0;i<imgs.length;i++){
             html+= '<div class="swiper-slide">'
-            html+= '<img src="'+imgs[i]+'">'
+            // html+= '<img src="'+imgs[i]+'@640w_1l">'
+            html+= '<div class="swiper_img" style="background:url('+imgs[i]+'@640w_1l) no-repeat;background-position: 50% 50%;background-size: cover;"></div>'
+
             html+= '</div>'
         }
         $('.banner .swiper-wrapper').html(html);
@@ -169,7 +175,7 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
                 if(com[i].gc_commen_img){
                     html+= '<div class="comment_img"><img class="wx_preview" src="'+ init.fixImgUrl(com[i].gc_commen_img) +'"></div>'
                 }else{
-                    html+= '<div class="comment_txt">'+ com[i].gc_comment +'</div>'
+                    html+= '<div class="comment_txt js_reply">'+ com[i].gc_comment +'</div>'
                 }
                 html+= '</div>'
                 if(com[i].gc_kids.length>0){
@@ -177,9 +183,9 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
                     for(var j=0;j<com[i].gc_kids.length;j++){
                         html+= '<div class="comment_reply_li js_reply js_reply_2" uid="'+ com[i].gc_kids[j].gc_user_id +'" username="'+ com[i].gc_kids[j].gc_username +'" >'
                         html+= '<div class="name">'+ com[i].gc_kids[j].gc_username +'<span>回复</span>'+ com[i].gc_kids[j].gc_to_user_name +'</div>'
-                        html+= '<div class="txt">'+ com[i].gc_kids[j].gc_comment +'</div>'
+                        html+= '<div class="txt js_reply">'+ com[i].gc_kids[j].gc_comment +'</div>'
                         html+= '</div>'
-                    }
+                    }$content_wrap.find('.js_to_comment_list').show();
                     html+= '</div>'
                 }else{
                     html+= '<div class="comment_reply comment_reply_none"></div>'
@@ -189,7 +195,9 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
             }
 
             $content_wrap.find('.comment_ul').html(html);
-            $content_wrap.find('.comment_more').show();
+            if(com.length>5){
+                $content_wrap.find('.js_to_comment_list').show();
+            }
 
         }
 
@@ -379,7 +387,7 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
         for(var i=0;i<data.length;i++){
             html+= '<li class="guess_like_li">'
             html+= '<a external href="/Portal/HsArticle/index/id/'+ data[i].id +'.html">'
-            html+= '<img src="'+ data[i].image +'">'
+            html+= '<div class="guess_like_li_img" style="background:url('+ data[i].image +'@640w_1l) no-repeat;background-position: 50% 50%;background-size: cover;"></div>'
             html+= '<div class="goods_title">'+ data[i].post_title +'</div>'
             html+= '</a>'
             html+= '</li>'

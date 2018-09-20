@@ -13,6 +13,17 @@ var PHPSESSID = common.prototype.getCookie('PHPSESSID');//获取访问来源
 var ajaxHeaders = {
     'phpsessionid': PHPSESSID
 };
+
+function lazyload() {
+    var contentHeight = $('.content').height();
+    $('[data-layzr]').each(function(){
+        var status = $(this).attr('data-layzrstatus');
+        if($(this).offset().top < contentHeight && !status){
+            $(this).css('background-image', 'url('+ $(this).attr('data-layzr') +')');
+            $(this).attr('data-layzrstatus', '1');
+        }
+    })
+};
 //时间戳转年月日
 function timestampToTime(timestamp) {
     var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
@@ -32,7 +43,7 @@ function checkTime(n) {
 function checkGoodsHtml(arr){
     arr.forEach(function(item,index){
         let goodsItem = '<li class="gs_goods_list">' +
-            '                    <a class="external gs_goods_img" href="/Portal/GhostMarket/article.html?id='+ item.gg_id +'"><img class="gs_goods_img" src="'+ item.gg_img[0] +'"></a>' +
+            '                    <a class="external gs_goods_img_a" href="/Portal/GhostMarket/article.html?id='+ item.gg_id +'"><div class="gs_goods_img" data-layzr="'+ item.gg_img[0] +'@640w_1l"></div></a>' +
             '                    <div class="gs_goods_mes">' +
             '                        <p class="gs_goods_name"><a class="external" href="/Portal/GhostMarket/article.html?id='+ item.gg_id +'">'+ item.gg_title +'</a></p>' +
             '                        <div class="gs_goods_store">' +
@@ -46,6 +57,7 @@ function checkGoodsHtml(arr){
             '                </li>';
         $('.gs_goods').append(goodsItem)
     });
+    lazyload();
 }
 function getGoods(option){
     if(loading){
@@ -63,7 +75,9 @@ function getGoods(option){
         success: function (res) {
             $('.gs_home_move').animate({
                 marginTop: "4.0533rem"
-            }, 500);
+            }, 500,function () {
+                lazyload();
+            });
             $('.gs_home_con').animate({
                 background: 'rgba(33,32,33,0.6)'
             }, 500);
@@ -139,19 +153,29 @@ function getGoods(option){
 function gsFun(option) {
     getGoods(option);
     $('.gs_home_con').on('scroll',function(ev){
+        lazyload();
         var $this = $(this);
-        if(!over){
-            $this.off('scroll');
-            return;
-        }
-        if(loading){
-            return
-        }
+
         //获取自己的scrollHeight,scrollTop
         var clientHeight = $this.height();
         var scrollHeight = $this[0].scrollHeight;
         var scrollTop = $this.scrollTop();
 
+        //调节背景色
+        var gs_goods_top = $('.gs_goods').offset().top;//这个元素距离页面顶部的距离
+        var percent = 2 * scrollTop / (+scrollTop + +gs_goods_top);//滚动比例，滚动到一半距离的时候显示为不透明
+        var opacity = (percent * 0.4 + 0.6).toFixed(2);
+        opacity = opacity > 1 ? 1 : opacity;
+        $('.gs_home_con').css({'background':'rgba(33,32,33,'+ opacity +')'});
+
+
+        if(!over){
+            // $this.off('scroll');
+            return;
+        }
+        if(loading){
+            return
+        }
         //判断距离底部的px
         var diff = scrollHeight - clientHeight - scrollTop <= 800;
 

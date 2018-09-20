@@ -99,12 +99,15 @@
         border-radius:0.16rem;
         overflow: hidden;
         margin-bottom:0.4rem;
-        .gs_goods_img{
+        .gs_goods_img_a{
           display: block;
           width:100%;
-          img{
+          .gs_goods_img{
             width:100%;
             height:4.6933rem;
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            background-size: cover;
           }
         }
         .gs_goods_mes{
@@ -135,6 +138,7 @@
             .gs_goods_store_mes{
               display: flex;
               align-items: center;
+              height: 0.4267rem;
               img{
                 width:0.4267rem;
                 height:0.4267rem;
@@ -149,13 +153,14 @@
                 font-size:0.2667rem;
                 font-family:PingFangSC-Regular;
                 font-weight:400;
-                color:rgba(255,255,255,1);
+                color:rgba(255,255,255,0.4);
               }
             }
             .gs_goods_price{
               font-size:0.5333rem;
               font-family:'din';
-              font-weight:900;
+              font-weight:700;
+              line-height: 1;
               color:rgba(255,255,255,1);
             }
           }
