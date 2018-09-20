@@ -195,7 +195,6 @@ common.prototype.getUrlParam = function(name) {
     var r = window.location.search.substr(1).match(reg);
     if (r != null) return unescape(r[2]); return null;
 };
-
 common.prototype.setCookie = function (name,value,days) {
     var Days = parseFloat(days)>0 ? parseFloat(days) : 30;
     var exp = new Date();

@@ -173,5 +173,5 @@ require('../modules/components/ghost_market_article_home/index');
 require('../modules/components/ghost_market_seller/index');
 //鬼市创建订单页面
 require('../modules/components/ghost_market_buy/index');
-//鬼市支付页面
-require('../modules/components/ghost_market_payment/index');
+//鬼市支付成功页面
+require('../modules/components/ghost_market_pay_success/index');
