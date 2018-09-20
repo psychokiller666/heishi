@@ -175,7 +175,8 @@ $(document).on('pageInit','.ghost_market_buy', function(e, id, page) {
             headers: ajaxHeaders,
             success:function(res){
                 if(res.status == 1){
-                    location.href = 'http://hs.ontheroadstore.com/payment/test_pay/gsjsapi.php?order_number='+ res.data.order_sn+ '&creatOrderTime='+ res.data.created_at +'&count_down=' + res.data.count_down;
+                    //hstest域名微信白名单未配置，不能用
+                    location.href = '//hs.ontheroadstore.com/payment/test_pay/gsjsapi.php?order_number='+ res.data.order_sn+ '&creatOrderTime='+ res.data.created_at +'&count_down=' + res.data.count_down;
                 }else{
                     $.toast(res.info)
                 }
