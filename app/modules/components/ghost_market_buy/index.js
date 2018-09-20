@@ -99,8 +99,8 @@ $(document).on('pageInit','.ghost_market_buy', function(e, id, page) {
         alert(JSON.stringify(res));
     });
     $('#choseAddress').click(function(){
-        addrTest({
-        // wx.openAddress({
+        // addrTest({
+        wx.openAddress({
             success: function (res) {
                 // 页面赋值
                 let addressHtml = '<p class="user_con_top">' +
@@ -168,7 +168,6 @@ $(document).on('pageInit','.ghost_market_buy', function(e, id, page) {
         goodsMes.postid = goodsId;
         goodsMes.source = 3;
         goodsMes.address_id = addressId;
-        console.log(ajaxHeaders);
         $.ajax({
             url:ApiBaseUrl + '/ghostmarket/creatorder',
             type:'POST',
@@ -176,11 +175,10 @@ $(document).on('pageInit','.ghost_market_buy', function(e, id, page) {
             headers: ajaxHeaders,
             success:function(res){
                 if(res.status == 1){
-                    console.log(res)
+                    location.href = 'http://hs.ontheroadstore.com/payment/test_pay/gsjsapi.php?order_number='+ res.data.order_sn+ '&creatOrderTime='+ res.data.created_at +'&count_down=' + res.data.count_down;
                 }else{
                     $.toast(res.info)
                 }
-
             },
             error:function(err){
                 $.toast(err.info)
