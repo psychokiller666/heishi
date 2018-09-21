@@ -94,6 +94,7 @@ function getGoods(option){
                 }
             }
             if (gsStatus === 2) {
+                $('.gs_home_con').css('overflow','hidden');
                 $('.gs_goods').hide();
                 $('.gs_home_mes').show();
                 let startTime = res.data.avtivity.ga_start_time;//鬼市开启时间
@@ -134,10 +135,11 @@ function getGoods(option){
                 }
             }
             if (gsStatus === 3) {
+                $('.gs_home_con').css('overflow','hidden');
                 $('.gs_goods').hide();
                 $('.gs_home_mes').show();
                 $('.gs_date').hide();
-                $('.gs_home_btn').children('a').eq(0).attr('href','/Portal/Index/index.html');
+                $('.gs_home_btn').children('a').eq(0).attr('href','javascript:$.toast("敬请期待");');
                 $('.gs_home_btn').children('a').eq(0).html('狠货榜单');
                 $('.gs_home_btn').children('a').eq(1).html('下期提醒');
                 $('.gs_prompt_mes img').attr('src', 'https://img8.ontheroadstore.com/guishi/img/gs_close_store.png')
@@ -152,6 +154,7 @@ function getGoods(option){
 }
 function gsFun(option) {
     getGoods(option);
+    var $gs_goods_ul = $('.gs_goods');
     $('.gs_home_con').on('scroll',function(ev){
         lazyload();
         var $this = $(this);
@@ -162,11 +165,14 @@ function gsFun(option) {
         var scrollTop = $this.scrollTop();
 
         //调节背景色
-        var gs_goods_top = $('.gs_goods').offset().top;//这个元素距离页面顶部的距离
-        var percent = 2 * scrollTop / (+scrollTop + +gs_goods_top);//滚动比例，滚动到一半距离的时候显示为不透明
-        var opacity = (percent * 0.4 + 0.6).toFixed(2);
-        opacity = opacity > 1 ? 1 : opacity;
-        $('.gs_home_con').css({'background':'rgba(33,32,33,'+ opacity +')'});
+        if($gs_goods_ul.children('.gs_goods_list').length>0){
+
+            var gs_goods_top = $gs_goods_ul.offset().top;//这个元素距离页面顶部的距离
+            var percent = 2 * scrollTop / (+scrollTop + +gs_goods_top);//滚动比例，滚动到一半距离的时候显示为不透明
+            var opacity = (percent * 0.4 + 0.6).toFixed(2);
+            opacity = opacity > 1 ? 1 : opacity;
+            $('.gs_home_con').css({'background':'rgba(33,32,33,'+ opacity +')'});
+        }
 
 
         if(!over){

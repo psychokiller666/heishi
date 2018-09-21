@@ -69,7 +69,7 @@ $(document).on('pageInit','.ghost_market_comment_list', function(e, id, page) {
                 if(com[i].gc_commen_img){
                     html+= '<div class="comment_img"><img class="wx_preview" src="' + init.fixImgUrl(com[i].gc_commen_img) +'"></div>'
                 }else{
-                    html+= '<div class="comment_txt">'+ com[i].gc_comment +'</div>'
+                    html+= '<div class="comment_txt js_reply">'+ com[i].gc_comment +'</div>'
                 }
                 html+= '</div>'
                 if(com[i].gc_kids.length>0){
@@ -198,6 +198,7 @@ $(document).on('pageInit','.ghost_market_comment_list', function(e, id, page) {
                 toUserId:'',    //被评论人id
                 toUserName:'',    //被评论人的name
                 callback:function(data){
+                    console.log('yijipinglun:',data)
                     getCommentList(0,1,false,function(com){
                         var html = createCommentHtml(com)
                         $content_wrap.find('.comment_ul').prepend(html);
@@ -241,7 +242,7 @@ $(document).on('pageInit','.ghost_market_comment_list', function(e, id, page) {
     //@skip 跳过几条； @num 读取几条； @record 是否修改commentObj
     function getCommentList(skip,num,record,callback){
 
-        if(commentObj.loading || commentObj.over){
+        if(commentObj.loading || (commentObj.over && record) ){
             return;
         }else{
             commentObj.loading = true;

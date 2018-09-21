@@ -14,7 +14,7 @@
       .comment_wrap{
         //background:rgba(255,255,255,0.1);
         border-radius: 0.16rem;
-        padding:0 0.4rem;
+        //padding:0 0.4rem;
         .comment_input{
           background:rgba(0,0,0,0.2);
           border-radius:0.10667rem;
@@ -126,9 +126,6 @@
           font-size: 0.37333rem;
 
           &[status="0"]{
-            .load_over{
-              display: none;
-            }
             .preloader {
               width: 0.5rem;
               height: 0.5rem;
@@ -139,35 +136,6 @@
           &[status="1"] {
             .preloader{
               display: none;
-            }
-            .load_over {
-              display: block;
-              span {
-                position: relative;
-                color: #D6D6D6;
-                &:before {
-                  content: "";
-                  width: 0.08rem;
-                  height: 0.08rem;
-                  background: #D6D6D6;
-                  position: absolute;
-                  top: 50%;
-                  left: -0.3rem;
-                  transform: translateY(-50%);
-                  border-radius: 50%;
-                }
-                &:after {
-                  content: "";
-                  width: 0.08rem;
-                  height: 0.08rem;
-                  background: #D6D6D6;
-                  position: absolute;
-                  top: 50%;
-                  right: -0.3rem;
-                  transform: translateY(-50%);
-                  border-radius: 50%;
-                }
-              }
             }
           }
         }
