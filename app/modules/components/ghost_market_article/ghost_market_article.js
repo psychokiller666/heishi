@@ -42,7 +42,6 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
             headers: ajaxHeaders,
             success: function (data) {
                 if (data.status == 1) {
-                    console.log(data.data);
                     initPage(data.data);
                 }else{
                     $.toast(data.info);
@@ -66,9 +65,23 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
         initComment(data.comment);
         initGuessLike(data.favorited);
         initEvent();
+        //初始化举报
+        initReport(data.user.id,goodsId,data.detail.gg_title);
+        setWXshare(data.detail);
     }
 
+    //设置微信分享
+    function setWXshare(detail) {
+        var share_data = {
+            title: detail.gg_title,
+            desc: '终于抢到了公路鬼市摊位，等你帮我上首页',
+            link: window.location.href,
+            img: detail.gg_img[0]+'?x-oss-process=image/resize,m_fill,h_300,w_300'
+        };
+        init.wx_share(share_data);
+    }
 
+    //初始化商品详情
     function initDetail(detail){
         $content_wrap.find('.title').html(detail.gg_title);
         $content_wrap.find('.price').html('¥'+detail.gg_price);
@@ -111,8 +124,12 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
             autoplay: 3000,
             speed:300,
             autoplayDisableOnInteraction : false
-        })
+        });
 
+        //安卓手机里分页器的位置会靠下，莫名其妙
+        if(init.isAndroid()){
+            $('.swiper-pagination').css('bottom','1.8rem');
+        }
 
     }
 
@@ -132,8 +149,6 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
         $content_wrap.find('.like_ico').attr('status',user.likeStatus);
         $('.footer .contact a').attr('href','/User/HsMessage/detail/from_uid/'+user.id);
 
-        //初始化举报
-        initReport(user.id,goodsId);
     }
 
 
@@ -173,7 +188,7 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
                 html+= '<div class="name">'+com[i].nickname+'</div>'
                 html+= '</div>'
                 if(com[i].gc_commen_img){
-                    html+= '<div class="comment_img"><img class="wx_preview" src="'+ init.fixImgUrl(com[i].gc_commen_img) +'"></div>'
+                    html+= '<div class="comment_img js_reply"><img class="wx_preview" src="'+ init.fixImgUrl(com[i].gc_commen_img) +'?x-oss-process=image/resize,m_fill,h_394,w_394"></div>'
                 }else{
                     html+= '<div class="comment_txt js_reply">'+ com[i].gc_comment +'</div>'
                 }
@@ -222,8 +237,6 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
             // 调用微信图片
             var arr = [];
             arr.push($(this).attr('src'));
-            console.log('pre: ',wx.previewImage);
-
             wx.previewImage({
                 current: arr[0],
                 urls: arr
@@ -258,7 +271,7 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
                 $('.like_ico').attr('status','1');
             },
             error: function (e) {
-                console.log('getGoodsDetail err: ', e);
+                console.log('setUserLike err: ', e);
                 $('.like_ico').attr('status','1');
             }
 
@@ -300,7 +313,6 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
             success: function (data) {
                 if (data.status == 1) {
                     userInfo = data.data;
-                    console.log(data.data);
                 }
             },
             error: function (e) {
@@ -332,7 +344,12 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
         });
 
         //    二级评论：回复评论
-        $content_wrap.find('.comment_wrap').on('click','.js_reply',function(){
+        $content_wrap.find('.comment_wrap').on('click','.js_reply',function(ev){
+
+            if($(ev.target).hasClass('wx_preview')){
+                return;
+            }
+
             var $parent = $(this).parents('.comment_li');
 
             var obj = {
@@ -399,25 +416,25 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
 
     //初始化举报
 
-    function initReport(uid,goodsId) {
+    function initReport(uid,goodsId,title) {
+
+        var content = '鬼市商品名称：'+ title +' , 鬼市商品id：'+ goodsId;
+
         //举报
         $('.report_btn').on('click',function(){
             $.confirm('你确定要举报吗？', function () {
-                reportGoods(uid,goodsId);
+                reportGoods(uid,content);
             });
         })
     }
 
     //举报
-    function reportGoods(uid,goodsId) {
+    function reportGoods(uid,content) {
 
         $.ajax({
             type: 'POST',
-            url: '/index.php?g=restful&m=HsUserReporting&a=reporting',
-            data: {
-                be_reported_uid: uid,
-                content: '鬼市商品id：'+ goodsId,
-            },
+            url: '/index.php?g=restful&m=HsUserReporting&a=reporting&be_reported_uid='+ uid +'&content='+content,
+            data: {},
             success: function(data){
                 if(data.status == 1){
                     $.toast('举报成功');

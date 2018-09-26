@@ -67,7 +67,7 @@ $(document).on('pageInit','.ghost_market_comment_list', function(e, id, page) {
                 html+= '<div class="name">'+com[i].nickname+'</div>'
                 html+= '</div>'
                 if(com[i].gc_commen_img){
-                    html+= '<div class="comment_img"><img class="wx_preview" src="' + init.fixImgUrl(com[i].gc_commen_img) +'"></div>'
+                    html+= '<div class="comment_img js_reply"><img class="wx_preview" src="' + init.fixImgUrl(com[i].gc_commen_img) +'?x-oss-process=image/resize,m_fill,h_394,w_394"></div>'
                 }else{
                     html+= '<div class="comment_txt js_reply">'+ com[i].gc_comment +'</div>'
                 }
@@ -189,7 +189,7 @@ $(document).on('pageInit','.ghost_market_comment_list', function(e, id, page) {
 
 
         //一级评论
-        $content_wrap.find('.comment_input').on('click',function(){
+        page.find('.js_reply_1').on('click',function(){
 
             openComment({
                 goodsId:goodsId,
@@ -209,7 +209,11 @@ $(document).on('pageInit','.ghost_market_comment_list', function(e, id, page) {
         });
 
         //    二级评论：回复评论
-        $content_wrap.find('.comment_wrap').on('click','.js_reply',function(){
+        $content_wrap.find('.comment_wrap').on('click','.js_reply',function(ev){
+
+            if($(ev.target).hasClass('wx_preview')){
+                return;
+            }
             var $parent = $(this).parents('.comment_li');
             var index = $parent.index();
 

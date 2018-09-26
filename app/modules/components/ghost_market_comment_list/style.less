@@ -40,6 +40,9 @@
           .comment_li{
             padding: 0.53333rem 0;
             border-bottom: 0.02667rem solid rgba(255,255,255,0.1);
+            &:last-child{
+              border-bottom: none;
+            }
             .comment_left{
               float: left;
               width: 1.06667rem;
@@ -72,7 +75,9 @@
                 margin-top: 0.32rem;
                 img{
                   display: block;
-                  max-width: 100%;
+                  width: 2.62rem;
+                  height: 2.62rem;
+                  border-radius: 0.16rem;
                 }
               }
               .comment_txt{
@@ -145,4 +150,40 @@
 
   }
 
+  .reply_footer{
+    position: absolute;
+    z-index: 100;
+    bottom: 0;
+    left: 0;
+    width: 10rem;
+    height: 0.8rem;
+    padding: 0.253rem 0;
+    line-height: 0.8rem;
+    color: rgba(255,255,255,.6);
+    background: #212021;
+    border-top: 0.02667rem solid rgba(255, 255, 255, 0.1);
+    .reply_send{
+      float: right;
+      padding-right:0.4rem;
+      font-size: 0.53333rem;
+    }
+    .reply_img{
+      float: left;
+      padding-left: 0.4rem;
+      font-size: 0.53333rem;
+    }
+    .reply_input{
+
+      margin: 0 auto;
+      width: 7.15rem;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.2);
+      box-sizing: border-box;
+      border-radius: 0.1rem;
+      padding: 0 0.4rem;
+      font-size: 0.37333rem;
+
+    }
+
+  }
 }

@@ -232,7 +232,8 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
             headers: ajaxHeaders,
             success: function (data) {
                 if (data.status == 1) {
-                    if(data.data.secondFloorStatus){
+                    if(data.data.userCenterStatusH5){
+                        $('.ghost_store_ad_img').css({'background':'url("'+ data.data.secondFloorBackgroundImgH5 +'@640w_1l") no-repeat center center','background-size': 'cover'});
                         $('.ghost_store_ad_wrap').show();
                         initGS();
                     }
@@ -249,6 +250,8 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
 
         //初始化鬼市home页
         gsHome({});
+
+        var gsType = undefined;//鬼市状态
 
         var $ghost_store_iframe_wrap = $('.ghost_store_iframe_wrap');
 
@@ -335,6 +338,9 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
                 $ghost_store_iframe_wrap.show().velocity({opacity: 1}, 600, 'linear', function () {});
             }, delay);
 
+            //判断是否需要重启
+            getGSstatus(changeStatus);
+
             $img.attr('openstatus', '1');
 
         });
@@ -369,7 +375,29 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
         //如果鬼市正在进行，自动打开
         gsGoing();
         function gsGoing(){
-            var url = ApiBaseUrl + '/ghostmarket/goods/getGhostMarketGoods';
+            getGSstatus(function(type, data){
+                if (data.status == 1) {
+
+                    if(data.data.avtivity){
+                        gsType = data.data.avtivity.ga_type;
+                    }
+
+                    //ga_type 类型1 开市中 2活动未开始 3活动已结束 0没有活动
+                    if(data.data.avtivity && data.data.avtivity.ga_type==1){
+
+                        if(localStorage.getItem('ga_id')==data.data.avtivity.ga_id){
+                            return;
+                        }
+
+                        localStorage.setItem('ga_id', data.data.avtivity.ga_id);
+                        //打开鬼市home页
+                        $ghost_store_iframe_wrap.show().animate({opacity: 1}, 500, 'linear');
+                    }
+                }
+            })
+
+
+/*            var url = ApiBaseUrl + '/ghostmarket/goods/getGhostMarketGoods';
             $.ajax({
                 type: "GET",
                 url: url,
@@ -392,14 +420,51 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
                     }
                 },
                 error: function (e) {
-                    console.log('getSetting err: ', e);
+                    console.log('getGhostMarketGoods err: ', e);
+                }
+
+            });*/
+        }
+
+        //获取当前gs状态
+        function getGSstatus(callback){
+            var url = ApiBaseUrl + '/ghostmarket/goods/getGhostMarketGoods';
+            $.ajax({
+                type: "GET",
+                url: url,
+                dataType: 'json',
+                data: {},
+                headers: ajaxHeaders,
+                success: function (data) {
+                    if (data.status == 1) {
+
+                        //ga_type 类型1 开市中 2活动未开始 3活动已结束 0没有活动
+                        if(data.data.avtivity && data.data.avtivity.ga_type==1){
+                            callback(data.data.avtivity.ga_type, data);
+                            return;
+                        }
+                    }
+                    callback(false);
+                    return;
+                },
+                error: function (e) {
+                    callback(false);
+                    console.log('getGhostMarketGoods err: ', e);
                 }
 
             });
         }
 
-
-
+        //判断状态是否改变
+        function changeStatus(newType){
+            //每次打开鬼市弹窗都去检测状态是否变化，如果鬼市状态变化，重新加载鬼市页面
+            if(gsType !== undefined && gsType !== newType){
+                $('.ghost_store_iframe_wrap').show();
+                $('.gs_home_con').scrollTop(10);
+                gsHome({});
+            }
+            gsType = newType;
+        }
 
 
     }

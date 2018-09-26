@@ -572,7 +572,7 @@ $(document).on('pageInit','.center', function(e, id, page){
             headers: ajaxHeaders,
             success: function (data) {
                 if (data.status == 1) {
-                    if(data.data.userCenterStatus){
+                    if(data.data.userCenterStatusH5){
                         $guishi_wrap.show();
                     }
 

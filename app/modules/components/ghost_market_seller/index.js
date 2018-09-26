@@ -30,7 +30,10 @@ $(document).on('pageInit','.ghost_market_seller', function(e, id, page) {
         arr.forEach(function(item,index){
             let goodsItem = '<li class="seller_goods_item">' +
                 '                            <a class="external" href="/Portal/GhostMarket/article.html?id='+ item.gg_id +'">' +
-                '                                <img class="seller_goods_img" src="'+ item.gg_img[0] +'" >' +
+                // '                                <img class="seller_goods_img" src="'+ item.gg_img[0] +'?x-oss-process=image/resize,m_fill,w_590,h_440" >' +
+
+
+                '                                <div class="seller_goods_img" style="background: url('+ item.gg_img[0] +'?x-oss-process=image/resize,m_fill,w_590,h_440) no-repeat center center;background-size: cover"></div>' +
                 '                                <div class="seller_goods_mes">' +
                 '                                    <div class="seller_goods_mes_bg"></div>' +
                 '                                    <div class="seller_goods_mes_con">' +
@@ -48,6 +51,11 @@ $(document).on('pageInit','.ghost_market_seller', function(e, id, page) {
         type:"GET",
         headers: ajaxHeaders,
         success:function(res){
+            if(res.status != 1){
+                $.toast(res.info);
+                return;
+            }
+
             let goodsList = res.data.data;
             if(res.data.user.signature == null){
                 res.data.user.signature = ''
@@ -67,6 +75,8 @@ $(document).on('pageInit','.ghost_market_seller', function(e, id, page) {
                             '<a class="seller_letter external" href="/User/HsMessage/detail/from_uid/'+ sellerId +'">私信</a>';
             $('.seller_mes').html(sellerMes);
             getGoods(goodsList);
+
+            setWXshare(res.data.user);
         }
     });
     $('#sellerScroll').on('scroll',function(ev){
@@ -116,6 +126,17 @@ $(document).on('pageInit','.ghost_market_seller', function(e, id, page) {
             })
         }
     });
+
+    //设置微信分享
+    function setWXshare(user) {
+        var share_data = {
+            title: '我是公路鬼市'+ user.g_booth +'号摊主'+ user.nickname,
+            desc: '终于抢到了公路鬼市摊位，速来围观有座~',
+            link: window.location.href,
+            img: user.avatar
+        };
+        init.wx_share(share_data);
+    }
 });
 
 

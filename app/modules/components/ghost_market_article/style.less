@@ -23,12 +23,21 @@
           }
         }
 
+        .swiper-pagination-bullet{
+          width: 0.16rem;
+          height: 0.16rem;
+          margin: 0 0.08rem;
+          background: #fff;
+          opacity: 0.5;
+        }
+
       }
       .swiper-container-horizontal>.swiper-pagination{
         bottom: 1.2rem;
       }
       .swiper-pagination-bullet.swiper-pagination-bullet-active{
-        background-color: #fff;
+        background: #fff;
+        opacity: 1;
       }
     }
 
@@ -304,7 +313,9 @@
                 margin-top: 0.32rem;
                 img{
                   display: block;
-                  max-width: 100%;
+                  width: 2.62rem;
+                  height: 2.62rem;
+                  border-radius: 0.16rem;
                 }
               }
               .comment_txt{
@@ -468,6 +479,16 @@
         .sold_out{
           display: none;
         }
+        .buy_ico{
+          display: inline-block;
+          width: 0.56rem;
+          height: 0.56rem;
+          background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAmlJREFUaAXtmD9OHDEUxtlVQIICRakSoOAAkZBo01BRpM4NIg4AFwABRcQxkEIaamqOADdIEbGkiaIoXYSW3ydmHXvm7ex6ZzWelfykT/P8/Py9z/b8sWZpKVvaFejNs/xwOHwL3yfwEWyDLSD7Ab6DG3Dd6/UeuXbHEL4JvoInMMmUo9zNTswAIQfgL4g1jTlIOgkEnMeqNvLPk0wCISeGGIXuwCF4D9YLyFdMfZYdtzoJFOyD8v3+h9hnMPbFoL4iR7m+iWu/lUlQaA0M/Or4P8HutAKUW4zh4kycq9NyzJxHkSNX8sX5x+VDLKHGAI317SiWJyqfSstAq+3bWRSJlwzJmU+E/wiWvZT5upDvlQr+pv161ioaC8Th296sfG4cbFvgCjz4zIl8aZCW0Vfd6ZRTeWMUiff0vQky0zd+IWGHY4iOJc76zvvvXOB2TbzUSZO0BWbtwAMZ74Ks7jQG7MCGL8eawDBIYMSorWdg5OtKl+vz47F+HW9dn+pYt1Bs/aT5eQJJlz/fQqmXP2YHeBuslPVasXLOpLbFYcXG8cQ8xKcGiRUz0mpDFocVqyVxncw+sFEHQetcpI9eI5vEG4ihUS7WLwcWrR0zgUtjclbMSKsNWRxWrJbEdY7bMuIr4AvQrSTIrzzYjmhKRxwFl8lLX2Bl2spZRtl+0rzOOz5njD9JTz+GrIu5eQKpdyXvQN6BhiuQb6GGC9h4eN6BxkvYkGDhd+CVsQADYu7HVvksYuS3GZK2wKwduA0yutWoaLNOo/oLvLg/dzk+6+/vDvgGKltGrG2TBmmp/JluW0iul1egiyvwDIIjdsCiNNiMAAAAAElFTkSuQmCC");
+          background-size: 100% 100%;
+          background-repeat: no-repeat;
+          vertical-align: middle;
+        }
+
       }
       .chat{
         vertical-align: middle;

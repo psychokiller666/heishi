@@ -6,6 +6,7 @@ var row = 14;
 var over = true;
 var loading = false;
 var gsStatus;//鬼市状态
+var timer = null;//倒计时定时器
 var preemptionStartTime;//摆摊开始时间
 var preemptionEndTime;//摆摊结束时间
 var preemptionStatus;//摆摊状态
@@ -99,7 +100,6 @@ function getGoods(option){
                 $('.gs_home_mes').show();
                 let startTime = res.data.avtivity.ga_start_time;//鬼市开启时间
                 let endTime = res.data.avtivity.ga_end_time;//鬼市结束时间
-                var timer = null;
                 let nowTime = res.data.avtivity.present_time;
                 let timeDifference = startTime - nowTime;
                 preemptionStartTime = res.data.avtivity.ga_preemption_start_time;
@@ -152,10 +152,44 @@ function getGoods(option){
         }
     });
 }
+
+//设置鬼市背景图
+function setGSbg(){
+    var url = ApiBaseUrl + '/ghostmarket/getSetting';
+    $.ajax({
+        type: "GET",
+        url: url,
+        dataType: 'json',
+        data: {},
+        headers: ajaxHeaders,
+        success: function (data) {
+            if (data.status == 1) {
+                var $gs_home_bg = $('.gs_home_bg');
+                if($gs_home_bg.attr('status') !== '1'){
+                    $gs_home_bg.css({'background':'url("'+ data.data.secondFloorBackgroundImg +'") no-repeat center center','background-size': 'cover'}).attr('status','1');
+                }
+            }
+        },
+        error: function (e) {
+            console.log('getSetting err: ', e);
+        }
+
+    });
+}
+
 function gsFun(option) {
+
+    //初始化数据
+    activeId = '';
+    page = 1;
+    row = 14;
+    over = true;
+    $('.gs_goods').html('');
+    clearInterval(timer);
+    setGSbg();
     getGoods(option);
     var $gs_goods_ul = $('.gs_goods');
-    $('.gs_home_con').on('scroll',function(ev){
+    $('.gs_home_con').off('scroll').on('scroll',function(ev){
         lazyload();
         var $this = $(this);
 
@@ -190,7 +224,7 @@ function gsFun(option) {
             getGoods(option)
         }
     });
-    $('.gs_home_btn').children('a').click(function(){
+    $('.gs_home_btn').children('a').off('click').click(function(){
         let oIndex = $(this).index();
         if(gsStatus === 2){
             if(oIndex == 0){
