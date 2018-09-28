@@ -188,7 +188,7 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
                 html+= '<div class="name">'+com[i].nickname+'</div>'
                 html+= '</div>'
                 if(com[i].gc_commen_img){
-                    html+= '<div class="comment_img js_reply"><img class="wx_preview" src="'+ init.fixImgUrl(com[i].gc_commen_img) +'?x-oss-process=image/resize,m_fill,h_394,w_394" wx_preview="'+ init.fixImgUrl(com[i].gc_commen_img) +'@640w_1l"></div>'
+                    html+= '<div class="comment_img js_reply"><img class="wx_preview" src="'+ init.fixImgUrl(com[i].gc_commen_img) +'@640w_1l" wx_preview="'+ init.fixImgUrl(com[i].gc_commen_img) +'@640w_1l"></div>'
                 }else{
                     html+= '<div class="comment_txt js_reply">'+ com[i].gc_comment +'</div>'
                 }
