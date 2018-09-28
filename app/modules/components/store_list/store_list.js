@@ -249,7 +249,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     function initGS() {
 
         //初始化鬼市home页
-        gsHome({});
+        gsHome({gs_cd_back:gs_cd_back});
 
         var gsType = undefined;//鬼市状态
 
@@ -323,11 +323,6 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
             //设置分享
             setShare();
 
-            // if ($img.attr('openstatus') === '1') {
-            //     //直接打开鬼市home页
-            //     $ghost_store_iframe_wrap.show().animate({opacity: 1}, 500, 'linear');
-            //     return;
-            // }
 
             //对鬼市广告图做动画及打开鬼市home页
 
@@ -376,54 +371,28 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
         gsGoing();
         function gsGoing(){
             getGSstatus(function(type, data){
-                if (data.status == 1) {
-
-                    if(data.data.avtivity){
-                        gsType = data.data.avtivity.ga_type;
-                    }
-
-                    //ga_type 类型1 开市中 2活动未开始 3活动已结束 0没有活动
-                    if(data.data.avtivity && data.data.avtivity.ga_type==1){
-
-                        if(localStorage.getItem('ga_id')==data.data.avtivity.ga_id){
-                            return;
-                        }
-
-                        localStorage.setItem('ga_id', data.data.avtivity.ga_id);
-                        //打开鬼市home页
-                        $ghost_store_iframe_wrap.show().animate({opacity: 1}, 500, 'linear');
-                    }
+                if(type === false){
+                    return;
                 }
+
+                gsType = type; //第一次设置gsType
+
+                //ga_type 类型1 开市中 2活动未开始 3活动已结束 0没有活动
+                if(type == 1){
+
+                    if(localStorage.getItem('ga_id')==data.data.avtivity.ga_id){
+                        return;
+                    }
+
+                    localStorage.setItem('ga_id', data.data.avtivity.ga_id);
+                    //打开鬼市home页
+                    $ghost_store_iframe_wrap.show().animate({opacity: 1}, 500, 'linear');
+                }
+
             })
 
 
-/*            var url = ApiBaseUrl + '/ghostmarket/goods/getGhostMarketGoods';
-            $.ajax({
-                type: "GET",
-                url: url,
-                dataType: 'json',
-                data: {},
-                headers: ajaxHeaders,
-                success: function (data) {
-                    if (data.status == 1) {
-                        //ga_type 类型1 开市中 2活动未开始 3活动已结束 0没有活动
-                        if(data.data.avtivity && data.data.avtivity.ga_type==1){
 
-                            if(localStorage.getItem('ga_id')==data.data.avtivity.ga_id){
-                                return;
-                            }
-
-                            localStorage.setItem('ga_id', data.data.avtivity.ga_id);
-                            //打开鬼市home页
-                            $ghost_store_iframe_wrap.show().animate({opacity: 1}, 500, 'linear');
-                        }
-                    }
-                },
-                error: function (e) {
-                    console.log('getGhostMarketGoods err: ', e);
-                }
-
-            });*/
         }
 
         //获取当前gs状态
@@ -439,13 +408,12 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
                     if (data.status == 1) {
 
                         //ga_type 类型1 开市中 2活动未开始 3活动已结束 0没有活动
-                        if(data.data.avtivity && data.data.avtivity.ga_type==1){
+                        if(data.data.avtivity){
                             callback(data.data.avtivity.ga_type, data);
                             return;
                         }
                     }
                     callback(false);
-                    return;
                 },
                 error: function (e) {
                     callback(false);
@@ -457,13 +425,43 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
 
         //判断状态是否改变
         function changeStatus(newType){
+            if(newType === false){
+                return;
+            }
             //每次打开鬼市弹窗都去检测状态是否变化，如果鬼市状态变化，重新加载鬼市页面
             if(gsType !== undefined && gsType !== newType){
-                $('.ghost_store_iframe_wrap').show();
+                $ghost_store_iframe_wrap.show();
                 $('.gs_home_con').scrollTop(10);
-                gsHome({});
+                gsHome({gs_cd_back:gs_cd_back});
             }
             gsType = newType;
+        }
+
+        //鬼市开市倒计时结束回调
+        function gs_cd_back() {
+
+            if($ghost_store_iframe_wrap.css('display')==='none'){
+                $.modal({
+                    text: '公路鬼市正式开市，去趟趟！',
+                    title: '开市提醒',
+                    buttons: [
+                        {
+                            text: '无聊', close: true,
+                            onClick: function () {
+                                gsType = null;
+                            }
+                        },
+                        {
+                            text: '去趟趟', bold: true, close: true,
+                            onClick: function () {
+                                window.location.href = '/Portal/GhostMarket/home.html';
+                            }
+                        }
+                    ]
+                });
+            }else{
+                window.location.href = '/Portal/GhostMarket/home.html';
+            }
         }
 
 

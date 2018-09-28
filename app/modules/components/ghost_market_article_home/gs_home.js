@@ -87,6 +87,9 @@ function getGoods(option){
             gsStatus = res.data.avtivity.ga_type;//鬼市开启关闭状态
             $('.gs_home_title p').html(res.data.avtivity.ga_theme);
             if(gsStatus === 1){
+                $('.gs_home_con').css('overflow','auto');
+                $('.gs_goods').css('display','flex');
+                $('.gs_home_mes').hide();
                 let goodsArr = res.data.data;
                 if(over){
                     checkGoodsHtml(goodsArr);
@@ -133,7 +136,12 @@ function getGoods(option){
                             $('.gs_prompt_mes img').attr('src', 'https://img8.ontheroadstore.com/guishi/img/gs_countdown_time.png')
                         } else {
                             clearInterval(timer);
-                            window.location.href = '/Portal/GhostMarket/home.html';
+                            //如果当前页面是首页，且弹窗未打开，弹窗提醒是否进入鬼市页面
+                            if(typeof option.gs_cd_back === 'function'){
+                                option.gs_cd_back();
+                            }else{
+                                window.location.href = '/Portal/GhostMarket/home.html';
+                            }
                         }
                     },1000)
                 }
@@ -187,6 +195,8 @@ function setGSbg(){
 }
 
 function gsFun(option) {
+    //option增加属性 option.gs_cd_back,用于开市倒计时结束执行回调。
+
 
     //初始化数据
     activeId = '';
