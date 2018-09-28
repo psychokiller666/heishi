@@ -179,7 +179,7 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
             for(var i=0;i<com.length;i++){
                 html+= '<li class="comment_li hs-cf" gcid="'+ com[i].gc_id +'" uid="'+com[i].gc_userId+'" username="'+com[i].nickname+'">'
                 html+= '<div class="comment_left js_reply">'
-                html+= '<img src="'+com[i].gc_user_img+'" class="comment_avatar">'
+                html+= '<img src="'+ (com[i].gc_user_img || init.lostImage) +'" class="comment_avatar">'
                 html+= '</div>'
                 html+= '<div class="comment_right">'
                 html+= '<div class="comment_user">'
@@ -188,7 +188,7 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
                 html+= '<div class="name">'+com[i].nickname+'</div>'
                 html+= '</div>'
                 if(com[i].gc_commen_img){
-                    html+= '<div class="comment_img js_reply"><img class="wx_preview" src="'+ init.fixImgUrl(com[i].gc_commen_img) +'?x-oss-process=image/resize,m_fill,h_394,w_394"></div>'
+                    html+= '<div class="comment_img js_reply"><img class="wx_preview" src="'+ init.fixImgUrl(com[i].gc_commen_img) +'?x-oss-process=image/resize,m_fill,h_394,w_394" wx_preview="'+ init.fixImgUrl(com[i].gc_commen_img) +'@640w_1l"></div>'
                 }else{
                     html+= '<div class="comment_txt js_reply">'+ com[i].gc_comment +'</div>'
                 }
@@ -236,7 +236,7 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
         $content_wrap.find('.comment_ul').on('click','.wx_preview',function(){
             // 调用微信图片
             var arr = [];
-            arr.push($(this).attr('src'));
+            arr.push($(this).attr('wx_preview'));
             wx.previewImage({
                 current: arr[0],
                 urls: arr
@@ -433,8 +433,11 @@ $(document).on('pageInit','.ghost_market_article', function(e, id, page) {
 
         $.ajax({
             type: 'POST',
-            url: '/index.php?g=restful&m=HsUserReporting&a=reporting&be_reported_uid='+ uid +'&content='+content,
-            data: {},
+            url: '/index.php?g=restful&m=HsUserReporting&a=reporting',
+            data: {
+                be_reported_uid: uid,
+                content: content
+            },
             success: function(data){
                 if(data.status == 1){
                     $.toast('举报成功');

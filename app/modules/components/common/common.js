@@ -31,6 +31,9 @@ function common(page){
   //上传图片的base url
   this.ImgBaseUrl = 'https://img8.ontheroadstore.com'
 };
+//没有图片的默认url
+common.prototype.lostImage = 'https://img8.ontheroadstore.com/iosupload/20180808/b0pMT2tsVk8vMmtzek1aSUtlYVlxQT09.jpg';
+
 common.prototype.loadimg = function(){
   var contentHeight = $('.content').height();
   $('[data-layzr]').each(function(){

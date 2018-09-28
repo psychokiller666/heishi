@@ -7,6 +7,7 @@ var over = true;
 var loading = false;
 var gsStatus;//鬼市状态
 var timer = null;//倒计时定时器
+var ga_start_time ;//鬼市开启时间
 var preemptionStartTime;//摆摊开始时间
 var preemptionEndTime;//摆摊结束时间
 var preemptionStatus;//摆摊状态
@@ -102,6 +103,7 @@ function getGoods(option){
                 let endTime = res.data.avtivity.ga_end_time;//鬼市结束时间
                 let nowTime = res.data.avtivity.present_time;
                 let timeDifference = startTime - nowTime;
+                ga_start_time = +timeDifference + +currentTime();//获取当前设备开始时间（因为微信/浏览器应用切出去以后定时器可能会暂停）
                 preemptionStartTime = res.data.avtivity.ga_preemption_start_time;
                 preemptionEndTime = res.data.avtivity.ga_preemption_end_time;
                 if(nowTime < preemptionStartTime){
@@ -119,7 +121,9 @@ function getGoods(option){
                     $('.gs_prompt_mes img').attr('src', 'https://img8.ontheroadstore.com/guishi/img/gs_open_time.png')
                 }else if(timeDifference <= 86400 && timeDifference>0){
                     timer = setInterval(function(){
-                        timeDifference--;
+                        // timeDifference--;
+                        timeDifference = ga_start_time - currentTime();//时间差值取当前设备的开始时间和当前时间的差值
+
                         if (timeDifference > 0) {
                             let h = Math.floor(timeDifference / 60 / 60 % 24);
                             let m = Math.floor(timeDifference / 60 % 60);
@@ -129,7 +133,7 @@ function getGoods(option){
                             $('.gs_prompt_mes img').attr('src', 'https://img8.ontheroadstore.com/guishi/img/gs_countdown_time.png')
                         } else {
                             clearInterval(timer);
-                            window.location.reload();
+                            window.location.href = '/Portal/GhostMarket/home.html';
                         }
                     },1000)
                 }
@@ -151,6 +155,11 @@ function getGoods(option){
             $.toast(res.info)
         }
     });
+}
+
+//获取当前时间戳（10位）
+function currentTime() {
+    return parseInt((new Date().valueOf())/1000);
 }
 
 //设置鬼市背景图
@@ -228,14 +237,35 @@ function gsFun(option) {
         let oIndex = $(this).index();
         if(gsStatus === 2){
             if(oIndex == 0){
-                if(preemptionStatus === 1){
+
+                var nowTime = parseInt((new Date().valueOf()) / 1000);
+                if(nowTime>preemptionEndTime){
+
+                }
+                if(nowTime>preemptionStartTime){
+                    if(nowTime>preemptionEndTime){
+                        //摆摊已结束
+                        $.toast('摆摊已结束');
+                    }else{
+                        //摆摊已开始
+                        if(preemptionStatus === 2){
+                            return;
+                        }
+                        location.href = '/Portal/Coupon/useCoupon.html?id=2';
+                    }
+                }else{
+                    //摆摊未开始
                     $.toast('摆摊时间未到');
-                    return
                 }
-                if(preemptionStatus === 3){
-                    $.toast('摆摊已结束');
-                    return
-                }
+
+                // if(preemptionStatus === 1){
+                //     $.toast('摆摊时间未到');
+                //     return
+                // }
+                // if(preemptionStatus === 3){
+                //     $.toast('摆摊已结束');
+                //     return
+                // }
             }
             if(oIndex == 1){
                 $.toast('请移步公路商店App')
