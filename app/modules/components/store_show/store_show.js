@@ -299,7 +299,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       return $('.special_offer').css('display', 'block');
     }
     if(postage == 0){
-      $('.postage').css('display', 'block');
+      $('.postage').css('display', 'none');
     }
     if(remain > 5 && remain < 10){
       $('.remain_tension').css('display', 'block');
