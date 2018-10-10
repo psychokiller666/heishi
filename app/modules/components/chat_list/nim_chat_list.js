@@ -138,6 +138,7 @@ $(document).on('pageInit','.detail', function (e, id, page) {
       if(data.status == 1){
         var token = data.data.token;
         var appKey = data.data.app_key;
+        //NIM插件在 tpl/heishiv2_mobile/Public/js/NIM_Web_NIM_v3.6.0.js
         IMnim = NIM.getInstance({
           appKey: appKey,
           account: IMmyId,
@@ -298,24 +299,35 @@ $(document).on('pageInit','.detail', function (e, id, page) {
       if(data.length == 0){
         return $.toast('近期没有聊天记录，请下拉查看历史记录');
       }
+      //data是聊天数据数组，data[i].type : 'text'文本;'image'图片;'custom'自定义消息
       //如果用户有消息
+        console.log('data: ',data)
       for(var i in data){
+
+        var str = '';
         if(IMmyId == data[i]['from']){
           if(data[i]['type'] == 'text'){
-            var str = '<li class="me"><span class="avatar" style="background-image: url('+myAvatar+')"></span><div class="content_bd">'+data[i]['text']+'</div><span class="date">'+messageTime(data[i]['time'])+'</span></li>';
+            str = '<li class="me"><span class="avatar" style="background-image: url('+myAvatar+')"></span><div class="content_bd">'+data[i]['text']+'</div><span class="date">'+messageTime(data[i]['time'])+'</span></li>';
           }else if(data[i]['type'] == 'image'){
-            var str = '<li class="me"><span class="avatar" style="background-image: url('+myAvatar+')"></span><div class="content_bd">'
+            str = '<li class="me"><span class="avatar" style="background-image: url('+myAvatar+')"></span><div class="content_bd">'
             +'<div class="image" data-layzr="'+data[i]['file']['url']+'" data-preview="'+data[i]['file']['url']+'"></div></div><span class="date">'+messageTime(data[i]['time'])+'</span></li>';
+          }else if(data[i]['type'] == 'custom'){
+            str = meGoods(JSON.parse(data[i].content),myAvatar,messageTime(data[i]['time']));
           }
         }else{
           if(data[i]['type'] == 'text'){
-            var str = '<li class="user"><span class="avatar" style="background-image: url('+userAvatar+')"></span><div class="content_bd">'+data[i]['text']+'</div><span class="date">'+messageTime(data[i]['time'])+'</span></li>';
+            str = '<li class="user"><span class="avatar" style="background-image: url('+userAvatar+')"></span><div class="content_bd">'+data[i]['text']+'</div><span class="date">'+messageTime(data[i]['time'])+'</span></li>';
           }else if(data[i]['type'] == 'image'){
-            var str = '<li class="user"><span class="avatar" style="background-image: url('+userAvatar+')"></span><div class="content_bd">'
+            str = '<li class="user"><span class="avatar" style="background-image: url('+userAvatar+')"></span><div class="content_bd">'
             +'<div class="image" data-layzr="'+data[i]['file']['url']+'" data-preview="'+data[i]['file']['url']+'"></div></div><span class="date">'+messageTime(data[i]['time'])+'</span></li>';
           }
         }
-        chat_list.find('ul').prepend(str);
+
+        //如果识别不了该消息，则不显示
+        if(typeof str === 'string' && str.length>0){
+          chat_list.find('ul').prepend(str);
+        }
+
         //设置下次获取聊天记录的参数idServer updateTime
         idServer = data[i]['idServer'];
         updateTime = data[i]['time'];
@@ -443,7 +455,48 @@ $(document).on('pageInit','.detail', function (e, id, page) {
       }
     });
   }
-  
+
+
+  //生成用户发送的商品
+  function meGoods(obj,avatar,time){
+    var html = '';
+
+    html += '<li class="me">'
+    html += '<span class="avatar" style="background-image: url('+avatar+')"></span>'
+    html += '<div class="sent_goods">'
+    html += '<div class="goods_img" style="background-image:url('+obj.goodsSrc+');"></div>'
+    html += '<div class="goods_info">'
+    html += '<div class="goods_title">'+obj.goodsName+'</div>'
+    html += '<div class="goods_price_wrap">'
+    html += '<div class="goods_price">'+obj.goodsPrice+'</div>'
+    html += '<a class="go_goods" external href="/Portal/HsArticle/index/id/'+obj.goodsId+'.html">点击跳转</a>'
+    html += '</div>'
+    html += '</div>'
+    html += '</div>'
+    html += '<span class="date">'+time+'</span>'
+    html += '</li>'
+
+    return html;
+  }
+
+  //生成待发送商品
+  function unsentGoods(obj){
+    var html = ''
+
+    html += '<li class="sent_goods">'
+    html += '<div class="goods_img" style="background-image:url('+obj.goodsSrc+');"></div>'
+    html += '<div class="goods_info">'
+    html += '<div class="goods_title">'+obj.goodsName+'</div>'
+    html += '<div class="goods_price_wrap">'
+    html += '<div class="goods_price">'+obj.goodsPrice+'</div>'
+    html += '<div class="send_goods_btn" goods="'+JSON.stringify(obj)+'">发送商品</div>'
+    html += '<a class="go_goods" external href="/Portal/HsArticle/index/id/'+obj.goodsId+'.html">点击跳转</a>'
+    html += '</div>'
+    html += '</div>'
+    html += '</li>'
+
+    return html;
+  }
 
   
   // 提交私信
