@@ -3,7 +3,7 @@
 // 微信sdk
 var wx = require('weixin-js-sdk');
 
-var common = function(page){
+function common(page){
   this.page = page;
   // 控制.hs-page高度
   this.countHeight();
@@ -27,7 +27,13 @@ var common = function(page){
     })
   }
   this.lazyLoad = Lazyload;
+
+  //上传图片的base url
+  this.ImgBaseUrl = 'https://img8.ontheroadstore.com'
 };
+//没有图片的默认url
+common.prototype.lostImage = 'https://img8.ontheroadstore.com/iosupload/20180808/b0pMT2tsVk8vMmtzek1aSUtlYVlxQT09.jpg';
+
 common.prototype.loadimg = function(){
   var contentHeight = $('.content').height();
   $('[data-layzr]').each(function(){
@@ -192,7 +198,6 @@ common.prototype.getUrlParam = function(name) {
     var r = window.location.search.substr(1).match(reg);
     if (r != null) return unescape(r[2]); return null;
 };
-
 common.prototype.setCookie = function (name,value,days) {
     var Days = parseFloat(days)>0 ? parseFloat(days) : 30;
     var exp = new Date();
@@ -282,6 +287,39 @@ common.prototype.getTimestamp = function (day, hour, min, sec, full){
     return stp;
 };
 
+
+//补全评论上传图片的imgUrl(因为不确定接口返回的imgurl是否是完整路径)
+common.prototype.fixImgUrl = function (url,ImgBaseUrl) {
+
+    ImgBaseUrl = ImgBaseUrl || this.ImgBaseUrl || 'https://img8.ontheroadstore.com';
+
+    if(typeof url === 'string' && url.length>0){
+
+        var arr = ['http://','https://','//'];
+
+        for(var i=0;i<arr.length;i++){
+            if(url.indexOf(arr[i])===0){
+                return url;
+            }
+        }
+
+        if(url.indexOf('/')===0){
+            return ImgBaseUrl + url;
+        }else{
+            return ImgBaseUrl + '/' + url;
+        }
+
+    }
+
+};
+
+//判断是否是安卓
+common.prototype.isAndroid = function (){
+    var u = navigator.userAgent;
+    var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+    // var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+    return isAndroid;
+};
 
 
 module.exports = common;

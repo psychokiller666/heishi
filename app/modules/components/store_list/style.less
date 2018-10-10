@@ -693,7 +693,118 @@
         }
     }
 }
+
+    //首页鬼市入口
+    .ghost_store_ad_wrap{
+        display: none;
+        margin: .533rem auto 0;
+        width: 9.2rem;
+        height: 2.21333rem;
+        .ghost_store_ad_img{
+            display: block;
+            width: 100%;
+            height: 100%;
+            border-radius: 0.18667rem;
+        }
+        .ghost_store_ad_img_bg{
+            background: rgba(0,0,0,.3);
+        }
+    }
+
+
 }
+
+//首页鬼市iframe
+.ghost_store_iframe_wrap{
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: #000;
+    opacity: 0;
+    .ghost_store_iframe{
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+    .ghost_store_iframe_close{
+        position: absolute;
+        right: 0.48rem;
+        top: 0.48rem;
+        z-index: 10;
+        width: 0.72rem;
+        height: 0.72rem;
+        border-radius: 50%;
+    }
+}
+//首页鬼市动画相关
+.ghost_store_animate_wrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1100;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    overflow: hidden;
+}
+.ghost_store_animate_wrap .ghost_store_animate {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateY(-50%) translateX(-2%);
+    /*它的尺寸将被jQuery覆盖，以按比例匹配视图*/
+    height: 100%;
+    /*我们的精灵由25帧组成*/
+    width: 2500%;
+    //todo: 修改url
+    background-image: url(https://img8.ontheroadstore.com/guishi/img/ink.png);
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+}
+.ghost_store_animate_wrap.visible {
+    opacity: 1;
+    visibility: visible;
+}
+.ghost_store_animate_wrap.opening .ghost_store_animate {
+    animation: cd-sequence 0.8s steps(24);
+    animation-fill-mode: forwards;
+}
+.ghost_store_animate_wrap.closing .ghost_store_animate {
+    animation: cd-sequence-reverse 0.8s steps(24);
+    animation-fill-mode: forwards;
+}
+.no-cssanimations .ghost_store_animate_wrap {
+    display: none;
+}
+
+/*正序动画*/
+@keyframes cd-sequence {
+    0% {
+        /* translateX(-2%) is used to horizontally center the first frame inside the viewport */
+        transform: translateY(-50%) translateX(-2%);
+    }
+    100% {
+        /* translateX(-98%) (2% + 96) is used to horizontally center the last frame inside the viewport  */
+        transform: translateY(-50%) translateX(-98%);
+    }
+}
+/*倒序动画*/
+@keyframes cd-sequence-reverse {
+    0% {
+        transform: translateY(-50%) translateX(-98%);
+    }
+    100% {
+        transform: translateY(-50%) translateX(-2%);
+    }
+}
+
+
 /*特卖*/
 .sale{
     img{
