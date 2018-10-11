@@ -920,7 +920,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
                 success: function(data){
                     if(data.status==1){
                         $btn.attr('get_status','1');
-                        $.toast('领取成功');
+                        $.toast('领取成功,请在App下单使用');
                     }else{
                         $.toast(data.info);
                         $btn.attr('clicked','0');
