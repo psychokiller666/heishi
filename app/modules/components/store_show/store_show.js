@@ -990,14 +990,14 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
                     location.href='/Portal/Coupon/couponGoods?couponid='+coupon_id;
                     break;
                 case '6' :
-                    location.href='/index.php/Portal/HsCategories/index.html';
+                    location.href='/Portal/HsCategories/index.html';
                     break;
                 case '7' :
-                    var href = $('.user_intro a').attr('href') || '/index.php/Portal/Index/index.html';
+                    var href = $('.user_intro a').attr('href') || '/Portal/Index/index.html';
                     location.href= href;
                     break;
                 default  :
-                    location.href='/index.php/Portal/Index/index.html';
+                    location.href='/Portal/Index/index.html';
                     break;
             }
 
