@@ -126,7 +126,7 @@ $(document).on('pageInit','.gift_for_new', function(e, id, page) {
             headers: ajaxHeaders,
             success: function(data){
                 if(data.status==1){
-                    $.toast('领取成功');
+                    $.toast('领取成功,请在App下单使用');
                     $btn.attr('status','1');
                 }else{
                     $.toast(data.info || '领取失败');

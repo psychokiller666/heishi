@@ -221,10 +221,10 @@ $(document).on('pageInit','.center', function(e, id, page){
           data = data;
 
           var html = '';
-          html += '<div class="classify_page classify_page_act">'+ createGoodsLists(data.goodsnew) +'</div>'
+          html += '<div class="classify_page classify_page_act" scroll="1" sortid="0">'+ createGoodsLists(data.goodsall) +'</div>'
+          html += '<div class="classify_page ">'+ createGoodsLists(data.goodsnew) +'</div>'
           html += '<div class="classify_page ">'+ createGoodsLists(data.seller_recommended) +'</div>'
           html += '<div class="classify_page ">'+ createGoodsLists(data.goodspopular) +'</div>'
-          html += '<div class="classify_page " scroll="1" sortid="0">'+ createGoodsLists(data.goodsall) +'</div>'
 
           $classifyPageWrap.html(html);
           $('.content').scrollTop(1).scrollTop(0);
