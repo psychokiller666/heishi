@@ -310,6 +310,17 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       $('.presell_status').css('display', 'block');
     }
   }
+
+  //todo:
+  //更新限购相关按钮
+  //  当点击标签时，更新两处限购标签，更新购买按钮文字，对数量及数量加减做限制。
+  function updateLimit(limit){
+
+    //限购标签
+    $('.good_limit_num').show().find('span').html(limit);
+  }
+
+
   // 加入购物车
   function shopping( object_id,styles_id, num) {
     $.ajax({
