@@ -202,7 +202,7 @@ $(document).on('pageInit', '.get_coupon', function (e, id, page) {
             },
             success: function(data){
                 if(data.status==1){
-                    $.toast('领取成功');
+                    $.toast('领取成功,请在App下单使用');
                 }else{
                     $.toast(data.info);
                 }

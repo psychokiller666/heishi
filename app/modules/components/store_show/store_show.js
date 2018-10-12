@@ -920,7 +920,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
                 success: function(data){
                     if(data.status==1){
                         $btn.attr('get_status','1');
-                        $.toast('领取成功');
+                        $.toast('领取成功,请在App下单使用');
                     }else{
                         $.toast(data.info);
                         $btn.attr('clicked','0');
@@ -990,14 +990,14 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
                     location.href='/Portal/Coupon/couponGoods?couponid='+coupon_id;
                     break;
                 case '6' :
-                    location.href='/index.php/Portal/HsCategories/index.html';
+                    location.href='/Portal/HsCategories/index.html';
                     break;
                 case '7' :
-                    var href = $('.user_intro a').attr('href') || '/index.php/Portal/Index/index.html';
+                    var href = $('.user_intro a').attr('href') || '/Portal/Index/index.html';
                     location.href= href;
                     break;
                 default  :
-                    location.href='/index.php/Portal/Index/index.html';
+                    location.href='/Portal/Index/index.html';
                     break;
             }
 
