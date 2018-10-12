@@ -1,0 +1,182 @@
+.issue_coupon {
+  &.container{
+    background: #3E0606;
+  }
+  .hs-page {
+
+    .wrap{
+
+      padding-bottom: 2rem;
+      .banner{
+        img{
+          display: block;
+          width: 100%;
+          height: 5.70667rem;
+        }
+      }
+
+      .get_coupon_ul{
+        position: relative;
+        z-index: 1;
+        margin-top: -0.8rem;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0 0.4rem;
+        -webkit-overflow-scrolling:touch;
+        li{
+          margin-bottom: 0.4rem;
+          box-sizing: border-box;
+          padding: 0.26667rem 0;
+          background: #fff;
+          border-radius: 0.16000rem;
+          height: 2.45333rem;
+          width: 100%;
+          .left{
+            float: left;
+            width: 2.96rem;
+            height: 100%;
+            text-align: center;
+            border-right: 0.02667rem dashed #979797;
+            .coupon_price{
+              height:0.69333rem;
+              font-size:0.69333rem;
+              font-family:'din';
+              color:#AE2121;
+              line-height:1;
+              padding: 0.34667rem 0 0.29333rem;
+            }
+            .coupon_desc{
+              font-size:0.26667rem;
+              font-family:PingFangSC-Light;
+              color:#202123;
+              line-height: 1;
+            }
+          }
+          .center{
+            float: left;
+            width: 3.57333rem;
+            box-sizing: border-box;
+            padding: 0.34667rem 0 0 0.50667rem;
+            .title{
+              font-size:0.37333rem;
+              font-family:PingFangSC-Semibold;
+              color:#202123;
+              line-height:1;
+              height: 0.98667rem;
+
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+            .time{
+              font-size:0.26667rem;
+              font-family:PingFangSC-Regular;
+              color:#8E8E8E;
+              line-height:1;
+              white-space: nowrap;
+            }
+          }
+          .right{
+            float: left;
+
+            .btn{
+              width: 1.81333rem;
+              height: 0.56rem;
+              background:#AE2121;
+              border-radius:0.29333rem;
+              margin: 0.69333rem 0 0 0.4rem;
+              font-size:0.34667rem;
+              font-family:PingFangSC-Medium;
+              color: #fff;
+              line-height:0.56rem;
+              text-align: center;
+
+              &[get_status='1']{
+                background: #D8D8D8;
+              }
+              &[get_status='0']:after{
+                content: '立即领取';
+              }
+              &[get_status='1']:after{
+                content: '已领取';
+              }
+              &[get_status='2']:after{
+                content: '查看商品';
+              }
+            }
+
+
+          }
+        }
+      }
+
+
+      .go_to_app{
+        margin: 0.8rem 0.4rem 1.36rem;
+        padding: 0.32rem 0.4rem;
+        border-radius:0.24rem;
+        border:0.02667rem solid rgba(255,255,255,1);
+        .left{
+          float: left;
+          width: 1.2rem;
+          height: 1.2rem;
+          img{
+            display: block;
+            width: 100%;
+            height: 100%;
+          }
+        }
+        .center{
+          float: left;
+          margin-left: 0.4rem;
+          .title{
+            display: block;
+            height: 0.48rem;
+          }
+          .txt{
+            margin-top: 0.26667rem;
+            font-size: 0.32rem;
+            line-height: 0.45333rem;
+            color: #fff;
+          }
+        }
+        .right{
+          float: right;
+          a{
+            display: block;
+            height: 0.53333rem;
+            line-height: 0.53333rem;
+            font-size: 0.32rem;
+            padding: 0 0.32rem;
+            color: #fff;
+            border-radius:0.10667rem;
+            border:0.05333rem solid #fff;
+            margin-top: 0.26667rem;
+          }
+        }
+      }
+
+      .qrcode{
+
+        img{
+          display: block;
+          width: 2.64rem;
+          height: 2.64rem;
+          margin: 0 auto 0.4rem;
+        }
+        .desc{
+          font-size: 0.34667rem;
+          line-height: 1;
+          color: #FFF;
+          text-align: center;
+        }
+      }
+
+
+    }
+
+  }
+
+
+}
+

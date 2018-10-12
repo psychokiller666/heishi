@@ -224,7 +224,7 @@ common.prototype.getApiBaseUrl = function(){
     return ApiBaseUrl;
 };
 
-//判断是否登录，如果参数toLogin==true，未登录则跳往登录页
+//判断是否登录，如果参数toLogin==true，未登录则跳往登录页 注：需要在html中添加隐藏的input.current_user_id
 common.prototype.ifLogin = function(toLogin){
     var $current_user_id = $('.current_user_id');
     var uid='';

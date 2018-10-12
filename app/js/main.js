@@ -151,3 +151,6 @@ require('../modules/components/user_coupon/user_coupon');
 require('../modules/components/coupon_goods/coupon_goods');
 //领取优惠券
 require('../modules/components/get_coupon/get_coupon');
+
+//优惠券活动页
+require('../modules/components/issue_coupon/issue_coupon');
