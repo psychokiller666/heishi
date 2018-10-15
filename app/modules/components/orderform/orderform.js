@@ -10,12 +10,25 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
   }
   var init = new common(page);
 
+  //限购，加减数量判断
+  function limitGoodsNum(num){
+    var maxBuyNum = parseInt($('.countNum').attr('data-max-buy-num'));
+    //限购
+    if(maxBuyNum>0 && num > maxBuyNum){
+        $.toast('数量超过限购范围');
+        return maxBuyNum;
+    }else{
+      return num;
+    }
+  }
+
   $('.min').click(function(){
     var num = parseInt($('.countNum').attr('data-num'));
     if(num <= 1){
       return $.toast('最少选择1个');
     }
     num = num - 1;
+    num = limitGoodsNum(num);
     $('.countNum').attr('data-num', num);
     $('.countNum').text(num);
     $('.good_num').attr('data-num', num);
@@ -29,6 +42,7 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
       return $.toast('当前库存为' + remain + '件');
     }
     num = num + 1;
+    num = limitGoodsNum(num);
     $('.countNum').attr('data-num', num);
     $('.countNum').text(num);
     $('.good_num').attr('data-num', num);
