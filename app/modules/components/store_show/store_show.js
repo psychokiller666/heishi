@@ -58,6 +58,20 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   //判断是否登录
   var loginStatus = init.ifLogin();
 
+  //获取限购数据，并判断限购类型
+  var goodsLimit = {};
+  goodsLimit.dataJson = $('.purchaseBuy').attr('value');
+  goodsLimit.data = JSON.parse(goodsLimit.dataJson);
+
+    if(goodsLimit.data.purchasePost && goodsLimit.data.purchasePost.number>0){
+    goodsLimit.type = 1;//商品限购
+    goodsLimit.canBuy = parseInt(goodsLimit.data.purchasePost.number - goodsLimit.data.purchasePost.buyNum) || 0;//还可以买的最大数量
+    setPageLimit(goodsLimit.data.purchasePost.number,goodsLimit.data.purchasePost.buyNum);//设置页面里的限购显示
+  }else if(goodsLimit.data.goodsInfo && Object.keys(goodsLimit.data.goodsInfo).length>0){
+    goodsLimit.type = 2;//款式限购
+  }
+
+
   
   // 如果有视频就放在封面图位置
   var video_status = 0;
@@ -138,6 +152,10 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     if($(this).hasClass('no_repertory')){
       return $.toast('当前商品没有库存');
     }
+    //限购
+    if($(this).hasClass('disable')){
+        return;
+    }
     if(type_items_span.length == 1){
       location.href = url;
     }else{
@@ -175,6 +193,10 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     operation(this, 0);
   })
   $('.buy').on("click",".buy_btn",function() {
+    //限购
+    if($(this).hasClass('disable')){
+        return;
+    }
     operation(this, 1);
   })
 
@@ -220,6 +242,21 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       $delivery_cycle.hide();
       $('.delivery_time_wrap').hide();
     }
+
+    //选中款式，设置限购,只有款式限购才执行
+    if(goodsLimit.type===2){
+      //设置最大购买数
+      var lockNum = $(this).attr('lock_num') || 0;
+      var buyNum = $(this).attr('buy_num') || 0;
+      if(lockNum>0){
+          goodsLimit.canBuy = parseInt(lockNum - buyNum) || 0;
+          setPageLimit(lockNum,buyNum);
+      }else{
+        setPageLimit();
+      }
+    }
+
+
   });
 
 
@@ -230,9 +267,11 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
     var num = parseInt($('.buy').find('.countNum').attr('data-num'));
     if(num <= 1){
-      return $.toast('最少选择1个');
+      return;
+      // return $.toast('最少选择1个');
     }
     num = num - 1;
+    num = limitTypeNum(num);
     $('.buy').find('.countNum').attr('data-num', num);
     $('.buy').find('.countNum').text(num);
   })
@@ -246,6 +285,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       return $.toast('当前库存为' + remain + '件');
     }
     num = num + 1;
+    num = limitTypeNum(num);
     $('.buy').find('.countNum').attr('data-num', num);
     $('.buy').find('.countNum').text(num);
   })
@@ -311,13 +351,33 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
   }
 
-  //todo:
-  //更新限购相关按钮
-  //  当点击标签时，更新两处限购标签，更新购买按钮文字，对数量及数量加减做限制。
-  function updateLimit(limit){
 
-    //限购标签
-    $('.good_limit_num').show().find('span').html(limit);
+  //设置页面上的限购
+  function setPageLimit(limitNum,buyNum) {
+
+    if(limitNum>0){
+      $('.good_limit_num').show().find('span').html(limitNum);
+      if(limitNum>buyNum){
+      //  还可以买
+        $('.buy_btn').html('限购'+limitNum+'件').removeClass('disable');
+      }else{
+        $('.buy_btn').html('限购'+limitNum+'件').addClass('disable');
+      }
+    }else{
+      goodsLimit.canBuy = undefined;
+      $('.good_limit_num').hide();
+      $('.buy_btn:not(.confirm)').html('买他妈的').removeClass('disable');
+    }
+
+  }
+  //限购加减数量判断,加减计算之后，判断如果数量未超出限购值，返回该值；如果数量超出，返回最大值，并且弹窗。
+  function limitTypeNum(num) {
+    if(num && typeof goodsLimit.canBuy === "number" && num>goodsLimit.canBuy){
+      $.toast('数量超过限购范围');
+      return goodsLimit.canBuy || 1;
+    }else{
+      return num;
+    }
   }
 
 
