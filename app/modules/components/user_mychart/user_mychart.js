@@ -671,7 +671,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
         //  单选
             var $item = $select.parents('.item')
             var limitType = $item.attr('data-limit_type');
-            var limitNum = $item.attr('data-limit_num');
+            var limitNum = parseInt($item.attr('data-limit_num'));
             if (limitType === '1') {
                 //  商品限购
                 //  需要先选中所有的id相同的商品，去计算总数
@@ -714,7 +714,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
         //    判断款式限购有没有不能选的
             for(let i=0;i<$items2.length;i++){
                 let $item = $items2.eq(i);
-                let limitNum = $item.attr('data-limit_num');
+                let limitNum = parseInt($item.attr('data-limit_num'));
                 let num = parseInt($item.find('.countNum').text());
                 if (num > limitNum) {
                     $.toast('数量超过限购范围');
@@ -735,7 +735,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
 
                 postids.push(postid);
 
-                let limitNum = $item.attr('data-limit_num');
+                let limitNum = parseInt($item.attr('data-limit_num'));
                 let selectNum = 0;//保存已选择的数量
                 let $items = $item.parent('.details').find('.item[data-postid="' + $item.attr('data-postid') + '"]');
                 $items.each(function (index, item) {
@@ -758,7 +758,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
             //    判断款式限购有没有不能选的
             for(let i=0;i<$items2.length;i++){
                 let $item = $items2.eq(i);
-                let limitNum = $item.attr('data-limit_num');
+                let limitNum = parseInt($item.attr('data-limit_num'));
                 let num = parseInt($item.find('.countNum').text());
                 if (num > limitNum) {
                     $.toast('数量超过限购范围');
@@ -779,7 +779,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
 
                 postids.push(postid);
 
-                let limitNum = $item.attr('data-limit_num');
+                let limitNum = parseInt($item.attr('data-limit_num'));
                 let selectNum = 0;//保存已选择的数量
                 let $items = $item.parent('.details').find('.item[data-postid="' + $item.attr('data-postid') + '"]');
                 $items.each(function (index, item) {
@@ -816,7 +816,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
                     postids.push(postid);
 
                     var $item = $(this);
-                    var limitNum = $item.attr('data-limit_num');
+                    var limitNum = parseInt($item.attr('data-limit_num'));
                     var selectNum = 0;//保存已选择的数量
                     var $items = $item.parent('.details').find('.item[data-postid="' + $item.attr('data-postid') + '"]');
                     $items.each(function (index, item) {
@@ -842,7 +842,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
 //    对某个款式限购的其他款式进行 禁用 / 启用
     function disableLimit($item) {
         var limitType = $item.attr('data-limit_type');
-        var limitNum = $item.attr('data-limit_num');
+        var limitNum = parseInt($item.attr('data-limit_num'));
         if (limitType === '1') {
             var selectNum = 0;//保存已选择的数量
             var $items = $item.parent('.details').find('.item[data-postid="' + $item.attr('data-postid') + '"]');
