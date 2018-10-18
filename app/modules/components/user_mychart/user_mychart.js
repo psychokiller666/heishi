@@ -1,3 +1,9 @@
+/**
+ * FBI warning　！！！：　
+ * 这个页的js不仅是购物车页，还包含了初始化订单页的代码！！！/User/MyChart/index.html
+ * WTF
+ * */
+
 //购物车页面
 // 初始化
 var common = require('../common/common.js');
@@ -10,9 +16,13 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
   init.checkfollow();
 
   //限购json
-  var chartData = JSON.parse($('.cartData').attr('value'));
+  var $cartData = $('.cartData');
+  var chartData = null;
   var limitBuyData = null;
-  initLimitBuy(chartData);
+  if($cartData.length>0){
+      chartData = JSON.parse($cartData.attr('value'));
+      initLimitBuy(chartData);
+  }
 
 
 
@@ -395,7 +405,9 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
     })
   }
 
-
+/**
+ * warning: 下面是初始化订单页的相关功能  /User/MyChart/index.html
+ * */
   //buy页面 初始化
   if(sessionStorage.cid){
     var selectItems = JSON.parse(sessionStorage.cid);
@@ -549,6 +561,9 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
   }
 */
 
+/**
+ * 限购相关
+ * */
 //限购相关
     function initLimitBuy(chartData) {
         parseLimitData(chartData);
