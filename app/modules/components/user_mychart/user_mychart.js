@@ -610,8 +610,9 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
 
 //  限购数量判断，加减
     function fixLimitNum(num, $item) {
-        var remain = $item.attr('data-remain');//库存
-        var limitNum = $item.attr('data-limit_num');
+
+        var remain = parseInt($item.attr('data-remain'))||0;//库存
+        var limitNum = parseInt($item.attr('data-limit_num'))||0;
         if ($item.attr('data-limit_type') === '1') {
             //  商品限购
             //    先看当前商品是否被选中，如果当前商品没被选中，不用去循环判断别人，
@@ -685,7 +686,9 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
                 var itemNum = parseInt($item.find('.countNum').text());//当前商品的数量
                 if(maxNum < itemNum){
                     // $.toast('数量超过限购范围,还可以购买'+ maxNum +'件');
-                    ifSetGoodsNum(maxNum, $item);//选中时超出提示是否设置为可买值
+                    if(maxNum>0){
+                        ifSetGoodsNum(maxNum, $item);//选中时超出提示是否设置为可买值
+                    }
                     return false;
                 }
 
@@ -696,7 +699,9 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
                 var num = parseInt($item.find('.countNum').text());
                 if (num > limitNum) {
                     // $.toast('数量超过限购范围');
-                    ifSetGoodsNum(limitNum, $item);//选中时超出提示是否设置为可买值
+                    if(limitNum>0){
+                        ifSetGoodsNum(limitNum, $item);//选中时超出提示是否设置为可买值
+                    }
                     return false;
                 }
             }
@@ -916,6 +921,13 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
         //若没有库存则锁死
         var inventory = $(that).find('.checkbox').hasClass('noInventory');
         if(inventory) return;
+
+        //限购：如果当前商品已经设置为限购不可买，返回
+        var limitMask = $(that).parents('.item').attr('data-limit_mask');
+        if(limitMask === '1'){
+          return;
+        }
+
 
         //限购：如果是取消选中的操作，不检查
         if(!el.hasClass('affirm')){
