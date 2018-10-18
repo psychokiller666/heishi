@@ -708,7 +708,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
                 }
 
 
-            } else {
+            } else if(limitType === '2'){   //还有不是限购的商品
                 //  款式限购
                 //  款式限购选中时判断数量，如果数量超出范围，直接设置数量并提示
                 var num = parseInt($item.find('.countNum').text());
