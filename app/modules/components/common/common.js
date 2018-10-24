@@ -29,7 +29,8 @@ function common(page){
   this.lazyLoad = Lazyload;
 
   //上传图片的base url
-  this.ImgBaseUrl = 'https://img8.ontheroadstore.com'
+  this.ImgBaseUrl = 'https://img8.ontheroadstore.com';
+  addCss();
 };
 //没有图片的默认url
 common.prototype.lostImage = 'https://img8.ontheroadstore.com/iosupload/20180808/b0pMT2tsVk8vMmtzek1aSUtlYVlxQT09.jpg';
@@ -321,5 +322,18 @@ common.prototype.isAndroid = function (){
     return isAndroid;
 };
 
+//添加css:由于less的bug，无法编译某些css，使用js添加到页面中
+common.prototype.addCss = addCss();
+
+function addCss(){
+    if($('style.addcss').length>0){
+        return;
+    }
+    var css = '';
+    css+= '<style type="text/css" class="addcss">'
+    css+= '.ellipsis_2{overflow : hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;}'
+    css+= '</style>'
+    $('body').append(css);
+};
 
 module.exports = common;

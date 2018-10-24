@@ -1160,7 +1160,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
             for(var i=0;i<length;i++){
                 html += '<li class="faq">'
                 html += '<div class="title">'+ data[i].title +'</div>'
-                html += '<div class="txt">'+ data[i].content +'</div>'
+                html += '<div class="txt ellipsis_2">'+ data[i].content +'</div>'
                 html += '</li>'
             }
             $faq_wrap.find('.faqs').html(html);
