@@ -178,3 +178,11 @@ require('../modules/components/ghost_market_seller/index');
 require('../modules/components/ghost_market_buy/index');
 //鬼市支付成功页面
 require('../modules/components/ghost_market_pay_success/index');
+
+
+//评分详情页
+require('../modules/components/score_details/score_details');
+//关于霍夫曼评分
+require('../modules/components/score_details/about_hofm');
+//关于霍夫曼评分
+require('../modules/components/score_details/faq_page');

@@ -1,0 +1,127 @@
+//评分详情
+.score_details{
+
+  .hofm_header{
+    padding: 0.53333rem 0;
+    margin: 0 0.4rem;
+    border-bottom: 0.0133rem solid #e8e8e8;
+    .hofm_header_a{
+      display: block;
+      color: inherit;
+      background: #F2F2F2;
+      border-radius: 0.16rem;
+      padding: 0.64rem 0 0.56rem 0.64rem;
+      font-size: 0;
+      position: relative;
+
+      &:after{
+        content: '\e512';
+        display: block;
+        position: absolute;
+        font-size: 0.26667rem;
+        top: 50%;
+        right: 0.56rem;
+        transform: translateY(-50%);
+      }
+
+      .hofm_img{
+        display: inline-block;
+        width: 2.18667rem;
+        height: 0.85333rem;
+        vertical-align: middle;
+      }
+      .hofm_right{
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 0.72rem;
+        .hofm_average{
+          font-size:0.37333rem;
+          font-weight:600;
+          color:#303030;
+          line-height:1;
+        }
+        .hofm_txt{
+          margin-top: 0.4rem;
+          font-size:0.32rem;
+          font-weight:400;
+          color:#8E8E8E;
+          line-height:1;
+        }
+      }
+    }
+  }
+
+  .score_ul{
+    margin-top: 0.53333rem;
+    padding: 0 0.4rem;
+    .score_li{
+      margin-bottom: 0.8rem;
+      .title{
+        font-size:0.37333rem;
+        font-weight:500;
+        color:#202123;
+        line-height:1;
+      }
+      .scores{
+        margin: 0.21333rem 0 0.4rem ;
+        .stars{
+          display: inline-block;
+          vertical-align: middle;
+          width: 2.13333rem;
+          height: 0.32rem;
+          font-size: 0.26667rem;
+
+          &[stars="0"]{
+            background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/0_2x.png');
+          }
+          &[stars="1"]{
+            background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/1_2x.png');
+          }
+          &[stars="2"]{
+            background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/2_2x.png');
+          }
+          &[stars="3"]{
+            background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/3_2x.png');
+          }
+          &[stars="4"]{
+            background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/4_2x.png');
+          }
+          &[stars="5"]{
+            background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/5_2x.png');
+          }
+
+          background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/5_2x.png');
+
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+        }
+        .score_num{
+          display: inline-block;
+          vertical-align: middle;
+          font-size:0.37333rem;
+          font-weight:600;
+          color:#202123;
+          line-height:1;
+          margin-left: 0.26667rem;
+        }
+      }
+      .score_desc{
+        font-size:0.34667rem;
+        font-weight:400;
+        color: #45484E;
+        line-height:0.45333rem;
+      }
+      .score_note{
+        background:#F2F2F2;
+        border-radius:0.16rem;
+        padding: 0.26667rem;
+        margin-top: 0.26667rem;
+        font-size:0.32rem;
+        font-weight:400;
+        color: #8E8E8E;
+        line-height: 0.42667rem;
+      }
+    }
+  }
+
+}

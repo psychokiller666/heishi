@@ -241,7 +241,7 @@
     }
     .status{
         padding: 0 0.4rem 0.4rem 0.4rem;
-        border-bottom: 0.213rem solid #F5F5F5;
+        //border-bottom: 0.213rem solid #F5F5F5;
         .hs-cf;
         .price{
             .font-dpr(20px);
@@ -274,6 +274,163 @@
             background-size: 100% 100%;
         }
     }
+
+    //认证
+    .authentication{
+        margin: 0 0.4rem;
+        font-size: 0;
+        *{
+            vertical-align: middle;
+        }
+        .auth_desc{
+            background: #F2F2F2;
+            border-radius:0.16rem;
+            padding: 0.16rem 0.4rem;
+            display: none;
+        }
+        .auth_right{
+            float: right;
+        }
+        .auth_img{
+            width: 1.76rem;
+            height: 0.37333rem;
+        }
+        .auth_txt{
+            font-size: 0.32rem;
+            line-height: 1;
+            color: #202123;
+        }
+        .auth_dot{
+            display: inline-block;
+            width: 0.10667rem;
+            height: 0.10667rem;
+            background: #202123;
+            margin: 0 0.4rem;
+            border-radius: 50%;
+        }
+        .authentication_cut{
+            height: 0.4rem;
+            border-bottom: 0.0133rem solid #e8e8e8;
+        }
+    }
+
+
+    .hofm_wrap{
+        display: none;
+        margin: 0.4rem;
+        padding: 0.4rem 0.26667rem 0.4rem 0.4rem;
+        //height:126px;
+        background:rgba(242,242,242,1);
+        border-radius:0.16rem;
+        .go_hofm{
+            display: block;
+            text-decoration: none;
+            color: #202123;
+            line-height: 1;
+            font-size: 0;
+            position: relative;
+            img{
+                display: inline-block;
+                width: 1.52rem;
+                height: 0.58667rem;
+            }
+            span{
+                display: inline-block;
+                font-size: 0.26667rem;
+                line-height: 1;
+                vertical-align: bottom;
+                margin-left: 0.21333rem;
+            }
+
+            &:after{
+                content: '\e512';
+                display: block;
+                position: absolute;
+                font-size: 0.26667rem;
+                top: 50%;
+                right: 0;
+                transform: translateY(-50%);
+            }
+
+        }
+
+        .hofm_score{
+            margin-top: 0.45333rem;
+            .hofm_left{
+                float: left;
+                width: 3.09333rem;
+                text-align: center;
+                .average{
+                    font-size:1.01333rem;
+                    font-family:HelveticaNeueDeskInterface-Bold;
+                    font-weight:bold;
+                    color:rgba(32,33,35,1);
+                    line-height:1;
+                }
+                .score_tip{
+                    font-size: 0.37333rem;
+                    font-family:PingFangSC-Semibold;
+                    font-weight:600;
+                    color:rgba(32,33,35,1);
+                    line-height:1;
+                    margin-top: 0.18667rem;
+                }
+            }
+            .hofm_right{
+                float: right;
+                width: 4.8rem;
+
+                .list{
+                    margin-bottom: 0.10667rem;
+                    &:last-child{
+                        margin-bottom: 0;
+                    }
+                    font-size: 0;
+                    .title{
+                        float: left;
+                        width: 5em;
+                        height: 0.32rem;
+                        font-size: 0.26667rem;
+                        line-height: 0.32rem;;
+                        vertical-align: middle;
+                        overflow: hidden;
+                    }
+                    .stars{
+                        width: 2.13333rem;
+                        height: 0.32rem;
+                        font-size: 0.26667rem;
+                        margin-left: 6em;
+                        &[stars="0"]{
+                            background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/0_2x.png');
+                        }
+                        &[stars="1"]{
+                            background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/1_2x.png');
+                        }
+                        &[stars="2"]{
+                            background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/2_2x.png');
+                        }
+                        &[stars="3"]{
+                            background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/3_2x.png');
+                        }
+                        &[stars="4"]{
+                            background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/4_2x.png');
+                        }
+                        &[stars="5"]{
+                            background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/5_2x.png');
+                        }
+                        background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/5_2x.png');
+                        background-repeat: no-repeat;
+                        background-size: 100% 100%;
+                    }
+                }
+            }
+        }
+    }
+    .hofm_wrap_cut{
+        border-bottom: 0.21333rem solid #F5F5F5;
+    }
+
+
     .user_intro{
         margin: 0 0.4rem;
         padding: 0.4rem 0;
@@ -391,7 +548,9 @@
         border-bottom:  0.213rem solid #F5F5F5;
     }
     .content_bd{
+        display: none;
         padding: 0 0.4rem 0.4rem;
+        border-bottom: 0.21333rem solid #F5F5F5;
         h4{
             .font-dpr(16px);
             padding: 0.4rem 0;
@@ -405,6 +564,41 @@
             font-weight: 300;
             line-height: 1.4em;
             letter-spacing: 0.02rem;
+        }
+        &[has_desc="1"]{
+            display: block;
+            .goods_msg_tags{
+                border-bottom: 0.0133rem solid #e8e8e8;
+            }
+        }
+        .goods_msg_tags{
+            display: none;
+            font-size: 0;
+            margin-bottom: 0.4rem;
+            text-align: left;
+            .msg_tag{
+                display: inline-block;
+                height: 0.56rem;
+                border-radius: 0.29333rem;
+                font-size: 0.34667rem;
+                line-height: 0.56rem;
+                color: #fff;
+                background:rgba(174,33,33,1);
+                padding: 0 0.48rem 0 0.26667rem;
+                margin: 0 0.53333rem 0.4rem 0;
+                position: relative;
+                &:after{
+                    .hs-icon;
+                    content: '\e512';
+                    font-size: .26667rem;
+                    line-height: 0.56rem;
+                    position: absolute;
+                    top: 50%;
+                    right: 0.18667rem;
+                    -webkit-transform: translateY(-50%);
+                    transform: translateY(-50%);
+                }
+            }
         }
     }
     .post_desc_img{
@@ -531,6 +725,60 @@
             }
         }
     }
+
+    //常见问题
+    .faq_wrap{
+        display: none;
+        padding: 0 0.4rem;
+        border-bottom: 0.21333rem solid #F5F5F5;
+        h4{
+            font-size: 0.42667rem;
+            padding: .4rem 0;
+            font-weight: 700;
+        }
+        .faq_a{
+            display: block;
+            color: inherit;
+        }
+        .faqs{
+            //border-bottom: 0.0133rem solid #e8e8e8;
+            .faq{
+                padding: 0.4rem 0;
+                border-top: 0.0133rem solid #e8e8e8;
+                .title{
+                    font-weight:600;
+                    font-size: 0.37333rem;
+                    line-height: 0.58667rem;
+                    vertical-align: top;
+                    color: #202123;
+                    word-break: break-all;
+                    text-align: justify;
+                }
+                .txt{
+                    font-size:0.37333rem;
+                    color:rgba(69,72,78,1);
+                    line-height:0.48rem;
+                    margin-top: 0.21333rem;
+                    max-height: 0.96rem;
+                    word-break: break-all;
+                    text-align: justify;
+                    .ellipsis_2;
+                }
+            }
+        }
+        .faq_more{
+            display: block;
+            color: #202123;
+            font-size: 0.37333rem;
+            line-height: 1;
+            padding: 0.53333rem 0;
+            text-align: center;
+            font-weight: 500;
+            border-top: 0.0133rem solid #e8e8e8;
+        }
+
+    }
+
     .comment{
         margin: 0 0.4rem;
         position: relative;
@@ -1058,7 +1306,7 @@
         box-sizing: border-box;
         .get_coupon_title{
             font-size: 0.42667rem;
-            color: #000;
+            color: #202123;
             text-align: center;
             height: 1.49333rem;
             line-height: 1.49333rem;
@@ -1175,3 +1423,84 @@
         }
     }
 }
+
+.goods_noun_mask{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: none;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 99999;
+    .goods_noun_wrap{
+        width: 100%;
+        height: 12.93333rem;
+        position: absolute;
+        bottom: 0;
+        background: #FFF;
+        border-top-right-radius: 0.16rem;
+        border-top-left-radius: 0.16rem;
+        box-sizing: border-box;
+        .goods_noun_title{
+            font-size: 0.42667rem;
+            color: #202123;
+            text-align: center;
+            line-height: 1;
+            font-family:PingFangSC-Semibold;
+            font-weight: bold;
+            padding: 0.53333rem 0;
+        }
+
+        .goods_noun_ul{
+            height: 9.30667rem;
+            overflow-x: hidden;
+            overflow-y: auto;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 0 0.4rem;
+            -webkit-overflow-scrolling:touch;
+            .goods_noun_li{
+
+                .goods_noun_tag{
+                    display: inline-block;
+                    font-size:0.34667rem;
+                    font-weight:400;
+                    color:rgba(32,33,35,1);
+                    line-height:1;
+                    background:rgba(242,242,242,1);
+                    border-radius:0.29333rem;
+                    padding: 0.10667rem 0.26667rem;
+                }
+                .goods_noun_txt{
+                    font-size:0.34667rem;
+                    font-weight:400;
+                    color:rgba(69,72,78,1);
+                    line-height:0.45333rem;
+                    margin: 0.42667rem 0 0.8rem;
+                }
+            }
+        }
+
+        .ok{
+            width: 9.04000rem;
+            height: 1.06667rem;
+            background: #AE2121;
+            color: #fff;
+            border-radius: 0.16rem;
+            font-family:PingFangSC-Semibold;
+            font-weight: bold;
+            font-size: 0.42667rem;
+            line-height: 1.06667rem;
+            text-align: center;
+            margin: 0.53333rem auto 0;
+        }
+    }
+}
+
+
+
+
+
+
+
