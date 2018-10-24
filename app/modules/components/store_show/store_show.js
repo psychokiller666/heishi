@@ -884,7 +884,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
 
             success: function(data){
                 if(data.status==1){
-                    console.log(data.data)
+                    // console.log(data.data)
                     setGoodsCoupon(data.data)
                 }
             },
@@ -1077,6 +1077,127 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
 
 
 
+    }
+
+
+    /**
+     * 评分部分
+     * */
+    getAssessment();
+
+    function getAssessment(){
+        var url = ApiBaseUrl + '/appv6_1/goods/'+ goodsId +'/assessment';
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType: 'json',
+            data: {},
+
+            success: function(data){
+                if(data.status==1){
+                    // console.log(data.data)
+                    initAuth(data.data.authentication);
+                    initHofm(data.data.hoffman);
+                    initNoun(data.data.noun);
+                    initFQA(data.data.problem);
+                }
+            },
+            error: function(e){
+                console.log('getAssessment err: ',e);
+            }
+
+        });
+
+    }
+    //认证部分
+    function initAuth(data) {
+        if(data){
+            var $auth = $('.authentication');
+            $auth.find('.auth_desc').attr('href',data.url).css('display','block');
+            $auth.find('.auth_img').attr('src',data.image);
+            $auth.find('.auth_txt').html(data.message);
+        }
+    }
+    //评分部分
+    function initHofm(data) {
+        if(data){
+            var $hofm_wrap = $('.hofm_wrap');
+            $hofm_wrap.find('.go_hofm').attr('href','/Portal/PostDetails/scoreDetails.html?id='+goodsId);
+            $hofm_wrap.find('.average').html(data.average);
+            $hofm_wrap.find('.total_score').html(data.totalscore);
+            $hofm_wrap.find('.hofm_right').html(hofmStarsHtml(data.detail));
+            $hofm_wrap.show();
+        }
+    }
+    //生成评星html
+    function hofmStarsHtml(data) {
+        var html = '';
+        for(var i=0;i<data.length;i++){
+            html += '<div class="list">'
+            html += '<div class="title">'+ data[i].title +'</div>'
+            html += '<div class="stars" stars="'+ parseInt(data[i].score) +'"></div>'
+            html += '</div>'
+        }
+        return html;
+    }
+    //商品信息里的标签
+    function initNoun(data) {
+        if(data && data.length>0){
+            var html = '';
+            for(var i=0;i<data.length;i++){
+                html += '<div class="msg_tag">'+ data[i].title +'</div>'
+            }
+            $('.goods_msg_tags').html(html).show();
+            initGoodsNounPopup(data);
+        }
+    }
+    //常见问题
+    function initFQA(data){
+        if(data && data.length>0){
+            var $faq_wrap = $('.faq_wrap');
+            var html = '';
+            var length = data.length>2 ? 2 : data.length;
+            for(var i=0;i<length;i++){
+                html += '<li class="faq">'
+                html += '<div class="title">'+ data[i].title +'</div>'
+                html += '<div class="txt">'+ data[i].content +'</div>'
+                html += '</li>'
+            }
+            $faq_wrap.find('.faqs').html(html);
+            if(length < 2){
+                $faq_wrap.find('.faq_more').hide();
+            }
+            $faq_wrap.show();
+        }
+    }
+    //商品特征标签说明弹窗
+    function initGoodsNounPopup(data) {
+        if(data && data.length>0) {
+            var $goods_noun_mask = $('.goods_noun_mask');
+            var $goods_noun_ul = $goods_noun_mask.find('.goods_noun_ul');
+            var html = '';
+            for(var i=0;i<data.length;i++){
+                html += '<li class="goods_noun_li">'
+                html += '<div class="goods_noun_tag">'+ data[i].title +'</div>'
+                html += '<div class="goods_noun_txt">'+ data[i].content +'</div>'
+                html += '</li>'
+            }
+            $goods_noun_ul.html(html);
+
+            //特征标签点击打开弹窗
+            page.on('click','.msg_tag',function(){
+                $goods_noun_mask.show();
+            });
+            //按ok关闭弹窗
+            page.on('click','.goods_noun_mask .ok',function(){
+                $goods_noun_mask.hide();
+            });
+            page.on('click','.goods_noun_mask',function(ev){
+                if($(ev.target).hasClass('goods_noun_mask')){
+                    $goods_noun_mask.hide();
+                }
+            });
+        }
     }
 
 

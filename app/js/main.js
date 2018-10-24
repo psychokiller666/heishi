@@ -154,3 +154,10 @@ require('../modules/components/get_coupon/get_coupon');
 
 //优惠券活动页
 require('../modules/components/issue_coupon/issue_coupon');
+
+//评分详情页
+require('../modules/components/score_details/score_details');
+//关于霍夫曼评分
+require('../modules/components/score_details/about_hofm');
+//关于霍夫曼评分
+require('../modules/components/score_details/faq_page');
