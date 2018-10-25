@@ -46,6 +46,8 @@ $(document).on('pageInit', '.score_details', function (e, id, page) {
             $('.hofm_average b').html(data.average);
             $('.hofm_txt').html(data.message);
 
+            $('.hofm_header_a').attr('href',data.url);
+
             var detail = data.detail;
             var html = '';
             for(var i=0;i<detail.length;i++){

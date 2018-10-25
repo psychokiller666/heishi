@@ -1113,7 +1113,11 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     function initAuth(data) {
         if(data){
             var $auth = $('.authentication');
-            $auth.find('.auth_desc').attr('href',data.url).css('display','block');
+            var url = data.url;
+            if(typeof url!=="string" || url.length<7){
+                url = 'javascript:;';
+            }
+            $auth.find('.auth_desc').attr('href',url).css('display','block');
             $auth.find('.auth_img').attr('src',data.image);
             $auth.find('.auth_txt').html(data.message);
         }
@@ -1122,7 +1126,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     function initHofm(data) {
         if(data){
             var $hofm_wrap = $('.hofm_wrap');
-            $hofm_wrap.find('.go_hofm').attr('href','/Portal/PostDetails/scoreDetails.html?id='+goodsId);
+            $hofm_wrap.find('.go_hofm_a').attr('href','/Portal/PostDetails/scoreDetails.html?id='+goodsId);
             $hofm_wrap.find('.average').html(data.average);
             $hofm_wrap.find('.total_score').html(data.totalscore);
             $hofm_wrap.find('.hofm_right').html(hofmStarsHtml(data.detail));
@@ -1187,18 +1191,31 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
             //特征标签点击打开弹窗
             page.on('click','.msg_tag',function(){
                 $goods_noun_mask.show();
+                forbidPageScroll(true);
             });
             //按ok关闭弹窗
             page.on('click','.goods_noun_mask .ok',function(){
                 $goods_noun_mask.hide();
+                forbidPageScroll(false);
             });
             page.on('click','.goods_noun_mask',function(ev){
                 if($(ev.target).hasClass('goods_noun_mask')){
                     $goods_noun_mask.hide();
+                    forbidPageScroll(false);
                 }
             });
         }
     }
+
+    //禁止页面滚动
+    function forbidPageScroll(forbid){
+        if(forbid){
+            $('.hs-page.content').css('overflow-y','hidden');
+        }else{
+            $('.hs-page.content').css('overflow-y','auto');
+        }
+    }
+
 
 
 

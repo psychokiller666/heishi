@@ -261,7 +261,7 @@
             line-height: 0.61rem;
             height: 0.61rem;
             border-radius: 0.61rem;
-            background: #F5F5F5;
+            //background: #F5F5F5;
             margin-left: 0.267rem;
             padding: 0 0.32rem;
         }
@@ -283,30 +283,10 @@
             vertical-align: middle;
         }
         .auth_desc{
-            background: #F2F2F2;
-            border-radius:0.16rem;
-            padding: 0.16rem 0.4rem;
             display: none;
         }
-        .auth_right{
-            float: right;
-        }
         .auth_img{
-            width: 1.76rem;
-            height: 0.37333rem;
-        }
-        .auth_txt{
-            font-size: 0.32rem;
-            line-height: 1;
-            color: #202123;
-        }
-        .auth_dot{
-            display: inline-block;
-            width: 0.10667rem;
-            height: 0.10667rem;
-            background: #202123;
-            margin: 0 0.4rem;
-            border-radius: 50%;
+            width: 100%;
         }
         .authentication_cut{
             height: 0.4rem;
@@ -322,7 +302,11 @@
         //height:126px;
         background:rgba(242,242,242,1);
         border-radius:0.16rem;
-        .go_hofm{
+        .go_hofm_a{
+            display: block;
+            color: inherit;
+        }
+        .hofm_top{
             display: block;
             text-decoration: none;
             color: #202123;
@@ -356,14 +340,17 @@
 
         .hofm_score{
             margin-top: 0.45333rem;
+            display: flex;
+            align-items:center;
+            justify-content: space-between;
             .hofm_left{
-                float: left;
+                //float: left;
                 width: 3.09333rem;
                 text-align: center;
                 .average{
                     font-size:1.01333rem;
                     font-family:HelveticaNeueDeskInterface-Bold;
-                    font-weight:bold;
+                    font-weight: 900;
                     color:rgba(32,33,35,1);
                     line-height:1;
                 }
@@ -377,7 +364,7 @@
                 }
             }
             .hofm_right{
-                float: right;
+                //float: right;
                 width: 4.8rem;
 
                 .list{
@@ -552,12 +539,12 @@
         padding: 0 0.4rem 0.4rem;
         border-bottom: 0.21333rem solid #F5F5F5;
         h4{
-            .font-dpr(16px);
+            font-size: 0.37333rem;
             padding: 0.4rem 0;
             font-weight: 700;
         }
         div{
-            .font-dpr(15px);
+            font-size: 0.37333rem;
             overflow: hidden;
             text-align: justify;
             word-break: break-all;
@@ -582,8 +569,8 @@
                 border-radius: 0.29333rem;
                 font-size: 0.34667rem;
                 line-height: 0.56rem;
-                color: #fff;
-                background:rgba(174,33,33,1);
+                color: #202123;
+                background:#f2f2f2;
                 padding: 0 0.48rem 0 0.26667rem;
                 margin: 0 0.53333rem 0.4rem 0;
                 position: relative;
@@ -732,7 +719,7 @@
         padding: 0 0.4rem;
         border-bottom: 0.21333rem solid #F5F5F5;
         h4{
-            font-size: 0.42667rem;
+            font-size: 0.37333rem;
             padding: .4rem 0;
             font-weight: 700;
         }
@@ -783,8 +770,8 @@
         margin: 0 0.4rem;
         position: relative;
         h2{
-            padding: 0.4rem 0 0.533rem 0;
-            .font-dpr(16px);
+            padding: 0.4rem 0 ;
+            font-size: 0.37333rem;
             line-height: 0.64rem;
             position: relative;
             font-weight: 700;
@@ -939,7 +926,7 @@
     .correlation{
         padding: 0 0.4rem 1.8rem;
         .title{
-            .font-dpr(16px);
+            font-size: 0.37333rem;
             font-weight: 700;
             padding: 0.4rem 0;
         }
@@ -1308,13 +1295,44 @@
             font-size: 0.42667rem;
             color: #202123;
             text-align: center;
-            height: 1.49333rem;
-            line-height: 1.49333rem;
+            line-height: 1;
             font-family:PingFangSC-Semibold;
             font-weight: bold;
+            padding: 0.53333rem 0 0.48rem;
+        }
+        .get_coupon_tip_wrap{
+            height: 0.53333rem;
+            text-align: center;
+            color: #AE2121;
+            font-size: 0;
+            margin-bottom: 0.4rem;
+            .vertical_middle{
+                display: inline-block;
+                vertical-align: middle;
+                font-size: 0.32rem;
+            }
+            .get_coupon_tip_ico{
+                transform:rotateZ(180deg);
+            }
+            .get_coupon_tip_txt{
+                margin: 0 0.56rem 0 0.24rem;
+            }
+            .get_coupon_tip_btn{
+                box-sizing: border-box;
+                height:0.53333rem;
+                line-height:0.42667rem;
+                border-radius:0.10667rem;
+                border:0.05333rem solid rgba(174,33,33,1);
+                a{
+                    padding: 0 0.24rem;
+                    display: block;
+                    height: 100%;
+                    color: inherit;
+                }
+            }
         }
         .get_coupon_ul{
-            height: 7.46667rem;
+            height: 6.69334rem;
             overflow-x: hidden;
             overflow-y: auto;
             width: 100%;
@@ -1468,7 +1486,7 @@
                     font-weight:400;
                     color:rgba(32,33,35,1);
                     line-height:1;
-                    background:rgba(242,242,242,1);
+                    background:#f2f2f2;
                     border-radius:0.29333rem;
                     padding: 0.10667rem 0.26667rem;
                 }
