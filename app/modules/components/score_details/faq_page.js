@@ -46,7 +46,7 @@ $(document).on('pageInit', '.faq_page', function (e, id, page) {
     function initFQA(data){
         if(data && data.length>0){
             var html = '';
-            var length = data.length>2 ? 2 : data.length;
+            var length = data.length;
             for(var i=0;i<length;i++){
                 html += '<li class="faq">'
                 html += '<div class="title">'+ data[i].title +'</div>'
