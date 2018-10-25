@@ -535,9 +535,7 @@
         border-bottom:  0.213rem solid #F5F5F5;
     }
     .content_bd{
-        display: none;
         padding: 0 0.4rem 0.4rem;
-        border-bottom: 0.21333rem solid #F5F5F5;
         h4{
             font-size: 0.37333rem;
             padding: 0.4rem 0;
@@ -552,16 +550,23 @@
             line-height: 1.4em;
             letter-spacing: 0.02rem;
         }
+
+    }
+    .content_desc{
+        display: none;
+        padding-bottom: 0;
+        border-bottom: 0.21333rem solid #F5F5F5;
+
         &[has_desc="1"]{
             display: block;
             .goods_msg_tags{
                 border-bottom: 0.0133rem solid #e8e8e8;
+                margin-bottom: 0.4rem;
             }
         }
         .goods_msg_tags{
             display: none;
             font-size: 0;
-            margin-bottom: 0.4rem;
             text-align: left;
             .msg_tag{
                 display: inline-block;
@@ -586,6 +591,10 @@
                     transform: translateY(-50%);
                 }
             }
+        }
+
+        .content_desc_txt{
+            padding-bottom: 0.4rem;
         }
     }
     .post_desc_img{
