@@ -1152,6 +1152,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
                 html += '<div class="msg_tag">'+ data[i].title +'</div>'
             }
             $('.goods_msg_tags').html(html).show();
+            $('.content_desc').show();
             initGoodsNounPopup(data);
         }
     }
