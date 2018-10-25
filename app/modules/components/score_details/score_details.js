@@ -65,8 +65,19 @@ $(document).on('pageInit', '.score_details', function (e, id, page) {
             }
             $('.score_ul').html(html);
 
+            var $content = $('.score_details .content');
+            $content.css('overflow','hidden');
+            setTimeout(function(){
+                $content.css({
+                    'overflow-y':'auto',
+                    'overflow-x': 'hidden',
+                });
+            },1);
+
+            $('.score_details .wrap').css('min-height','100%');
+
         }else{
-            $.toast('暂无问题');
+            $.toast('暂无信息');
         }
     }
 
