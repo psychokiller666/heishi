@@ -1,5 +1,10 @@
 // 搜索
-// 搜索页修改版，为单页化搜索页定制
+
+var common = require('../common/common.js');
+var apiBaseUrl = common.prototype.getApiBaseUrl();
+
+
+// 搜索页修改版，为单页化搜索页定制(原先搜索页是个弹窗，现在改为单独的页面，并且可以保持当前的搜索结果及状态)
 var SearchInit = function () {
   	var start_num = 0;
 	var search_content = null;
@@ -166,6 +171,8 @@ var SearchInit = function () {
 		if(loading){
 			return false;
 		}
+		console.log(last_page <= start_num);
+
 		if(last_page <= start_num){
 			return false;
 		}
@@ -177,47 +184,105 @@ var SearchInit = function () {
 		ajax_search(search_content, start_num*20);
   	});
 
+
+	//搜索接口：新旧接口字段转换
+	function transData(items) {
+		var obj = [];
+		if(items instanceof Array && items.length>0){
+			items.forEach(function(v,i){
+				obj.push({
+                    goods_author_uid: v.author,
+                    goods_author_nickname: v.user_name,
+                    goods_author_avatar: v.user_avatar,
+                    goods_id: v.id,
+                    goods_title: v.title,
+                    goods_cover_img: v.cover,
+                    goods_keywords: [(v.traits && v.traits[0]) ? v.traits[0].name : ''],
+                    goods_comments: "",
+                    goods_hits: "",
+                    goods_likes: "",
+                    goods_sales: "",
+                    goods_type: "",
+                    index_name: ""
+				})
+			});
+		}
+		return obj;
+    }
+
 	//搜索接口
 	function ajax_search(query, start){
+console.log(start_num,last_page);
+
+
 
         sessionStorage.setItem('searchStart',start_num);
 
 		$.ajax({
 	    	type: 'GET',
-		    url: '/index.php?g=restful&m=HsSearch&a=ajax_search',
-		    data: {
-		    	query: query,
-		    	start: start
-		    },
+            url: apiBaseUrl + '/appv6_1/search/posts',
+            data: {
+                query: query,
+                page: start / 20 + 1
+            },
 		    success: function(data){
-		    	if(data.status == 1){
-		    		if(data.data.total_pages == 1){
-		    			$('.infinite-scroll-preloader').hide();
-		    		}
-                    search_nodata_status = false;
-                    last_page = data.data.total_pages;
-                    $('.search_null').hide();
-                    $('.conjecture_like').hide();
-		    		$('.search_goods_list').show();
-		    		$('.search_correlation').hide();
-		    		output(data.data.items);
-		    	}
-		    	if(data.status == 0){
-		    		$.toast(data.info);
-		    		$('.infinite-scroll-preloader').hide();
-		    	}
-		    	if(data.status == 2){
-		    		//没有收到
-		    		search_nodata_status = true;
-                    last_page = data.data.total_pages;
-                    start_num = last_page;
-                    $('.search_null').show();
-                    $('.conjecture_like').show();
-                    $('.search_goods_list').show();
-                    $('.search_correlation').hide();
-		    		output(data.data.items);
-		    		$('.infinite-scroll-preloader').hide();
-		    	}
+
+                var message = '';
+
+                if(data.status == 1){
+
+		    		//如果message不为空，则是没有搜索到数据
+					message = data.data.message;
+
+					if(typeof message === "string" && message.length>0){
+
+                        //没有搜到
+                        search_nodata_status = true;
+                        last_page = data.data.total_pages;
+                        start_num = last_page;
+                        setSearchNullMsg(searchMsg);
+                        $('.search_null').show();
+                        // $('.conjecture_like').show();
+                        $('.search_goods_list').show();
+                        $('.search_correlation').hide();
+                        var items = transData(data.data.items);
+                        output(items);
+                        $('.infinite-scroll-preloader').hide();
+
+					}else{
+
+                        //搜到数据
+                        if(data.data.total_pages == 1){
+                            $('.infinite-scroll-preloader').hide();
+                        }
+                        search_nodata_status = false;
+                        last_page = data.data.total_pages;
+                        $('.search_null').hide();
+                        // $('.conjecture_like').hide();
+                        $('.search_goods_list').show();
+                        $('.search_correlation').hide();
+                        var items = transData(data.data.items);
+                        output(items);
+					}
+
+		    	}else{
+                	var errMsg = '';
+                	if(typeof data.info === "string"){
+                		errMsg = data.info;
+					}else if(typeof data.info.code === "string"){
+                		errMsg = data.info.code;
+					}else{
+                		errMsg = '网络错误，请稍后重试';
+					}
+                    $.toast(data.info);
+                    $('.infinite-scroll-preloader').hide();
+                    //加载更多数据时，假如接口失败了，start_num回退一个。
+                    if(data.info!=='到最后一页了' && start_num > 0){
+                    	start_num--;
+					}
+				}
+
+
 		    	loading = false;
 		    	function output(items){
 		    		$.each(items, function(index, item){
@@ -246,15 +311,20 @@ var SearchInit = function () {
                     sessionStorage.setItem('searchScrollTop',$('.search_goods_list').scrollTop());
                     sessionStorage.setItem('searchLastPage',last_page);
                     sessionStorage.setItem('searchStart',start_num);
-                    sessionStorage.setItem('searchStatus',data.status);
+                    sessionStorage.setItem('searchStatus',(search_nodata_status ? 2 : 1));//搜索状态，1是有结果，2是没结果
                     sessionStorage.setItem('searchQuery',query);
                     sessionStorage.setItem('searchUl',$('.search_goods_list ul').html());
+                    sessionStorage.setItem('searchMsg',message);
 
 		    	}
 		    },
 		    error: function(error){
 		    	console.log(error);
 		    	loading = false;
+                //加载更多数据时，假如接口失败了，start_num回退一个。
+                if(start_num > 0){
+                    start_num--;
+                }
 		    }
 		});
 	}
@@ -270,6 +340,8 @@ var SearchInit = function () {
         var searchQuery = sessionStorage.getItem('searchQuery');
         var searchStart = sessionStorage.getItem('searchStart');
         var searchUl = sessionStorage.getItem('searchUl');
+        var searchMsg = sessionStorage.getItem('searchMsg');
+
 
         if(searchQuery==searchTxt && searchUl){
             start_num = +searchStart;
@@ -282,12 +354,13 @@ var SearchInit = function () {
                 if(searchStatus==1){
                     search_nodata_status = false;
                     $('.search_null').hide();
-                    $('.conjecture_like').hide();
+                    // $('.conjecture_like').hide();
                 }
                 if(searchStatus==2){
                     search_nodata_status = true;
+                    setSearchNullMsg(searchMsg);
                     $('.search_null').show();
-                    $('.conjecture_like').show();
+                    // $('.conjecture_like').show();
                 }
                 $('.search_goods_list').show();
                 $('.search_correlation').hide();
@@ -325,6 +398,7 @@ var SearchInit = function () {
         sessionStorage.removeItem('searchQuery');
         sessionStorage.removeItem('searchStart');
         sessionStorage.removeItem('searchUl');
+        sessionStorage.removeItem('searchMsg');
 	}
 
     // 替换当前url query值
@@ -341,6 +415,13 @@ var SearchInit = function () {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
         var r = window.location.search.substr(1).match(reg);
         if (r != null) return unescape(r[2]); return null;
+    }
+
+	//设置无搜索结果的提示语
+	function setSearchNullMsg(msg) {
+		if(typeof msg==="string" && msg.length>0){
+			$('.search_null_msg').html(msg);
+		}
     }
 
 
