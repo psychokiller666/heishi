@@ -272,7 +272,7 @@ $(document).on('pageInit','.gift_for_new', function(e, id, page) {
             html+= '</li>'
         }
 
-        $('.goods_ul').html(html);
+        $('.gift_for_new .goods_ul').html(html);
     }
 
     //商品top10分类标签
