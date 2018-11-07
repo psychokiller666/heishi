@@ -161,3 +161,8 @@ require('../modules/components/score_details/score_details');
 require('../modules/components/score_details/about_hofm');
 //关于霍夫曼评分
 require('../modules/components/score_details/faq_page');
+
+//抽奖活动
+require('../modules/components/lottery/lottery');
+//抽奖活动规则
+require('../modules/components/lottery/lottery_rule');
