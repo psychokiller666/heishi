@@ -2,33 +2,13 @@
 .lottery {
   background: #fff;
   .hs-page {
-    background-color: #fff;
-    transition: background-color .5s;
+    background: #A49378;
 
-    .dis_none{
-      display: none;
-    }
 
     //头部
     .lottery_header{
       text-align: center;
       min-height: 0.8rem;
-      position: relative;
-
-      .forecast_a{
-        position: absolute;
-        top: 0.4rem;
-        right: 0.4rem;
-        z-index: 10;
-        width: 1.70667rem;
-        height: 0.42667rem;
-        img{
-          display: block;
-          width: 100%;
-          height: 100%;
-        }
-      }
-
       //进行中
       .going{
         position: relative;
@@ -41,7 +21,6 @@
         }
         .count_down{
           font-size: 0;
-          height:0.8rem;
           b{
             display: inline-block;
             width:0.58667rem;
@@ -85,7 +64,16 @@
             }
           }
         }
-
+        .forecast_a{
+          position: absolute;
+          top: 0.4rem;
+          right: 0.4rem;
+          img{
+            display: block;
+            width: 100%;
+            height: 100%;
+          }
+        }
       }
       //预告
       .forecast{
@@ -123,15 +111,10 @@
         width: 9.06667rem;
         height: 6.08rem;
         margin: 0 auto;
+        background-color: #ccc;
         color: inherit;
         border-radius: 0.24rem;
         box-shadow: 0 0.16rem 0.56rem rgba(0,0,0,0.3);
-        background-position: 50% 50%;
-        background-repeat: no-repeat;
-        background-size: 100%;
-        .banner{
-
-        }
         .title{
           width: 10em;
           overflow: hidden;
@@ -188,7 +171,6 @@
           width: 100%;
           color: #fff;
           span{
-            display: inline-block;
             vertical-align: middle;
             text-align: justify;
           }
@@ -196,10 +178,8 @@
             width: 0.42667rem;
             height: 0.42667rem;
             vertical-align: middle;
-            margin: 0 ;
           }
           b{
-            display: inline-block;
             color: #AE2121;
             vertical-align: middle;
           }
@@ -237,7 +217,6 @@
         color: #fff;
         font-size: 0.42667rem;
         line-height: 0.64rem;
-        margin-top: 0.53333rem;
         .left{
 
         }
@@ -254,9 +233,6 @@
           .num{
             font-size: 0.42667rem;
             vertical-align: middle;
-            b{
-              font-weight: inherit;
-            }
           }
           .arrow{
             vertical-align: middle;
@@ -278,12 +254,11 @@
         display: inline-block;
         color: #fff;
         span{
-          display: inline-block;
           line-height: 1;
           vertical-align: middle;
           &.info{
             font-size: 0.37333rem;
-            transform: rotateZ(180deg);
+            transform: translateZ(180deg);
           }
           &.txt{
             font-size: 0.26667rem;
@@ -348,12 +323,6 @@
       .sponsor{
         height: 1.06667rem;
         margin-top: 0.4rem;
-        a{
-          display: block;
-          width: 100%;
-          height: 100%;
-          color: inherit;
-        }
         .avatar_img{
           float: left;
           width: 1.06667rem;
@@ -416,9 +385,6 @@
         &:first-child{
           margin-left: 0.48rem;
         }
-        &:last-child{
-          margin-right: 0.48rem;
-        }
         a{
           display: block;
           width: 100%;
@@ -457,18 +423,11 @@
     .lottery_download{
       width: 9.06667rem;
       height: 2.08rem;
+      padding: 0.4rem 0.48rem;
       margin: .8rem auto 0;
       box-sizing: border-box;
       border: 0.02667rem solid #fff;
       border-radius: 0.42667rem;
-      a{
-        box-sizing: border-box;
-        display: block;
-        width: 100%;
-        height: 100%;
-        padding: 0.4rem 0.48rem;
-        color: inherit;
-      }
       .logo{
         float: left;
         width: 1.28rem;
@@ -524,11 +483,6 @@
         li{
           height: 0.8rem;
           margin-top: 0.4rem;
-          a{
-            display: block;
-            width: 100%;
-            height: 100%;
-          }
           img{
             float: left;
             width: 0.8rem;
@@ -579,37 +533,12 @@
           display: block;
           margin: 0 auto;
         }
-
-        .result_get_0{
-          display: none;
-        }
-        .result_get_1{
-          display: none;
-        }
-        .result_get_2{
-          display: none;
-        }
-        &[status="0"]{
-          .result_get_0{
-            display: block;
-          }
-        }
-        &[status="1"]{
-          .result_get_1{
-            display: block;
-          }
-        }
-        &[status="2"]{
-          .result_get_2{
-            display: block;
-          }
-        }
-
         .result_btns{
           margin-top: 0.8rem;
           display: flex;
           justify-content: space-between;
           .result_btn{
+            display: block;
             color: #fff;
             width: 4.32rem;
             height: 1.17333rem;
@@ -623,11 +552,6 @@
               border-color: #AE2121;
               background: #AE2121;
             }
-            &.result_btn_disable{
-              border-color: rgba(255,255,255,.5);
-              background: rgba(255,255,255,.5);
-            }
-
           }
         }
       }
@@ -641,7 +565,7 @@
           margin: 0 auto;
         }
         .result_btns{
-          margin-top: 0.53333rem;
+          margin-top: 0.8rem;
           .result_see{
             display: block;
             width: 100%;
@@ -657,64 +581,6 @@
       }
     }
 
-
-    .lottery_coupon_wrap{
-      li{
-        margin-top: 0.53333rem;
-        box-sizing: border-box;
-        padding: 0.26667rem 0;
-        background: #fff;
-        border-radius: 0.16000rem;
-        height: 2.45333rem;
-        width: 100%;
-        list-style: none;
-        .left{
-          float: left;
-          width: 2.96rem;
-          height: 100%;
-          text-align: center;
-          border-right: 0.02667rem dashed #979797;
-          .coupon_price{
-            height:0.69333rem;
-            font-size:0.69333rem;
-            font-family:'din';
-            color:#AE2121;
-            line-height:1;
-            padding: 0.34667rem 0 0.29333rem;
-          }
-          .coupon_desc{
-            font-size:0.26667rem;
-            font-family:PingFangSC-Light;
-            color:#202123;
-            line-height: 1;
-          }
-        }
-        .center{
-          float: left;
-          width: 5.36rem;
-          box-sizing: border-box;
-          padding: 0.34667rem 0 0 0.90667rem;
-          .title{
-            font-size:0.37333rem;
-            font-family:PingFangSC-Semibold;
-            color:#202123;
-            line-height:1;
-            height: 0.98667rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-          }
-          .time{
-            font-size:0.26667rem;
-            font-family:PingFangSC-Regular;
-            color:#8E8E8E;
-            line-height:1;
-            white-space: nowrap;
-          }
-        }
-
-      }
-    }
   }
 
 }

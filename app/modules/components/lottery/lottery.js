@@ -37,16 +37,6 @@ $(document).on('pageInit','.lottery', function(e, id, page) {
 
     var loginStatus = true;
 
-    //todo:临时放在这里
-    window.appCallbackInterface = function(json){
-        $.toast(json);
-    };
-    $(page).on('click','.app_js_test_btn',function(){
-        $.toast('click');
-        location.href = 'lottery://11';
-    });
-
-
     //与app交互的协议url
     var AppUrl = {
 
