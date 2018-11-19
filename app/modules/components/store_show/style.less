@@ -780,6 +780,130 @@
 
     }
 
+
+    //测评
+    .lottery_evaluation{
+        display: none;
+        border-bottom: 0.21333rem solid #F5F5F5;
+        h4{
+            font-size: 0.37333rem;
+            padding: .4rem;
+            font-weight: 700;
+
+            .lottery_evaluation_more{
+                float: right;
+                color: #8E8E8E;
+            }
+        }
+
+        .lottery_evaluation_ul{
+            height: 3.41333rem;
+            margin-bottom: 0.4rem;
+            padding: 0 0.4rem;
+            white-space: nowrap;
+            overflow-x: auto;
+            overflow-y: hidden;
+            font-size: 0;
+
+            .lottery_evaluation_li{
+                display: inline-block;
+                padding: 0.32rem;
+                margin-right: 0.4rem;
+                width: 100%;
+                height: 100%;
+                box-sizing: border-box;
+                background-color: #F2F2F2;
+                border-radius: 0.24rem;
+                &:last-child{
+                    margin-right: 0;
+                }
+                &.lottery_evaluation_li_short{
+                    width: 7.04rem;
+                    .lottery_evaluation_li_a{
+                        .left{
+                            width: 3.2rem;
+                        }
+                    }
+                }
+
+                .lottery_evaluation_li_a{
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+
+                    .left{
+                        float: left;
+                        width: 5.36rem;
+                        .userinfo{
+                            height: 0.69333rem;
+                            .avatar{
+                                width: 0.69333rem;
+                                height: 0.69333rem;
+                                float: left;
+                            }
+                            .username{
+                                box-sizing: border-box;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow:ellipsis;
+                                font-size: 0.32rem;
+                                color: #8E8E8E;
+                                padding-left: 0.26667rem;
+                                line-height: 0.69333rem;
+                            }
+                        }
+                        .text{
+                            white-space: normal;
+                            color: #45484E;
+                            font-size: 0.34667rem;
+                            line-height: 0.45333rem;
+                            margin-top: 0.26667rem;
+                            text-align: justify;
+                            word-wrap: break-word;
+                            height: 1.81333rem;
+                            overflow: hidden;
+                        }
+
+
+                    }
+                    .right{
+                        float: right;
+                        width: 2.77333rem;
+                        height: 2.77333rem;
+                        position: relative;
+                        margin-left: 0.4rem;
+                        .image{
+                            width: 100%;
+                            height: 100%;
+                            border-radius:0.26667rem;
+                            background-size: cover;
+                            background-position: center center;
+                            background-repeat: no-repeat;
+
+                        }
+                        .image_count{
+                            position: absolute;
+                            bottom: 0.26667rem;
+                            right: 0.26667rem;
+                            font-size:0.32rem;
+                            font-weight:600;
+                            color: #fff;
+                            line-height:1;
+                            padding: 0.13333rem;
+                            background:rgba(0,0,0,0.4);
+                            border-radius:0.26667rem;
+
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+
+    }
+
     .comment{
         margin: 0 0.4rem;
         position: relative;
