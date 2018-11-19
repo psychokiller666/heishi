@@ -166,3 +166,9 @@ require('../modules/components/score_details/faq_page');
 require('../modules/components/lottery/lottery');
 //抽奖活动规则
 require('../modules/components/lottery/lottery_rule');
+//抽奖参与用户
+require('../modules/components/lottery/lottery_user');
+//抽奖测评页
+require('../modules/components/lottery/lottery_evaluation');
+
+

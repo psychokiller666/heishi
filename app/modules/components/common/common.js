@@ -123,6 +123,9 @@ common.prototype.wx_share = function(options){
 
     // 判断是否分享
     if(options) {
+
+      options.img = fixUrlProtocol(options.img);//补全分享图片url协议
+
       wx.config({
         debug: false,
         appId: data.appId,
@@ -332,8 +335,46 @@ function addCss(){
     var css = '';
     css+= '<style type="text/css" class="addcss">'
     css+= '.ellipsis_2{overflow : hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;}'
+    css+= '.ellipsis_3{overflow : hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 3;}'
+    css+= '.ellipsis_4{overflow : hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 4;}'
+    css+= '.ellipsis_5{overflow : hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 5;}'
     css+= '</style>'
     $('body').append(css);
 };
+
+
+//时间戳格式化 调用方法  new Date(1541753878000).format('yyyy-MM-dd hh:mm:ss')
+Date.prototype.format = function(format) {
+    var date = {
+        "M+": this.getMonth() + 1,
+        "d+": this.getDate(),
+        "h+": this.getHours(),
+        "m+": this.getMinutes(),
+        "s+": this.getSeconds(),
+        "q+": Math.floor((this.getMonth() + 3) / 3),
+        "S+": this.getMilliseconds()
+    };
+    if (/(y+)/i.test(format)) {
+        format = format.replace(RegExp.$1, (this.getFullYear() + '').substr(4 - RegExp.$1.length));
+    }
+    for (var k in date) {
+        if (new RegExp("(" + k + ")").test(format)) {
+            format = format.replace(RegExp.$1, RegExp.$1.length == 1 ?
+                date[k] : ("00" + date[k]).substr(("" + date[k]).length));
+        }
+    }
+    return format;
+};
+
+//补全url协议同当前网页协议：修复分享url没有http或https时分享缩略图不显示的问题
+function fixUrlProtocol(url){
+    if(url && url.indexOf('//')===0){
+        return location.protocol + url;
+    }else{
+        return url;
+    }
+}
+
+
 
 module.exports = common;
