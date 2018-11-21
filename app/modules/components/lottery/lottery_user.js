@@ -18,8 +18,29 @@ $(document).on('pageInit','.lottery_user', function(e, id, page) {
         'phpsessionid': PHPSESSID
     };
 
-    var loginStatus = init.ifLogin();
+    //判断是否是app，如果是app，url都需要做处理，ajax headers携带身份不一样
+    var isApp = false;
+    var $isApp = $('.is_app');
+    var Authorization = $isApp.attr('authorization');
+    var loginStatus = true;
 
+    if(Authorization && Authorization.length>0){
+        isApp = true;
+        ajaxHeaders = {
+            'Authorization' : Authorization,
+            // 'version' : version,//跨域不能加version
+        };
+    }else{
+        //如果不是app，通过uid判断是否登录，如果未登录，点击领取和关注按钮需要跳转到登录页3
+        loginStatus = init.ifLogin();
+    }
+
+    var pretendApp = init.getUrlParam('pretendApp');//todo delete 假装是app
+    if(pretendApp==1){
+        isApp = true;//todo delete
+    }else if(pretendApp==2){
+        isApp = false;//todo delete
+    }
 
 
     var $page = $(page);
