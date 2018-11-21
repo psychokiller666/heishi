@@ -266,6 +266,7 @@ $(document).on('pageInit','.lottery', function(e, id, page) {
                 lottery_join_object_id : lottery.lottery_join_object_id,//支付商品id
                 lottery_object_id : lottery.lottery_object_id,//直接购买商品id
                 lottery_uid : lottery.lottery_uid,//活动商品卖家uid
+                lottery_uid_name : lottery.lottery_uid_name,//活动商品卖家uid name
                 lottery_price : lottery.price,//活动商品价格
                 name : lottery.name,//商品标题
                 next_lottery_id : lottery.next_lottery_id,//如果是正在进行的抽奖活动 该id为下期未开始的抽奖活动id
@@ -275,6 +276,7 @@ $(document).on('pageInit','.lottery', function(e, id, page) {
                 seller_uid : lottery.seller_uid,//卖家id
                 coupon_code : lottery.coupon_code,//活动优惠券id
                 background : lottery.background,//十六进制背景色
+                pay_endtime : lottery.pay_endtime,//领奖截止时间
             },
             user:data.user,//所有用户信息
         };
@@ -288,6 +290,9 @@ $(document).on('pageInit','.lottery', function(e, id, page) {
 
     //顶部开奖倒计时 参数：结束时间戳，下次活动id
     function initEndCD(endTime,nowTime,delay){
+
+        var scrolling = false;//是否在滚动，如果在滚动，不更新倒计时
+        var scrollTimer = null;//充值scrolling的计时器
 
         delay = parseInt(delay) >=0 ? parseInt(delay) : 30*60;
         var delayCD = 5;//几秒刷一次开奖倒计时时间
@@ -337,6 +342,9 @@ $(document).on('pageInit','.lottery', function(e, id, page) {
 
         //更新倒计时dom
         function createCD(t){
+            if(scrolling){
+                return;
+            }
             if(parseInt(t) >= 0){
                 var s = fixTime(t % 60).split('');
                 var m = fixTime(Math.floor(t/60) % 60).split('');
@@ -351,6 +359,15 @@ $(document).on('pageInit','.lottery', function(e, id, page) {
 
             }
         }
+
+        $page.find('.hs-page').on('scroll',function(){
+
+            scrolling = true;
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(function(){
+                scrolling = false;
+            },300)
+        });
 
     }
 
