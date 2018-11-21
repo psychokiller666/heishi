@@ -1139,7 +1139,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         for(var i=0;i<data.length;i++){
             html += '<div class="list">'
             html += '<div class="title">'+ data[i].title +'</div>'
-            html += '<div class="stars" stars="'+ parseInt(data[i].score) +'"></div>'
+            html += '<div class="stars" stars="'+ parseInt(data[i].scroe) +'"></div>'
             html += '</div>'
         }
         return html;
@@ -1194,7 +1194,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
 
             success: function(data){
                 if(data.status==1){
-                    console.log(data.data)
+                    // console.log(data.data)
                     createEvaluation(data.data);
                 }else{
                     $.toast(data.info);

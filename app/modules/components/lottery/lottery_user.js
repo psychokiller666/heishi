@@ -18,29 +18,8 @@ $(document).on('pageInit','.lottery_user', function(e, id, page) {
         'phpsessionid': PHPSESSID
     };
 
-    //判断是否是app，如果是app，url都需要做处理，ajax headers携带身份不一样
-    var isApp = false;
-    var $isApp = $('.is_app');
-    var Authorization = $isApp.attr('authorization');
-    var loginStatus = true;
+    var loginStatus = init.ifLogin();
 
-    if(Authorization && Authorization.length>0){
-        isApp = true;
-        ajaxHeaders = {
-            'Authorization' : Authorization,
-            // 'version' : version,//跨域不能加version
-        };
-    }else{
-        //如果不是app，通过uid判断是否登录，如果未登录，点击领取和关注按钮需要跳转到登录页3
-        loginStatus = init.ifLogin();
-    }
-
-    var pretendApp = init.getUrlParam('pretendApp');//todo delete 假装是app
-    if(pretendApp==1){
-        isApp = true;//todo delete
-    }else if(pretendApp==2){
-        isApp = false;//todo delete
-    }
 
 
     var $page = $(page);
@@ -112,7 +91,7 @@ $(document).on('pageInit','.lottery_user', function(e, id, page) {
 
         for(var i=0;i<res.length;i++){
             html += '<li>'
-            html += '<div class="li_time">'+res[i].updated_time+'</div>'
+            html += '<div class="li_time">'+formatTime(res[i].updated_time)+'</div>'
             html += '<a external class="li_avatar" href="'+ createUserUrl(res[i].uid) +'" style="background-image: url('+res[i].avatar+');"></a>'
             html += '<div class="li_name">'+res[i].user_name+'</div>'
             html += '</li>'
@@ -121,6 +100,17 @@ $(document).on('pageInit','.lottery_user', function(e, id, page) {
         $lottery_user_ul.append(html);
     }
 
+    //格式化时间
+    function formatTime(time){
+        if(time){
+            if(String(time).length===10){
+                time = time * 1000;
+            }
+            return new Date(time).format('MM-dd');
+        }else{
+            return '';
+        }
+    }
 
 
     //添加滚动事件

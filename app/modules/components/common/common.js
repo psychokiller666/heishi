@@ -254,9 +254,27 @@ common.prototype.ifLogin = function(toLogin){
 common.prototype.toLogin = function(){
     var appid = 'null';
     var nowUrl = encodeURI(location.href);
-    var url = '/Api/Oauth/login?type=weixin&login_http_referer='+nowUrl;
+    // var url = '/Api/Oauth/login?type=weixin&login_http_referer='+nowUrl;
     // var url = '/User/Login/mobile?appid='+appid+'&redirect_uri='+nowUrl+'&type=mobile&response_type=code';
-    location.href = url;
+    // location.href = url;
+
+    var postForm = document.createElement("form");//表单对象
+    postForm.method="post" ;
+    postForm.action = '/Api/Oauth/login' ;
+
+    var typeInput = document.createElement("input") ; //type input
+    typeInput.setAttribute("name", "type") ;
+    typeInput.setAttribute("value", "weixin");
+    postForm.appendChild(typeInput) ;
+    var refererInput = document.createElement("input");// referer input
+    refererInput.setAttribute("name","login_http_referer");
+    refererInput.setAttribute("value",nowUrl);
+    postForm.appendChild(refererInput);
+
+    document.body.appendChild(postForm) ;
+    postForm.submit() ;
+    document.body.removeChild(postForm) ;
+
     return false;
 };
 //优惠券的格式化时间，显示为2001.11.11

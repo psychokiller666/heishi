@@ -374,6 +374,7 @@
 
                 .list{
                     margin-bottom: 0.10667rem;
+                    height: 0.32rem;
                     &:last-child{
                         margin-bottom: 0;
                     }
@@ -388,31 +389,66 @@
                         overflow: hidden;
                     }
                     .stars{
-                        width: 2.13333rem;
-                        height: 0.32rem;
+                        width: 2.66667rem;
+                        height: 0.16rem;
                         font-size: 0.26667rem;
                         margin-left: 6em;
-                        &[stars="0"]{
-                            background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/0_2x.png');
+                        transform: translateY(0.08rem);
+                        position: relative;
+                        &:before{
+                            content: '';
+                            display: block;
+                            width: 0;
+                            height: 0.16rem;
+                            background-color: #202123;
+                            border-radius:0.08rem;
                         }
-                        &[stars="1"]{
-                            background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/1_2x.png');
+                        &:after{
+                            content: '0';
+                            display: block;
+                            position: absolute;
+                            right: -0.32rem;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            color: #8E8E8E;
+                            font-size: 0.26667rem;
+                            line-height: 1;
                         }
-                        &[stars="2"]{
-                            background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/2_2x.png');
+                        &[stars="0"]:before{
+
                         }
-                        &[stars="3"]{
-                            background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/3_2x.png');
+                        &[stars="1"]:before{
+                            width: 20%;
                         }
-                        &[stars="4"]{
-                            background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/4_2x.png');
+                        &[stars="2"]:before{
+                            width: 40%;
                         }
-                        &[stars="5"]{
-                            background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/5_2x.png');
+                        &[stars="3"]:before{
+                            width: 60%;
                         }
-                        background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/5_2x.png');
-                        background-repeat: no-repeat;
-                        background-size: 100% 100%;
+                        &[stars="4"]:before{
+                            width: 80%;
+                        }
+                        &[stars="5"]:before{
+                            width: 100%;
+                        }
+                        &[stars="1"]:after{
+                            content: '1';
+                        }
+                        &[stars="2"]:after{
+                            content: '2';
+                        }
+                        &[stars="3"]:after{
+                            content: '3';
+                        }
+                        &[stars="4"]:after{
+                            content: '4';
+                        }
+                        &[stars="5"]:after{
+                            content: '5';
+                        }
+                        background: #D8D8D8;
+                        border-radius:0.08rem;
                     }
                 }
             }
