@@ -11,7 +11,6 @@ $(document).on('pageInit','.lottery_user', function(e, id, page) {
 
     var init = new common(page);
 
-
     var ApiBaseUrl = init.getApiBaseUrl();
 
     var PHPSESSID = init.getCookie('PHPSESSID');
