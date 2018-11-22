@@ -11,8 +11,6 @@ $(document).on('pageInit','.lottery_user', function(e, id, page) {
 
     var init = new common(page);
 
-    init.setSensorsHeader();//神策header
-
 
     var ApiBaseUrl = init.getApiBaseUrl();
 
