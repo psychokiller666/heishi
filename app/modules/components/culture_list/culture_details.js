@@ -19,7 +19,15 @@ $(document).on('pageInit','.culture_details', function (e, id, page) {
     link: window.location.href,
     img: $('.frontcover').find('.image').attr('data-share')
   };
-  init.wx_share(share_data);
+  init.wx_share(share_data,function(type){
+      init.sensors.track('share', {
+          shareType: '文章',
+          shareMethod: type === 1 ? '朋友圈' : '微信',//1是朋友圈，2是好友
+          commodityID: $(page).attr('data-id'),
+          // sellerID: '',
+      })
+    });
+
   // 检查是否关注
   init.checkfollow();
 

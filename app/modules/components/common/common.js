@@ -3,6 +3,9 @@
 // 微信sdk
 var wx = require('weixin-js-sdk');
 
+//神策sdk
+var sensors = require('../../../modules/components/sa_sdk/sensorsdata.min.js')
+
 function common(page){
   this.page = page;
   // 控制.hs-page高度
@@ -31,6 +34,7 @@ function common(page){
   //上传图片的base url
   this.ImgBaseUrl = 'https://img8.ontheroadstore.com';
   addCss();
+  initSensorsdata();
 };
 //没有图片的默认url
 common.prototype.lostImage = 'https://img8.ontheroadstore.com/iosupload/20180808/b0pMT2tsVk8vMmtzek1aSUtlYVlxQT09.jpg';
@@ -111,7 +115,7 @@ common.prototype.checkfollow = function(){
   }
 }
 // 微信jssdk分享
-common.prototype.wx_share = function(options){
+common.prototype.wx_share = function(options,callback){
   var _this = this;
   $.ajax({
     url: '/index.php?g=restful&m=HsJsapi&a=jssign',
@@ -149,6 +153,11 @@ common.prototype.wx_share = function(options){
           // 用户确认分享后执行的回调函数
           // 腾讯统计
           MtaH5.clickStat('wx_onMenuShareTimeline',{'title': options.title});
+        },
+        complete: function(){
+            if(typeof callback === "function"){
+                callback(1);//1是朋友圈，2是好友
+            }
         }
       });
       wx.onMenuShareAppMessage({
@@ -160,6 +169,11 @@ common.prototype.wx_share = function(options){
           // 用户确认分享后执行的回调函数
           // 腾讯统计
           MtaH5.clickStat('wx_onMenuShareAppMessage',{'title': options.title});
+        },
+        complete: function(){
+          if(typeof callback === "function"){
+              callback(2);//1是朋友圈，2是好友
+          }
         }
       });
     });
@@ -392,6 +406,56 @@ function fixUrlProtocol(url){
         return url;
     }
 }
+
+common.prototype.sensors = sensors;
+//神策初始化
+//文档 https://www.sensorsdata.cn/manual/js_sdk.html
+function initSensorsdata(){
+
+    sensors.init({
+        server_url: 'https://sc.ontheroadstore.com/sa?project=default',
+        // server_url: 'https://sc.ontheroadstore.com/sa?project=production',
+        web_url:"http://47.93.182.143:8107",
+        use_app_track: true,// 与app打通
+    });
+    sensors.quick('autoTrack');//自动采集页面浏览
+    //todo: 自动采集会自动 console
+
+    sensors.registerPage({
+        platformType:'H5',//公共属性 ：平台
+    });
+
+
+    var $current_user_id = $('.current_user_id');
+    var uid='';
+    if($current_user_id.length>0){
+        uid = $current_user_id.attr('uid');
+        if(typeof uid === 'string' && uid.length>0){
+            //已登录
+            sensors.login(uid);
+        }
+    }
+
+    //自定义事件追踪
+    // sensors.track('sendVCode',{
+    //     phoneNumber:'',
+    //     buttonName:'',
+    // });
+    setSensorsHeader();
+
+}
+
+//给ajax设置header
+common.prototype.setSensorsHeader = setSensorsHeader;
+function setSensorsHeader(){
+    $.ajaxSettings.beforeSend = function(xhr,request){
+        //console.log( request.headers )
+        // 在这里加上你的 token
+        xhr.setRequestHeader('SCProperties',sensors.getPresetProperties());
+    }
+    console.log('setSensorsHeader...');
+};
+
 
 
 
