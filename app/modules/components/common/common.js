@@ -412,13 +412,19 @@ common.prototype.sensors = sensors;
 //文档 https://www.sensorsdata.cn/manual/js_sdk.html
 function initSensorsdata(){
 
+    var pageType = getPageType();
+    console.log('pageType: ',pageType);
+
     sensors.init({
         server_url: 'https://sc.ontheroadstore.com/sa?project=default',
         // server_url: 'https://sc.ontheroadstore.com/sa?project=production',
         web_url:"http://47.93.182.143:8107",
         use_app_track: true,// 与app打通
     });
-    sensors.quick('autoTrack');//自动采集页面浏览
+    //自动采集页面浏览
+    sensors.quick('autoTrack', {
+        pageType: pageType,
+    });
     //todo: 自动采集会自动 console
 
     sensors.registerPage({
@@ -443,19 +449,146 @@ function initSensorsdata(){
     // });
     setSensorsHeader();
 
+    $('body').on('click','.open_app',function(){
+        sensors.track('buttonClick', {
+            pageType : '页面头部',
+            buttonName : '打开APP',
+        })
+    });
+    $('body').on('click','.open_hs',function(){
+        sensors.track('buttonClick', {
+            pageType : '页面头部',
+            buttonName : '关注我们',
+        })
+    });
+
 }
 
 //给ajax设置header
 common.prototype.setSensorsHeader = setSensorsHeader;
 function setSensorsHeader(){
     $.ajaxSettings.beforeSend = function(xhr,request){
-        //console.log( request.headers )
         // 在这里加上你的 token
-        xhr.setRequestHeader('SCProperties',sensors.getPresetProperties());
+        var obj = sensors.getPresetProperties();
+        obj.platformType = 'H5';
+        xhr.setRequestHeader('SCProperties',obj);
     }
-    console.log('setSensorsHeader...');
 };
 
+//埋点公用的一些方法
+common.prototype.sensorsFun = {
+    bottomNav : function () {
+    //    底部导航加埋点
+        var $footerNavUl = $('body').find('.footer_nav_ul');
+        if($footerNavUl.attr('sensors')!=='1'){
+            $footerNavUl.attr('sensors','1');
+            $footerNavUl.on('click','li',function () {
+                var index = $(this).index();
+                var btnTxt = ['首页', '分类', '购物车', '消息','我的']
+
+                sensors.track('buttonClick', {
+                    pageType : '底部导航',
+                    buttonName : btnTxt[index],
+                })
+            })
+        }
+    },
+    pageType : function (pageType){
+        //页面类型
+        sensors.quick('autoTrack', {
+            pageType: pageType
+        });
+    },
+    mkt : function (type,page,content,location,desc,id){
+        sensors.track('mkt_event', {
+            mkt_type : type,
+            mkt_page : page,
+            mkt_content : content,
+            mkt_location : location,
+            mkt_desc : desc,
+            commodityID : id,
+        })
+        alert(1111);
+    },
+    //从url中获取商品或文章id
+    getUrlId : function (url) {
+        var id = '';
+        var goods = '/Portal/HsArticle/index/id/';// /Portal/HsArticle/index/id/1095919.html
+        var article = '/Portal/HsArticle/culture/id/';// /Portal/HsArticle/culture/id/1095879.html
+        var user = '/User/index/index/id/';// /User/index/index/id/176.html
+        if(url.indexOf(goods)>-1 || url.indexOf(article)>-1 || url.indexOf(user)>-1){
+            id = url.replace('.html','').split('/id/')[1];
+        }
+        return id;
+    },
+    //获取 /xxx/abc.html 格式中的 abc
+    getUrlKey : function (url,key) {
+        key = key || 'id';
+        var txt = '/'+key+'/';
+        var id = '';
+        if(url.indexOf(txt)>-1){
+            id = url.replace('.html','').split(txt)[1];
+        }
+        return id;
+    }
+
+};
+
+//获取埋点pageType
+function getPageType (){
+    var pathname = location.pathname;
+    var pathArr = [
+        {name:'推荐页',path:'/'},
+        {name:'推荐页',path:'/Portal/Index/index.html'},
+        {name:'大专题页',path:'/HsProject/index/pid/'},
+        {name:'文章列表页',path:'/Portal/Index/cultureall.html'},
+        {name:'分类列表页',path:'/HsCategories/category_index/id/'},
+        {name:'热门页',path:'/Portal/index/showall.html'},
+        {name:'关注-关注的狠人',path:'/Portal/index/atten.html'},
+        {name:'关注-关注的狠货',path:'/Portal/index/atten.html'},
+        {name:'特卖页',path:'/Portal/index/sale.html'},
+        {name:'分类页',path:'/Portal/HsCategories/index.html'},
+        {name:'标签页',path:'/HsCategories/category_index/id/'},
+        {name:'搜索结果页',path:'/Portal/Index/search_goods.html'},
+        {name:'购物车页面',path:'/User/MyChart/index.html'},
+        {name:'订单物流页',path:'/User/HsOrder/express_query/order_number/'},
+        {name:'我的页面（买家版）',path:'/User/Center/index.html'},
+        {name:'我的订单页',path:'/user/HsBuyorder/order_all.html'},
+        {name:'我的订单页',path:'/user/HsBuyorder/order_deliver.html'},
+        {name:'买家订单详情页',path:'/user/HsBuyorder/order_info/id/'},
+        {name:'商品详情页',path:'/Portal/HsArticle/index/id/'},
+        {name:'卖家店铺页',path:'/User/index/index/id/'},
+        {name:'我的优惠券页',path:'/Portal/Coupon/userCoupon.html'},
+        {name:'我的收藏页',path:'/index.php/user/HsLike/index.html'},
+        {name:'确认订单页',path:'/User/HsOrder/add/object_id/'},
+        {name:'确认订单页',path:'/User/MyChart/buy.html'},
+        {name:'私信页面',path:'/User/HsMessage/detail/from_uid/'},
+        {name:'文章页面',path:'/Portal/HsArticle/culture/id/'},
+        {name:'常见问题页',path:'/Portal/PostDetails/faq.html'},
+        {name:'评分详情页',path:'/Portal/PostDetails/scoreDetails.html'},
+        {name:'评论列表页面',path:'/user/HsComment/my_comment_list.html'},
+        {name:'评论页',path:'/Portal/HsArticle/comment_list/id/,type/1.html'},
+        {name:'哆嗦列表页',path:'/Portal/HsArticle/comment_list/id/,/type/2.html'},
+        {name:'登录注册页',path:'/User/Login/mobile.html'},
+    ];
+
+
+    for(var i=0;i<pathArr.length;i++){
+        var item = pathArr[i];
+        var path = item.path;
+        if(path.indexOf(',')>-1){
+            var arr = path.split(',');
+            if(pathname.indexOf(arr[0])>-1 && pathname.indexOf(arr[1])>-1){
+                return item.name;
+            }
+        }else{
+            if(pathname.indexOf(path)>-1){
+                return item.name;
+            }
+        }
+    }
+    return '';
+}
 
 
 

@@ -32,6 +32,7 @@ $(document).on('pageInit','.center', function(e, id, page){
     init.wx_share(share_data);
   }
 
+    init.sensorsFun.bottomNav();
 
 
 
@@ -107,7 +108,11 @@ $(document).on('pageInit','.center', function(e, id, page){
                 operationType : '关注',
                 sellerID : $(this).data('id'),
                 storeName : $(page).find('.header .username').html(),
-            })
+            });
+            init.sensors.track('buttonClick', {
+                pageType : '卖家店铺页',
+                buttonName : '关注',
+            });
         })
     }
 
@@ -146,8 +151,16 @@ $(document).on('pageInit','.center', function(e, id, page){
                 $pushMsg.show();
                 if($pushMsg.attr('push')=='1'){
                     $pushMsg.attr('push',0);
+                    init.sensors.track('buttonClick', {
+                        pageType : '卖家店铺页',
+                        buttonName : '取消推送',
+                    })
                 }else{
                     $pushMsg.attr('push',1);
+                    init.sensors.track('buttonClick', {
+                        pageType : '卖家店铺页',
+                        buttonName : '上新推送',
+                    })
                 }
                 $.toast(data.info);
             } else {
