@@ -44,6 +44,12 @@ $(document).on('pageInit','.user_attention', function (e, id, page) {
 					console.log(xhr);
 				}
 			});
+            init.sensors.track('subscribe', {
+                pageType : '我关注的',
+                operationType : '关注',
+                sellerID : $(this).data('data-id'),
+                storeName : $(this).parents('.title').find('.user_nicename').html(),
+            })
 		}else{
 			$.confirm('确定取消关注吗？', function () {
 				$.ajax({
@@ -63,6 +69,12 @@ $(document).on('pageInit','.user_attention', function (e, id, page) {
 						console.log(xhr);
 					}
 				});
+                init.sensors.track('subscribe', {
+                    pageType : '我关注的',
+                    operationType : '取关',
+                    sellerID : $(this).data('data-id'),
+                    storeName : $(this).parents('.title').find('.user_nicename').html(),
+                })
 		    });
 		}
 	})
@@ -85,6 +97,12 @@ $(document).on('pageInit','.user_attention', function (e, id, page) {
 					}
 				}
 			});
+            init.sensors.track('collectOrNot',{
+                operationType: "商品",
+                collectType: "取消收藏",
+                commodityID: id,
+                sellerID: $(this).parents('li').find('.user').attr('data-user_id'),
+            });
 	    });
 	})
 })

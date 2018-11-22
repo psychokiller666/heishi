@@ -45,13 +45,24 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
 
 
   var init = new common(page);
-  var share_data = {
+
+  var goodsId = $('.store-show').attr('data-id');
+  var sellerId = $(page).find('.chat_btn').attr('data-otheruid');
+
+    var share_data = {
     title: page.find('.frontcover .title').text(),
     desc: page.find('.content_details').find('div').text(),
     link: share_url,
     img: page.find('.frontcover .image').data('share')
   };
-  init.wx_share(share_data);
+  init.wx_share(share_data,function(type){
+      init.sensors.track('share',{
+          shareType: '商品',
+          shareMethod: type===1 ? '朋友圈':'微信',//1是朋友圈，2是好友
+          commodityID: goodsId,
+          // sellerID:sellerId,
+      });
+  });
   // 检查是否关注
   init.checkfollow();
 
@@ -72,7 +83,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   }
 
 
-  
+
   // 如果有视频就放在封面图位置
   var video_status = 0;
   if($('.video_bg').length > 0){
@@ -465,6 +476,12 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }else{
       collect(this);
     }
+    init.sensors.track('collectOrNot',{
+        operationType: "商品",
+        collectType: bool ? "取消收藏" : '收藏',
+        commodityID: goodsId,
+        sellerID: sellerId,
+    });
     function collect(that){
        $.ajax({
         type: 'POST',
@@ -591,6 +608,10 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
   });
   attention.click(function(){
+    if(!loginStatus){
+      init.toLogin();
+      return;
+    }
     // 关注
     $.post('/index.php?g=user&m=HsFellows&a=ajax_add',{
       uid: $(this).data('uid')
@@ -603,9 +624,20 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         $.toast(data.info);
       }
     });
+      init.sensors.track('subscribe', {
+          pageType : '商品详情页',
+          operationType : '关注',
+          sellerID : $(this).data('data-uid'),
+          storeName : $(this).parents('.user_info').find('.user_name').html(),
+      })
+
   })
   $('.cancel_attention').click(function(){
     // 取消关注
+    if(!loginStatus){
+        init.toLogin();
+        return;
+    }
     $.post('/index.php?g=user&m=HsFellows&a=ajax_cancel',{
       uid: $(this).data('uid')
     },function(data){
@@ -617,6 +649,12 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         $.toast(data.info);
       }
     });
+      init.sensors.track('subscribe', {
+          pageType : '商品详情页',
+          operationType : '取关',
+          sellerID : $(this).data('data-uid'),
+          storeName : $(this).parents('.user_info').find('.user_name').html(),
+      })
   })
 
   // 微信预览图片
@@ -872,7 +910,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     var ApiBaseUrl = init.getApiBaseUrl();
     var PHPSESSID = init.getCookie('PHPSESSID');
 
-    var goodsId = $('.store-show').attr('data-id');
+
     getGoodsCoupon()
     function getGoodsCoupon(){
         var url = ApiBaseUrl + '/appv6/coupon/getPostsCouponList';
@@ -1281,6 +1319,18 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
 
 
+    init.sensors.track('commodityDetail',{
+        commodityID: goodsId,
+        sellerID:sellerId,
+    });
 
+    $(page).find('.chat_btn').on('click',function(){
+        init.sensors.track('contactSeller', {
+            pageType : '商品详情页',
+            buttonName : '私信',
+            commodityID : goodsId,
+            sellerID : sellerId,
+        })
+    })
 
 });

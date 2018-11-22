@@ -44,7 +44,7 @@ $(document).on('pageInit','.lottery', function(e, id, page) {
     // var version = $isApp.attr('version');
 
     var loginStatus = true;
-
+    //todo::::
 
     //app回调函数对象。调用方式：appCallbackFunction.lotteryAddTicketCount(args)
     window.appCallbackFunction = {};

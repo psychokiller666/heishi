@@ -15,6 +15,15 @@ var SearchInit = function () {
 	var search_nodata_status = false;
 
 
+	var sensorsTrack = {
+        'searchType':'狠货',
+        'keyWord':'',//关键词
+        'hasResult':true,//是否有搜索结果
+        'isHistory':false,//是否是历史记录
+        'isRecommend':false,//是否是推荐词
+    };
+
+
     //取消按钮
     $('.search_list').find('.cancelBtn').click(function(){
 
@@ -100,6 +109,8 @@ var SearchInit = function () {
 			$('.search_content').val(search_content);
 			$('.search_goods_list ul').empty();
 			start_num = 0;
+            sensorsTrack.isRecommend = false;
+            sensorsTrack.isHistory = true;
 			ajax_search(search_content, start_num);
 		    $('.infinite-scroll-preloader').show();
 		}
@@ -137,7 +148,9 @@ var SearchInit = function () {
 			$('.search_content').val(search_content);
 			$('.search_goods_list ul').empty();
 			start_num = 0;
-			ajax_search(search_content, start_num);
+            sensorsTrack.isRecommend = true;
+            sensorsTrack.isHistory = false;
+            ajax_search(search_content, start_num);
 		    $('.infinite-scroll-preloader').show();
 			return false;
 		}else{
@@ -212,9 +225,6 @@ var SearchInit = function () {
 
 	//搜索接口
 	function ajax_search(query, start){
-console.log(start_num,last_page);
-
-
 
         sessionStorage.setItem('searchStart',start_num);
 
@@ -237,6 +247,7 @@ console.log(start_num,last_page);
 					if(typeof message === "string" && message.length>0){
 
                         //没有搜到
+                        sensorsTrack.hasResult = false;
                         search_nodata_status = true;
                         last_page = data.data.total_pages;
                         start_num = last_page;
@@ -252,6 +263,7 @@ console.log(start_num,last_page);
 					}else{
 
                         //搜到数据
+                        sensorsTrack.hasResult = true;
                         if(data.data.total_pages == 1){
                             $('.infinite-scroll-preloader').hide();
                         }
@@ -265,7 +277,11 @@ console.log(start_num,last_page);
                         output(items);
 					}
 
-		    	}else{
+					sensorsTrack.keyWord = query;
+                    common.prototype.sensors.track('search',sensorsTrack);
+
+
+                }else{
                 	var errMsg = '';
                 	if(typeof data.info === "string"){
                 		errMsg = data.info;

@@ -14,6 +14,15 @@ $(document).on('pageInit','.detail', function (e, id, page) {
   // 初始底部
   $('.hs-main').css('bottom', $('.reply_content').height() + 'px');
 
+  var sensorFrom = init.getUrlParam('from')||'';
+  if(sensorFrom==1){
+      init.sensors.track('contactSeller', {
+          pageType : '私信页面',
+          buttonName : '私信',
+          commodityID : '',
+          sellerID : $(page).find('#user_id').val(),
+      })
+  }
 
   var uploadingStatus = false;
   $('.uploading').click(function(){

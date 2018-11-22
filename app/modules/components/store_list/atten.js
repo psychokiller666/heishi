@@ -92,6 +92,12 @@ $(document).on('pageInit','.atten', function(e, id, page){
 					console.log(xhr);
 				}
 			});
+            init.sensors.track('subscribe', {
+                pageType : '关注-关注的狠人',
+                operationType : '关注',
+                sellerID : $(this).data('data-id'),
+                storeName : $(this).parents('.title').find('.user_nicename').html(),
+            })
 		}else{
 			$.confirm('确定取消吗？', function () {
 				$.ajax({
@@ -111,6 +117,12 @@ $(document).on('pageInit','.atten', function(e, id, page){
 						console.log(xhr);
 					}
 				});
+                init.sensors.track('subscribe', {
+                    pageType : '关注-关注的狠人',
+                    operationType : '取关',
+                    sellerID : $(this).data('data-id'),
+                    storeName : $(this).parents('.title').find('.user_nicename').html(),
+                })
 		    });
 		}
 	})
