@@ -75,10 +75,10 @@ $(document).on('pageInit', '.score_details', function (e, id, page) {
                 html += '<div class="stars_lv_wrap">'
                 var content = detail[i].content;
                 for (var j=0;j<content.length;j++){
-                    html += '<div class="stars_lv">'+ content[j].scroe +' 级: '+ content[j].info
+                    html += '<div class="stars_lv">'+ (j+1) +' 级: '+ content[j].info
 
                     if(content[j].isChoice==1){
-                        html += '<div class="stars_lv_sel">'+ content[j].scroe +' 级: '+ content[j].info +'</div>'
+                        html += '<div class="stars_lv_sel">'+ (j+1) +' 级: '+ content[j].info +'</div>'
                     }
                     html += '</div>'
                 }
