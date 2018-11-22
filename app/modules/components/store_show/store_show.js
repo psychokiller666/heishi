@@ -580,6 +580,10 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
 
   // 特价跳转
   $('.special_offer').click(function(){
+      init.sensors.track('buttonClick', {
+          pageType : '商品详情页',
+          buttonName : '打开APP',
+      })
     location.href= GV.app_url;
   })
   // 卖家全部商品
@@ -596,7 +600,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   })
 
   // 是否关注当前卖家
-  var attention = $('.attention');
+/*  var attention = $('.attention');
   $.post('/index.php?g=user&m=HsFellows&a=ajax_relations',{
     my_uid: attention.data('meid'),
     other_uid: attention.data('uid')
@@ -655,7 +659,17 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
           sellerID : $(this).data('data-uid'),
           storeName : $(this).parents('.user_info').find('.user_name').html(),
       })
-  })
+  })*/
+
+
+    $(page).find('.user_goods .user_info').click(function(){
+        var id= $(this).attr('data-id');
+        init.sensors.track('buttonClick', {
+            pageType : '商品详情页',
+            buttonName : '去逛逛',
+        });
+        location.href = '/User/index/index/id/'+id+'.html';
+    });
 
   // 微信预览图片
   var images = $('.images');
@@ -1331,6 +1345,30 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
             commodityID : goodsId,
             sellerID : sellerId,
         })
-    })
+        init.sensors.track('buttonClick', {
+            pageType : '商品详情页',
+            buttonName : '私信',
+        })
+    });
+    $(page).find('.shopping_btn').on('click',function(){
+        init.sensors.track('buttonClick', {
+            pageType : '商品详情页',
+            buttonName : '购物车',
+        })
+    });
+    $(page).find('.userhome_btn').on('click',function(){
+        init.sensors.track('buttonClick', {
+            pageType : '商品详情页',
+            buttonName : '店铺',
+        })
+    });
+    $(page).find('.user_intro a').on('click',function(){
+        init.sensors.track('buttonClick', {
+            pageType : '商品详情页',
+            buttonName : '头像',
+        })
+    });
+
+
 
 });

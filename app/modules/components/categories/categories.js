@@ -1,3 +1,4 @@
+// 分类页
 // 初始化
 var common = require('../common/common.js');
 var handlebars = require('../../../../node_modules/handlebars/dist/handlebars.min.js');
@@ -13,6 +14,14 @@ $(document).on('pageInit','.categories', function(e, id, page){
 
   // 搜索初始
   // SearchInit();
+    $(page).find('.search_btn').on('click',function(){
+        init.sensors.track('buttonClick', {
+            pageType : '分类页面',
+            buttonName : '搜索',
+        })
+    });
+    init.sensorsFun.bottomNav();
+
   // 初始化title
   $('title').text('分类');
   // 存储每个子分类位置

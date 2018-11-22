@@ -8,4 +8,5 @@ $(document).on('pageInit','.user_message', function (e, id, page) {
   }
   var init = new common(page);
   init.checkfollow();
+  init.sensorsFun.bottomNav();
 })

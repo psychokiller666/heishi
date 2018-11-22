@@ -1,4 +1,4 @@
-// 商品列表
+// 商品列表 首页
 // 初始化
 var common = require('../common/common.js');
 
@@ -487,7 +487,139 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     }
 
 
-  });
+  //  神策埋点事件
+    sensorsEvent();
+    function sensorsEvent() {
+        $(page).find('.go_to_search').on('click',function(){
+            init.sensors.track('buttonClick', {
+                pageType : '首页',
+                buttonName : '搜索',
+            })
+        });
+        init.sensorsFun.bottomNav();
+        var $swoperBulletWrap = $(page).find('.swiper-pagination');
+        //首页banner
+        $(page).find('.banner').on('click','.swiper-slide',function(){
+            var url = $(this).find('a').attr('href');
+            var index = $(this).attr('data-swiper-slide-index');
+            init.sensorsFun.mkt('banner','首页',url,index,'','');
+        });
+        //首页大专题
+        $(page).find('.classification_content').on('click','a',function(){
+            var url = $(this).attr('href');
+            var index = $(this).index();
+            var title = $(this).find('.project_name').html();
+            init.sensorsFun.mkt('专题','首页',title,index,'','');
+        });
+        //首页新品
+        $(page).find('.newposts .goods_content').on('click','a',function(){
+            var $this = $(this);
+            var $li = $this.parents('.goods_list');
+            var url = $this.attr('href');
+            var index = $li.index();
+            var title = '';
+            var desc = '';
+            var id = '';
+            if($this.hasClass('filepath')||$this.hasClass('post_title')){
+                //商品
+                title = $li.find('.post_title').html();
+                desc = '商品';
+                id = init.sensorsFun.getUrlId(url);
+            }else if($this.hasClass('keywords')){
+                //标签
+                if($this.hasClass('keywords_none')){
+                    return;
+                }
+                title = $this.html();
+            }else{
+                //卖家id
+                title = init.sensorsFun.getUrlId(url);
+                desc = '店铺'
+            }
+
+            init.sensorsFun.mkt('新品','首页',title,index,desc,id);
+        });
+        //首页top10
+        $(page).find('.hitposts .goods_list').on('click','a',function(){
+            var $this = $(this);
+            var $li = $this.parents('.swiper-slide');
+            var url = $this.attr('href');
+            var index = $li.attr('data-swiper-slide-index');
+            var title = '';
+            var desc = '';
+            var id = '';
+            if($this.hasClass('filepath')||$this.hasClass('post_title')){
+                //商品
+                title = $li.find('.post_title').html();
+                desc = '商品';
+                id = init.sensorsFun.getUrlId(url);
+            }else if($this.hasClass('keywords')){
+                //标签
+                if($this.hasClass('keywords_none')){
+                    return;
+                }
+                title = $this.html();
+            }else{
+                //卖家id
+                title = init.sensorsFun.getUrlId(url);
+                desc = '店铺'
+            }
+
+            init.sensorsFun.mkt('新品','首页',title,index,desc,id);
+        });
+        //首页专题精选
+        $(page).find('.topic_list .culture_list').on('click','a',function(){
+            var url = $(this).attr('href');
+            var index = $(this).index();
+            var title = $(this).find('.culture_name').html();
+            init.sensorsFun.mkt('专题精选','首页',title,index,'','');
+        });
+        //卖家推荐
+        $(page).find('.recommend_user .user_list').on('click','a',function(){
+            var $li = $(this).parents('.item');
+            var url = $(this).attr('href');
+            var index = $li.index();
+            var title = $li.find('.attentionUser').attr('data-uid');
+            init.sensorsFun.mkt('卖家推荐','首页',title,index,'','');
+        });
+        //热门分类
+        $(page).find('.categories .categories_list').on('click','a',function(){
+            var url = $(this).attr('href');
+            var index = $(this).index();
+            var title = $(this).find('div').html();
+            init.sensorsFun.mkt('热门分类','首页',title,index,'','');
+        });
+        //首页 商品列表
+        $(page).find('.goods_list_ul').on('click','a',function(){
+            var $this = $(this);
+            var $li = $this.parents('li');
+            var url = $this.attr('href');
+            var index = $li.index();
+            var title = '';
+            var desc = '';
+            var id = '';
+            if($this.hasClass('articles')){
+                //商品
+                title = $li.find('.title').html();
+                desc = '商品';
+                id = init.sensorsFun.getUrlId(url);
+            }else if($this.hasClass('classify_keyword')){
+                //标签
+                title = $this.html();
+            }else{
+                //卖家id
+                title = init.sensorsFun.getUrlId(url);
+                desc = '店铺'
+            }
+
+            init.sensorsFun.mkt('商品列表','首页',title,index,desc,id);
+        });
+
+    }
+
+
+
+});
 
 
 

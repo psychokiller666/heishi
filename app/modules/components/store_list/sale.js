@@ -11,6 +11,10 @@ $(document).on('pageInit','.sale', function(e, id, page){
   var init = new common(page);
   init.checkfollow();
   $(".openapp_btn").click(function(){
+      init.sensors.track('buttonClick', {
+          pageType : '特卖页面',
+          buttonName : '打开APP',
+      })
     location.href = GV.app_url;
   })
   // 搜索初始

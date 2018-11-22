@@ -24,6 +24,14 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
       initLimitBuy(chartData);
   }
 
+    init.sensorsFun.bottomNav();
+
+    $(page).find('.recommend').on('click',function(){
+        init.sensors.track('buttonClick', {
+            pageType : '购物车',
+            buttonName : '相似商品',
+        })
+    });
 
 
   //初始加载
