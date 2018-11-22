@@ -17,6 +17,18 @@ $(document).on('pageInit', '.user_coupon', function (e, id, page) {
 
     var ApiBaseUrl = init.getApiBaseUrl();
 
+    $(page).on('click','.use_coupon_btn',function(){
+        init.sensors.track('buttonClick', {
+            pageType : '用户中心-优惠券',
+            buttonName : '立即使用',
+        })
+    });
+    $(page).on('click','.coupon_go_get',function(){
+        init.sensors.track('buttonClick', {
+            pageType : '用户中心-优惠券',
+            buttonName : '去领券',
+        })
+    });
 
     //属性名是优惠券类型type,值是对象,保存nowpage,totalpage,ifover,ifloading
     var couponTypes = {
@@ -81,7 +93,7 @@ $(document).on('pageInit', '.user_coupon', function (e, id, page) {
             }
             html += '</div>'
             html += '<div class="right">'
-            html += '<div class="btn"><a external href="/Portal/Coupon/useCoupon.html">立即使用</a></div>'
+            html += '<div class="btn"><a external href="/Portal/Coupon/useCoupon.html" class="use_coupon_btn">立即使用</a></div>'
             html += '</div>'
             html += '</div>'
             html += '<div class="right_btm">'

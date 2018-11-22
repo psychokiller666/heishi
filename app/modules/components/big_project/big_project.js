@@ -85,4 +85,27 @@ $(document).on('pageInit','.big_project', function (e, id, page) {
       }
     })
   }
+
+    //  神策埋点事件
+    sensorsEvent();
+    function sensorsEvent() {
+        //大专题banner
+        var bigTitle = $(page).find('.project_name').html();
+        $(page).find('.banner').on('click','.swiper-slide',function(){
+            var url = $(this).find('a').attr('href');
+            var index = $(this).attr('data-swiper-slide-index');
+            init.sensorsFun.mkt('banner','大专题页-'+bigTitle,url,index,'','');
+        });
+        //大专题 精选商品
+        $(page).find('.project_list').on('click','li',function(){
+            var url = $(this).find('a').attr('href');
+            var index = $(this).index();
+            var title = $(this).find('span').html();
+            var classify = $(page).find('.project_names .active').html();
+            var id = init.sensorsFun.getUrlId(url);
+            init.sensorsFun.mkt('精选商品','大专题页-'+bigTitle,classify+'-'+title,index,'',id);
+        });
+
+    }
+
 })

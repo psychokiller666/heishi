@@ -599,6 +599,10 @@ $(document).on('pageInit','.lottery', function(e, id, page) {
                     callApp(21);
                 }else{
                     getLottery();
+                    init.sensors.track('buttonClick', {
+                        pageType : '抽奖页面',
+                        buttonName : '抽奖',
+                    })
                 }
             }
         }else if(isApp && $this.attr('status')==='1'){
@@ -619,6 +623,13 @@ $(document).on('pageInit','.lottery', function(e, id, page) {
             //我的抽奖券弹窗              lottery://22-xxx 加分享shareid
             callApp(22);
         }
+    });
+
+    $page.on('click','.lottery_download ',function(){
+        init.sensors.track('buttonClick', {
+            pageType : '抽奖页面',
+            buttonName : '打开APP',
+        })
     });
 
 
