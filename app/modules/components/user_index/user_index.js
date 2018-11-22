@@ -102,6 +102,12 @@ $(document).on('pageInit','.center', function(e, id, page){
                     $.toast(data.info);
                 }
             });
+            init.sensors.track('subscribe', {
+                pageType : '卖家店铺页',
+                operationType : '关注',
+                sellerID : $(this).data('id'),
+                storeName : $(page).find('.header .username').html(),
+            })
         })
     }
 
@@ -119,6 +125,13 @@ $(document).on('pageInit','.center', function(e, id, page){
           $.toast(data.info);
         }
       });
+
+        init.sensors.track('subscribe', {
+            pageType : '卖家店铺页',
+            operationType : '取关',
+            sellerID : $(this).data('id'),
+            storeName : $(page).find('.header .username').html(),
+        })
     })
 
     $pushMsg.click(function(){
@@ -143,6 +156,15 @@ $(document).on('pageInit','.center', function(e, id, page){
         });
 
     })
+
+      $(page).find('.private_letter').on('click',function(){
+          init.sensors.track('contactSeller', {
+              pageType : '卖家店铺页',
+              buttonName : '私信',
+              commodityID : '',
+              sellerID : $(this).data('id'),
+          })
+      });
 
 
     /****店铺首页 分类及加载 -start ****/

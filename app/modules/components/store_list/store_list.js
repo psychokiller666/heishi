@@ -20,6 +20,8 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
   init.wx_share(share_data);
   init.checkfollow();
 
+  var loginStatus = init.ifLogin();
+
   // 搜索初始
   // SearchInit();
 
@@ -75,6 +77,10 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
   $('.attentionUser').click(function(){
     var that = this;
     var isAtten = $(this).data('isatten');
+    if(!loginStatus){
+        init.toLogin();
+        return;
+    }
     if(isAtten == 0){
       $.ajax({
         type: 'POST',
@@ -90,8 +96,21 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
           console.log(xhr);
         }
       });
+        init.sensors.track('subscribe', {
+            pageType : '推荐页',
+            operationType : '关注',
+            sellerID : $(this).data('data-uid'),
+            storeName : $(this).parents('.item').find('.user_nicename').html(),
+        })
     } else {
       $.confirm('确定取消吗？', function () {
+          init.sensors.track('subscribe', {
+              pageType : '推荐页',
+              operationType : '取关',
+              sellerID : $(this).data('data-uid'),
+              storeName : $(this).parents('.item').find('.user_nicename').html(),
+          })
+
         $.ajax({
           type: 'POST',
           url: '/index.php?g=user&m=HsFellows&a=ajax_cancel',
