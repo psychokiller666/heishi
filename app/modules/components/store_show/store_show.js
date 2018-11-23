@@ -664,10 +664,6 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
 
     $(page).find('.user_goods .user_info').click(function(){
         var id= $(this).attr('data-id');
-        init.sensors.track('buttonClick', {
-            pageType : '商品详情页',
-            buttonName : '去逛逛',
-        });
         location.href = '/User/index/index/id/'+id+'.html';
     });
 
@@ -1333,41 +1329,102 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
 
 
-    init.sensors.track('commodityDetail',{
-        commodityID: goodsId,
-        sellerID:sellerId,
-    });
+    //  神策埋点事件
+    sensorsEvent();
+    function sensorsEvent() {
 
-    $(page).find('.chat_btn').on('click',function(){
-        init.sensors.track('contactSeller', {
-            pageType : '商品详情页',
-            buttonName : '私信',
-            commodityID : goodsId,
-            sellerID : sellerId,
-        })
-        init.sensors.track('buttonClick', {
-            pageType : '商品详情页',
-            buttonName : '私信',
-        })
-    });
-    $(page).find('.shopping_btn').on('click',function(){
-        init.sensors.track('buttonClick', {
-            pageType : '商品详情页',
-            buttonName : '购物车',
-        })
-    });
-    $(page).find('.userhome_btn').on('click',function(){
-        init.sensors.track('buttonClick', {
-            pageType : '商品详情页',
-            buttonName : '店铺',
-        })
-    });
-    $(page).find('.user_intro a').on('click',function(){
-        init.sensors.track('buttonClick', {
-            pageType : '商品详情页',
-            buttonName : '头像',
-        })
-    });
+        init.sensors.track('commodityDetail',{
+            commodityID: goodsId,
+            sellerID:sellerId,
+        });
+
+        $(page).find('.chat_btn').on('click',function(){
+            init.sensors.track('contactSeller', {
+                pageType : '商品详情页',
+                buttonName : '私信',
+                commodityID : goodsId,
+                sellerID : sellerId,
+            })
+            init.sensors.track('buttonClick', {
+                pageType : '商品详情页',
+                buttonName : '私信',
+            })
+        });
+        $(page).find('.shopping_btn').on('click',function(){
+            init.sensors.track('buttonClick', {
+                pageType : '商品详情页',
+                buttonName : '购物车',
+            })
+        });
+        $(page).find('.userhome_btn').on('click',function(){
+            init.sensors.track('buttonClick', {
+                pageType : '商品详情页',
+                buttonName : '店铺',
+            })
+        });
+        $(page).find('.user_intro a').on('click',function(){
+            init.sensors.track('buttonClick', {
+                pageType : '商品详情页',
+                buttonName : '头像',
+            })
+        });
+
+        //卖家推荐商品
+        $(page).find('.user_goods .goods_content').on('click','a',function(){
+            var $this = $(this);
+            var $li = $this;
+            var url = $this.attr('href');
+            var index = $li.index();
+            var title = $li.find('.post_title').html();
+            var desc = '商品';
+            var id = init.sensorsFun.getUrlId(url);
+
+            init.sensorsFun.mkt('卖家推荐商品','商品详情页',title,index,desc,id);
+        });
+
+        //卖家推荐商品的卖家
+        $(page).find('.user_goods').on('click','.user_info',function(){
+            var id= $(this).attr('data-id');
+            init.sensors.track('buttonClick', {
+                pageType : '商品详情页',
+                buttonName : '去逛逛',
+            });
+            init.sensorsFun.mkt('卖家推荐商品','商品详情页',id,'','店铺','');
+        });
+
+        //猜你喜欢
+        $(page).find('.correlation .goods_content').on('click','a',function(){
+            var $this = $(this);
+            var $li = $this.parents('.goods_list');
+            var url = $this.attr('href');
+            var index = $li.index();
+            var title = '';
+            var desc = '';
+            var id = '';
+            if($this.hasClass('filepath')||$this.hasClass('post_title')){
+                //商品
+                title = $li.find('.post_title').html();
+                desc = '商品';
+                id = init.sensorsFun.getUrlId(url);
+            }else if($this.hasClass('classify_keyword')){
+                //标签
+                title = $this.html();
+                desc = '标签';
+            }else{
+                //卖家id
+                title = init.sensorsFun.getUrlId(url);
+                desc = '店铺'
+            }
+
+            init.sensorsFun.mkt('随便看看','购物车页',title,index,desc,id);
+
+        });
+
+
+
+    }
+
+
 
 
 

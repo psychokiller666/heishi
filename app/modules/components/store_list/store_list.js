@@ -277,6 +277,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
                     return;
                 }
                 title = $this.html();
+                desc = '标签';
             }else{
                 //卖家id
                 title = init.sensorsFun.getUrlId(url);
@@ -305,6 +306,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
                     return;
                 }
                 title = $this.html();
+                desc = '标签';
             }else{
                 //卖家id
                 title = init.sensorsFun.getUrlId(url);
@@ -352,6 +354,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
             }else if($this.hasClass('classify_keyword')){
                 //标签
                 title = $this.html();
+                desc = '标签';
             }else{
                 //卖家id
                 title = init.sensorsFun.getUrlId(url);

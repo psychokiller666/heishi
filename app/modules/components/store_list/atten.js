@@ -126,4 +126,86 @@ $(document).on('pageInit','.atten', function(e, id, page){
 		    });
 		}
 	})
+
+
+    //  神策埋点事件
+    sensorsEvent();
+    function sensorsEvent() {
+
+        //关注-关注的狠人
+        $(page).find('.seller_user_goods').on('click','a',function(){
+            var $this = $(this);
+            var $li = $this.parents('.my_fans_content');
+            var url = $this.attr('href');
+            var index = $li.index();
+            var title = '';
+            var desc = '';
+            var id = '';
+            if($this.find('.post_title').length>0){
+                //商品
+                title = $this.find('.post_title').html();
+                desc = '商品';
+                id = init.sensorsFun.getUrlId(url);
+            }else{
+                //卖家id
+                title = init.sensorsFun.getUrlId(url);
+                desc = '店铺'
+            }
+
+            init.sensorsFun.mkt('关注','关注-关注的狠人',title,index,desc,id);
+        });
+        //关注-关注的狠货
+        $(page).find('.commodity_goods .favors_goods_wrap').on('click','a',function(){
+            var $this = $(this);
+            var $li = $this.parents('li');
+            var url = $this.attr('href');
+            var index = $li.index();
+            var title = '';
+            var desc = '';
+            var id = '';
+            if($this.hasClass('articles')){
+                //商品
+                title = $li.find('.title').html();
+                desc = '商品';
+                id = init.sensorsFun.getUrlId(url);
+            }else if($this.hasClass('classify_keyword')){
+                //标签
+                title = $this.html();
+                desc = '标签';
+            }else{
+                //卖家id
+                title = init.sensorsFun.getUrlId(url);
+                desc = '店铺'
+            }
+
+            init.sensorsFun.mkt('关注','关注-关注的狠货',title,index,desc,id);
+        });
+        //最受欢迎 关注-关注的狠货
+        $(page).find('.commodity_goods .recommend_goods_wrap').on('click','a',function(){
+            var $this = $(this);
+            var $li = $this.parents('li');
+            var url = $this.attr('href');
+            var index = $li.index();
+            var title = '';
+            var desc = '';
+            var id = '';
+            if($this.hasClass('articles')){
+                //商品
+                title = $li.find('.title').html();
+                desc = '商品';
+                id = init.sensorsFun.getUrlId(url);
+            }else if($this.hasClass('classify_keyword')){
+                //标签
+                title = $this.html();
+                desc = '标签';
+            }else{
+                //卖家id
+                title = init.sensorsFun.getUrlId(url);
+                desc = '店铺'
+            }
+
+            init.sensorsFun.mkt('最受欢迎','关注-关注的狠货',title,index,desc,id);
+        });
+    }
+
 });

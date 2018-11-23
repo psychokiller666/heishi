@@ -12,7 +12,7 @@ $(document).on('pageInit','.sale', function(e, id, page){
   init.checkfollow();
   $(".openapp_btn").click(function(){
       init.sensors.track('buttonClick', {
-          pageType : '特卖页面',
+          pageType : '特卖页',
           buttonName : '打开APP',
       })
     location.href = GV.app_url;

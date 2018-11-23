@@ -87,4 +87,45 @@ $(document).on('pageInit','.showall', function (e, id, page) {
       $('.hs-main').css('bottom', 0);
     }
   }
+
+    //  神策埋点事件
+    sensorsEvent();
+    function sensorsEvent() {
+
+        //哆嗦排行榜
+        $(page).find('.goods_content .goods_list').on('click','a',function(){
+            var url = $(this).attr('href');
+            var index = $(this).index();
+            var title = $(this).find('.post_title').html();
+            var id = init.sensorsFun.getUrlId(url);
+            init.sensorsFun.mkt('哆嗦排行榜','热门',title,index,'',id);
+        });
+        //当下最热
+        $(page).find('.current_hot_ul').on('click','a',function(){
+            var $this = $(this);
+            var $li = $this.parents('li');
+            var url = $this.attr('href');
+            var index = $li.index();
+            var title = '';
+            var desc = '';
+            var id = '';
+            if($this.hasClass('articles')){
+                //商品
+                title = $li.find('.title').html();
+                desc = '商品';
+                id = init.sensorsFun.getUrlId(url);
+            }else if($this.hasClass('classify_keyword')){
+                //标签
+                title = $this.html();
+                desc = '标签';
+            }else{
+                //卖家id
+                title = init.sensorsFun.getUrlId(url);
+                desc = '店铺'
+            }
+
+            init.sensorsFun.mkt('当下最热','热门',title,index,desc,id);
+        });
+    }
+
 });
