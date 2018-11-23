@@ -30,6 +30,7 @@ $(document).on('pageInit', '.score_details', function (e, id, page) {
 
             success: function(data){
                 if(data.status==1){
+                    console.log(data.data)
                     initHofmUl(data.data.hoffman);
                 }
             },
@@ -50,7 +51,7 @@ $(document).on('pageInit', '.score_details', function (e, id, page) {
 
             var detail = data.detail;
             var html = '';
-            for(var i=0;i<detail.length;i++){
+/*            for(var i=0;i<detail.length;i++){
                 html += '<li class="score_li">'
                 html += '<div class="title">'+ detail[i].title +'</div>'
                 html += '<div class="scores">'
@@ -63,7 +64,29 @@ $(document).on('pageInit', '.score_details', function (e, id, page) {
                 }
                 html += '</li>'
             }
-            $('.score_ul').html(html);
+            $('.score_ul').html(html);*/
+
+            for(var i=0;i<detail.length;i++){
+                html += '<li class="score_ul_new_li">'
+                html += '<div class="title">'+ detail[i].title +'</div>'
+                html += '<div class="stars_wrap">'
+                html += '<div class="stars" stars="'+ parseInt(detail[i].scroe) +'"></div>'
+                html += '</div>'
+                html += '<div class="stars_lv_wrap">'
+                var content = detail[i].content;
+                for (var j=0;j<content.length;j++){
+                    html += '<div class="stars_lv">'+ (j+1) +' 级: '+ content[j].info
+
+                    if(content[j].isChoice==1){
+                        html += '<div class="stars_lv_sel">'+ (j+1) +' 级: '+ content[j].info +'</div>'
+                    }
+                    html += '</div>'
+                }
+                html += '</div>'
+                html += '</li>'
+            }
+            $('.score_ul_new').html(html);
+
 
             var $content = $('.score_details .content');
             $content.css('overflow','hidden');

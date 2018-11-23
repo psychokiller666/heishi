@@ -123,6 +123,9 @@ common.prototype.wx_share = function(options){
 
     // 判断是否分享
     if(options) {
+
+      options.img = fixUrlProtocol(options.img);//补全分享图片url协议
+
       wx.config({
         debug: false,
         appId: data.appId,
@@ -252,9 +255,27 @@ common.prototype.ifLogin = function(toLogin){
 common.prototype.toLogin = function(){
     var appid = 'null';
     var nowUrl = encodeURI(location.href);
-    var url = '/Api/Oauth/login?type=weixin&login_http_referer='+nowUrl;
+    // var url = '/Api/Oauth/login?type=weixin&login_http_referer='+nowUrl;
     // var url = '/User/Login/mobile?appid='+appid+'&redirect_uri='+nowUrl+'&type=mobile&response_type=code';
-    location.href = url;
+    // location.href = url;
+
+    var postForm = document.createElement("form");//表单对象
+    postForm.method="post" ;
+    postForm.action = '/Api/Oauth/login' ;
+
+    var typeInput = document.createElement("input") ; //type input
+    typeInput.setAttribute("name", "type") ;
+    typeInput.setAttribute("value", "weixin");
+    postForm.appendChild(typeInput) ;
+    var refererInput = document.createElement("input");// referer input
+    refererInput.setAttribute("name","login_http_referer");
+    refererInput.setAttribute("value",nowUrl);
+    postForm.appendChild(refererInput);
+
+    document.body.appendChild(postForm) ;
+    postForm.submit() ;
+    document.body.removeChild(postForm) ;
+
     return false;
 };
 //优惠券的格式化时间，显示为2001.11.11
@@ -333,8 +354,46 @@ function addCss(){
     var css = '';
     css+= '<style type="text/css" class="addcss">'
     css+= '.ellipsis_2{overflow : hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;}'
+    css+= '.ellipsis_3{overflow : hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 3;}'
+    css+= '.ellipsis_4{overflow : hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 4;}'
+    css+= '.ellipsis_5{overflow : hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 5;}'
     css+= '</style>'
     $('body').append(css);
 };
+
+
+//时间戳格式化 调用方法  new Date(1541753878000).format('yyyy-MM-dd hh:mm:ss')
+Date.prototype.format = function(format) {
+    var date = {
+        "M+": this.getMonth() + 1,
+        "d+": this.getDate(),
+        "h+": this.getHours(),
+        "m+": this.getMinutes(),
+        "s+": this.getSeconds(),
+        "q+": Math.floor((this.getMonth() + 3) / 3),
+        "S+": this.getMilliseconds()
+    };
+    if (/(y+)/i.test(format)) {
+        format = format.replace(RegExp.$1, (this.getFullYear() + '').substr(4 - RegExp.$1.length));
+    }
+    for (var k in date) {
+        if (new RegExp("(" + k + ")").test(format)) {
+            format = format.replace(RegExp.$1, RegExp.$1.length == 1 ?
+                date[k] : ("00" + date[k]).substr(("" + date[k]).length));
+        }
+    }
+    return format;
+};
+
+//补全url协议同当前网页协议：修复分享url没有http或https时分享缩略图不显示的问题
+function fixUrlProtocol(url){
+    if(url && url.indexOf('//')===0){
+        return location.protocol + url;
+    }else{
+        return url;
+    }
+}
+
+
 
 module.exports = common;

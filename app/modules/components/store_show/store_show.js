@@ -1139,7 +1139,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         for(var i=0;i<data.length;i++){
             html += '<div class="list">'
             html += '<div class="title">'+ data[i].title +'</div>'
-            html += '<div class="stars" stars="'+ parseInt(data[i].score) +'"></div>'
+            html += '<div class="stars" stars="'+ parseInt(data[i].scroe) +'"></div>'
             html += '</div>'
         }
         return html;
@@ -1175,6 +1175,69 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
             $faq_wrap.show();
         }
     }
+
+    //评论
+    getGoodsEvaluation();
+
+    //获取商品评测列表
+    function getGoodsEvaluation(){
+
+        var url = ApiBaseUrl + '/appv6_2/lottery/getGoodsEvaluation';
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType: 'json',
+            data: {
+                object_id:goodsId,
+            },
+            // headers: ajaxHeaders,
+
+            success: function(data){
+                if(data.status==1){
+                    // console.log(data.data)
+                    createEvaluation(data.data);
+                }else{
+                    $.toast(data.info);
+                }
+            },
+            error: function(e){
+                console.log('getLotteryUser err: ',e);
+            }
+        });
+    }
+
+    function createEvaluation(data){
+
+        var html = '';
+        if( data instanceof Array && data.length>0){
+
+            for(var i=0;i<data.length;i++){
+              html += '<li class="lottery_evaluation_li '+ (data.length>1?'lottery_evaluation_li_short':'') +'">'
+              html += '<a class="lottery_evaluation_li_a" href="/Portal/Lottery/lottery_evaluation.html?id='+goodsId+'">'
+              html += '<div class="right">'
+              html += '<div class="image" style="background-image: url('+ data[i].img[0] +'@!320x320);"></div>'
+              html += '<div class="image_count">'+ data[i].img.length +'张</div>'
+              html += '</div>'
+              html += '<div class="left">'
+              html += '<div class="userinfo">'
+              html += '<div class="avatar" style="background-image: url('+data[i].avatar+')"></div>'
+              html += '<div class="username">'+ data[i].user_name +'</div>'
+              html += '</div>'
+              html += '<div class="text ellipsis_4">'+ data[i].content +'</div>'
+              html += '</div>'
+              html += '</a>'
+              html += '</li>'
+            }
+
+            $(page).find('.lottery_evaluation_ul').html(html);
+            $(page).find('.lottery_evaluation').show();
+        }
+
+
+        return html;
+    }
+
+
     //商品特征标签说明弹窗
     function initGoodsNounPopup(data) {
         if(data && data.length>0) {

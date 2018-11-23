@@ -374,6 +374,7 @@
 
                 .list{
                     margin-bottom: 0.10667rem;
+                    height: 0.32rem;
                     &:last-child{
                         margin-bottom: 0;
                     }
@@ -388,31 +389,66 @@
                         overflow: hidden;
                     }
                     .stars{
-                        width: 2.13333rem;
-                        height: 0.32rem;
+                        width: 2.66667rem;
+                        height: 0.16rem;
                         font-size: 0.26667rem;
                         margin-left: 6em;
-                        &[stars="0"]{
-                            background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/0_2x.png');
+                        transform: translateY(0.08rem);
+                        position: relative;
+                        &:before{
+                            content: '';
+                            display: block;
+                            width: 0;
+                            height: 0.16rem;
+                            background-color: #202123;
+                            border-radius:0.08rem;
                         }
-                        &[stars="1"]{
-                            background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/1_2x.png');
+                        &:after{
+                            content: '0';
+                            display: block;
+                            position: absolute;
+                            right: -0.32rem;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            color: #8E8E8E;
+                            font-size: 0.26667rem;
+                            line-height: 1;
                         }
-                        &[stars="2"]{
-                            background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/2_2x.png');
+                        &[stars="0"]:before{
+
                         }
-                        &[stars="3"]{
-                            background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/3_2x.png');
+                        &[stars="1"]:before{
+                            width: 20%;
                         }
-                        &[stars="4"]{
-                            background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/4_2x.png');
+                        &[stars="2"]:before{
+                            width: 40%;
                         }
-                        &[stars="5"]{
-                            background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/5_2x.png');
+                        &[stars="3"]:before{
+                            width: 60%;
                         }
-                        background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/5_2x.png');
-                        background-repeat: no-repeat;
-                        background-size: 100% 100%;
+                        &[stars="4"]:before{
+                            width: 80%;
+                        }
+                        &[stars="5"]:before{
+                            width: 100%;
+                        }
+                        &[stars="1"]:after{
+                            content: '1';
+                        }
+                        &[stars="2"]:after{
+                            content: '2';
+                        }
+                        &[stars="3"]:after{
+                            content: '3';
+                        }
+                        &[stars="4"]:after{
+                            content: '4';
+                        }
+                        &[stars="5"]:after{
+                            content: '5';
+                        }
+                        background: #D8D8D8;
+                        border-radius:0.08rem;
                     }
                 }
             }
@@ -780,6 +816,130 @@
 
     }
 
+
+    //测评
+    .lottery_evaluation{
+        display: none;
+        border-bottom: 0.21333rem solid #F5F5F5;
+        h4{
+            font-size: 0.37333rem;
+            padding: .4rem;
+            font-weight: 700;
+
+            .lottery_evaluation_more{
+                float: right;
+                color: #8E8E8E;
+            }
+        }
+
+        .lottery_evaluation_ul{
+            height: 3.41333rem;
+            margin-bottom: 0.4rem;
+            padding: 0 0.4rem;
+            white-space: nowrap;
+            overflow-x: auto;
+            overflow-y: hidden;
+            font-size: 0;
+
+            .lottery_evaluation_li{
+                display: inline-block;
+                padding: 0.32rem;
+                margin-right: 0.4rem;
+                width: 100%;
+                height: 100%;
+                box-sizing: border-box;
+                background-color: #F2F2F2;
+                border-radius: 0.24rem;
+                &:last-child{
+                    margin-right: 0;
+                }
+                &.lottery_evaluation_li_short{
+                    width: 7.04rem;
+                    .lottery_evaluation_li_a{
+                        .left{
+                            width: 3.2rem;
+                        }
+                    }
+                }
+
+                .lottery_evaluation_li_a{
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+
+                    .left{
+                        float: left;
+                        width: 5.36rem;
+                        .userinfo{
+                            height: 0.69333rem;
+                            .avatar{
+                                width: 0.69333rem;
+                                height: 0.69333rem;
+                                float: left;
+                            }
+                            .username{
+                                box-sizing: border-box;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow:ellipsis;
+                                font-size: 0.32rem;
+                                color: #8E8E8E;
+                                padding-left: 0.26667rem;
+                                line-height: 0.69333rem;
+                            }
+                        }
+                        .text{
+                            white-space: normal;
+                            color: #45484E;
+                            font-size: 0.34667rem;
+                            line-height: 0.45333rem;
+                            margin-top: 0.26667rem;
+                            text-align: justify;
+                            word-wrap: break-word;
+                            height: 1.81333rem;
+                            overflow: hidden;
+                        }
+
+
+                    }
+                    .right{
+                        float: right;
+                        width: 2.77333rem;
+                        height: 2.77333rem;
+                        position: relative;
+                        margin-left: 0.4rem;
+                        .image{
+                            width: 100%;
+                            height: 100%;
+                            border-radius:0.26667rem;
+                            background-size: cover;
+                            background-position: center center;
+                            background-repeat: no-repeat;
+
+                        }
+                        .image_count{
+                            position: absolute;
+                            bottom: 0.26667rem;
+                            right: 0.26667rem;
+                            font-size:0.32rem;
+                            font-weight:600;
+                            color: #fff;
+                            line-height:1;
+                            padding: 0.13333rem;
+                            background:rgba(0,0,0,0.4);
+                            border-radius:0.26667rem;
+
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+
+    }
+
     .comment{
         margin: 0 0.4rem;
         position: relative;
@@ -1074,9 +1234,11 @@
     }
     .title{
         letter-spacing: -0.026667rem;
-        .font-dpr(16px);
+        font-size: 0.42667rem;
+        max-height: 1.06667rem;
         font-weight: bold;
-        padding: 2.053rem 0.4rem 0.4rem 0.4rem;
+        padding: 2.053rem 0.4rem 0 0.4rem;
+        margin-bottom: 0.4rem;
     }
     .status{
         padding: 0 0.4rem 0.4rem 0.4rem;
@@ -1084,8 +1246,8 @@
         //margin-bottom: 0.4rem;
         .hs-cf;
         .price{
-            .font-dpr(20px);
-            line-height: 0.61rem;
+            font-size: 0.53333rem;
+            line-height: 1;
             float: left;
         }
         .good_limit_num,
@@ -1133,11 +1295,10 @@
     }
     .style{
         margin-top: 0.4rem;
-        max-height: 7.1rem;
+        max-height: 6.28rem;
         overflow-y: auto;
         box-sizing: border-box;
         -webkit-overflow-scrolling: touch;
-        padding-bottom: 0.4rem;
         .style_content{
             margin: 0 0.4rem;
         }
@@ -1215,6 +1376,7 @@
         }
         .good_num{
             margin-top: 0.213rem;
+            margin-bottom: 1.5rem;
         }
     }
     .buy_btn,

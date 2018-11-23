@@ -175,8 +175,6 @@ require('../modules/components/ghost_market_comment_list/index');
 require('../modules/components/plugin/velocity.min');
 
 
-
-
 //鬼市首页
 require('../modules/components/ghost_market_article_home/index');
 //鬼市卖家详情页
@@ -185,3 +183,15 @@ require('../modules/components/ghost_market_seller/index');
 require('../modules/components/ghost_market_buy/index');
 //鬼市支付成功页面
 require('../modules/components/ghost_market_pay_success/index');
+
+
+//抽奖活动
+require('../modules/components/lottery/lottery');
+//抽奖活动规则
+require('../modules/components/lottery/lottery_rule');
+//抽奖参与用户
+require('../modules/components/lottery/lottery_user');
+//抽奖测评页
+require('../modules/components/lottery/lottery_evaluation');
+
+
