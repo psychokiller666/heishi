@@ -168,7 +168,8 @@ var SearchInit = function () {
 		}else if(type == 1 && url_type == 6){
 			var url = '/HsCategories/category_index/id/'+$(this).attr('data-url')+'.html';
 		}
-		location.href = url;
+        location.href = url;
+        common.prototype.sensorsFun.mkt('搜索','',$(this).text(),'','','');
 	})
 
 	//滚动条滚动事件
@@ -184,7 +185,7 @@ var SearchInit = function () {
 		if(loading){
 			return false;
 		}
-		console.log(last_page <= start_num);
+		// console.log(last_page <= start_num);
 
 		if(last_page <= start_num){
 			return false;
@@ -278,8 +279,10 @@ var SearchInit = function () {
 					}
 
 					sensorsTrack.keyWord = query;
-                    common.prototype.sensors.track('search',sensorsTrack);
-
+                    if(start==0){
+                        common.prototype.sensors.track('search',sensorsTrack);
+                        common.prototype.sensorsFun.mkt('搜索','',query,'','','');
+                    }
 
                 }else{
                 	var errMsg = '';
@@ -290,7 +293,7 @@ var SearchInit = function () {
 					}else{
                 		errMsg = '网络错误，请稍后重试';
 					}
-                    $.toast(data.info);
+                    $.toast(errMsg);
                     $('.infinite-scroll-preloader').hide();
                     //加载更多数据时，假如接口失败了，start_num回退一个。
                     if(data.info!=='到最后一页了' && start_num > 0){

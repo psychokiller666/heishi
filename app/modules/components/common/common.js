@@ -36,6 +36,12 @@ function common(page){
   addCss();
   initSensorsdata();
 };
+
+//判断域名是否是生产环境
+common.prototype.isProduction = isProduction;
+function isProduction(){
+    return location.pathname === 'hs.ontheroadstore.com';
+}
 //没有图片的默认url
 common.prototype.lostImage = 'https://img8.ontheroadstore.com/iosupload/20180808/b0pMT2tsVk8vMmtzek1aSUtlYVlxQT09.jpg';
 
@@ -412,25 +418,35 @@ common.prototype.sensors = sensors;
 //神策初始化
 //文档 https://www.sensorsdata.cn/manual/js_sdk.html
 function initSensorsdata(){
+    window.sa = sensors;
 
     var pageType = getPageType();
-    console.log('pageType: ',pageType);
+
+    var HostName = location.hostname;
+    var isProduction = common.prototype.isProduction();
+
+    var server_url = 'https://sc.ontheroadstore.com/sa?project=default';//测试服务器
+    if (isProduction) {
+        server_url = 'https://sc.ontheroadstore.com/sa?project=production';//正式服务器
+    }
 
     sensors.init({
-        server_url: 'https://sc.ontheroadstore.com/sa?project=default',
-        // server_url: 'https://sc.ontheroadstore.com/sa?project=production',
+        server_url: server_url,
         web_url:"http://47.93.182.143:8107",
         use_app_track: true,// 与app打通
+        show_log:!isProduction,//log
     });
+
+    //注册公共属性
+    sensors.registerPage({
+        platformType:'H5',//公共属性 ：平台
+    });
+
     //自动采集页面浏览
     sensors.quick('autoTrack', {
         pageType: pageType,
     });
-    //todo: 自动采集会自动 console
 
-    sensors.registerPage({
-        platformType:'H5',//公共属性 ：平台
-    });
 
 
     var $current_user_id = $('.current_user_id');
@@ -472,7 +488,7 @@ function setSensorsHeader(){
         // 在这里加上你的 token
         var obj = sensors.getPresetProperties();
         obj.platformType = 'H5';
-        xhr.setRequestHeader('SCProperties',obj);
+        xhr.setRequestHeader('SCProperties',encodeURI(JSON.stringify(obj)));
     }
 };
 
@@ -508,8 +524,7 @@ common.prototype.sensorsFun = {
             mkt_location : location,
             mkt_desc : desc,
             commodityID : id,
-        })
-        alert(1111);
+        });
     },
     //从url中获取商品或文章id
     getUrlId : function (url) {
@@ -539,7 +554,6 @@ common.prototype.sensorsFun = {
 function getPageType (){
     var pathname = location.pathname;
     var pathArr = [
-        {name:'推荐页',path:'/'},
         {name:'推荐页',path:'/Portal/Index/index.html'},
         {name:'大专题页',path:'/HsProject/index/pid/'},
         {name:'文章列表页',path:'/Portal/Index/cultureall.html'},
@@ -551,7 +565,7 @@ function getPageType (){
         {name:'分类页',path:'/Portal/HsCategories/index.html'},
         {name:'标签页',path:'/HsCategories/category_index/id/'},
         {name:'搜索结果页',path:'/Portal/Index/search_goods.html'},
-        {name:'购物车页面',path:'/User/MyChart/index.html'},
+        {name:'购物车页',path:'/User/MyChart/index.html'},
         {name:'订单物流页',path:'/User/HsOrder/express_query/order_number/'},
         {name:'我的页面（买家版）',path:'/User/Center/index.html'},
         {name:'我的订单页',path:'/user/HsBuyorder/order_all.html'},
@@ -563,17 +577,21 @@ function getPageType (){
         {name:'我的收藏页',path:'/index.php/user/HsLike/index.html'},
         {name:'确认订单页',path:'/User/HsOrder/add/object_id/'},
         {name:'确认订单页',path:'/User/MyChart/buy.html'},
-        {name:'私信页面',path:'/User/HsMessage/detail/from_uid/'},
-        {name:'文章页面',path:'/Portal/HsArticle/culture/id/'},
+        {name:'私信页',path:'/User/HsMessage/detail/from_uid/'},
+        {name:'文章页',path:'/Portal/HsArticle/culture/id/'},
         {name:'常见问题页',path:'/Portal/PostDetails/faq.html'},
         {name:'评分详情页',path:'/Portal/PostDetails/scoreDetails.html'},
-        {name:'评论列表页面',path:'/user/HsComment/my_comment_list.html'},
+        {name:'评论列表页',path:'/user/HsComment/my_comment_list.html'},
         {name:'评论页',path:'/Portal/HsArticle/comment_list/id/,type/1.html'},
         {name:'哆嗦列表页',path:'/Portal/HsArticle/comment_list/id/,/type/2.html'},
         {name:'登录注册页',path:'/User/Login/mobile.html'},
+        {name:'抽奖页',path:'/Portal/Lottery/lottery.html'},
     ];
 
 
+    if(pathname==='/'){
+        return '推荐页';
+    }
     for(var i=0;i<pathArr.length;i++){
         var item = pathArr[i];
         var path = item.path;

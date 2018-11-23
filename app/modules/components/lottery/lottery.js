@@ -44,7 +44,7 @@ $(document).on('pageInit','.lottery', function(e, id, page) {
     // var version = $isApp.attr('version');
 
     var loginStatus = true;
-    //todo::::
+
 
     //app回调函数对象。调用方式：appCallbackFunction.lotteryAddTicketCount(args)
     window.appCallbackFunction = {};
@@ -118,7 +118,7 @@ $(document).on('pageInit','.lottery', function(e, id, page) {
             headers: ajaxHeaders,
             success: function(data){
                 if(data.status==1){
-                    console.log(data.data)
+                    // console.log(data.data)
 
                     id = data.data.lottery.id;
                     userinfo = data.data.user || {};
@@ -148,7 +148,7 @@ $(document).on('pageInit','.lottery', function(e, id, page) {
             headers: ajaxHeaders,
             success: function(data){
                 if(data.status==1){
-                    console.log(data);
+                    // console.log(data);
                     if(data.data.code){
                         addUserLotteryCount([data.data.code]);
                         //抽奖成功
@@ -187,7 +187,7 @@ $(document).on('pageInit','.lottery', function(e, id, page) {
             return;
         }
         var url = callAppUrl(type);
-        console.log(url);
+        // console.log(url);
         location.href = url;
     }
     //生成url
@@ -240,7 +240,7 @@ $(document).on('pageInit','.lottery', function(e, id, page) {
     function sendAppJson(data) {
         if(isApp && data){
             var txt = JSON.stringify(data);
-            console.log('lottery-json://'+txt);
+            // console.log('lottery-json://'+txt);
             location.href = 'lottery-json://'+txt;
 
             sendDataByOC(txt);
@@ -329,7 +329,7 @@ $(document).on('pageInit','.lottery', function(e, id, page) {
                 if(!isApp){
                     openTimer = setInterval(function () {
                         delay = localOpenTime - currentTime();
-                        console.log('delay sec: ',delay);
+                        // console.log('delay sec: ',delay);
                         if(delay < 0){
                             clearInterval(openTimer);
                             history.go(0);//在app中自动刷新无法发送header信息
@@ -599,19 +599,18 @@ $(document).on('pageInit','.lottery', function(e, id, page) {
                     callApp(21);
                 }else{
                     getLottery();
-                    init.sensors.track('buttonClick', {
-                        pageType : '抽奖页面',
-                        buttonName : '抽奖',
-                    })
+                    sensorsClick('免费抽奖');
                 }
             }
         }else if(isApp && $this.attr('status')==='1'){
-            //点击获取更多优惠券（分享）    lottery://23-xxx 加分享shareid
+            //点击获取更多抽奖券（分享）    lottery://23-xxx 加分享shareid
             callApp(23);
+            sensorsClick('获取更多抽奖券');
 
         }else if(isApp && $this.attr('status')==='2'){
             //设置开始提醒                lottery://11
             callApp(11);
+            sensorsClick('设置提醒');
         }
 
     });
@@ -625,12 +624,7 @@ $(document).on('pageInit','.lottery', function(e, id, page) {
         }
     });
 
-    $page.on('click','.lottery_download ',function(){
-        init.sensors.track('buttonClick', {
-            pageType : '抽奖页面',
-            buttonName : '打开APP',
-        })
-    });
+
 
 
     //生成优惠券
@@ -745,6 +739,61 @@ $(document).on('pageInit','.lottery', function(e, id, page) {
 
 
 
+    //  神策埋点事件
+    sensorsEvent();
+    function sensorsEvent() {
+
+        $page.on('click','.lottery_download ',function(){
+            sensorsClick('打开APP');
+        });
+
+        //卖家推荐商品
+        $(page).find('.lottery_sponsor_goods_ul').on('click','a',function(){
+            var $this = $(this);
+            var $li = $this.parents('li');
+            var url = $this.attr('href');
+            var index = $li.index();
+            var title = $li.find('.title').html();
+            var desc = '商品';
+            var id = init.sensorsFun.getUrlId(url);
+
+            init.sensorsFun.mkt('卖家推荐商品','抽奖页',title,index,desc,id);
+        });
+
+        //卖家推荐商品的卖家
+        $(page).find('.lottery_sponsor').on('click','a',function(){
+            var $this = $(this);
+            var url = $this.attr('href');
+            var id = init.sensorsFun.getUrlId(url);
+
+            init.sensorsFun.mkt('卖家推荐商品','抽奖页',id,'','店铺','');
+        });
+
+        //去逛逛
+        $(page).find('.sponsor').on('click',function(){
+            sensorsClick('去逛逛');
+        });
+        //显摆一下
+        $(page).find('.result_share').on('click',function(){
+            sensorsClick('显摆一下');
+        });
+        //买他妈的
+        $(page).find('.result_see').on('click',function(){
+            sensorsClick('买他妈的');
+        });
+        //奖品详情
+        $(page).find('.lottery_detail a').on('click',function(){
+            sensorsClick('奖品详情');
+        });
+
+    }
+    //抽奖页面的点击埋点
+    function sensorsClick(buttonName) {
+        init.sensors.track('buttonClick', {
+            pageType : '抽奖页',
+            buttonName : buttonName,
+        })
+    }
 
 
 
