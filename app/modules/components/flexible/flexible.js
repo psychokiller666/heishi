@@ -6,11 +6,17 @@
         var docW = document.documentElement.getBoundingClientRect().width
         var fs = document.documentElement.style.fontSize
 
-        var divW = $('#FixRemDom')[0].clientWidth;
-
-        if(docW < divW){
-            var fixFontSize = docW * parseFloat(fs) / divW;
-            document.documentElement.style.fontSize=fixFontSize+'px'
+        var $FixRemDom = $('#FixRemDom');
+        if($FixRemDom.length === 0){
+            $('body').append('<div id="FixRemDom" style="width:10rem;"></div>');
+        }
+        $FixRemDom = $('#FixRemDom');
+        if($FixRemDom.length > 0){
+            var divW = $FixRemDom[0].clientWidth;
+            if(docW < divW){
+                var fixFontSize = docW * parseFloat(fs) / divW;
+                document.documentElement.style.fontSize=fixFontSize+'px'
+            }
         }
     }
 

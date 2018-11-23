@@ -58,6 +58,20 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   //判断是否登录
   var loginStatus = init.ifLogin();
 
+  //获取限购数据，并判断限购类型
+  var goodsLimit = {};
+  goodsLimit.dataJson = $('.purchaseBuy').attr('value');
+  goodsLimit.data = JSON.parse(goodsLimit.dataJson);
+
+    if(goodsLimit.data.purchasePost && goodsLimit.data.purchasePost.number>0){
+    goodsLimit.type = 1;//商品限购
+    goodsLimit.canBuy = parseInt(goodsLimit.data.purchasePost.number - goodsLimit.data.purchasePost.buyNum) || 0;//还可以买的最大数量
+    setPageLimit(goodsLimit.data.purchasePost.number,goodsLimit.data.purchasePost.buyNum);//设置页面里的限购显示
+  }else if(goodsLimit.data.goodsInfo && Object.keys(goodsLimit.data.goodsInfo).length>0){
+    goodsLimit.type = 2;//款式限购
+  }
+
+
   
   // 如果有视频就放在封面图位置
   var video_status = 0;
@@ -138,6 +152,10 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     if($(this).hasClass('no_repertory')){
       return $.toast('当前商品没有库存');
     }
+    //限购
+    if($(this).hasClass('disable')){
+        return;
+    }
     if(type_items_span.length == 1){
       location.href = url;
     }else{
@@ -175,6 +193,10 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     operation(this, 0);
   })
   $('.buy').on("click",".buy_btn",function() {
+    //限购
+    if($(this).hasClass('disable')){
+        return;
+    }
     operation(this, 1);
   })
 
@@ -220,6 +242,21 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       $delivery_cycle.hide();
       $('.delivery_time_wrap').hide();
     }
+
+    //选中款式，设置限购,只有款式限购才执行
+    if(goodsLimit.type===2){
+      //设置最大购买数
+      var lockNum = $(this).attr('lock_num') || 0;
+      var buyNum = $(this).attr('buy_num') || 0;
+      if(lockNum>0){
+          goodsLimit.canBuy = parseInt(lockNum - buyNum) || 0;
+          setPageLimit(lockNum,buyNum);
+      }else{
+        setPageLimit();
+      }
+    }
+
+
   });
 
 
@@ -230,9 +267,11 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
     var num = parseInt($('.buy').find('.countNum').attr('data-num'));
     if(num <= 1){
-      return $.toast('最少选择1个');
+      return;
+      // return $.toast('最少选择1个');
     }
     num = num - 1;
+    num = limitTypeNum(num);
     $('.buy').find('.countNum').attr('data-num', num);
     $('.buy').find('.countNum').text(num);
   })
@@ -246,6 +285,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       return $.toast('当前库存为' + remain + '件');
     }
     num = num + 1;
+    num = limitTypeNum(num);
     $('.buy').find('.countNum').attr('data-num', num);
     $('.buy').find('.countNum').text(num);
   })
@@ -310,6 +350,37 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       $('.presell_status').css('display', 'block');
     }
   }
+
+
+  //设置页面上的限购
+  function setPageLimit(limitNum,buyNum) {
+
+    if(limitNum>0){
+      $('.good_limit_num').show().find('span').html(limitNum);
+      if(limitNum>buyNum){
+      //  还可以买
+        $('.buy_btn').html('限购'+limitNum+'件').removeClass('disable');
+      }else{
+        $('.buy_btn').html('限购'+limitNum+'件').addClass('disable');
+      }
+    }else{
+      goodsLimit.canBuy = undefined;
+      $('.good_limit_num').hide();
+      $('.buy_btn:not(.confirm)').html('买他妈的').removeClass('disable');
+    }
+
+  }
+  //限购加减数量判断,加减计算之后，判断如果数量未超出限购值，返回该值；如果数量超出，返回最大值，并且弹窗。
+  function limitTypeNum(num) {
+    if(num && typeof goodsLimit.canBuy === "number" && num>goodsLimit.canBuy){
+      $.toast('数量超过限购范围');
+      return goodsLimit.canBuy || 1;
+    }else{
+      return num;
+    }
+  }
+
+
   // 加入购物车
   function shopping( object_id,styles_id, num) {
     $.ajax({
@@ -813,7 +884,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
 
             success: function(data){
                 if(data.status==1){
-                    console.log(data.data)
+                    // console.log(data.data)
                     setGoodsCoupon(data.data)
                 }
             },
@@ -920,7 +991,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
                 success: function(data){
                     if(data.status==1){
                         $btn.attr('get_status','1');
-                        $.toast('领取成功');
+                        $.toast('领取成功,请在App下单使用');
                     }else{
                         $.toast(data.info);
                         $btn.attr('clicked','0');
@@ -990,14 +1061,14 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
                     location.href='/Portal/Coupon/couponGoods?couponid='+coupon_id;
                     break;
                 case '6' :
-                    location.href='/index.php/Portal/HsCategories/index.html';
+                    location.href='/Portal/HsCategories/index.html';
                     break;
                 case '7' :
-                    var href = $('.user_intro a').attr('href') || '/index.php/Portal/Index/index.html';
+                    var href = $('.user_intro a').attr('href') || '/Portal/Index/index.html';
                     location.href= href;
                     break;
                 default  :
-                    location.href='/index.php/Portal/Index/index.html';
+                    location.href='/Portal/Index/index.html';
                     break;
             }
 
@@ -1007,6 +1078,145 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
 
 
     }
+
+
+    /**
+     * 评分部分
+     * */
+    getAssessment();
+
+    function getAssessment(){
+        var url = ApiBaseUrl + '/appv6_1/goods/'+ goodsId +'/assessment';
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType: 'json',
+            data: {},
+
+            success: function(data){
+                if(data.status==1){
+                    // console.log(data.data)
+                    initAuth(data.data.authentication);
+                    initHofm(data.data.hoffman);
+                    initNoun(data.data.noun);
+                    initFQA(data.data.problem);
+                }
+            },
+            error: function(e){
+                console.log('getAssessment err: ',e);
+            }
+
+        });
+
+    }
+    //认证部分
+    function initAuth(data) {
+        if(data){
+            var $auth = $('.authentication');
+            var url = data.url;
+            if(typeof url!=="string" || url.length<7){
+                url = 'javascript:;';
+            }
+            $auth.find('.auth_desc').attr('href',url).css('display','block');
+            $auth.find('.auth_img').attr('src',data.image);
+            $auth.find('.auth_txt').html(data.message);
+        }
+    }
+    //评分部分
+    function initHofm(data) {
+        if(data){
+            var $hofm_wrap = $('.hofm_wrap');
+            $hofm_wrap.find('.go_hofm_a').attr('href','/Portal/PostDetails/scoreDetails.html?id='+goodsId);
+            $hofm_wrap.find('.average').html(data.average);
+            $hofm_wrap.find('.total_score').html(data.totalscore);
+            $hofm_wrap.find('.hofm_right').html(hofmStarsHtml(data.detail));
+            $hofm_wrap.show();
+        }
+    }
+    //生成评星html
+    function hofmStarsHtml(data) {
+        var html = '';
+        for(var i=0;i<data.length;i++){
+            html += '<div class="list">'
+            html += '<div class="title">'+ data[i].title +'</div>'
+            html += '<div class="stars" stars="'+ parseInt(data[i].score) +'"></div>'
+            html += '</div>'
+        }
+        return html;
+    }
+    //商品信息里的标签
+    function initNoun(data) {
+        if(data && data.length>0){
+            var html = '';
+            for(var i=0;i<data.length;i++){
+                html += '<div class="msg_tag">'+ data[i].title +'</div>'
+            }
+            $('.goods_msg_tags').html(html).show();
+            $('.content_desc').show();
+            initGoodsNounPopup(data);
+        }
+    }
+    //常见问题
+    function initFQA(data){
+        if(data && data.length>0){
+            var $faq_wrap = $('.faq_wrap');
+            var html = '';
+            var length = data.length>2 ? 2 : data.length;
+            for(var i=0;i<length;i++){
+                html += '<li class="faq">'
+                html += '<div class="title">'+ data[i].title +'</div>'
+                html += '<div class="txt ellipsis_2">'+ data[i].content +'</div>'
+                html += '</li>'
+            }
+            $faq_wrap.find('.faqs').html(html);
+            if(length < 2){
+                $faq_wrap.find('.faq_more').hide();
+            }
+            $faq_wrap.show();
+        }
+    }
+    //商品特征标签说明弹窗
+    function initGoodsNounPopup(data) {
+        if(data && data.length>0) {
+            var $goods_noun_mask = $('.goods_noun_mask');
+            var $goods_noun_ul = $goods_noun_mask.find('.goods_noun_ul');
+            var html = '';
+            for(var i=0;i<data.length;i++){
+                html += '<li class="goods_noun_li">'
+                html += '<div class="goods_noun_tag">'+ data[i].title +'</div>'
+                html += '<div class="goods_noun_txt">'+ data[i].content +'</div>'
+                html += '</li>'
+            }
+            $goods_noun_ul.html(html);
+
+            //特征标签点击打开弹窗
+            page.on('click','.msg_tag',function(){
+                $goods_noun_mask.show();
+                forbidPageScroll(true);
+            });
+            //按ok关闭弹窗
+            page.on('click','.goods_noun_mask .ok',function(){
+                $goods_noun_mask.hide();
+                forbidPageScroll(false);
+            });
+            page.on('click','.goods_noun_mask',function(ev){
+                if($(ev.target).hasClass('goods_noun_mask')){
+                    $goods_noun_mask.hide();
+                    forbidPageScroll(false);
+                }
+            });
+        }
+    }
+
+    //禁止页面滚动
+    function forbidPageScroll(forbid){
+        if(forbid){
+            $('.hs-page.content').css('overflow-y','hidden');
+        }else{
+            $('.hs-page.content').css('overflow-y','auto');
+        }
+    }
+
 
 
 

@@ -29,7 +29,8 @@ function common(page){
   this.lazyLoad = Lazyload;
 
   //上传图片的base url
-  this.ImgBaseUrl = 'https://img8.ontheroadstore.com'
+  this.ImgBaseUrl = 'https://img8.ontheroadstore.com';
+  addCss();
 };
 //没有图片的默认url
 common.prototype.lostImage = 'https://img8.ontheroadstore.com/iosupload/20180808/b0pMT2tsVk8vMmtzek1aSUtlYVlxQT09.jpg';
@@ -198,6 +199,7 @@ common.prototype.getUrlParam = function(name) {
     var r = window.location.search.substr(1).match(reg);
     if (r != null) return unescape(r[2]); return null;
 };
+
 common.prototype.setCookie = function (name,value,days) {
     var Days = parseFloat(days)>0 ? parseFloat(days) : 30;
     var exp = new Date();
@@ -229,7 +231,7 @@ common.prototype.getApiBaseUrl = function(){
     return ApiBaseUrl;
 };
 
-//判断是否登录，如果参数toLogin==true，未登录则跳往登录页
+//判断是否登录，如果参数toLogin==true，未登录则跳往登录页 注：需要在html中添加隐藏的input.current_user_id
 common.prototype.ifLogin = function(toLogin){
     var $current_user_id = $('.current_user_id');
     var uid='';
@@ -321,5 +323,18 @@ common.prototype.isAndroid = function (){
     return isAndroid;
 };
 
+//添加css:由于less的bug，无法编译某些css，使用js添加到页面中
+common.prototype.addCss = addCss();
+
+function addCss(){
+    if($('style.addcss').length>0){
+        return;
+    }
+    var css = '';
+    css+= '<style type="text/css" class="addcss">'
+    css+= '.ellipsis_2{overflow : hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;}'
+    css+= '</style>'
+    $('body').append(css);
+};
 
 module.exports = common;
