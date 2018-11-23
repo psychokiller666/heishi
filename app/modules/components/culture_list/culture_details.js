@@ -278,4 +278,39 @@ $(document).on('pageInit','.culture_details', function (e, id, page) {
     }, opts.delay);
     return _this;
   };
+
+    //  神策埋点事件
+    sensorsEvent();
+    function sensorsEvent() {
+
+        //相关阅读 文章详情页
+        var $correlationA = $(page).find('.correlation a');
+        $correlationA.on('click',function(){
+            var $this = $(this);
+            var url = $this.attr('href');
+            var index = $correlationA.index($this);
+            var title = $this.find('.title').html();
+            var desc = '商品';
+            var id = init.sensorsFun.getUrlId(url);
+
+            init.sensorsFun.mkt('相关阅读','文章详情页',title,index,desc,id);
+        });
+        //插入的商品 文章详情页
+        var $insertGoods = $(page).find('.content_bd a.article_content');
+        $insertGoods.on('click',function(){
+            var $this = $(this);
+            var url = $this.attr('href');
+            var index = $insertGoods.index($this);
+            var title = $this.children('span').children('span').eq(1).html();
+            var desc = '';
+            var id = init.sensorsFun.getUrlId(url);
+
+            init.sensorsFun.mkt('插入的商品','文章详情页',title,index,desc,id);
+        })
+
+
+    }
+
+
+
 });

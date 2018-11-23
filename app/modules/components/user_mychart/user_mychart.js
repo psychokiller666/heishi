@@ -1000,4 +1000,40 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
     }
 
 
+
+
+//    购物车页神策
+    //  神策埋点事件
+    sensorsEvent();
+    function sensorsEvent() {
+
+        //随便看看 购物车页
+        $(page).find('.correlation .goods_content').on('click','a',function(){
+            var $this = $(this);
+            var $li = $this.parents('.goods_list');
+            var url = $this.attr('href');
+            var index = $li.index();
+            var title = '';
+            var desc = '';
+            var id = '';
+            if($this.hasClass('filepath')||$this.hasClass('post_title')){
+                //商品
+                title = $li.find('.post_title').html();
+                desc = '商品';
+                id = init.sensorsFun.getUrlId(url);
+            }else if($this.hasClass('classify_keyword')){
+                //标签
+                title = $this.html();
+                desc = '标签';
+            }else{
+                //卖家id
+                title = init.sensorsFun.getUrlId(url);
+                desc = '店铺'
+            }
+
+            init.sensorsFun.mkt('随便看看','购物车页',title,index,desc,id);
+
+        });
+
+    }
 });

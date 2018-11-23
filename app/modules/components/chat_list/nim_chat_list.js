@@ -17,7 +17,7 @@ $(document).on('pageInit','.detail', function (e, id, page) {
   var sensorFrom = init.getUrlParam('from')||'';
   if(sensorFrom==1){
       init.sensors.track('contactSeller', {
-          pageType : '私信页面',
+          pageType : '私信页',
           buttonName : '私信',
           commodityID : '',
           sellerID : $(page).find('#user_id').val(),
