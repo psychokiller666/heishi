@@ -525,7 +525,7 @@ $(document).on('pageInit','.lottery', function(e, id, page) {
         if(!(data.user_list && userlist.count>0)){
             return;
         }
-        $page.find('.lottery_participator a').attr('href',createUrl('Portal/Lottery/lottery_user.html?id='+id));//参与用户列表
+        // $page.find('.lottery_participator a').attr('href',createUrl('Portal/Lottery/lottery_user.html?id='+id));//参与用户列表//取消抽奖用户列表入口
         $page.find('.lottery_participator .txt b').html(userlist.count);
 
         var html = '';
