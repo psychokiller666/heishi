@@ -3,7 +3,7 @@
 // 初始化
 var common = require('../common/common.js');
 
-$(document).on('pageInit','.lottery_user', function(e, id, page) {
+$(document).on('pageInit','.lottery_user', function(e, id1, page) {
     if (page.selector == '.page') {
         return false;
     }
@@ -36,18 +36,18 @@ $(document).on('pageInit','.lottery_user', function(e, id, page) {
         loginStatus = init.ifLogin();
     }
 
-    var pretendApp = init.getUrlParam('pretendApp');//todo delete 假装是app
+    var pretendApp = init.getUrlParam('pretendApp');//假装是app
     if(pretendApp==1){
-        isApp = true;//todo delete
+        isApp = true;
     }else if(pretendApp==2){
-        isApp = false;//todo delete
+        isApp = false;
     }
 
 
     var $page = $(page);
 
     var id = init.getUrlParam('id') || '';
-    var page = 1;//页码
+    var pageCount = 1;//页码
     var rows = 20;//每页多少个数据
     var loading = false;//是否正在加载数据
     var over = false;//是否加载完毕
@@ -79,7 +79,7 @@ $(document).on('pageInit','.lottery_user', function(e, id, page) {
             url: url,
             dataType: 'json',
             data: {
-                page:page,
+                page:pageCount,
                 rows:rows,
             },
             // headers: ajaxHeaders,
@@ -95,7 +95,7 @@ $(document).on('pageInit','.lottery_user', function(e, id, page) {
                     if(result.length<rows){
                         over = true;
                     }else{
-                        page++;
+                        pageCount++;
                     }
                 }
                 loading = false;
