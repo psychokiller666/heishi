@@ -3,7 +3,7 @@
 // 初始化
 var common = require('../common/common.js');
 
-$(document).on('pageInit','.lottery', function(e, id, page) {
+$(document).on('pageInit','.lottery', function(e, id1, page) {
     if (page.selector == '.page') {
         return false;
     }
@@ -21,7 +21,7 @@ $(document).on('pageInit','.lottery', function(e, id, page) {
 
     var $page = $(page);
     var id = init.getUrlParam('id') || '';
-    var pretendApp = init.getUrlParam('pretendApp');//todo delete 假装是app
+    var pretendApp = init.getUrlParam('pretendApp');//假装是app
     var shareCode = init.getUrlParam('share_code') || '';
     var userinfo = null;//保存当前用户的信息
     var lottery = null;//保存活动信息
@@ -97,9 +97,9 @@ $(document).on('pageInit','.lottery', function(e, id, page) {
 
 
     if(pretendApp==1){
-        isApp = true;//todo delete
+        isApp = true;
     }else if(pretendApp==2){
-        isApp = false;//todo delete
+        isApp = false;
     }
 
 
@@ -134,6 +134,8 @@ $(document).on('pageInit','.lottery', function(e, id, page) {
                 console.log('initLottery err: ',e);
             }
         });
+
+        show_lottery_apple_tip();
     }
 
 
@@ -737,6 +739,16 @@ $(document).on('pageInit','.lottery', function(e, id, page) {
         $page.find('.lottery_btns .disable').html('等待开始').show();
     }
 
+    //显示苹果声明
+    function show_lottery_apple_tip(){
+        if(isApp){
+            var u = navigator.userAgent;
+            var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+            if(isIOS){
+                $page.find('.lottery_apple_tip').show();
+            }
+        }
+    }
 
 
     //  神策埋点事件
