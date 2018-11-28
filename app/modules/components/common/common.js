@@ -532,13 +532,19 @@ common.prototype.sensorsFun = {
         });
     },
     mkt : function (type,page,content,location,desc,id){
+        var index = location;
+        if(location===''||location===undefined||location===null||isNaN(parseInt(location))){
+            index = '';
+        }else{
+            index = String(+location+1)
+        }
         sensors.track('mkt_event', {
             mkt_type : type,
             mkt_page : page,
-            mkt_content : content,
-            mkt_location : location,
-            mkt_desc : desc,
-            commodityID : id,
+            mkt_content : String(content),
+            mkt_location : index,
+            mkt_desc : String(desc),
+            commodityID : String(id),
         });
     },
     //从url中获取商品或文章id
