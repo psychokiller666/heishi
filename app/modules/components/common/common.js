@@ -272,7 +272,12 @@ common.prototype.ifLogin = function(toLogin){
 
 //去往登录页
 common.prototype.toLogin = function(){
-    var appid = 'null';
+
+    if(!isWeiXin()){
+        location.href = 'https://url.cn/5EVfeob';
+        return;
+    }
+
     var nowUrl = encodeURI(location.href);
     // var url = '/Api/Oauth/login?type=weixin&login_http_referer='+nowUrl;
     // var url = '/User/Login/mobile?appid='+appid+'&redirect_uri='+nowUrl+'&type=mobile&response_type=code';
@@ -297,6 +302,17 @@ common.prototype.toLogin = function(){
 
     return false;
 };
+//判断是否是微信浏览器的函数
+common.prototype.isWeiXin = isWeiXin;
+function isWeiXin(){
+    var ua = window.navigator.userAgent.toLowerCase();
+    //通过正则表达式匹配ua中是否含有MicroMessenger字符串
+    if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+        return true;
+    }else{
+        return false;
+    }
+}
 //优惠券的格式化时间，显示为2001.11.11
 common.prototype.couponFmtTime = function (time){
 

@@ -26,14 +26,6 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
     var userinfo = null;//保存当前用户的信息
     var lottery = null;//保存活动信息
     var lotteryData = null;//保存所有活动信息
-    // 调用微信分享sdk
-    var share_data = {
-        title: '公路商店 — 抽奖活动',
-        desc: '为你不着边际的企图心',
-        link: window.location.href,
-        img: 'https://jscache.ontheroadstore.com/tpl/simplebootx_mobile/Public/i/logo.png'
-    };
-    init.wx_share(share_data);
 
 
     //判断是否是app，如果是app，url都需要做处理，ajax headers携带身份不一样
@@ -48,7 +40,7 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
 
     //app回调函数对象。调用方式：appCallbackFunction.lotteryAddTicketCount(args)
     window.appCallbackFunction = {};
-    window.appCallbackFunction.lotteryAddTicketCount = addUserLotteryCount2; //分享后更新抽奖券数量
+    window.appCallbackFunction.lotteryAddTicketCount = addUserLotteryCount2; //分享后更新抽奖码数量
     window.appCallbackFunction.getLotteryCallback = getLotteryCallback;  //抽奖回调
     window.appCallbackFunction.setLotteryNotifyCallback = setLotteryNotifyCallback;  //设置提醒成功回调
     window.appCallbackFunction.changeLotteryGetBtn = changeLotteryGetBtn;  //修改领取按钮状态 0 未领取，1待发货，2查看物流
@@ -66,8 +58,8 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
         //设置开始提醒                lottery://11
 
         //抽奖成功弹窗（点击免费抽奖）  lottery://21
-        //我的抽奖券弹窗              lottery://22
-        //点击获取更多优惠券（分享）    lottery://23
+        //我的抽奖码弹窗              lottery://22
+        //点击获取更多抽奖码（分享）    lottery://23
 
         //中奖后领取奖品弹窗          lottery://31
         //中奖后分享（点击显摆一下）   lottery://32
@@ -156,7 +148,7 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
                         //抽奖成功
                         if(isApp){
                             callApp(21);
-                            $page.find('.lottery_btns .able').attr('status','1').html('获取更多抽奖券');
+                            $page.find('.lottery_btns .able').attr('status','1').html('获取更多抽奖码，提高中奖率');
                             $page.find('.lottery_btns .lottery_num').show();
                         }else{
                             $page.find('.lottery_btns .able').attr('status','1').hide();
@@ -276,7 +268,7 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
                 seller_avatar : lottery.seller_avatar,//卖家头像
                 seller_name : lottery.seller_name,//卖家名称
                 seller_uid : lottery.seller_uid,//卖家id
-                coupon_code : lottery.coupon_code,//活动优惠券id
+                coupon_code : lottery.coupon_code,//活动抽奖码id
                 background : lottery.background,//十六进制背景色
                 pay_endtime : lottery.pay_endtime,//领奖截止时间
             },
@@ -439,13 +431,22 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
             }
         }
 
+        // 调用微信分享sdk
+        var share_data = {
+            title: '公路福利--'+lottery.name,
+            desc: '公路商店会员活动限时开启中！稀缺狠货免费拿！',
+            link: window.location.href,
+            img: lottery.picture[0],
+        };
+        init.wx_share(share_data);
+
     }
 
     //活动未开始
     function initLotteryForecast(data){
         if(isApp && data.user.is_notify == 0){
             //未设置开始提醒
-            $page.find('.lottery_btns .able').attr('status','2').html('设置提醒').show();//status 0 未抽奖 1 获取更多抽奖券 2 设置开始提醒
+            $page.find('.lottery_btns .able').attr('status','2').html('设置提醒').show();//status 0 未抽奖 1 获取更多抽奖码 2 设置开始提醒
         }else{
             $page.find('.lottery_btns .disable').html('等待开始').show();
         }
@@ -455,9 +456,9 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
     //活动进行中
     function initLotteryInProgress(data) {
         if(isApp){
-            //1 在app里，如果已参与，显示拥有的券数
+            //1 在app里，如果已参与，显示拥有的码数
             if(data.user.lottery_code && data.user.lottery_code.length>0){
-                $page.find('.lottery_btns .able').attr('status','1').html('获取更多抽奖券').show();//status 0 未抽奖 1 获取更多抽奖券 2 设置开始提醒
+                $page.find('.lottery_btns .able').attr('status','1').html('获取更多抽奖码').show();//status 0 未抽奖 1 获取更多抽奖码 2 设置开始提醒
                 $page.find('.lottery_btns .lottery_num .num b').html(data.user.lottery_code.length);
                 $page.find('.lottery_btns .lottery_num').show();
             }else{
@@ -588,10 +589,10 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
         }
     }
 
-    //抽奖或获取更多抽奖券
+    //抽奖或获取更多抽奖码
     $page.on('click','.lottery_btns .able',function(ev){
         var $this = $(this);
-        //status 0 未抽奖 1 获取更多抽奖券 2 设置开始提醒
+        //status 0 未抽奖 1 获取更多抽奖码 2 设置开始提醒
         if($this.attr('status')==='0'){
             if(!isApp && !loginStatus){
                 init.toLogin();
@@ -605,9 +606,9 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
                 }
             }
         }else if(isApp && $this.attr('status')==='1'){
-            //点击获取更多抽奖券（分享）    lottery://23-xxx 加分享shareid
+            //点击获取更多抽奖码（分享）    lottery://23-xxx 加分享shareid
             callApp(23);
-            sensorsClick('获取更多抽奖券');
+            sensorsClick('获取更多抽奖码');
 
         }else if(isApp && $this.attr('status')==='2'){
             //设置开始提醒                lottery://11
@@ -617,11 +618,11 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
 
     });
 
-    //我的抽奖券弹窗
+    //我的抽奖码弹窗
     $page.on('click','.lottery_btns .lottery_num',function(ev){
         var $this = $(this);
         if(isApp){
-            //我的抽奖券弹窗              lottery://22-xxx 加分享shareid
+            //我的抽奖码弹窗              lottery://22-xxx 加分享shareid
             callApp(22);
         }
     });
@@ -680,7 +681,7 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
     }
 
 
-    //分享成功后抽奖券数量增加，增加优惠券code
+    //分享成功后抽奖码数量增加，增加抽奖码code
     function addUserLotteryCount(codeArr){
         if(codeArr instanceof Array && codeArr.length>0 ){
 
@@ -697,7 +698,7 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
             $num.html(userinfo.lottery_code.length);
         }
     }
-    //分享成功后抽奖券数量增加，增加优惠券code,传一个code字符串
+    //分享成功后抽奖码数量增加，增加抽奖码code,传一个code字符串
     function addUserLotteryCount2(codeTxt){
         if(typeof codeTxt === "string" && codeTxt.length>0 ){
             var $num = $page.find('.lottery_btns .lottery_num .num b');
@@ -723,7 +724,7 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
     function getLotteryCallback(codeTxt){
         addUserLotteryCount2(codeTxt);
         //抽奖成功
-        $page.find('.lottery_btns .able').attr('status','1').html('获取更多抽奖券');
+        $page.find('.lottery_btns .able').attr('status','1').html('获取更多抽奖码');
         $page.find('.lottery_btns .lottery_num').show();
 
         if($page.find('.lottery_participator .imgs img').length<4){
