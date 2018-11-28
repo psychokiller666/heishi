@@ -120,6 +120,7 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
                     initDetail(data.data.lottery,data.data);
                     initSeller(data.data);
                     createSendAppJson(data.data);//传递json给app
+                    initLotteryNav(data.data.activity,data.data.lottery.id);
                 }
             },
             error: function(e){
@@ -148,7 +149,7 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
                         //抽奖成功
                         if(isApp){
                             callApp(21);
-                            $page.find('.lottery_btns .able').attr('status','1').html('获取更多抽奖码，提高中奖率');
+                            $page.find('.lottery_btns .able').attr('status','1').html('获取更多抽奖券，提高中奖率');
                             $page.find('.lottery_btns .lottery_num').show();
                         }else{
                             $page.find('.lottery_btns .able').attr('status','1').hide();
@@ -263,7 +264,7 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
                 lottery_uid_name : lottery.lottery_uid_name,//活动商品卖家uid name
                 lottery_price : lottery.price,//活动商品价格
                 name : lottery.name,//商品标题
-                next_lottery_id : lottery.next_lottery_id,//如果是正在进行的抽奖活动 该id为下期未开始的抽奖活动id
+                // next_lottery_id : lottery.next_lottery_id,//如果是正在进行的抽奖活动 该id为下期未开始的抽奖活动id todo:临时屏蔽
                 lottery_img : lottery.picture[0],//卖家头像
                 seller_avatar : lottery.seller_avatar,//卖家头像
                 seller_name : lottery.seller_name,//卖家名称
@@ -426,9 +427,9 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
 
             initParticipator(data);//参与人员
 
-            if(lottery.next_lottery_id && !isApp){
-                $page.find('.lottery_header .forecast_a').attr('href',createUrl('Portal/Lottery/lottery.html?id='+lottery.next_lottery_id)).show();
-            }
+            // if(lottery.next_lottery_id && !isApp){
+            //     $page.find('.lottery_header .forecast_a').attr('href',createUrl('Portal/Lottery/lottery.html?id='+lottery.next_lottery_id)).show();
+            // }
         }
 
         // 调用微信分享sdk
@@ -458,7 +459,7 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
         if(isApp){
             //1 在app里，如果已参与，显示拥有的码数
             if(data.user.lottery_code && data.user.lottery_code.length>0){
-                $page.find('.lottery_btns .able').attr('status','1').html('获取更多抽奖码，提高中奖率').show();//status 0 未抽奖 1 获取更多抽奖码 2 设置开始提醒
+                $page.find('.lottery_btns .able').attr('status','1').html('获取更多抽奖券，提高中奖率').show();//status 0 未抽奖 1 获取更多抽奖码 2 设置开始提醒
                 $page.find('.lottery_btns .lottery_num .num b').html(data.user.lottery_code.length);
                 $page.find('.lottery_btns .lottery_num').show();
             }else{
@@ -608,7 +609,7 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
         }else if(isApp && $this.attr('status')==='1'){
             //点击获取更多抽奖码（分享）    lottery://23-xxx 加分享shareid
             callApp(23);
-            sensorsClick('获取更多抽奖码，提高中奖率');
+            sensorsClick('获取更多抽奖券，提高中奖率');
 
         }else if(isApp && $this.attr('status')==='2'){
             //设置开始提醒                lottery://11
@@ -628,7 +629,26 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
     });
 
 
-
+    //顶部活动导航按钮显示
+    function initLotteryNav(act,nowid) {
+        var next = init.getUrlParam('next');
+        if(isApp && act && next!=='1'){
+            if (act.last_activity && act.last_activity!==nowid) {
+                $page.find('.lottery_nav_btn_last').attr('lottery', act.last_activity).show();
+            }
+            // if (act.current_activity) {
+            //     $page.find('.lottery_nav_btn_now').attr('lottery', act.current_activity).show();
+            // }
+            if (act.next_activity && act.next_activity!==nowid) {
+                $page.find('.lottery_nav_btn_next').attr('lottery', act.next_activity).show();
+            }
+            $page.find('.lottery_nav_btns').on('click','.lottery_nav_btn',function(){
+                var lottery = $(this).attr('lottery');
+                var url = createUrl('Portal/Lottery/lottery.html?next=1&id='+lottery);
+                location.href = url;
+            })
+        }
+    }
 
     //生成优惠券
     function createCoupon(data) {
@@ -724,7 +744,7 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
     function getLotteryCallback(codeTxt){
         addUserLotteryCount2(codeTxt);
         //抽奖成功
-        $page.find('.lottery_btns .able').attr('status','1').html('获取更多抽奖码，提高中奖率');
+        $page.find('.lottery_btns .able').attr('status','1').html('获取更多抽奖券，提高中奖率');
         $page.find('.lottery_btns .lottery_num').show();
 
         if($page.find('.lottery_participator .imgs img').length<4){
