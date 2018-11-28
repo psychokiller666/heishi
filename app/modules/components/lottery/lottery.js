@@ -433,7 +433,7 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
 
         // 调用微信分享sdk
         var share_data = {
-            title: '公路福利--'+lottery.name,
+            title: '公路福利--['+lottery.name+']免费拿走',
             desc: '公路商店会员活动限时开启中！稀缺狠货免费拿！',
             link: window.location.href,
             img: lottery.picture[0],
@@ -458,7 +458,7 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
         if(isApp){
             //1 在app里，如果已参与，显示拥有的码数
             if(data.user.lottery_code && data.user.lottery_code.length>0){
-                $page.find('.lottery_btns .able').attr('status','1').html('获取更多抽奖码').show();//status 0 未抽奖 1 获取更多抽奖码 2 设置开始提醒
+                $page.find('.lottery_btns .able').attr('status','1').html('获取更多抽奖码，提高中奖率').show();//status 0 未抽奖 1 获取更多抽奖码 2 设置开始提醒
                 $page.find('.lottery_btns .lottery_num .num b').html(data.user.lottery_code.length);
                 $page.find('.lottery_btns .lottery_num').show();
             }else{
@@ -608,7 +608,7 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
         }else if(isApp && $this.attr('status')==='1'){
             //点击获取更多抽奖码（分享）    lottery://23-xxx 加分享shareid
             callApp(23);
-            sensorsClick('获取更多抽奖码');
+            sensorsClick('获取更多抽奖码，提高中奖率');
 
         }else if(isApp && $this.attr('status')==='2'){
             //设置开始提醒                lottery://11
@@ -724,7 +724,7 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
     function getLotteryCallback(codeTxt){
         addUserLotteryCount2(codeTxt);
         //抽奖成功
-        $page.find('.lottery_btns .able').attr('status','1').html('获取更多抽奖码');
+        $page.find('.lottery_btns .able').attr('status','1').html('获取更多抽奖码，提高中奖率');
         $page.find('.lottery_btns .lottery_num').show();
 
         if($page.find('.lottery_participator .imgs img').length<4){
@@ -790,9 +790,9 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
         $(page).find('.result_share').on('click',function(){
             sensorsClick('显摆一下');
         });
-        //买他妈的
+        //领券买他妈的
         $(page).find('.result_see').on('click',function(){
-            sensorsClick('买他妈的');
+            sensorsClick('领券买他妈的');
         });
         //奖品详情
         $(page).find('.lottery_detail a').on('click',function(){
