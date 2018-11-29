@@ -195,5 +195,6 @@ require('../modules/components/lottery/lottery_rule');
 require('../modules/components/lottery/lottery_user');
 //抽奖测评页
 require('../modules/components/lottery/lottery_evaluation');
-
+//抽奖活动-抽奖彩蛋
+require('../modules/components/lottery/lottery_act');
 
