@@ -1,0 +1,779 @@
+/*抽奖活动-彩蛋*/
+.lottery_act {
+  background: #fff;
+  .hs-page {
+    background-color: #fff;
+    transition: background-color .5s;
+
+    .dis_none{
+      display: none;
+    }
+
+    //头部
+    .lottery_header{
+      text-align: center;
+      min-height: 0.8rem;
+      padding-top: 0.24rem;
+      position: relative;
+
+      .lottery_nav_btns{
+        position: absolute;
+        left: 0;
+        top: 0.24rem;
+        z-index: 100;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0 0.48rem;
+        .lottery_nav_btn{
+          display: none;
+          float: right;
+          width: 1.92rem;
+          height: 0.64rem;
+          box-sizing: border-box;
+          font-size: 0.32rem;
+          line-height: 1;
+          text-align: center;
+          color: #fff;
+          border: 0.05333rem solid #fff;
+          border-radius: 0.16rem;
+          margin-top: 0.18rem;
+          padding: 0.10667rem 0;
+          &.lottery_nav_btn_last{
+            float: left;
+          }
+        }
+      }
+
+      .forecast_a{
+        position: absolute;
+        top: 0.4rem;
+        right: 0.4rem;
+        z-index: 10;
+        width: 1.70667rem;
+        height: 0.42667rem;
+        img{
+          display: block;
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+      //进行中
+      .going{
+        position: relative;
+        .title{
+          font-size: 0.32rem;
+          line-height: 1;
+          padding: 0.32rem 0 0.21333rem;
+          color: #fff;
+          font-weight:600;
+        }
+        .count_down{
+          font-size: 0;
+          height:0.8rem;
+          b{
+            display: inline-block;
+            width:0.58667rem;
+            height:0.8rem;
+            background:#000;
+            border-radius:0.10667rem;
+            text-align: center;
+            font-size: 0.64rem;
+            line-height: 0.8rem;
+            font-family:PingFangSC-Semibold;
+            font-weight:600;
+            color: #fff;
+            vertical-align: middle;
+            margin-right: 0.13333rem;
+            &:last-child{
+              margin-right: 0;
+            }
+          }
+          i{
+            display: inline-block;
+            position: relative;
+            width: 0.16rem;
+            height:0.8rem;
+            vertical-align: middle;
+            margin-right: 0.13333rem;
+
+            &:before,&:after{
+              position: absolute;
+              left: 0;
+              top: 0.13333rem;
+              content: '';
+              display: block;
+              width: 0.16rem;
+              height: 0.16rem;
+              border-radius: 50%;
+              background: #000;
+            }
+            &:after{
+              top: initial;
+              bottom: 0.13333rem;
+            }
+          }
+        }
+
+      }
+      //预告
+      .forecast{
+        display: none;
+        .title{
+          font-size: 0.32rem;
+          line-height: 1;
+          padding: 0.32rem 0 0.21333rem;
+          color: #fff;
+          font-weight:600;
+        }
+        .start_time{
+          font-size: 0;
+          font-family:'din';
+          font-weight:900;
+          color:#fff;
+          height: 0.8rem;
+          b{
+            font-size:0.69333rem;
+            line-height:1;
+            &:first-child{
+              margin-right: 0.4rem;
+            }
+          }
+        }
+      }
+    }
+
+    //banner
+    .lottery_banner{
+      margin: 0.4rem 0 0 0;
+      .banner_a{
+        position: relative;
+        display: block;
+        width: 9.06667rem;
+        height: 6.08rem;
+        margin: 0 auto;
+        color: inherit;
+        border-radius: 0.24rem;
+        box-shadow: 0 0.16rem 0.56rem rgba(0,0,0,0.3);
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        &:after{
+          content: '';
+          display: block;
+          width: 100%;
+          height: 3.54667rem;
+          background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,0.1) 100%);
+          border-radius:0.24rem;
+          position: absolute;
+          left: 0;
+          bottom: 0;
+        }
+        .banner{
+
+        }
+        .title{
+          position: absolute;
+          left: 0.4rem;
+          bottom: 1.2rem;
+          z-index: 10;
+          width: 10em;
+          line-height:0.64rem;
+          max-height: 1.28rem;
+          overflow: hidden;
+          //padding: 4.50667rem 0 0.26667rem 0.4rem;
+          font-size:0.48rem;
+          font-family:FZCCHJW--GB1-0;
+          font-weight:normal;
+          color:#fff;
+        }
+        .desc{
+          position: absolute;
+          left: 0.4rem;
+          bottom: 0.4rem;
+          z-index: 10;
+          font-size:0.37333rem;
+          font-family:PingFangSC-Semibold;
+          font-weight:600;
+          color:#fff;
+          line-height:1;
+          opacity: 0.8;
+        }
+        .price{
+          position: absolute;
+          right: 0.37333rem;
+          bottom: 0.4rem;
+          z-index: 10;
+          font-size:0.96rem;
+          font-family:'din';
+          font-weight:900;
+          color:#fff;
+          line-height:1;
+          text-decoration: line-through;
+        }
+      }
+    }
+
+    //商品详情
+    .lottery_detail{
+      font-size: 0.37333rem;
+      color: #fff;
+      width: 9.06667rem;
+      margin: 0.8rem auto 0;
+      .title{
+        font-family:PingFangSC-Semibold;
+        font-weight:600;
+        line-height: 1;
+      }
+      .text{
+        font-family:PingFangSC-Regular;
+        font-weight:400;
+        line-height:0.58667rem;
+        margin-top: 0.42667rem;
+        .text_a{
+          display: block;
+          width: 100%;
+          color: #fff;
+          span{
+            vertical-align: middle;
+            text-align: justify;
+          }
+          img{
+            width: 0.42667rem;
+            height: 0.42667rem;
+            vertical-align: middle;
+            margin: 0 ;
+          }
+          b{
+            display: inline-block;
+            color: #AE2121;
+            vertical-align: middle;
+          }
+        }
+      }
+
+    }
+
+    //按钮
+    .lottery_btns{
+      width: 9.06667rem;
+      margin: 0.8rem auto 0;
+      user-select: none;
+      .btn{
+        width: 100%;
+        height: 1.17333rem;
+        line-height: 1.17333rem;
+        text-align: center;
+        color: #fff;
+        font-size: 0.37333rem;
+        background: #AE2121;
+        border-radius: 0.64rem;
+        &.disable{
+          background:rgba(255,255,255,0.5);
+          color: rgba(255,255,255,.5);
+        }
+      }
+
+      //抽奖券
+      .lottery_num{
+        width: 100%;
+        box-sizing: border-box;
+        border: 0.02667rem solid #fff;
+        border-radius:0.42667rem;
+        padding: 0.34667rem 0.48rem;
+        color: #fff;
+        font-size: 0.42667rem;
+        line-height: 0.64rem;
+        margin-top: 0.53333rem;
+        .left{
+
+        }
+        .right{
+          float: right;
+          height: 0.64rem;
+          font-size: 0;
+          img{
+            width: 1.28rem;
+            height: 0.64rem;
+            vertical-align: middle;
+            margin-right: 0.48rem;
+          }
+          .num{
+            font-size: 0.42667rem;
+            vertical-align: middle;
+            b{
+              font-weight: inherit;
+            }
+          }
+          .arrow{
+            vertical-align: middle;
+            display: inline-block;
+            font-size: 0.42667rem;
+            margin-right: -0.13333rem;
+            vertical-align: middle;
+          }
+        }
+      }
+    }
+
+    //抽奖规则
+    .lottery_rule_btn{
+      margin-top: 0.4rem;
+      text-align: center;
+      font-size: 0;
+      a{
+        display: inline-block;
+        color: #fff;
+        span{
+          display: inline-block;
+          line-height: 1;
+          vertical-align: middle;
+          &.info{
+            font-size: 0.37333rem;
+            transform: rotateZ(180deg);
+          }
+          &.txt{
+            font-size: 0.26667rem;
+            margin-left: 0.21333rem;
+          }
+        }
+      }
+    }
+
+    //apple声明
+    .lottery_apple_tip{
+      font-size: 0.26667rem;
+      color: #fff;
+      line-height: 1;
+      margin-top: 0.4rem;
+      text-align: center;
+      opacity: 0.8;
+      display: none;
+    }
+
+    //参与者
+    .lottery_participator{
+      margin-top: 0.58667rem;
+      text-align: center;
+      font-size: 0;
+      a{
+        display: inline-block;
+        .imgs{
+          display: inline-block;
+          vertical-align: middle;
+          font-size: 0;
+          img{
+            width: 0.64rem;
+            height: 0.64rem;
+            border: 0.05333rem solid #A49378;
+            border-radius: 50%;
+            margin-left: -0.24rem;
+            &:first-child{
+              margin-left: 0;
+            }
+          }
+        }
+        .txt{
+          display: inline-block;
+          vertical-align: middle;
+          margin-left: 0.26667rem;
+          color: #fff;
+          font-size: 0.34667rem;
+          line-height: 1;
+          font-family:PingFangSC-Medium;
+          font-weight:500;
+          .arrow{
+            margin-left: 0.21333rem;
+            vertical-align: middle;
+            font-size: 0.42667rem;
+            vertical-align: middle;
+          }
+        }
+      }
+    }
+
+    //赞助商
+    .lottery_sponsor{
+      width: 9.06667rem;
+      margin: .8rem auto 0;
+      color: #fff;
+      .title{
+        font-size:0.37333rem;
+        font-family:PingFangSC-Semibold;
+        font-weight:600;
+        line-height:1;
+      }
+      .sponsor{
+        height: 1.06667rem;
+        margin-top: 0.4rem;
+        a{
+          display: block;
+          width: 100%;
+          height: 100%;
+          color: inherit;
+        }
+        .avatar_img{
+          float: left;
+          width: 1.06667rem;
+          height: 1.06667rem;
+          border-radius: 50%;
+        }
+        .center{
+          float: left;
+          height: 1.06667rem;
+          margin-left: 0.26667rem;
+          width: 5.6rem;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          .name{
+            font-size:0.37333rem;
+            font-family:PingFangSC-Medium;
+            font-weight:500;
+            color:#fff;
+            line-height:0.53333rem;
+          }
+          .intro{
+            font-size:0.32rem;
+            font-family:PingFangSC-Medium;
+            font-weight:500;
+            color:rgba(255,255,255,0.6);
+            line-height:0.53333rem;
+          }
+        }
+        .seller_btn{
+          float: right;
+          width:1.57333rem;
+          height:0.61333rem;
+          border-radius: 0.10667rem;
+          border:0.02667rem solid #fff;
+          box-sizing: border-box;
+          text-align: center;
+          font-size:0.34667rem;
+          font-family:PingFangSC-Medium;
+          font-weight:500;
+          color:rgba(255,255,255,1);
+          line-height:0.56rem;
+          margin-top: 0.21333rem;
+        }
+      }
+
+    }
+
+    //赞助商商品
+    .lottery_sponsor_goods_ul{
+      overflow-y: hidden;
+      overflow-x: auto;
+      white-space: nowrap;
+      margin-top: 0.4rem;
+      font-size: 0;
+      li{
+        display: inline-block;
+        width: 7.22667rem;
+        margin-right: 0.26667rem;
+        &:first-child{
+          margin-left: 0.48rem;
+        }
+        &:last-child{
+          margin-right: 0.48rem;
+        }
+        a{
+          display: block;
+          width: 100%;
+          height: 100%;
+          .img{
+            width: 100%;
+            height: 3.68rem;
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            background-size: cover;
+            border-radius: .16rem;
+          }
+          .title{
+            font-size:0.37333rem;
+            font-family:PingFangSC-Medium;
+            font-weight:500;
+            color:#fff;
+            line-height:1;
+            height: 1.5em;
+            margin-top: 0.26667rem;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+
+    //底部空白
+    .lottery_bottom_space{
+      height: 1.36rem;
+    }
+
+
+    //下载app
+    .lottery_download{
+      width: 9.06667rem;
+      height: 2.08rem;
+      margin: .8rem auto 0;
+      box-sizing: border-box;
+      border: 0.02667rem solid rgba(255,255,255,.6);
+      border-radius: 0.42667rem;
+      a{
+        box-sizing: border-box;
+        display: block;
+        width: 100%;
+        height: 100%;
+        padding: 0.4rem 0.48rem;
+        color: inherit;
+      }
+      .logo{
+        float: left;
+        width: 1.28rem;
+        height: 1.28rem;
+      }
+      .center{
+        float: left;
+        margin-left: 0.26667rem;
+        color: #fff;
+        .title{
+          line-height: 0.64rem;
+          font-size: 0.37333rem;
+          font-family:PingFangSC-Semibold;
+          font-weight:600;
+        }
+        .txt{
+          font-size: 0.32rem;
+          font-family:PingFangSC-Regular;
+          font-weight:400;
+          line-height: 0.64rem;
+
+        }
+      }
+      .download{
+        float: right;
+        width: 1.92rem;
+        height: 0.64rem;
+        box-sizing: border-box;
+        font-size: 0.32rem;
+        line-height: 1;
+        text-align: center;
+        color: #fff;
+        border: 0.05333rem solid #fff;
+        border-radius: 0.16rem;
+        margin-top: 0.32rem;
+        padding: 0.10667rem 0;
+      }
+    }
+
+    //中奖名单
+    .lottery_winners{
+      width: 9.06667rem;
+      margin: .8rem auto 0;
+      color: #fff;
+      .title{
+        font-size:0.37333rem;
+        font-family:PingFangSC-Semibold;
+        font-weight:600;
+        line-height:1;
+      }
+
+      ul{
+        li{
+          height: 0.8rem;
+          margin-top: 0.4rem;
+          a{
+            display: block;
+            width: 100%;
+            height: 100%;
+          }
+          img{
+            float: left;
+            width: 0.8rem;
+            height: 0.8rem;
+            border-radius: 50%;
+          }
+          .name{
+            float: left;
+            width: 4.8rem;
+            font-family:PingFangSC-Medium;
+            font-size: 0.37333rem;
+            font-weight:500;
+            color: #fff;
+            line-height: 0.8rem;
+            margin-left: 0.4rem;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+          .sn{
+            float: right;
+            font-size:0.42667rem;
+            font-family:PingFangSC-Medium;
+            font-weight:500;
+            color:#fff;
+            line-height: 0.8rem;
+            width: 2.4rem;
+            text-align: right;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+
+
+    //中奖结果
+    .lottery_result{
+      width: 9.06667rem;
+      margin: .56rem auto 0;
+
+      //中奖
+      .result_true{
+        img{
+          width: 7.17333rem;
+          height: 4.85333rem;
+          display: block;
+          margin: 0 auto;
+        }
+
+        .result_get_0{
+          display: none;
+        }
+        .result_get_1{
+          display: none;
+        }
+        .result_get_2{
+          display: none;
+        }
+        &[status="0"]{
+          .result_get_0{
+            display: block;
+          }
+        }
+        &[status="1"]{
+          .result_get_1{
+            display: block;
+          }
+        }
+        &[status="2"]{
+          .result_get_2{
+            display: block;
+          }
+        }
+
+        .result_btns{
+          margin-top: 0.8rem;
+          display: flex;
+          justify-content: space-between;
+          .result_btn{
+            color: #fff;
+            width: 4.32rem;
+            height: 1.17333rem;
+            font-size: 0.42667rem;
+            line-height: 1.12rem;
+            text-align: center;
+            border: 0.02667rem solid #fff;
+            border-radius: 0.64rem;
+            box-sizing: border-box;
+            &.result_btn_red{
+              border-color: #AE2121;
+              background: #AE2121;
+            }
+            &.result_btn_disable{
+              border-color: rgba(255,255,255,.5);
+              background: rgba(255,255,255,.5);
+              color: rgba(255,255,255,.5);
+            }
+
+          }
+        }
+      }
+
+      //未中奖
+      .result_false{
+        img{
+          display: block;
+          width: 7.09333rem;
+          height: 4.96rem;
+          margin: 0 auto;
+        }
+        .result_btns{
+          margin-top: 0.53333rem;
+          .result_see{
+            display: block;
+            width: 100%;
+            height: 1.17333rem;
+            line-height: 1.17333rem;
+            text-align: center;
+            color: #fff;
+            font-size: 0.37333rem;
+            background: #AE2121;
+            border-radius: 0.64rem;
+          }
+        }
+      }
+    }
+
+
+    .lottery_coupon_wrap{
+      li{
+        margin-top: 0.53333rem;
+        box-sizing: border-box;
+        padding: 0.26667rem 0;
+        background: #fff;
+        border-radius: 0.16000rem;
+        height: 2.45333rem;
+        width: 100%;
+        list-style: none;
+        .left{
+          float: left;
+          width: 2.96rem;
+          height: 100%;
+          text-align: center;
+          border-right: 0.02667rem dashed #979797;
+          .coupon_price{
+            height:0.69333rem;
+            font-size:0.69333rem;
+            font-family:'din';
+            color:#AE2121;
+            line-height:1;
+            padding: 0.34667rem 0 0.29333rem;
+          }
+          .coupon_desc{
+            font-size:0.26667rem;
+            font-family:PingFangSC-Light;
+            color:#202123;
+            line-height: 1;
+          }
+        }
+        .center{
+          float: left;
+          width: 5.36rem;
+          box-sizing: border-box;
+          padding: 0.34667rem 0 0 0.90667rem;
+          .title{
+            font-size:0.37333rem;
+            font-family:PingFangSC-Semibold;
+            color:#202123;
+            line-height:1;
+            height: 0.98667rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+          .time{
+            font-size:0.26667rem;
+            font-family:PingFangSC-Regular;
+            color:#8E8E8E;
+            line-height:1;
+            white-space: nowrap;
+          }
+        }
+
+      }
+    }
+  }
+
+}
