@@ -27,6 +27,7 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
     var lottery = null;//保存活动信息
     var lotteryData = null;//保存所有活动信息
 
+    var isIOS = init.system_query()==='ios';//是否是ios
 
     //判断是否是app，如果是app，url都需要做处理，ajax headers携带身份不一样
     var isApp = false;
@@ -275,6 +276,10 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
             },
             user:data.user,//所有用户信息
         };
+
+        if(!isIOS){
+            obj.lottery.next_lottery_id = lottery.next_lottery_id;
+        }
 
         sendAppJson(obj);
     }
@@ -632,7 +637,7 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
     //顶部活动导航按钮显示
     function initLotteryNav(act,nowid) {
         var next = init.getUrlParam('next');
-        if(isApp && act && next!=='1'){
+        if(isApp && isIOS && act && next!=='1'){
             if (act.last_activity && act.last_activity!==nowid) {
                 $page.find('.lottery_nav_btn_last').attr('lottery', act.last_activity).show();
             }
