@@ -31,9 +31,12 @@ $(document).on('pageInit','.lottery_act', function(e, id1, page) {
         2:'',
         3:'',
     };
-    var lotteryCache = {};//存储lottery对象，'活动id':{time:'获取数据时的时间戳',data:'接口返回的data.data数据'}
+    var lotteryCache = {    //存储lottery对象，'活动id':{time:'获取数据时的时间戳',data:'接口返回的data.data数据'}
+        cacheTime : 60,     //缓存时长，单位秒
+    };
     var topOpenTimer = null;
     var topTimer = null;
+    var diffServerTime = 0;//与服务器的时差 本地时间-服务器时间
 
     var isIOS = init.system_query()==='ios';//是否是ios
 
@@ -119,17 +122,27 @@ $(document).on('pageInit','.lottery_act', function(e, id1, page) {
             data: {lottery_id:id},
             headers: ajaxHeaders,
             success: function(data){
-                setTimeout(function(){
-                    callApp(41);
-                },50);
+                if(isApp){
+                    setTimeout(function(){
+                        callApp(41);
+                    },50);
+                }
                 if(data.status==1){
                     // console.log(data.data)
+                    var lotteryData = data.data;
 
-                    initLotteryFun(data.data);
+                    lotteryCache[lotteryData.lottery.id] = {
+                        data : lotteryData,
+                        time : init.getTimestamp(),
+                    };
+                    console.log(lotteryCache);
+                    initLotteryFun(lotteryData);
                 }
             },
             error: function(e){
-                callApp(41);
+                if(isApp){
+                    callApp(41);
+                }
                 console.log('initLottery err: ',e);
             }
         });
@@ -137,6 +150,22 @@ $(document).on('pageInit','.lottery_act', function(e, id1, page) {
         show_lottery_apple_tip();
     }
 
+    //重新加载lottery，传入新id
+    function reloadLottery(){
+
+        clearInterval(topTimer);
+        clearInterval(topOpenTimer);
+
+        var cache = lotteryCache[id];
+        var now = init.getTimestamp();
+        if(cache && (now - cache.time < lotteryCache.cacheTime)){
+            //如果有缓存并且时间差小于cacheTime，使用缓存
+            // initLotteryFun(cache.data);//todo:倒计时没有更新，暂时无法使用
+            initLottery();
+        }else{
+            initLottery();
+        }
+    }
 
     //具体的init方法
     function initLotteryFun(data) {
@@ -174,7 +203,7 @@ $(document).on('pageInit','.lottery_act', function(e, id1, page) {
                         //抽奖成功
                         if(isApp){
                             callApp(21);
-                            $page.find('.lottery_btns .able').attr('status','1').html('获取更多抽奖券，提高中奖率');
+                            $page.find('.lottery_btns .able').attr('status','1').html('获取更多抽奖码，提高中奖率');
                             $page.find('.lottery_btns .lottery_num').show();
                         }else{
                             $page.find('.lottery_btns .able').attr('status','1').hide();
@@ -315,7 +344,15 @@ $(document).on('pageInit','.lottery_act', function(e, id1, page) {
 
 
     //顶部开奖倒计时 参数：结束时间戳，服务器时间戳，抽奖结束后延迟
-    function initEndCD(endTime,nowTime,delay){
+    function initEndCD(endTime,nowServerTime,delay){
+
+
+        var nowLocalTime = currentTime();//本地时间
+        if(diffServerTime === 0){
+            diffServerTime = nowLocalTime - nowServerTime;//本地时间 - 服务器时间
+        }else{
+            nowServerTime = nowLocalTime - diffServerTime;//如果设置过本地时间与服务器时间差值，重新计算服务器时间
+        }
 
         var scrolling = false;//是否在滚动，如果在滚动，不更新倒计时
         var scrollTimer = null;//重置scrolling的计时器
@@ -323,18 +360,27 @@ $(document).on('pageInit','.lottery_act', function(e, id1, page) {
         delay = parseInt(delay) >=0 ? parseInt(delay) : 30*60;
         var delayCD = 5;//几秒刷一次开奖倒计时时间
 
-        var diff = endTime - nowTime;
-        var localEndTime = +diff + currentTime();
+        var diff = endTime - nowServerTime;
+        var localEndTime = +diff + nowLocalTime;//本地的活动结束时间
 
-        var localOpenTime = +delay + localEndTime;
+        var localOpenTime = +delay + localEndTime;//本地的开奖时间 结束时间+抽奖延时
 
         var $countdown = $page.find('.lottery_header .count_down');
         var $hour = $countdown.find('.hour');
         var $min = $countdown.find('.min');
         var $sec = $countdown.find('.sec');
 
+        // $hour.html('00');
+        // $min.html('00');
+        // $sec.html('00');
+
         clearInterval(topTimer);
-        topTimer = setInterval(function(){
+        clearInterval(topOpenTimer);
+        cdIntervalFun();
+        topTimer = setInterval(cdIntervalFun,1000);
+
+        //倒计时interval的fun
+        function cdIntervalFun(){
 
             createCD(diff--);
             if(diff % 8 === 0){
@@ -348,6 +394,7 @@ $(document).on('pageInit','.lottery_act', function(e, id1, page) {
                 $page.find('.lottery_btns .disable').html('等待开奖').show();
 
                 if(!isApp){
+                    //如果不是app，倒计时结束后，使用开奖延迟时间delay进行倒计时，时间到了后刷新页面。
                     topOpenTimer = setInterval(function () {
                         delay = localOpenTime - currentTime();
                         // console.log('delay sec: ',delay);
@@ -358,7 +405,8 @@ $(document).on('pageInit','.lottery_act', function(e, id1, page) {
                     },delayCD*1000)
                 }
             }
-        },1000);
+        }
+
         $page.find('.lottery_header .going').show();
 
 
@@ -382,10 +430,8 @@ $(document).on('pageInit','.lottery_act', function(e, id1, page) {
             }
         }
 
-        var i=0;
         $page.find('.hs-page').off('scroll')
         $page.find('.hs-page').on('scroll',function(){
-            console.log('scroll:',i++);
             scrolling = true;
             clearTimeout(scrollTimer);
             scrollTimer = setTimeout(function(){
@@ -489,7 +535,7 @@ $(document).on('pageInit','.lottery_act', function(e, id1, page) {
         if(isApp){
             //1 在app里，如果已参与，显示拥有的码数
             if(data.user.lottery_code && data.user.lottery_code.length>0){
-                $page.find('.lottery_btns .able').attr('status','1').html('获取更多抽奖券，提高中奖率').show();//status 0 未抽奖 1 获取更多抽奖码 2 设置开始提醒
+                $page.find('.lottery_btns .able').attr('status','1').html('获取更多抽奖码，提高中奖率').show();//status 0 未抽奖 1 获取更多抽奖码 2 设置开始提醒
                 $page.find('.lottery_btns .lottery_num .num b').html(data.user.lottery_code.length);
                 $page.find('.lottery_btns .lottery_num').show();
             }else{
@@ -498,7 +544,7 @@ $(document).on('pageInit','.lottery_act', function(e, id1, page) {
         }else{
             //2 在h5里，如果已登录且参与过，显示抽奖成功和打开app查看结果
             if(loginStatus && data.user && data.user.lottery_code && data.user.lottery_code.length>0){
-                $page.find('.lottery_btns .disable').html('抽奖成功').show();
+                $page.find('.lottery_btns .disable').html('抽奖成功，下载App可提高中奖率').show();
                 $page.find('.lottery_download').show();
             }else{
                 $page.find('.lottery_btns .able').attr('status','0').html('免费抽奖').show();
@@ -534,7 +580,12 @@ $(document).on('pageInit','.lottery_act', function(e, id1, page) {
                 $page.find('.result_true .result_share').attr('href',callAppUrl(32));//分享
 
             }else if(data.user.status == 2 || data.user.status == 0){
-                createCoupon(data.coupon);
+                if(data.coupon){
+                    createCoupon(data.coupon);
+                    $page.find('.result_false .no_win_img').attr('src','https://img8.ontheroadstore.com/static/image/choujiang/no_winning_2x.png')
+                }else{
+                    $page.find('.result_false .no_win_img').attr('src','https://img8.ontheroadstore.com/static/image/choujiang/no_win_2x.png')
+                }
                 $page.find('.result_false').show();
                 $page.find('.lottery_result').show();
                 $page.find('.result_false .result_see').attr('href',callAppUrl(33));//优惠券购买
@@ -639,7 +690,7 @@ $(document).on('pageInit','.lottery_act', function(e, id1, page) {
         }else if(isApp && $this.attr('status')==='1'){
             //点击获取更多抽奖码（分享）    lottery://23-xxx 加分享shareid
             callApp(23);
-            sensorsClick('获取更多抽奖券，提高中奖率');
+            sensorsClick('获取更多抽奖码，提高中奖率');
 
         }else if(isApp && $this.attr('status')==='2'){
             //设置开始提醒                lottery://11
@@ -672,21 +723,29 @@ $(document).on('pageInit','.lottery_act', function(e, id1, page) {
             return;
         }
         var liHtml = '';
-        liHtml += '<li>'
-        liHtml += '<div class="left">'
-        liHtml += '<div class="coupon_price">¥<b>'+ data.coupon_price +'</b></div>'
-        liHtml += '<div class="coupon_desc">'+ (data.min_price > 0 ? '满'+data.min_price+'可用':'消费任意金额可用') +'</div>'
-        liHtml += '</div>'
-        liHtml += '<div class="center">'
-        liHtml += '<div class="title">'+ data.title +'</div>'
 
+        liHtml+= '<li class="coupon_li">'
+        liHtml+= '<div class="coupon_top">'
+        liHtml+= '<div class="left">'
+        liHtml+= '<div class="coupon_price">¥<b>'+ data.coupon_price +'</b></div>'
+        liHtml+= '<div class="coupon_desc">'+ (data.min_price > 0 ? '满'+data.min_price+'可用':'消费任意金额可用') +'</div>'
+        liHtml+= '</div>'
+        liHtml+= '<div class="right_top">'
+        liHtml+= '<div class="center">'
+        liHtml+= '<div class="title">'+ data.title +'</div>'
         if (data.apply_time_type==2){
             liHtml += '<div class="time">'+ init.couponFmtTime(init.getTimestamp()) + ' - ' + init.couponFmtTime(init.getTimestamp(data.apply_time_length)) +'</div>'
         }else{
             liHtml += '<div class="time">'+ init.couponFmtTime(data.apply_time_start) + ' - ' + init.couponFmtTime(data.apply_time_end) +'</div>'
         }
-        liHtml += '</div>'
-        liHtml += '</li>'
+        liHtml+= '</div>'
+        liHtml+= '</div>'
+        liHtml+= '<div class="right_btm">'
+        liHtml+= '<div class="open_wrap"><span class="title">'+ data.coupon_note +'</span></div>'
+        liHtml+= '</div>'
+        liHtml+= '</div>'
+        liHtml+= '</li>'
+
 
         $page.find('.lottery_coupon_wrap').html(liHtml);
 
@@ -760,7 +819,7 @@ $(document).on('pageInit','.lottery_act', function(e, id1, page) {
     function getLotteryCallback(codeTxt){
         addUserLotteryCount2(codeTxt);
         //抽奖成功
-        $page.find('.lottery_btns .able').attr('status','1').html('获取更多抽奖券，提高中奖率');
+        $page.find('.lottery_btns .able').attr('status','1').html('获取更多抽奖码，提高中奖率');
         $page.find('.lottery_btns .lottery_num').show();
 
         if($page.find('.lottery_participator .imgs img').length<4){
@@ -781,17 +840,16 @@ $(document).on('pageInit','.lottery_act', function(e, id1, page) {
 
         if(lotteryids[type]){
             id = lotteryids[type];
-            initLottery();
-            clearInterval(topTimer);
-            clearInterval(topOpenTimer);
-            var $countdown = $page.find('.lottery_header .count_down');
-            $countdown.find('.hour').html('00');
-            $countdown.find('.min').html('00');
-            $countdown.find('.sec').html('00');
+            reloadLottery();
+        }else if(type==0 && lotteryId){
+            id = lotteryId;
+            reloadLottery();
         }else{
-            callApp(41);
+            if(isApp){
+                callApp(41);
+            }
             setTimeout(function(){
-                $.toast('没有当前分类')
+                $.toast('当前抽奖不存在')
             },50)
         }
     }
@@ -846,9 +904,9 @@ $(document).on('pageInit','.lottery_act', function(e, id1, page) {
         $(page).find('.result_share').on('click',function(){
             sensorsClick('显摆一下');
         });
-        //领券买他妈的
+        //买他妈的
         $(page).find('.result_see').on('click',function(){
-            sensorsClick('领券买他妈的');
+            sensorsClick('买他妈的');
         });
         //奖品详情
         $(page).find('.lottery_detail a').on('click',function(){
