@@ -288,7 +288,7 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
 
 
 
-    //顶部开奖倒计时 参数：结束时间戳，下次活动id
+    //顶部开奖倒计时 参数：结束时间戳，服务器时间戳，抽奖结束后延迟
     function initEndCD(endTime,nowTime,delay){
 
         var scrolling = false;//是否在滚动，如果在滚动，不更新倒计时
@@ -400,6 +400,7 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
     function initDetail(lottery,data){
 
         $('.lottery .hs-page').css('background-color',lottery.background);
+        $('body').css('background-color',lottery.background);
 
         $page.find('.lottery_banner .banner_a').attr('href','/Portal/HsArticle/index/id/'+lottery.lottery_object_id+'.html')
             .css({

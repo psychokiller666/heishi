@@ -13,36 +13,10 @@
     .lottery_header{
       text-align: center;
       min-height: 0.8rem;
-      padding-top: 0.24rem;
+      padding-top: 0.4rem;
       position: relative;
 
-      .lottery_nav_btns{
-        position: absolute;
-        left: 0;
-        top: 0.24rem;
-        z-index: 100;
-        width: 100%;
-        box-sizing: border-box;
-        padding: 0 0.48rem;
-        .lottery_nav_btn{
-          display: none;
-          float: right;
-          width: 1.92rem;
-          height: 0.64rem;
-          box-sizing: border-box;
-          font-size: 0.32rem;
-          line-height: 1;
-          text-align: center;
-          color: #fff;
-          border: 0.05333rem solid #fff;
-          border-radius: 0.16rem;
-          margin-top: 0.18rem;
-          padding: 0.10667rem 0;
-          &.lottery_nav_btn_last{
-            float: left;
-          }
-        }
-      }
+
 
       .forecast_a{
         position: absolute;
@@ -64,53 +38,46 @@
         .title{
           font-size: 0.32rem;
           line-height: 1;
-          padding: 0.32rem 0 0.21333rem;
+          padding: 0 0 0.21333rem;
           color: #fff;
           font-weight:600;
         }
         .count_down{
           font-size: 0;
-          height:0.8rem;
+          height:1.33333rem;
           b{
             display: inline-block;
-            width:0.58667rem;
-            height:0.8rem;
-            background:#000;
+            width:1.12rem;
+            height:1.33333rem;
+            background-image:url('data:image/svg+xml;utf8,<svg version="1.1"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 42 50" style="enable-background:new 0 0 42 50;" xml:space="preserve"><g><g transform="translate(-94.000000, -145.000000)"><g transform="translate(94.000000, 145.000000)"><g><path d="M42,26v21c0,1.7-1.3,3-3,3H3c-1.7,0-3-1.3-3-3V26h2c0.6,0,1-0.4,1-1s-0.4-1-1-1H0V3c0-1.7,1.3-3,3-3h36c1.7,0,3,1.3,3,3v21h-2c-0.6,0-1,0.4-1,1s0.4,1,1,1H42z"/></g></g></g></g></svg>');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
             border-radius:0.10667rem;
             text-align: center;
-            font-size: 0.64rem;
-            line-height: 0.8rem;
-            font-family:PingFangSC-Semibold;
+            font-size: 0.85333rem;
+            line-height: 1.33333rem;
+            font-family:'din';
             font-weight:600;
             color: #fff;
             vertical-align: middle;
-            margin-right: 0.13333rem;
-            &:last-child{
-              margin-right: 0;
-            }
           }
           i{
             display: inline-block;
             position: relative;
-            width: 0.16rem;
-            height:0.8rem;
+            width: 0.32rem;
+            height:0.32rem;
+            font-family:PingFangSC-Medium;
+            font-weight:500;
+            font-style: normal;
+            font-size: 0.32rem;
+            color: #fff;
+            line-height: 1;
             vertical-align: middle;
-            margin-right: 0.13333rem;
-
-            &:before,&:after{
-              position: absolute;
-              left: 0;
-              top: 0.13333rem;
-              content: '';
-              display: block;
-              width: 0.16rem;
-              height: 0.16rem;
-              border-radius: 50%;
-              background: #000;
-            }
-            &:after{
-              top: initial;
-              bottom: 0.13333rem;
+            margin: 0 0.13333rem;
+            transform: translateY(0.3rem);
+            &:last-child{
+              margin-right: 0;
             }
           }
         }
@@ -118,11 +85,10 @@
       }
       //预告
       .forecast{
-        display: none;
         .title{
           font-size: 0.32rem;
           line-height: 1;
-          padding: 0.32rem 0 0.21333rem;
+          padding: 0 0 0.21333rem;
           color: #fff;
           font-weight:600;
         }
@@ -182,9 +148,9 @@
           max-height: 1.28rem;
           overflow: hidden;
           //padding: 4.50667rem 0 0.26667rem 0.4rem;
-          font-size:0.48rem;
+          font-size:0.53333rem;
           font-family:FZCCHJW--GB1-0;
-          font-weight:normal;
+          font-weight:900;
           color:#fff;
         }
         .desc{
@@ -772,6 +738,22 @@
           }
         }
 
+      }
+    }
+
+    .lottery_open_explain{
+      text-align: center;
+      margin-top: 1.6rem;
+      img{
+        width: 3.12rem;
+        height: 0.93333rem;
+      }
+      div{
+        margin-top: 0.4rem;
+        font-size:0.37333rem;
+        font-weight:500;
+        color:#fff;
+        line-height:0.58667rem;
       }
     }
   }
