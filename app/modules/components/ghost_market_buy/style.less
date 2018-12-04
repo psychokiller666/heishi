@@ -1,0 +1,200 @@
+.ghost_market_buy{
+  background:rgba(244,244,244,1)!important;
+  .user_address{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding:0.48rem 0.3467rem;
+    height:2.5333rem;
+    box-sizing: border-box;
+    background:#fff;
+    border-top:0.0267rem solid rgba(232,232,232,1);
+    margin-bottom:0.2133rem;
+    .user_address_left{
+      font-size:0.5333rem;
+    }
+    .user_address_right{
+      font-size:0.4rem;
+    }
+    .user_address_center{
+      width: 7.5733rem;
+      .address_empty{
+        font-size:0.3467rem;
+        color:#999;
+      }
+      .user_con_top{
+        display: flex;
+        justify-content: space-between;
+        font-size:0.3467rem;
+        font-weight:500;
+        color:rgba(32,33,35,1);
+      }
+      .user_con_bottom{
+        font-size:0.3467rem;
+        font-weight:400;
+        color:rgba(45,47,60,1);
+        line-height:0.48rem;
+        margin-top:0.2667rem;
+        height:0.96rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        /* autoprefixer: off */
+        -webkit-box-orient: vertical;
+        /* autoprefixer: on */
+      }
+    }
+  }
+  .goods_mes{
+    background:#fff;
+    box-sizing: border-box;
+    padding:0 0.3467rem;
+    li{
+      padding:0.3467rem 0;
+      border-bottom:0.0267rem solid rgba(232,232,232,1);
+      &:last-child{
+        border-bottom:none;
+      }
+      &.goods_seller{
+        display: flex;
+        align-items: center;
+        img{
+          width: 0.5333rem;
+          height: 0.5333rem;
+          border-radius:50%;
+        }
+        span{
+          font-size:0.32rem;
+          font-weight:400;
+          color:rgba(51,51,51,1);
+          margin-left: 0.4533rem; 
+        }
+      }
+      &.goods_mes_con{
+        .goods_img{
+          width:3.8133rem;
+          height:1.9333rem;
+          margin-right:0.3467rem;
+        }
+        .goods_mes_right{
+          width:5.1467rem;
+          height: 1.9333rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          .goods_name{
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            font-size:0.3467rem;
+            font-weight:400;
+            color:rgba(32,33,35,1);
+          }
+          .goods_price{
+            .hs-fl{
+                font-size:0.3467rem;
+                font-weight:600;
+                color:rgba(174,33,33,1);
+            }
+            p{
+              font-size:0.3467rem;
+              font-weight:400;
+              color:rgba(142,142,142,1);
+            }
+          }
+        }
+      }
+      &.goods_num{
+        .goods_num_left{
+          font-size:0.3467rem;
+          font-weight:500;
+          color:rgba(32,33,35,1);
+        }
+        .goods_num_right{
+          i{
+            display: inline-block;
+            width:0.4rem;
+            height:0.4rem;
+            border:0.0133rem solid rgba(151,151,151,1);
+            text-align: center;
+            line-height: 0.45rem;
+            font-size:0.32rem;
+            box-sizing: border-box;
+          }
+          span{
+            display: inline-block;
+            margin:0 0.5333rem;
+            font-size:0.3733rem;
+            font-weight:500;
+            color:rgba(32,33,35,1);
+          }
+        }
+      }
+      &.goods_freight{
+        font-size:0.3467rem;
+        font-weight:500;
+        color:rgba(32,33,35,1);
+      }
+      &.goods_leave_mes{
+        padding:0;
+        span{
+          font-size:0.3467rem;
+          font-weight:500;
+          color:rgba(32,33,35,1);
+        }
+        input{
+          width:7.3333rem;
+          padding: .3467rem 0;
+          margin-left:0.6933rem;
+          font-size:0.32rem;
+          border:none;
+        }
+      }
+    }
+  }
+  .goods_pay{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width:100%;
+    height:1.28rem;
+    background:#fff;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    div{
+      display: inline-block;
+      &.total_price{
+        font-size:0.32rem;
+        font-weight:400;
+        color:rgba(32,33,35,1);
+        span{
+          font-size:0.3733rem;
+          font-weight:500;
+          color:rgba(174,33,33,1);
+        }
+      }
+      &.total_freight{
+        font-size:0.32rem;
+        font-weight:400;
+        color:rgba(142,142,142,1);
+        margin:0 0.3467rem 0 0.2933rem;
+      }
+      &.go_pay{
+        width:2.2933rem;
+        height:0.96rem;
+        background:rgba(174,33,33,1);
+        border-radius:0.1067rem;
+        font-weight:500;
+        color:rgba(255,255,255,1);
+        font-size:0.3467rem;
+        text-align: center;
+        line-height: 0.96rem;
+        margin-right:0.3467rem;
+      }
+    }
+  }
+}
+
+

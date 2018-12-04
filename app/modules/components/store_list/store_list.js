@@ -1,8 +1,14 @@
 // 商品列表 首页
 // 初始化
 var common = require('../common/common.js');
+
+// velocity动画插件，使用方法同jquery.animate。引入的原因是使用animate在ios上动画速度过快。
+var velocity = require('../plugin/velocity.min.js');
 // 搜索
 // var SearchInit = require('../search_list/search_list.js');
+
+//鬼市首页
+var gsHome = require('../ghost_market_article_home/gs_home.js');
 
 $(document).on('pageInit','.index_list', function (e, id, page) {
   if (page.selector == '.page'){
@@ -369,3 +375,257 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
 
 
 });
+
+
+  // 鬼市首页入口
+    setGS();
+    function setGS(){
+        var url = ApiBaseUrl + '/ghostmarket/getSetting';
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType: 'json',
+            data: {},
+            headers: ajaxHeaders,
+            success: function (data) {
+                if (data.status == 1) {
+                    if(data.data.userCenterStatusH5){
+                        $('.ghost_store_ad_img').css({'background':'url("'+ data.data.secondFloorBackgroundImgH5 +'@640w_1l") no-repeat center center','background-size': 'cover'});
+                        $('.ghost_store_ad_wrap').show();
+                        initGS();
+                    }
+                }
+            },
+            error: function (e) {
+                console.log('getSetting err: ', e);
+            }
+
+        });
+    }
+
+    function initGS() {
+
+        //初始化鬼市home页
+        gsHome({gs_cd_back:gs_cd_back});
+
+        var gsType = undefined;//鬼市状态
+
+        var $ghost_store_iframe_wrap = $('.ghost_store_iframe_wrap');
+
+        var gs_share_data = {
+            title: '公路商店 — 鬼市',
+            desc: '为你不着边际的企图心',
+            link: window.location.origin + '/Portal/GhostMarket/home.html',
+            img: 'http://jscache.ontheroadstore.com/tpl/simplebootx_mobile/Public/i/logo.png'
+        };
+
+
+        //鬼市首页泼墨动画
+
+        var modalTrigger = $('.cd-modal-trigger'),
+            transitionLayer = $('.ghost_store_animate_wrap'),
+            transitionBackground = transitionLayer.children(),
+            modalWindow = $('.cd-modal');
+
+        var frameProportion = 1.78, //png frame aspect ratio
+            frames = 25, //number of png frames
+            resize = false;
+
+        //设置过渡背景尺寸
+        setLayerDimensions();
+        $(window).on('resize', function(){
+            if( !resize ) {
+                resize = true;
+                (!window.requestAnimationFrame) ? setTimeout(setLayerDimensions, 300) : window.requestAnimationFrame(setLayerDimensions);
+            }
+        });
+
+
+        //close modal window
+        modalWindow.on('click', '.modal-close', function(event){
+            event.preventDefault();
+            transitionLayer.addClass('closing');
+            // modalWindow.removeClass('visible');
+            transitionBackground.one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(){
+                transitionLayer.removeClass('closing opening visible');
+                transitionBackground.off('webkitAnimationEnd oanimationend msAnimationEnd animationend');
+            });
+        });
+
+        function setLayerDimensions() {
+            var windowWidth = $(window).width(),
+                windowHeight = $(window).height(),
+                layerHeight, layerWidth;
+
+            if( windowWidth/windowHeight > frameProportion ) {
+                layerWidth = windowWidth;
+                layerHeight = layerWidth/frameProportion;
+            } else {
+                layerHeight = windowHeight*1.2;
+                layerWidth = layerHeight*frameProportion;
+            }
+
+            transitionBackground.css({
+                'width': layerWidth*frames+'px',
+                'height': layerHeight+'px',
+            });
+
+            resize = false;
+        }
+
+
+        $('.ghost_store_ad_wrap').on('click', '.ghost_store_ad_img', function () {
+            var $img = $(this);
+
+            //设置分享
+            setShare();
+
+
+            //对鬼市广告图做动画及打开鬼市home页
+
+            transitionLayer.addClass('visible opening');
+
+            var delay =  600;
+            setTimeout(function(){
+                $ghost_store_iframe_wrap.show().velocity({opacity: 1}, 600, 'linear', function () {});
+            }, delay);
+
+            //判断是否需要重启
+            getGSstatus(changeStatus);
+
+            $img.attr('openstatus', '1');
+
+        });
+
+        //关闭按钮事件
+        $('.ghost_store_iframe_close').off('click').on('click', function () {
+
+            //设置分享
+            setShare(true);
+
+            transitionLayer.addClass('closing');
+            modalWindow.removeClass('visible');
+            transitionBackground.one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(){
+                transitionLayer.removeClass('closing opening visible');
+                transitionBackground.off('webkitAnimationEnd oanimationend msAnimationEnd animationend');
+            });
+
+
+            $ghost_store_iframe_wrap.velocity({opacity: 0}, 600, 'linear', function () {
+                $ghost_store_iframe_wrap.hide();
+            });
+        });
+
+        //设置分享信息
+        function setShare(restore) {
+            if (restore) {
+                init.wx_share(share_data);
+            } else {
+                init.wx_share(gs_share_data);
+            }
+        }
+        //如果鬼市正在进行，自动打开
+        gsGoing();
+        function gsGoing(){
+            getGSstatus(function(type, data){
+                if(type === false){
+                    return;
+                }
+
+                gsType = type; //第一次设置gsType
+
+                //ga_type 类型1 开市中 2活动未开始 3活动已结束 0没有活动
+                if(type == 1){
+
+                    if(localStorage.getItem('ga_id')==data.data.avtivity.ga_id){
+                        return;
+                    }
+
+                    localStorage.setItem('ga_id', data.data.avtivity.ga_id);
+                    //打开鬼市home页
+                    $ghost_store_iframe_wrap.show().animate({opacity: 1}, 500, 'linear');
+                }
+
+            })
+
+
+
+        }
+
+        //获取当前gs状态
+        function getGSstatus(callback){
+            var url = ApiBaseUrl + '/ghostmarket/goods/getGhostMarketGoods';
+            $.ajax({
+                type: "GET",
+                url: url,
+                dataType: 'json',
+                data: {},
+                headers: ajaxHeaders,
+                success: function (data) {
+                    if (data.status == 1) {
+
+                        //ga_type 类型1 开市中 2活动未开始 3活动已结束 0没有活动
+                        if(data.data.avtivity){
+                            callback(data.data.avtivity.ga_type, data);
+                            return;
+                        }
+                    }
+                    callback(false);
+                },
+                error: function (e) {
+                    callback(false);
+                    console.log('getGhostMarketGoods err: ', e);
+                }
+
+            });
+        }
+
+        //判断状态是否改变
+        function changeStatus(newType){
+            if(newType === false){
+                return;
+            }
+            //每次打开鬼市弹窗都去检测状态是否变化，如果鬼市状态变化，重新加载鬼市页面
+            if(gsType !== undefined && gsType !== newType){
+                $ghost_store_iframe_wrap.show();
+                $('.gs_home_con').scrollTop(10);
+                gsHome({gs_cd_back:gs_cd_back});
+            }
+            gsType = newType;
+        }
+
+        //鬼市开市倒计时结束回调
+        function gs_cd_back() {
+
+            if($ghost_store_iframe_wrap.css('display')==='none'){
+                $.modal({
+                    text: '公路鬼市正式开市，去趟趟！',
+                    title: '开市提醒',
+                    buttons: [
+                        {
+                            text: '无聊', close: true,
+                            onClick: function () {
+                                gsType = null;
+                            }
+                        },
+                        {
+                            text: '去趟趟', bold: true, close: true,
+                            onClick: function () {
+                                window.location.href = '/Portal/GhostMarket/home.html';
+                            }
+                        }
+                    ]
+                });
+            }else{
+                window.location.href = '/Portal/GhostMarket/home.html';
+            }
+        }
+
+
+    }
+
+
+  });
+
+
+
