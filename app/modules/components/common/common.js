@@ -433,7 +433,6 @@ common.prototype.sensors = sensors;
 //神策初始化
 //文档 https://www.sensorsdata.cn/manual/js_sdk.html
 function initSensorsdata(){
-    window.sa = sensors;
 
     var pageType = getPageType();
 
