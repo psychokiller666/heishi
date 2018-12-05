@@ -444,11 +444,20 @@ function initSensorsdata(){
         server_url = 'https://sc.ontheroadstore.com/sa?project=production';//正式服务器
     }
 
+    if(localStorage.getItem('SASER')==='DEVSERVER'){
+        server_url = 'https://sc.ontheroadstore.com/sa?project=default';
+    }
+    var showlog = false;
+    if(localStorage.getItem('SALOG')==='SHOWLOG'){
+        showlog = true;
+        console.log(server_url.split('?')[1]);
+        window.sensors = sensors;
+    }
     sensors.init({
         server_url: server_url,
         web_url:"http://47.93.182.143:8107",
         use_app_track: true,// 与app打通
-        show_log:!isProduction,//log
+        show_log:showlog,//log
     });
 
     //注册公共属性
