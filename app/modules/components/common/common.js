@@ -40,7 +40,7 @@ function common(page){
 //判断域名是否是生产环境
 common.prototype.isProduction = isProduction;
 function isProduction(){
-    return location.pathname === 'hs.ontheroadstore.com';
+    return location.hostname === 'hs.ontheroadstore.com';
 }
 //没有图片的默认url
 common.prototype.lostImage = 'https://img8.ontheroadstore.com/iosupload/20180808/b0pMT2tsVk8vMmtzek1aSUtlYVlxQT09.jpg';
