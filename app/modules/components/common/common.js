@@ -6,6 +6,9 @@ var wx = require('weixin-js-sdk');
 //神策sdk
 var sensors = require('../../../modules/components/sa_sdk/sensorsdata.min.js')
 
+//md5
+var md5 = require('../../../modules/components/plugin/md5.min');
+
 function common(page){
   this.page = page;
   // 控制.hs-page高度
@@ -153,7 +156,7 @@ common.prototype.wx_share = function(options,callback){
       // 分享
       wx.onMenuShareTimeline({
         title: $.trim(options.title),
-        link: options.link,
+        link: partnerUrlFix(options.link),
         imgUrl: options.img,
         success: function(){
           // 用户确认分享后执行的回调函数
@@ -169,7 +172,7 @@ common.prototype.wx_share = function(options,callback){
       wx.onMenuShareAppMessage({
         title: $.trim(options.title),
         desc: $.trim(options.desc),
-        link: options.link,
+        link: partnerUrlFix(options.link),
         imgUrl: options.img,
         success:function(){
           // 用户确认分享后执行的回调函数
@@ -603,7 +606,7 @@ function getPageType (){
         {name:'商品详情页',path:'/Portal/HsArticle/index/id/'},
         {name:'卖家店铺页',path:'/User/index/index/id/'},
         {name:'我的优惠券页',path:'/Portal/Coupon/userCoupon.html'},
-        {name:'我的收藏页',path:'/index.php/user/HsLike/index.html'},
+        {name:'我的收藏页',path:'/user/HsLike/index.html'},
         {name:'确认订单页',path:'/User/HsOrder/add/object_id/'},
         {name:'确认订单页',path:'/User/MyChart/buy.html'},
         {name:'私信页',path:'/User/HsMessage/detail/from_uid/'},
@@ -637,6 +640,99 @@ function getPageType (){
     }
     return '';
 }
+
+
+//合伙人分享url追加 referCode
+function partnerUrlFix(url){
+    var uid = getUserId();
+    var md5Uid = '';
+    if(uid){
+        md5Uid = md5(uid);
+        url = replaceUrlParams(url,{referCode:md5Uid});
+    }
+    console.log('shareurl:',url);
+    return url;
+}
+
+//获取用户id
+function getUserId(){
+    var $current_user_id = $('.current_user_id');
+    var uid='';
+    if($current_user_id.length>0){
+        uid = $current_user_id.attr('uid');
+        if(typeof uid === 'string' && uid.length>0){
+            //已登录
+            return uid;
+        }
+    }
+    return false;
+}
+
+//解析url
+function parseURL(url) {
+    var a = document.createElement('a');
+    a.href = url;
+    return {
+        source: url,
+        protocol: a.protocol.replace(':', ''),
+        host: a.hostname,
+        port: a.port,
+        query: a.search,
+        params: (function () {
+            var ret = {},
+                seg = a.search.replace(/^\?/, '').split('&'),
+                len = seg.length, i = 0, s;
+            for (; i < len; i++) {
+                if (!seg[i]) { continue; }
+                s = seg[i].split('=');
+                ret[s[0]] = s[1];
+            }
+            return ret;
+
+        })(),
+        file: (a.pathname.match(/\/([^\/?#]+)$/i) || [, ''])[1],
+        hash: a.hash.replace('#', ''),
+        path: a.pathname.replace(/^([^\/])/, '/$1'),
+        relative: (a.href.match(/tps?:\/\/[^\/]+(.+)/) || [, ''])[1],
+        segments: a.pathname.replace(/^\//, '').split('/')
+    };
+}
+
+//替换url中的同名参数值，url:原本的url;newParams:新的参数对象
+function replaceUrlParams(url, newParams) {
+    var parsedUrl = parseURL(url);
+
+    for (var x in newParams) {
+        var hasInMyUrlParams = false;
+        for (var y in parsedUrl.params) {
+            if (x.toLowerCase() == y.toLowerCase()) {
+                parsedUrl.params[y] = newParams[x];
+                hasInMyUrlParams = true;
+                break;
+            }
+        }
+        //原来没有的参数则追加
+        if (!hasInMyUrlParams) {
+            parsedUrl.params[x] = newParams[x];
+        }
+    }
+    var _result = parsedUrl.protocol + "://" + parsedUrl.host + (parsedUrl.port ? ":" + parsedUrl.port : '') + parsedUrl.path + "?";
+
+    for (var p in parsedUrl.params) {
+        _result += (p + "=" + parsedUrl.params[p] + "&");
+    }
+
+    if (_result.substr(_result.length - 1) == "&") {
+        _result = _result.substr(0, _result.length - 1);
+    }
+
+    if (parsedUrl.hash != "") {
+        _result += "#" + parsedUrl.hash;
+    }
+    return _result;
+}
+
+
 
 
 

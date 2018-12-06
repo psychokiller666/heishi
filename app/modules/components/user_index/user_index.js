@@ -619,6 +619,69 @@ $(document).on('pageInit','.center', function(e, id, page){
         });
     }
 
+    //合伙人
+    var $partner_wrap = $('.partner_wrap');
+    if($partner_wrap.length>0){
+        var ApiBaseUrl = init.getApiBaseUrl();
+        var PHPSESSID = init.getCookie('PHPSESSID');
+        var ajaxHeaders = {
+            'phpsessionid': PHPSESSID
+        };
+        var url = ApiBaseUrl + '/ghostmarket/getSetting';
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType: 'json',
+            data: {},
+            headers: ajaxHeaders,
+            success: function (data) {
+                if (data.status == 1) {
+
+                    initPartner(data.data);
+
+                }
+            },
+            error: function (e) {
+                console.log('getSetting err: ', e);
+            }
+        });
+
+        function initPartner(data){
+            var status = 1;//当前用户状态 0未加入，1已加入，2已锁定
+            var url = '';//点击跳转的url
+
+            var $partner_today = $partner_wrap.find('.partner_today');
+            var $partner_total = $partner_wrap.find('.partner_total');
+            var $partner_content = $partner_wrap.find('.partner_content');
+            $partner_wrap.attr('status',status);
+            $partner_content.attr('status',status);
+
+            if(status===0){
+                url = ''
+            }else if(status===1){
+                url = ''
+                $partner_today.find('.partner_money').html('65')
+                $partner_total.find('.partner_money').html('65455')
+
+            }else if(status===2){
+                url = ''
+            }
+
+            $partner_wrap.on('click',function(){
+                if(status===0){
+                    init.sensors.track('buttonClick', {
+                        pageType : '我的页面（买家版）',
+                        buttonName : '立即加入',
+                    })
+                }
+                location.href = url;
+            });
+
+            $partner_wrap.show();
+        }
+
+    }
+
   //  个人用户中心页
   if(store_list.length == 0){
     // 弹出绑定手机窗口 自己的个人中心
