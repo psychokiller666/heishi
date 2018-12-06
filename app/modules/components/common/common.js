@@ -603,7 +603,7 @@ function getPageType (){
         {name:'商品详情页',path:'/Portal/HsArticle/index/id/'},
         {name:'卖家店铺页',path:'/User/index/index/id/'},
         {name:'我的优惠券页',path:'/Portal/Coupon/userCoupon.html'},
-        {name:'我的收藏页',path:'/index.php/user/HsLike/index.html'},
+        {name:'我的收藏页',path:'/user/HsLike/index.html'},
         {name:'确认订单页',path:'/User/HsOrder/add/object_id/'},
         {name:'确认订单页',path:'/User/MyChart/buy.html'},
         {name:'私信页',path:'/User/HsMessage/detail/from_uid/'},
