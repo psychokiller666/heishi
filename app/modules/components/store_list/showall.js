@@ -21,6 +21,12 @@ $(document).on('pageInit','.showall', function (e, id, page) {
   init.wx_share(share_data);
   init.checkfollow();
 
+    var ApiBaseUrl = init.getApiBaseUrl();
+    var PHPSESSID = init.getCookie('PHPSESSID');
+    var ajaxHeaders = {
+        'phpsessionid': PHPSESSID
+    };
+
 
   // 搜索初始
   // SearchInit();
@@ -87,6 +93,34 @@ $(document).on('pageInit','.showall', function (e, id, page) {
       $('.hs-main').css('bottom', 0);
     }
   }
+
+    //抽奖顶部入口
+    var $go_to_lottery = $(page).find('.go_to_lottery');
+    if($go_to_lottery.length>0){
+        showLottery();
+    }
+    function showLottery(){
+        var url = ApiBaseUrl + '/appv6_2/getLotterySwitch';
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType: 'json',
+            data: {},
+            headers: ajaxHeaders,
+            success: function (data) {
+                if (data.status == 1) {
+                    if(data.data==1){
+                        $go_to_lottery.show();
+                    }
+                }
+            },
+            error: function (e) {
+                console.log('getLotterySwitch err: ', e);
+            }
+
+        });
+    }
+
 
     //  神策埋点事件
     sensorsEvent();

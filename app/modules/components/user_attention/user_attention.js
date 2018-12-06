@@ -47,8 +47,8 @@ $(document).on('pageInit','.user_attention', function (e, id, page) {
             init.sensors.track('subscribe', {
                 pageType : '我关注的',
                 operationType : '关注',
-                sellerID : $(this).data('data-id'),
-                storeName : $(this).parents('.title').find('.user_nicename').html(),
+                sellerID : $(that).data('id'),
+                storeName : $(that).parents('.title').find('.user_nicename').html(),
             })
 		}else{
 			$.confirm('确定取消关注吗？', function () {
@@ -72,8 +72,8 @@ $(document).on('pageInit','.user_attention', function (e, id, page) {
                 init.sensors.track('subscribe', {
                     pageType : '我关注的',
                     operationType : '取关',
-                    sellerID : $(this).data('data-id'),
-                    storeName : $(this).parents('.title').find('.user_nicename').html(),
+                    sellerID : $(that).data('id'),
+                    storeName : $(that).parents('.title').find('.user_nicename').html(),
                 })
 		    });
 		}
