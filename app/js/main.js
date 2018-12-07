@@ -196,3 +196,8 @@ require('../modules/components/ghost_market_seller/index');
 require('../modules/components/ghost_market_buy/index');
 //鬼市支付成功页面
 require('../modules/components/ghost_market_pay_success/index');
+
+
+//合伙人详情
+require('../modules/components/partner/partner_detail');
+

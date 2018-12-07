@@ -38,6 +38,7 @@ function common(page){
   this.ImgBaseUrl = 'https://img8.ontheroadstore.com';
   addCss();
   initSensorsdata();
+  partnerInviteUser();
 };
 
 //判断域名是否是生产环境
@@ -220,25 +221,29 @@ common.prototype.system_query = function() {
 }
 
 //获取url中的参数
-common.prototype.getUrlParam = function(name) {
+common.prototype.getUrlParam = getUrlParam;
+function getUrlParam(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);
     if (r != null) return unescape(r[2]); return null;
 };
-common.prototype.setCookie = function (name,value,days) {
+common.prototype.setCookie = setCookie;
+function setCookie(name,value,days) {
     var Days = parseFloat(days)>0 ? parseFloat(days) : 30;
     var exp = new Date();
     exp.setTime(exp.getTime() + Days*24*60*60*1000);
     document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString() + ';path=/;';
 };
-common.prototype.getCookie = function (name) {
+common.prototype.getCookie = getCookie;
+function getCookie(name) {
     var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
     if(arr=document.cookie.match(reg))
         return unescape(arr[2]);
     else
         return null;
 };
-common.prototype.delCookie = function (name) {
+common.prototype.delCookie = delCookie;
+function delCookie(name) {
     var exp = new Date();
     exp.setTime(exp.getTime() - 1);
     var cval=getCookie(name);
@@ -246,7 +251,8 @@ common.prototype.delCookie = function (name) {
         document.cookie= name + "="+cval+";expires="+exp.toGMTString();
 };
 
-common.prototype.getApiBaseUrl = function(){
+common.prototype.getApiBaseUrl = getApiBaseUrl;
+function getApiBaseUrl(){
     var HostName = location.hostname;
     var ApiBaseUrl = 'https://apitest.ontheroadstore.com';
 
@@ -453,7 +459,6 @@ function initSensorsdata(){
     var showlog = false;
     if(localStorage.getItem('SALOG')==='SHOWLOG'){
         showlog = true;
-        console.log(server_url.split('?')[1]);
         window.sensors = sensors;
     }
     sensors.init({
@@ -647,7 +652,7 @@ function partnerUrlFix(url){
     var uid = getUserId();
     var md5Uid = '';
     if(uid){
-        md5Uid = md5(uid);
+        md5Uid = md5('hsontheroadstore'+uid);
         url = replaceUrlParams(url,{referCode:md5Uid});
     }
     console.log('shareurl:',url);
@@ -733,6 +738,95 @@ function replaceUrlParams(url, newParams) {
 }
 
 
+//新用户访问分享链接
+function partnerInviteUser(){
+
+    // 如果当前页面链接含有 referCode ，读取 localstorage，判断是否与之前存储的相同，
+    // 如果相同，记录本次访问时间，检查上次调用接口时间，如果超过12小时，再次发送
+    // 如果不相同，记录 referCode，记录本次访问时间，检查是否登录，
+    // 如果已登录，检查上次调用接口时间，如果未发送过或超过12小时，调用接口并记录
+/*    var tempData = {
+        referCode:'',
+        visitTime:'',//访问该链接的时间
+        sendTime:'',//上次发送接口的时间，没有值就是没发送过
+        isOldUser:false,//是否是老用户
+    }*/
+    var uid = getUserId();
+    var nowTime = parseInt((new Date()).getTime()/1000);
+    var delayTime = 60;//多长时间间隔后调用接口 12小时=43200 todo:修改时长
+    var expireTime = 60*5;//过期时间 7天=604800
+    var ifsend = true;//是否调用接口
+
+    var partnerData = {};
+    var partnerDataTxt = localStorage.getItem('partnerData');
+    var referCode = getUrlParam('referCode');
+    if(partnerDataTxt){
+        partnerData = JSON.parse(partnerDataTxt);
+    }
+
+console.log('befor: ',partnerData)
+
+    if(referCode === partnerData.referCode){
+        partnerData.visitTime = nowTime;
+        ifsend = nowTime - partnerData.sendTime > delayTime;
+    }else if(referCode){
+        partnerData.visitTime = nowTime;
+        partnerData.referCode = referCode;
+        partnerData.sendTime = 0;
+    }else{
+        if(nowTime - partnerData.visitTime > expireTime){
+            ifsend = false;
+            partnerData = {};
+        }
+    }
+
+
+console.log('middle: ',partnerData)
+
+    localStorage.setItem('partnerData',JSON.stringify(partnerData));
+
+    if(uid && ifsend && !partnerData.isOldUser){
+        //调用接口
+        partnerBind(referCode,function(data){
+            partnerData.sendTime = nowTime;
+            partnerData.isOldUser = data.oldUserStatus;
+
+            console.log('end: ',partnerData)
+
+            localStorage.setItem('partnerData',JSON.stringify(partnerData));
+        });
+
+    }
+
+}
+
+function partnerBind(referCode,callback){
+
+    var url = '/index.php?g=restful&m=HsPartnerBind&a=bind';
+
+    var PHPSESSID = getCookie('PHPSESSID');
+    var ajaxHeaders = {
+        'phpsessionid': PHPSESSID
+    };
+    $.ajax({
+        type: "GET",
+        url: url,
+        dataType: 'json',
+        data: {referCode:referCode},
+        headers: ajaxHeaders,
+        success: function(data){
+
+            console.log(data);
+            if(typeof callback === "function"){
+                callback(data);
+            }
+
+        },
+        error: function(e){
+            console.log('partnerBind err: ',e);
+        }
+    });
+}
 
 
 
