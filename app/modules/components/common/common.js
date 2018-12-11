@@ -764,8 +764,6 @@ function partnerInviteUser(){
         partnerData = JSON.parse(partnerDataTxt);
     }
 
-console.log('befor: ',partnerData)
-
     if(referCode === partnerData.referCode){
         partnerData.visitTime = nowTime;
         ifsend = nowTime - partnerData.sendTime > delayTime;
@@ -780,9 +778,6 @@ console.log('befor: ',partnerData)
         }
     }
 
-
-console.log('middle: ',partnerData)
-
     localStorage.setItem('partnerData',JSON.stringify(partnerData));
 
     if(uid && ifsend && !partnerData.isOldUser){
@@ -790,8 +785,6 @@ console.log('middle: ',partnerData)
         partnerBind(referCode,function(data){
             partnerData.sendTime = nowTime;
             partnerData.isOldUser = data.oldUserStatus;
-
-            console.log('end: ',partnerData)
 
             localStorage.setItem('partnerData',JSON.stringify(partnerData));
         });

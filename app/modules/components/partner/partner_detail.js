@@ -22,10 +22,11 @@ $(document).on('pageInit','.partner_detail', function(e, id, page) {
         'phpsessionid': PHPSESSID
     };
 
+    initPartnerData();
 
     function initPartnerData(){
 
-        var url = ApiBaseUrl + '/appv6_2/getLotteryUserList/'+id;
+        var url = ApiBaseUrl + '/appv6_3/getPartnerMoneyInfo';
         $.ajax({
             type: "GET",
             url: url,
@@ -36,6 +37,7 @@ $(document).on('pageInit','.partner_detail', function(e, id, page) {
             success: function(data){
                 if(data.status==1){
                     console.log(data.data)
+                    setPartnerData(data.data);
 
                 }
 
@@ -47,12 +49,12 @@ $(document).on('pageInit','.partner_detail', function(e, id, page) {
         });
     }
 
-    setPartnerData();
 
     function setPartnerData(data) {
         var $wrap = $page.find('.partner_detail_wrap')
         var $userimg = $wrap.find('.user_info img');
         var $username = $wrap.find('.user_info span');
+
         var $total_price = $wrap.find('.total_price span');
         var $today_price = $wrap.find('.today_price span');
         var $today_order = $wrap.find('.today_order');
@@ -61,13 +63,28 @@ $(document).on('pageInit','.partner_detail', function(e, id, page) {
 
         var $freeze_tip = $wrap.find('.freeze_tip');
 
+/*        var temp = {
+            cumulativeIncome: 0,//累计金额
+            frozenMoney: 0,//冻结金额
+            todayMoney: 0,//今日收益
+            todayOrders: 0,//今日订单数
+            withdrawMoney: 0,//可提现金额
+            withdrawable: "100",//提现最低限额
+
+        }*/
 
 
-        $freeze_tip.on('click',function(ev){
-            $.toast('click')
-            ev.stopPropagation();
+
+        $total_price.html(data.cumulativeIncome);
+        $today_price.html(data.todayMoney);
+        $today_order.html(data.todayOrders);
+        $freeze_price.html(data.frozenMoney);
+        $can_use.html(data.withdrawMoney);
+
+
+        $freeze_tip.off('click').on('click',function(ev){
+
             ev.preventDefault();
-            return false;
         });
     }
 

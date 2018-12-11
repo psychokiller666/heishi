@@ -200,4 +200,8 @@ require('../modules/components/ghost_market_pay_success/index');
 
 //合伙人详情
 require('../modules/components/partner/partner_detail');
+//加入合伙人
+require('../modules/components/partner/partner_join');
+//合伙人已锁定
+require('../modules/components/partner/partner_lock');
 
