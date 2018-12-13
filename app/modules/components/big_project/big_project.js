@@ -6,12 +6,20 @@ $(document).on('pageInit','.big_project', function (e, id, page) {
     return false;
   }
   var init = new common(page);
+
+  //微信分享图片
+  var shareImgUrl = 'https://jscache.ontheroadstore.com/tpl/simplebootx_mobile/Public/i/logo.png';
+  var $project_share_img = $(page).find('.project_share_img');
+  if($project_share_img.length>0){
+    shareImgUrl = $project_share_img.attr('value') || shareImgUrl;
+  }
+
   // 调用微信分享sdk
   var share_data = {
     title: $('.project_name').attr('data-name') + ' — 公路商店',
     desc: $('.desc').text(),
     link: window.location.href,
-    img: 'http://jscache.ontheroadstore.com/tpl/simplebootx_mobile/Public/i/logo.png'
+    img: shareImgUrl
   };
 
   init.wx_share(share_data);
