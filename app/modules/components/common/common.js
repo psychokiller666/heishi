@@ -644,13 +644,12 @@ function getPageType (){
 
 //合伙人分享url追加 referCode
 function partnerUrlFix(url){
-    var uid = getUserId();
-    var md5Uid = '';
-    if(uid){
-        md5Uid = md5(uid);
-        url = replaceUrlParams(url,{referCode:md5Uid});
-    }
-    console.log('shareurl:',url);
+    // var uid = getUserId();
+    // var md5Uid = '';
+    // if(uid){
+    //     md5Uid = md5(uid);
+    //     url = replaceUrlParams(url,{referCode:md5Uid});
+    // }
     return url;
 }
 
