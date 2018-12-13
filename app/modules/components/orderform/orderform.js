@@ -10,6 +10,13 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
   }
   var init = new common(page);
 
+  var ApiBaseUrl = init.getApiBaseUrl();
+
+  var PHPSESSID = init.getCookie('PHPSESSID');
+  var ajaxHeaders = {
+      'phpsessionid': PHPSESSID
+  };
+
   //限购，加减数量判断
   function limitGoodsNum(num){
     var maxBuyNum = parseInt($('.countNum').attr('data-max-buy-num'));
@@ -68,7 +75,7 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
       return $.toast('订单正在生成中');
     }
     payment_status = true;
-    var post_data = {
+/*    var post_data = {
       'order[orders][0][seller_name]':$(this).data('username'),
       'order[orders][0][attach]': $('.attach').val(),
       'order[orders][0][seller_uid]': $(this).data('seller_uid'),
@@ -88,6 +95,61 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
       } else {
         $.toast(data.info);
       }
-    })
+    })*/
+
+      //    创建订单api接口
+      var orderData = {
+          "address_id":$(this).attr('data-address_id'),
+          "orders":[
+              {
+                  "attach":$('.attach').val(),//备注
+                  "items":[
+                      {
+                          "counts":number,
+                          "item_id":$(this).data('id'),//商品id
+                          "mid":$(this).data('mid'),//款式id
+                      }
+                  ],
+                  "seller_name":$(this).data('username'),
+                  "seller_uid":$(this).data('seller_uid'),
+              }
+          ],
+          "type":1, //类型 1商品订单 0打赏
+          // "user_coupon_id":""
+      };
+
+      $.ajax({
+          type: "POST",
+          url: ApiBaseUrl + '/appv6/createorder',
+          dataType: 'json',
+          data: orderData,
+          headers: ajaxHeaders,
+
+          success: function(data){
+              if(data.status==1){
+                  // console.log(data.data)
+                  /*var tmp = {
+                      "status":1,
+                      "code":1,
+                      "info":"Success",
+                      "data":"VR20180820151512ZST5UV"
+                  }*/
+                  var ok_url = GV.pay_url+'hsjsapi.php?order_number=' + data.data + '&digital_goods=0';
+                  window.location.href = ok_url;
+              }else{
+                  $.toast(data.info);
+              }
+              payment_status = false;
+
+          },
+          error: function(e){
+              payment_status = false;
+              $.toast('网络故障，请稍后重试');
+              console.log('createOrder err: ',e);
+          }
+      });
+
   })
+
+
 });
