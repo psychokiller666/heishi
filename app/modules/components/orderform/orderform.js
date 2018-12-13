@@ -68,6 +68,11 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
   var payment_status = false;
   $('.payment').click(function(){
     var number = $('.countNum').attr('data-num');
+    var addressid = $(this).attr('data-address_id');
+
+    if(addressid==0){
+        return $.toast('请先选择地址');
+    }
     if(number <= 0){
       return $.toast('请输入正确的数量');
     }
@@ -99,7 +104,7 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
 
       //    创建订单api接口
       var orderData = {
-          "address_id":$(this).attr('data-address_id'),
+          "address_id":addressid,
           "orders":[
               {
                   "attach":$('.attach').val(),//备注

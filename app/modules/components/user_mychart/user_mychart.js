@@ -473,10 +473,15 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
     if(payment_status){
       return $.toast('订单正在生成中');
     }
+    var addressid = $(this).attr('data-address_id');
+
+    if(addressid==0){
+        return $.toast('请先选择地址');
+    }
     payment_status = true;
 
     var orderData = {
-        "address_id":$(this).attr('data-address_id'),
+        "address_id":addressid,
         "orders":[
             /*{
                 "attach":'',//备注
