@@ -623,6 +623,7 @@ function getPageType (){
         {name:'哆嗦列表页',path:'/Portal/HsArticle/comment_list/id/,/type/2.html'},
         {name:'登录注册页',path:'/User/Login/mobile.html'},
         {name:'抽奖页',path:'/Portal/Lottery/lottery.html'},
+        {name:'抽奖页',path:'/Portal/Lottery/lottery_act.html'},
     ];
 
 
