@@ -22,6 +22,8 @@ $(document).on('pageInit','.partner_detail', function(e, id, page) {
         'phpsessionid': PHPSESSID
     };
 
+    var uid = init.ifLogin(true);
+
     initPartnerData();
 
     function initPartnerData(){

@@ -663,18 +663,22 @@ $(document).on('pageInit','.center', function(e, id, page){
             var $partner_today = $partner_wrap.find('.partner_today');
             var $partner_total = $partner_wrap.find('.partner_total');
             var $partner_content = $partner_wrap.find('.partner_content');
+            var $partner_join = $partner_wrap.find('.partner_join');
             $partner_wrap.attr('status',status);
             $partner_content.attr('status',status);
 
             if(status===0){
                 url = '/Portal/Partner/partner_join.html';
+                $partner_join.css('background-image','url('+data.partner_image_url+')');
             }else if(status===1){
                 url = '/Portal/Partner/partner_detail.html';
                 $partner_today.find('.partner_money').html(data.partner_cumulative_income);
                 $partner_total.find('.partner_money').html(data.partner_today_income);
 
             }else if(status===2){
-                url = '/Portal/Partner/partner_lock.html';
+                var reason = data.partner_ban_reason||'';
+                reason = escape(reason);
+                url = '/Portal/Partner/partner_lock.html?reason='+reason;
             }
 
             $partner_wrap.on('click',function(){

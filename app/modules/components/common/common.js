@@ -770,7 +770,11 @@ function partnerInviteUser(){
     var partnerDataTxt = localStorage.getItem('partnerData');
     var referCode = getUrlParam('referCode');
     if(partnerDataTxt){
-        partnerData = JSON.parse(partnerDataTxt);
+        try{
+            partnerData = JSON.parse(partnerDataTxt);
+        }catch (e) {
+            console.log(e);
+        }
         //todo: 判断，如果当前用户换过账号（对比两个referCode）则清空partnerData
     }
 
@@ -782,10 +786,12 @@ function partnerInviteUser(){
         partnerData.referCode = referCode;
         partnerData.sendTime = 0;
     }else{
-        if(nowTime - partnerData.visitTime > expireTime){
-            ifsend = false;
-            partnerData = {};
-        }
+        ifsend = false;
+        partnerData = {};
+    }
+    if(nowTime - partnerData.visitTime > expireTime){
+        ifsend = false;
+        partnerData = {};
     }
 
     localStorage.setItem('partnerData',JSON.stringify(partnerData));

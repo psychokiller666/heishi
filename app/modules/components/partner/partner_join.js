@@ -55,7 +55,7 @@ $(document).on('pageInit','.partner_join', function(e, id, page) {
                     //设置成功
                     $.toast(data.data.message || '加入成功！');
                     setTimeout(function(){
-                        // location.href = '/Portal/Partner/partner_detail.html';
+                        location.href = '/Portal/Partner/partner_detail.html';
                     },1000)
                 }else{
                     $.toast(data.info);

@@ -24,8 +24,15 @@ $(document).on('pageInit','.partner_lock', function(e, id, page) {
 
     var uid = init.ifLogin(true);
 
+    var reason = init.getUrlParam('reason');
 
+    if(reason){
+        reason = unescape(reason)
+        $page.find('.lock_reason').html(reason);
+    }
 
+    // todo:获取客服电话号码
+//    todo： 埋点
 
 
 
