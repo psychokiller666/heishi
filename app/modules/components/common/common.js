@@ -741,10 +741,18 @@ function replaceUrlParams(url, newParams) {
 //新用户访问分享链接
 function partnerInviteUser(){
 
+    var clearLocalStorage = getUrlParam('CLEAR');
+    var showLocalStorage = getUrlParam('SHOW');
+    if(clearLocalStorage==1){
+        localStorage.setItem('partnerData','');//todo 清除localstorage
+    }
+
+
     // 如果当前页面链接含有 referCode ，读取 localstorage，判断是否与之前存储的相同，
     // 如果相同，记录本次访问时间，检查上次调用接口时间，如果超过12小时，再次发送
     // 如果不相同，记录 referCode，记录本次访问时间，检查是否登录，
     // 如果已登录，检查上次调用接口时间，如果未发送过或超过12小时，调用接口并记录
+    // 如果已经记录为老用户，则不再发送。
 /*    var tempData = {
         referCode:'',
         visitTime:'',//访问该链接的时间
@@ -762,6 +770,7 @@ function partnerInviteUser(){
     var referCode = getUrlParam('referCode');
     if(partnerDataTxt){
         partnerData = JSON.parse(partnerDataTxt);
+        //todo: 判断，如果当前用户换过账号（对比两个referCode）则清空partnerData
     }
 
     if(referCode === partnerData.referCode){
@@ -780,12 +789,19 @@ function partnerInviteUser(){
 
     localStorage.setItem('partnerData',JSON.stringify(partnerData));
 
+    if(showLocalStorage==1){
+        $.toast(JSON.stringify(partnerData),10000) //todo:
+    }
+
     if(uid && ifsend && !partnerData.isOldUser){
         //调用接口
         partnerBind(referCode,function(data){
             partnerData.sendTime = nowTime;
             partnerData.isOldUser = data.oldUserStatus;
 
+            if(showLocalStorage==1 || !isProduction()){
+                $.toast('绑定成功');//todo:
+            }
             localStorage.setItem('partnerData',JSON.stringify(partnerData));
         });
 

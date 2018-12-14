@@ -9,7 +9,7 @@ $(document).on('pageInit','.partner_detail', function(e, id, page) {
         return false;
     }
 
-    document.title = '黑市合伙人';
+    document.title = '公路传教士';
 
     var init = new common(page);
 
