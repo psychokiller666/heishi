@@ -196,3 +196,8 @@ require('../modules/components/ghost_market_seller/index');
 require('../modules/components/ghost_market_buy/index');
 //鬼市支付成功页面
 require('../modules/components/ghost_market_pay_success/index');
+
+
+
+//圣诞活动页
+require('../modules/components/activity/christmas');
