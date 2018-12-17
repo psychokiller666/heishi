@@ -25,6 +25,10 @@ $(document).on('pageInit','.big_project', function (e, id, page) {
   init.wx_share(share_data);
   init.checkfollow(1);
 
+  if(init.isWeiXin()){
+    $(page).find('.return_home_page_text').show();
+  }
+
 
   $('.project_names').find('.item').eq(0).addClass('active');
   $('.project_list').find('.active').attr('data-id', $('.project_names').find('.item').eq(0).attr('data-id'));
@@ -62,12 +66,21 @@ $(document).on('pageInit','.big_project', function (e, id, page) {
         project_status = false;
         $('.project_list').find('ul').removeClass('active');
         $(this).addClass('active');
+        window.location.hash = id;
       }
     })
     if(project_status){
       ajax_posts(id);
     }
   })
+
+/*  var hash = window.location.hash.replace('#','');
+  $('.project_names').find('.item').each(function(){
+      if(hash == $(this).attr('data-id')){
+          $(this).trigger('click');
+      }
+  });*/
+
 
   function ajax_posts(id){
     var picture_root_url = $('.picture_root_url').val();
@@ -81,7 +94,7 @@ $(document).on('pageInit','.big_project', function (e, id, page) {
           $('.project_list').append(ul);
           $.each(data.data, function(i, item){
             var str = '<li>'
-                      +'<a href="/Portal/HsArticle/index/id/'+item.id +'.html">'
+                      +'<a class="external" href="/Portal/HsArticle/index/id/'+item.id +'.html">'
                       +'<div class="images" data-layzr="'+picture_root_url+item.filepath+'@640w_1l" data-layzr-bg></div>'
                       +'<span>'+item.post_title+'</span>'
                       +'</a>'
