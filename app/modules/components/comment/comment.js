@@ -396,6 +396,15 @@ $(document).on('pageInit','.user_comment_list', function (e, id, page) {
     }
   });
 
+  if(!init.ifLogin()){
+      $(page).find('.reply_input').on('click',function(){
+          if(init.ifLogin(true) == false){
+              return ;
+          }
+      });
+      $(page).find('.reply_input .uploading input').attr('type','');
+  }
+
   var loading = false;
   var comment_type = $('.comment_type').val();//**丫的变量定义重复了，由于不知道这个变量的作用，暂时新增一个变量。
   var ajax_comment_type = $('.comment_type').val();
@@ -480,6 +489,9 @@ $(document).on('pageInit','.user_comment_list', function (e, id, page) {
   'V信','wechat','VX','蘑菇','邮票','LSD','taobao','tb','操你妈','草你妈','🍃'];
   esc.init(text_list);
   $('.submit').click(function(){
+    if(init.ifLogin(true) == false){
+        return ;
+    }
     if(submit_status){
       return false;
     }

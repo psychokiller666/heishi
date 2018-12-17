@@ -470,6 +470,9 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
 
   //收藏
   page.on('click','.collect',function(e){
+    if(init.ifLogin(true) == false){
+        return ;
+    }
     var bool=$(".collect ").hasClass("active");
     if(bool){
       closeCollect(this);
@@ -741,6 +744,9 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   // 点击comment_btn回复
   var reply_tpl = handlebars.compile($("#reply_tpl").html());
   page.on('click','.comment_btn',function(){
+    if(init.ifLogin(true) == false){
+        return ;
+    }
     comment_manage.open_comment_box({
       ispic: true,
       username: '',
@@ -857,6 +863,9 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   // 打赏
   var dialog_reward = $('.dialog_reward');
   page.on('click', '.reward', function(){
+    if(init.ifLogin(true) == false){
+        return ;
+    }
     dialog_reward.find('input').val('');
     dialog_reward.show();
   })
