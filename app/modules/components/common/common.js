@@ -624,6 +624,8 @@ function getPageType (){
         {name:'登录注册页',path:'/User/Login/mobile.html'},
         {name:'抽奖页',path:'/Portal/Lottery/lottery.html'},
         {name:'抽奖页',path:'/Portal/Lottery/lottery_act.html'},
+        {name:'公路传教士注册页',path:'/Portal/Partner/partner_join.html'},
+        {name:'公路传教士',path:'/Portal/Partner/partner_detail.html'},
     ];
 
 

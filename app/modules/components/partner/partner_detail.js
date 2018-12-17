@@ -38,7 +38,7 @@ $(document).on('pageInit','.partner_detail', function(e, id, page) {
 
             success: function(data){
                 if(data.status==1){
-                    console.log(data.data)
+                    // console.log(data.data)
                     setPartnerData(data.data);
 
                 }
@@ -90,7 +90,12 @@ $(document).on('pageInit','.partner_detail', function(e, id, page) {
         });
     }
 
-
+    $page.find('.partner_share_btn').on('click',function(){
+        init.sensors.track('buttonClick', {
+            pageType : '公路传教士',
+            buttonName : '去分享',
+        })
+    });
 
 
 });

@@ -9,7 +9,7 @@ $(document).on('pageInit','.partner_join', function(e, id, page) {
         return false;
     }
 
-    document.title = '加入合伙人';
+    document.title = '加入公路传教士';
 
     var init = new common(page);
 
@@ -30,11 +30,15 @@ $(document).on('pageInit','.partner_join', function(e, id, page) {
 
     function initJoin(){
         $partner_join_btn.off('click').on('click',function(){
-           var $this = $(this);
-           if($this.attr('status')==='0'){
+            var $this = $(this);
+            if($this.attr('status')==='0'){
                $this.attr('status','1');
                joinPartner();
-           }
+            }
+            init.sensors.track('buttonClick', {
+                pageType : '公路传教士注册页',
+                buttonName : '立即加入',
+            })
         });
     }
 

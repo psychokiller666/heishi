@@ -31,8 +31,34 @@ $(document).on('pageInit','.partner_lock', function(e, id, page) {
         $page.find('.lock_reason').html(reason);
     }
 
-    // todo:获取客服电话号码
-//    todo： 埋点
+    var $contact_customer_a = $page.find('.contact_customer_a');
+
+    getServerPhone();
+    // 获取客服电话号码
+    function getServerPhone(){
+        var url = ApiBaseUrl + '/appv2/servicephone';
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType: 'json',
+            data: {},
+            headers: ajaxHeaders,
+
+            success: function(data){
+                if(data.status==1){
+                    // console.log(data.data)
+                    var phone = data.data.service_phone[0];
+                    $contact_customer_a.attr('href','tel:'+phone);
+                }
+
+            },
+            error: function(e){
+
+                console.log('servicephone err: ',e);
+            }
+        });
+    }
+    
 
 
 
