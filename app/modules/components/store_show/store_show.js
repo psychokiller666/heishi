@@ -763,6 +763,9 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
 
   // 进行二级回复
   $('.comment_bd').on('click', 'li', function(e){
+    if(init.ifLogin(true) == false){
+        return ;
+    }
     var that = this;
     if(e.srcElement.className != 'comment_image'){
       comment_manage.open_comment_box({
