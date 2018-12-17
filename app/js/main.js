@@ -205,3 +205,9 @@ require('../modules/components/partner/partner_join');
 //合伙人已锁定
 require('../modules/components/partner/partner_lock');
 
+
+
+
+
+//圣诞活动页
+require('../modules/components/activity/christmas');
