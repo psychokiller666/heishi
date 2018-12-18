@@ -138,10 +138,10 @@ $(document).on('pageInit','.christmas', function(e, id, page) {
                     showPopup();
                 }else{
                     var info = data.info;
-                    if(str_length(info)>15){
+                    if(info && str_length(info)>30){
                         info = cut_str(info,15) + '…';
                     }
-                    $.toast(info);
+                    $.toast(info || '领取失败,请刷新后重试');
                 }
                 $btn.attr('clicked','0');
             },
