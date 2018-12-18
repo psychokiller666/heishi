@@ -1,7 +1,7 @@
 .christmas {
-  background: #2944B8;
+  background: #9C0404;
   .hs-page {
-    background: #2944B8;
+    background: #9C0404;
 
 
     .act_banner{
@@ -74,7 +74,7 @@
       width: 4.48rem;
       height: 0.61333rem;
       margin: 0.8rem auto 0;
-      background: url("https://img8.ontheroadstore.com/static/2018sd/act_title_2x.png") no-repeat center;
+      background: url("https://img8.ontheroadstore.com/static/2018sd/activity_title_2x.png") no-repeat center;
       background-size: cover;
     }
 
@@ -107,6 +107,103 @@
       }
     }
 
+    .act_project_ul_2{
+      margin: 0.96rem 0.53333rem 1.6rem;
+      padding: 0.53333rem ;
+      background-color: #fff;
+      border-radius: 0.24rem;
+      .act_project_li{
+        width: 100%;
+        height:  4.13333rem;
+        border-radius: 0.21333rem;
+        overflow: hidden;
+        margin-top: 0.53333rem;
+        &:first-child{
+          margin-top: 0;
+        }
+        .act_project_a{
+          display: block;
+          width: 100%;
+          height: 100%;
+          .act_project_img{
+            display: block;
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+
+    .popup_wrap{
+      display: none;
+      position: fixed;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+      width: 10rem;
+      height: 100%;
+      background: rgba(0,0,0,.3);
+      .popup_mask{
+        width: 100%;
+        height: 100%;
+      }
+      .popup_content{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        background: #fff;
+        width: 7.46667rem;
+        text-align: center;
+        border-radius:0.24rem;
+        overflow: hidden;
+        .popup_title{
+          font-size:0.42667rem;
+          font-weight:500;
+          color:#202123;
+          line-height:1;
+          padding: 0.53333rem 0;
+        }
+        .popup_text{
+          font-size: 0.37333rem;
+          line-height: 0.53333rem;
+          color:#202123;
+          font-weight:500;
+          padding: 0.4rem 0.4rem 1.09333rem;
+        }
+        .popup_btns{
+          user-select: none;
+          border-top: 0.02667rem solid #E6E6E6;
+          height: 1.44rem;
+          position: relative;
+          &:after{
+            content: '';
+            display: block;
+            height: 1.12rem;
+            width: 0.02667rem;
+            position: absolute;
+            left: 50%;
+            top: 0.16rem;
+            background-color: #E6E6E6;
+          }
+          .popup_btn{
+            float: left;
+            width: 50%;
+            height: 100%;
+            font-size: 0.37333rem;
+            line-height: 1.44rem;
+            color:#202123;
+            font-weight:500;
+          }
+          .popup_no{
+            color: #8E8E8E;
+          }
+          .popup_yes{
+            color: #AE2121;
+          }
+        }
+      }
+    }
 
   }
 
