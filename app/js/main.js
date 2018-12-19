@@ -211,3 +211,9 @@ require('../modules/components/partner/partner_lock');
 
 //圣诞活动页
 require('../modules/components/activity/christmas');
+//清空购物车活动页
+require('../modules/components/activity/clear_cart');
+
+
+
+
