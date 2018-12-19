@@ -738,13 +738,22 @@
           padding: 0.4rem 0;
           height: 1.52rem;
           .partner_view{
+            position: relative;
             float: left;
             width: 50%;
             height: 1.52rem;
             text-align: center;
-            &:first-child{
-              border-right: 0.01333rem solid rgba(0,0,0,0.2);
-              margin-right: -0.0134rem;
+            &:first-child:after{
+              position: absolute;
+              right: 0;
+              top: 0;
+              content: '';
+              display: block;
+              width: 0.01333rem;
+              height: 100%;
+              background: rgba(0,0,0,0.2);
+              //border-right: 0.01333rem solid rgba(0,0,0,0.2);
+
             }
             .partner_money{
               font-size: 0.8rem;
