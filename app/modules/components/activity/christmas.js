@@ -22,10 +22,10 @@ $(document).on('pageInit','.christmas', function(e, id, page) {
 
     // 调用微信分享sdk
     var share_data = {
-        title: '公路商店',//todo:
-        desc: '为你不着边际的企图心',
+        title: '直男直通车',
+        desc: '圣诞送礼能保半年平安',
         link: window.location.href,
-        img: 'https://jscache.ontheroadstore.com/tpl/simplebootx_mobile/Public/i/logo.png'
+        img: 'https://img8.ontheroadstore.com/upload/181218/f8fd802e6bb0b34697cd1fc13d15811f.jpg?x-oss-process=image/resize,m_fixed,h_300,w_300',
     };
     init.wx_share(share_data);
 
