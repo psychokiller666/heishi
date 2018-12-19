@@ -201,3 +201,9 @@ require('../modules/components/ghost_market_pay_success/index');
 
 //圣诞活动页
 require('../modules/components/activity/christmas');
+//清空购物车活动页
+require('../modules/components/activity/clear_cart');
+
+
+
+
