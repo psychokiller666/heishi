@@ -220,25 +220,29 @@ common.prototype.system_query = function() {
 }
 
 //获取url中的参数
-common.prototype.getUrlParam = function(name) {
+common.prototype.getUrlParam = getUrlParam;
+function getUrlParam(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);
     if (r != null) return unescape(r[2]); return null;
 };
-common.prototype.setCookie = function (name,value,days) {
+common.prototype.setCookie = setCookie;
+function setCookie(name,value,days) {
     var Days = parseFloat(days)>0 ? parseFloat(days) : 30;
     var exp = new Date();
     exp.setTime(exp.getTime() + Days*24*60*60*1000);
     document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString() + ';path=/;';
 };
-common.prototype.getCookie = function (name) {
+common.prototype.getCookie = getCookie;
+function getCookie(name) {
     var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
     if(arr=document.cookie.match(reg))
         return unescape(arr[2]);
     else
         return null;
 };
-common.prototype.delCookie = function (name) {
+common.prototype.delCookie = delCookie;
+function delCookie(name) {
     var exp = new Date();
     exp.setTime(exp.getTime() - 1);
     var cval=getCookie(name);
@@ -246,7 +250,8 @@ common.prototype.delCookie = function (name) {
         document.cookie= name + "="+cval+";expires="+exp.toGMTString();
 };
 
-common.prototype.getApiBaseUrl = function(){
+common.prototype.getApiBaseUrl = getApiBaseUrl;
+function getApiBaseUrl(){
     var HostName = location.hostname;
     var ApiBaseUrl = 'https://apitest.ontheroadstore.com';
 
@@ -453,7 +458,6 @@ function initSensorsdata(){
     var showlog = false;
     if(localStorage.getItem('SALOG')==='SHOWLOG'){
         showlog = true;
-        console.log(server_url.split('?')[1]);
         window.sensors = sensors;
     }
     sensors.init({
@@ -619,6 +623,10 @@ function getPageType (){
         {name:'登录注册页',path:'/User/Login/mobile.html'},
         {name:'抽奖页',path:'/Portal/Lottery/lottery.html'},
         {name:'抽奖页',path:'/Portal/Lottery/lottery_act.html'},
+        {name:'公路传教士注册页',path:'/Portal/Partner/partner_join.html'},
+        {name:'公路传教士',path:'/Portal/Partner/partner_detail.html'},
+        {name:'购物车礼金',path:'/Portal/Index/clear_cart.html'},
+        {name:'仓库小姐姐的福利',path:'/Portal/Index/miss_treasury.html'},
     ];
 
 
