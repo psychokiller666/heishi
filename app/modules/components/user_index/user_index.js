@@ -672,8 +672,8 @@ $(document).on('pageInit','.center', function(e, id, page){
                 $partner_join.css('background-image','url('+data.partner_image_url+')');
             }else if(status===1){
                 url = '/Portal/Partner/partner_detail.html';
-                $partner_today.find('.partner_money').html(data.partner_cumulative_income);
-                $partner_total.find('.partner_money').html(data.partner_today_income);
+                $partner_today.find('.partner_money').html(data.partner_today_income);
+                $partner_total.find('.partner_money').html(data.partner_cumulative_income);
 
             }else if(status===2){
                 var reason = data.partner_ban_reason||'';
