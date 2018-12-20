@@ -221,29 +221,25 @@ common.prototype.system_query = function() {
 }
 
 //获取url中的参数
-common.prototype.getUrlParam = getUrlParam;
-function getUrlParam(name) {
+common.prototype.getUrlParam = function(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);
     if (r != null) return unescape(r[2]); return null;
 };
-common.prototype.setCookie = setCookie;
-function setCookie(name,value,days) {
+common.prototype.setCookie = function (name,value,days) {
     var Days = parseFloat(days)>0 ? parseFloat(days) : 30;
     var exp = new Date();
     exp.setTime(exp.getTime() + Days*24*60*60*1000);
     document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString() + ';path=/;';
 };
-common.prototype.getCookie = getCookie;
-function getCookie(name) {
+common.prototype.getCookie = function (name) {
     var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
     if(arr=document.cookie.match(reg))
         return unescape(arr[2]);
     else
         return null;
 };
-common.prototype.delCookie = delCookie;
-function delCookie(name) {
+common.prototype.delCookie = function (name) {
     var exp = new Date();
     exp.setTime(exp.getTime() - 1);
     var cval=getCookie(name);
@@ -251,8 +247,7 @@ function delCookie(name) {
         document.cookie= name + "="+cval+";expires="+exp.toGMTString();
 };
 
-common.prototype.getApiBaseUrl = getApiBaseUrl;
-function getApiBaseUrl(){
+common.prototype.getApiBaseUrl = function(){
     var HostName = location.hostname;
     var ApiBaseUrl = 'https://apitest.ontheroadstore.com';
 
@@ -459,6 +454,7 @@ function initSensorsdata(){
     var showlog = false;
     if(localStorage.getItem('SALOG')==='SHOWLOG'){
         showlog = true;
+        console.log(server_url.split('?')[1]);
         window.sensors = sensors;
     }
     sensors.init({
@@ -741,110 +737,6 @@ function replaceUrlParams(url, newParams) {
 }
 
 
-//新用户访问分享链接
-function partnerInviteUser(){
-
-    var clearLocalStorage = getUrlParam('CLEAR');
-    var showLocalStorage = getUrlParam('SHOW');
-    if(clearLocalStorage==1){
-        localStorage.setItem('partnerData','');//todo 清除localstorage
-    }
-
-
-    // 如果当前页面链接含有 referCode ，读取 localstorage，判断是否与之前存储的相同，
-    // 如果相同，记录本次访问时间，检查上次调用接口时间，如果超过12小时，再次发送
-    // 如果不相同，记录 referCode，记录本次访问时间，检查是否登录，
-    // 如果已登录，检查上次调用接口时间，如果未发送过或超过12小时，调用接口并记录
-    // 如果已经记录为老用户，则不再发送。
-/*    var tempData = {
-        referCode:'',
-        visitTime:'',//访问该链接的时间
-        sendTime:'',//上次发送接口的时间，没有值就是没发送过
-        isOldUser:false,//是否是老用户
-    }*/
-    var uid = getUserId();
-    var nowTime = parseInt((new Date()).getTime()/1000);
-    var delayTime = 60;//多长时间间隔后调用接口 12小时=43200 todo:修改时长
-    var expireTime = 60*5;//过期时间 7天=604800
-    var ifsend = true;//是否调用接口
-
-    var partnerData = {};
-    var partnerDataTxt = localStorage.getItem('partnerData');
-    var referCode = getUrlParam('referCode');
-    if(partnerDataTxt){
-        try{
-            partnerData = JSON.parse(partnerDataTxt);
-        }catch (e) {
-            console.log(e);
-        }
-        //todo: 判断，如果当前用户换过账号（对比两个referCode）则清空partnerData
-    }
-
-    if(referCode === partnerData.referCode){
-        partnerData.visitTime = nowTime;
-        ifsend = nowTime - partnerData.sendTime > delayTime;
-    }else if(referCode){
-        partnerData.visitTime = nowTime;
-        partnerData.referCode = referCode;
-        partnerData.sendTime = 0;
-    }else{
-        ifsend = false;
-        partnerData = {};
-    }
-    if(nowTime - partnerData.visitTime > expireTime){
-        ifsend = false;
-        partnerData = {};
-    }
-
-    localStorage.setItem('partnerData',JSON.stringify(partnerData));
-
-    if(showLocalStorage==1){
-        $.toast(JSON.stringify(partnerData),10000) //todo:
-    }
-
-    if(uid && ifsend && !partnerData.isOldUser){
-        //调用接口
-        partnerBind(referCode,function(data){
-            partnerData.sendTime = nowTime;
-            partnerData.isOldUser = data.oldUserStatus;
-
-            if(showLocalStorage==1 || !isProduction()){
-                $.toast('绑定成功');//todo:
-            }
-            localStorage.setItem('partnerData',JSON.stringify(partnerData));
-        });
-
-    }
-
-}
-
-function partnerBind(referCode,callback){
-
-    var url = '/index.php?g=restful&m=HsPartnerBind&a=bind';
-
-    var PHPSESSID = getCookie('PHPSESSID');
-    var ajaxHeaders = {
-        'phpsessionid': PHPSESSID
-    };
-    $.ajax({
-        type: "GET",
-        url: url,
-        dataType: 'json',
-        data: {referCode:referCode},
-        headers: ajaxHeaders,
-        success: function(data){
-
-            console.log(data);
-            if(typeof callback === "function"){
-                callback(data);
-            }
-
-        },
-        error: function(e){
-            console.log('partnerBind err: ',e);
-        }
-    });
-}
 
 
 
