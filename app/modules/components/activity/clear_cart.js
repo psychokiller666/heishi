@@ -64,6 +64,24 @@ $(document).on('pageInit','.clear_cart', function(e, id, page) {
         $(page).find('.return_home_page').show();
     }
 
+    var $popup_wrap = $(page).find('.popup_wrap');
+    $popup_wrap.on('click','.popup_btn',function(){
+        if($(this).hasClass('popup_yes')){
+            //
+        }
+        hidePopup();
+    });
+    $popup_wrap.on('click','.popup_mask',function(){
+        hidePopup();
+    });
+
+    function showPopup(){
+        $popup_wrap.show();
+    }
+    function hidePopup(){
+        $popup_wrap.hide();
+    }
+
 
     $(page).on('click','.get_coupon_btn',function(){
 
@@ -113,7 +131,11 @@ $(document).on('pageInit','.clear_cart', function(e, id, page) {
 
             success: function(data){
                 if(data.status==1){
-                    $.toast('领取成功');
+                    if(pageTitle='购物车礼金' && $popup_wrap.length>0){
+                        showPopup();
+                    }else{
+                        $.toast('领取成功');
+                    }
                 }else{
                     var info = data.info;
                     if(info && str_length(info)>30){
