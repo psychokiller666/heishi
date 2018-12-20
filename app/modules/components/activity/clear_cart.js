@@ -20,6 +20,15 @@ $(document).on('pageInit','.clear_cart', function(e, id, page) {
         'phpsessionid': PHPSESSID
     };
 
+    // 调用微信分享sdk
+    var share_data = {
+        title: '购物车礼金',
+        desc: '为你不着边际的企图心',
+        link: window.location.href,
+        img: 'https://jscache.ontheroadstore.com/tpl/simplebootx_mobile/Public/i/logo.png'
+    };
+    init.wx_share(share_data);
+
 
     // $('body,.page, .page-group').css('background','#9c0404');
 

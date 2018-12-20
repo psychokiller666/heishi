@@ -237,6 +237,11 @@ $(document).on('pageInit','.culture_details', function (e, id, page) {
     });
   })
 
+
+  //  给文章内容中的a标签添加external
+    $(page).find('.content_bd a').addClass('external');
+
+
   //统计进入次数
   var user_id = $(".praise_btn").data("id");
   setTimeout(function(){
