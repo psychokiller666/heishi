@@ -626,6 +626,8 @@ function getPageType (){
         {name:'抽奖页',path:'/Portal/Lottery/lottery_act.html'},
         {name:'公路传教士注册页',path:'/Portal/Partner/partner_join.html'},
         {name:'公路传教士',path:'/Portal/Partner/partner_detail.html'},
+        {name:'购物车礼金',path:'/Portal/Index/clear_cart.html'},
+        {name:'仓库小姐姐的福利',path:'/Portal/Index/miss_treasury.html'},
     ];
 
 

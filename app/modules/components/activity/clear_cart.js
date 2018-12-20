@@ -1,4 +1,4 @@
-//清空购物车活动
+//清空购物车活动 && 库房小姐姐的福利，不是同一个html，但是逻辑相同
 
 // 初始化
 var common = require('../common/common.js');
@@ -7,7 +7,10 @@ $(document).on('pageInit','.clear_cart', function(e, id, page) {
     if (page.selector == '.page') {
         return false;
     }
-    document.title = '购物车礼金';
+
+    var pageTitle = $(page).find('.page_title').attr('title') || '公路商店';
+
+    document.title = pageTitle;
 
     var init = new common(page);
 
@@ -22,7 +25,7 @@ $(document).on('pageInit','.clear_cart', function(e, id, page) {
 
     // 调用微信分享sdk
     var share_data = {
-        title: '购物车礼金',
+        title: pageTitle,
         desc: '为你不着边际的企图心',
         link: window.location.href,
         img: 'https://jscache.ontheroadstore.com/tpl/simplebootx_mobile/Public/i/logo.png'
@@ -88,6 +91,12 @@ $(document).on('pageInit','.clear_cart', function(e, id, page) {
         });
 
         getACoupon($this,ids);
+
+        init.sensors.track('buttonClick', {
+            pageType : pageTitle,
+            buttonName : '领取优惠券',
+        })
+
 
     });
 
