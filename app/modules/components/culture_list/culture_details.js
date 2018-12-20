@@ -74,6 +74,11 @@ $(document).on('pageInit','.culture_details', function (e, id, page) {
   page.find('iframe').parent().css({'height': iframe_ratio*502+'px'});
   // 点赞
   $('.like_list').on('click', '.praise_btn', function(){
+
+    if(init.ifLogin(true) == false){
+        return ;
+    }
+
     var id = $(this).data('id');
     if($(this).hasClass('praise_btn_success')){
       $.ajax({
@@ -167,6 +172,11 @@ $(document).on('pageInit','.culture_details', function (e, id, page) {
   // 点击comment-btn回复
   var reply_tpl = handlebars.compile($("#reply_tpl").html());
   page.on('click','.comment_btn',function(){
+
+    if(init.ifLogin(true) == false){
+        return ;
+    }
+
     var comment_id = $(this).data('id');
     comment_manage.open_comment_box({
       ispic: true,
@@ -184,6 +194,11 @@ $(document).on('pageInit','.culture_details', function (e, id, page) {
 
   // 进行二级回复
   $('.comment_bd').on('click', 'li', function(e){
+
+    if(init.ifLogin(true) == false){
+        return ;
+    }
+
     var that = this;
     if(e.srcElement.className != 'comment_image'){
       comment_manage.open_comment_box({
