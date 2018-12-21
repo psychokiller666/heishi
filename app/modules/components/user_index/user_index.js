@@ -627,7 +627,7 @@ $(document).on('pageInit','.center', function(e, id, page){
         var ajaxHeaders = {
             'phpsessionid': PHPSESSID
         };
-        var url = ApiBaseUrl + '/ghostmarket/getSetting';
+        var url = ApiBaseUrl + '/appv5/user/center/summary/buyer';
         $.ajax({
             type: "GET",
             url: url,
@@ -647,24 +647,38 @@ $(document).on('pageInit','.center', function(e, id, page){
         });
 
         function initPartner(data){
-            var status = 1;//当前用户状态 0未加入，1已加入，2已锁定
+
+            if(data.partner_status == 0){
+            //    合伙人状态 1 显示合伙人模块 0关闭合伙人模块
+                return;
+            }
+
+            var status = data.is_partner;//当前用户状态 0未加入，1已加入，-1已锁定
+            if(status===-1){
+                status = 2; //2已锁定
+            }
+
             var url = '';//点击跳转的url
 
             var $partner_today = $partner_wrap.find('.partner_today');
             var $partner_total = $partner_wrap.find('.partner_total');
             var $partner_content = $partner_wrap.find('.partner_content');
+            var $partner_join = $partner_wrap.find('.partner_join');
             $partner_wrap.attr('status',status);
             $partner_content.attr('status',status);
 
             if(status===0){
-                url = ''
+                url = '/Portal/Partner/partner_join.html';
+                $partner_join.css('background-image','url('+data.partner_image_url+')');
             }else if(status===1){
-                url = ''
-                $partner_today.find('.partner_money').html('65')
-                $partner_total.find('.partner_money').html('65455')
+                url = '/Portal/Partner/partner_detail.html';
+                $partner_today.find('.partner_money').html(data.partner_cumulative_income);
+                $partner_total.find('.partner_money').html(data.partner_today_income);
 
             }else if(status===2){
-                url = ''
+                var reason = data.partner_ban_reason||'';
+                reason = escape(reason);
+                url = '/Portal/Partner/partner_lock.html?reason='+reason;
             }
 
             $partner_wrap.on('click',function(){
