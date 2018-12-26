@@ -660,7 +660,7 @@ function partnerUrlFix(url){
         md5Uid = md5('hsontheroadstore'+uid);
         url = replaceUrlParams(url,{referCode:md5Uid});
     }
-    console.log('shareurl:',url);
+    // console.log('shareurl:',url);
     return url;
 }
 
@@ -747,7 +747,7 @@ function replaceUrlParams(url, newParams) {
 function partnerInviteUser(){
 
     var clearLocalStorage = getUrlParam('CLEAR');
-    var showLocalStorage = getUrlParam('SHOW');
+
     if(clearLocalStorage==1){
         localStorage.setItem('partnerData','');//todo 清除localstorage
     }
@@ -766,8 +766,8 @@ function partnerInviteUser(){
     }*/
     var uid = getUserId();
     var nowTime = parseInt((new Date()).getTime()/1000);
-    var delayTime = 60;//多长时间间隔后调用接口 12小时=43200 todo:修改时长
-    var expireTime = 60*5;//过期时间 7天=604800
+    var delayTime = 21600;//多长时间间隔后调用接口 6小时=21600 todo:修改时长
+    var expireTime = 604800;//过期时间 7天=604800
     var ifsend = true;//是否调用接口
 
     var partnerData = {};
@@ -800,9 +800,6 @@ function partnerInviteUser(){
 
     localStorage.setItem('partnerData',JSON.stringify(partnerData));
 
-    if(showLocalStorage==1){
-        $.toast(JSON.stringify(partnerData),10000) //todo:
-    }
 
     if(uid && ifsend && !partnerData.isOldUser){
         //调用接口
@@ -810,9 +807,6 @@ function partnerInviteUser(){
             partnerData.sendTime = nowTime;
             partnerData.isOldUser = data.oldUserStatus;
 
-            if(showLocalStorage==1 || !isProduction()){
-                $.toast('绑定成功');//todo:
-            }
             localStorage.setItem('partnerData',JSON.stringify(partnerData));
         });
 
@@ -836,7 +830,6 @@ function partnerBind(referCode,callback){
         headers: ajaxHeaders,
         success: function(data){
 
-            console.log(data);
             if(typeof callback === "function"){
                 callback(data);
             }
