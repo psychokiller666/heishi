@@ -676,6 +676,8 @@ $(document).on('pageInit','.center', function(e, id, page){
                 $partner_total.find('.partner_money').html(data.partner_cumulative_income);
 
             }else if(status===2){
+                $partner_today.find('.partner_money').html(data.partner_today_income);
+                $partner_total.find('.partner_money').html(data.partner_cumulative_income);
                 var reason = data.partner_ban_reason||'';
                 reason = escape(reason);
                 url = '/Portal/Partner/partner_lock.html?reason='+reason;
