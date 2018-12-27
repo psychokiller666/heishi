@@ -213,6 +213,8 @@ require('../modules/components/partner/partner_lock');
 require('../modules/components/activity/christmas');
 //清空购物车活动页
 require('../modules/components/activity/clear_cart');
+//电子烟活动推送
+require('../modules/components/activity/e_cigarette');
 
 
 
