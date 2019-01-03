@@ -22,7 +22,7 @@ $(document).on('pageInit','.partner_join', function(e, id, page) {
         'phpsessionid': PHPSESSID
     };
 
-    var uid = init.ifLogin(true);
+    var uid = init.ifLogin();
 
     var $partner_join_btn = $page.find('.partner_join_btn');
 
@@ -30,6 +30,9 @@ $(document).on('pageInit','.partner_join', function(e, id, page) {
 
     function initJoin(){
         $partner_join_btn.off('click').on('click',function(){
+            if(init.ifLogin(true) == false){
+                return ;
+            }
             var $this = $(this);
             if($this.attr('status')==='0'){
                $this.attr('status','1');
