@@ -126,8 +126,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }else{
         $('.delivery_time_wrap').hide();
     }
-
-    update_status(single.data('price'), single.data('postage'), single.data('remain'), single.data('presell'), single.data('special'));
+    update_status(single.data('price'), single.data('id'), single.data('remain'), single.data('presell'), single.data('special'));
     if(single.hasClass('no_repertory')){
       $('.footer_nav').find(".buy_btn").attr("data-remain",single.data('remain')).addClass('no_repertory');
       $('.footer_nav').find(".add_chart").attr("data-remain",single.data('remain')).addClass('no_repertory');
@@ -219,14 +218,14 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     $('.type_item').find('span').removeClass('active');
     $(this).addClass('active');
     var price = $(this).attr('data-price');
-    var postage = $(this).attr('data-postage');
+    var item_id = $(this).attr('data-id');
     var remain = $(this).attr('data-remain');
     var presell = $(this).attr('data-presell');
     var special = $(this).attr('data-special');
     var type_desc = $(this).text();
     $('.select').find('.select_type').text(type_desc);
     $('.buy').find('.add').attr('data-remain', remain);
-    update_status(price, postage, remain, presell, special);
+    update_status(price, item_id, remain, presell, special);
     // 设置立即购买跳转链接
     var id = $(this).data("id");
     var article_id = $(this).data("articleid");
@@ -330,7 +329,8 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       $('.special_offer').css('display', 'block');
     }
   })
-  function update_status(price, postage, remain, presell, special) {
+
+  function update_status(price, item_id, remain, presell, special) {
     $('.postage').css('display', 'none');
     $('.remain_tension').css('display', 'none');
     $('.remain').css('display', 'none');
@@ -349,9 +349,9 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     if(special == 1){
       return $('.special_offer').css('display', 'block');
     }
-    if(postage == 0){
-      $('.postage').css('display', 'none');
-    }
+
+    showPostage(item_id);
+
     if(remain > 5 && remain < 10){
       $('.remain_tension').css('display', 'block');
     }else if(remain >= 1 && remain <= 5){
@@ -360,6 +360,30 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     if(presell){
       $('.presell_status').css('display', 'block');
     }
+  }
+
+  showPostage();//初始化显示隐藏包邮标签
+
+    //显示/隐藏包邮
+  function showPostage(item_id) {
+      var postageObj = window.POSTAGE_OBJ;
+      var postage = 0;
+      if (postageObj) {
+          if (item_id) {
+              postage = postageObj[item_id];
+          } else {
+              for(var key in postageObj){
+                  if (postageObj.hasOwnProperty(key) === true){
+                      postage += +postageObj[key];
+                  }
+              }
+          }
+          if (postage == 0) {
+              $('.postage').css('display', 'block');
+          } else {
+              $('.postage').css('display', 'none');
+          }
+      }
   }
 
 
