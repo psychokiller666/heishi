@@ -338,6 +338,9 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     $('.presell').css('display', 'none');
     $('.special_offer').css('display', 'none');
     $('.presell_item').css('display', 'none');
+
+    showPostage(item_id);
+
     // 如果是特价，其他状态不显示
     if(price){
       $('.price').find('.font_din').text(price);
@@ -349,8 +352,6 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     if(special == 1){
       return $('.special_offer').css('display', 'block');
     }
-
-    showPostage(item_id);
 
     if(remain > 5 && remain < 10){
       $('.remain_tension').css('display', 'block');
