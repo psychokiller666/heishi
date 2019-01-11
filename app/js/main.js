@@ -216,6 +216,9 @@ require('../modules/components/activity/clear_cart');
 //电子烟活动推送
 require('../modules/components/activity/e_cigarette');
 
-
+//系统升级
+require('../modules/components/download/system_upgrade');
+//下载app
+require('../modules/components/download/download');
 
 
