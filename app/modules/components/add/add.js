@@ -470,7 +470,7 @@ $(document).on('pageInit','.add', function (e, id, page) {
     if(num>=6){
       $.toast("最多6个",1000);
     }else{
-      items.find(".styles").find("input").val("");
+      items.find("input").val("");
       $(this).before(items);
     }      
   })
