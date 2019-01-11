@@ -98,7 +98,7 @@ common.prototype.checkfollow = function(){
     }else if(res.data == 1){
       $('.open_app').hide();
       $('.open_hs').hide();
-      $('.open_app').show();
+      // $('.open_app').show(); //TODO： 隐藏下载app顶部条
       if($('.show-list').length == 1){
         $('.show-list').find('.return_top').css('bottom', '0.946rem');
       }
@@ -283,7 +283,8 @@ common.prototype.ifLogin = function(toLogin){
 common.prototype.toLogin = function(){
 
     if(!isWeiXin()){
-        location.href = 'https://url.cn/5EVfeob';
+        // location.href = 'https://url.cn/5EVfeob';
+        location.href = '/User/Login/index/type/pc.html';
         return;
     }
 

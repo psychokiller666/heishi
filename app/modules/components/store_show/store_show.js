@@ -324,11 +324,11 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   }
   // 状态更新
   // 如果商品当中有款式为特价 则其他状态不显示
-  $('.types').find('span').each(function(){
+/*  $('.types').find('span').each(function(){
     if($(this).attr('data-special') == 1){
       $('.special_offer').css('display', 'block');
     }
-  })
+  })*/
 
   function update_status(price, item_id, remain, presell, special) {
     $('.postage').css('display', 'none');
@@ -349,9 +349,9 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       $('.presell').css('display', 'block').find('.time').text(presell);
       $('.presell_item').css('display', 'block').find('.time').text(presell);
     }
-    if(special == 1){
+/*    if(special == 1){
       return $('.special_offer').css('display', 'block');
-    }
+    }*/
 
     if(remain > 5 && remain < 10){
       $('.remain_tension').css('display', 'block');
