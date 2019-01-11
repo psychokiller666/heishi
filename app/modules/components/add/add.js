@@ -262,6 +262,11 @@ $(document).on('pageInit','.add', function (e, id, page) {
   function get_specification(){
     var specification = $('.specification');
     var specification_input = specification.find('textarea').val();
+    if(specification_input.length === 0){
+      $.toast('规格不能为空');
+      specification.find('textarea').trigger('focus');
+      specification_input = false;
+    }
     return specification_input;
   }
   // 获取描述
@@ -386,7 +391,7 @@ $(document).on('pageInit','.add', function (e, id, page) {
     var _this = $(this);
     var post_data;
     // 判断
-    if(get_title() && get_excerpt() && get_picture_list()){
+    if(get_title() && get_specification() && get_excerpt() && get_picture_list()){
       if(_this.data('type') == 1){
         if(get_number($('.select').attr("id"))){
           post_data = {
