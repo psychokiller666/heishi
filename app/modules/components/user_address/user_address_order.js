@@ -1,4 +1,4 @@
-// 初始化
+// 初始化 确认订单页选择地址跳转过来
 var common = require('../common/common.js');
 // 微信sdk
 var wx = require('weixin-js-sdk');
@@ -6,10 +6,44 @@ $(document).on('pageInit','.address_order', function(e, id, page){
   if (page.selector == '.page'){
     return false;
   }
+  if(sessionStorage.getItem('UPDATEADDRESS')=='1'){
+    sessionStorage.setItem('UPDATEADDRESS','')
+    location.reload();
+    return;
+  }
   var init = new common(page);
 
+  //原本的逻辑是选择一个地址后设置为默认地址，然后跳回确认订单页并使用默认地址
+  //现改为选择一个地址，保存到sessionStorage里，然后跳回确认订单页，并使用
   $('.address_info').click(function(){
     var that = this;
+    var $this = $(this);
+    var addr = {};
+    // res.provinceName + res.cityName + res.countryName + res.detailInfo + res.userName + res.telNumber
+    addr.id = $this.attr('id')
+    addr.provinceName = $this.attr('provinceName')
+    addr.cityName = $this.attr('cityName')
+    addr.countryName = $this.attr('countryName')
+    addr.detailInfo = $this.attr('detailInfo')
+    addr.userName = $this.attr('userName')
+    addr.telNumber = $this.attr('telNumber')
+
+    var addrTxt = JSON.stringify(addr);
+    addrTxt = escape(addrTxt);
+    sessionStorage.setItem('ADDRESS',addrTxt);
+    var object_id = $this.attr('data-object_id');
+/*    if(object_id){
+      window.location.href = $this.attr('data-href');
+    }else{
+      window.location.href = $this.attr('data-chart_buy');
+    }*/
+    sessionStorage.setItem('UPDATEADDRESS','1')
+    window.history.go(-1);
+
+
+
+/*    废弃
+
     $.ajax({
       url: '/index.php?g=user&m=HsAddress&a=set_default',
       type: 'POST',
@@ -28,6 +62,7 @@ $(document).on('pageInit','.address_order', function(e, id, page){
         $.toast(data.info);
       }
     })
+    */
   })
   $('.open_wx_address').click(function(){
     wx.openAddress({
@@ -96,7 +131,9 @@ $(document).on('pageInit','.address_order', function(e, id, page){
         data: post_data,
         success: function(data) {
           if(data.status == 1){
-            location.href = $(that).attr('data-href');
+            sessionStorage.setItem('UPDATEADDRESS','1')
+            history.go(-1);
+            // location.href = $(that).attr('data-href');
           }else{
             $.toast(data.info);
           }

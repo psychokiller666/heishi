@@ -448,6 +448,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
     })
     postage();
     countCompletePrice();
+    window.FUNgetAddress();
     $(".user-mychart-buy").css("display","block");
   }
   //buy 加邮费计算总价格
@@ -560,6 +561,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
 
 
   })
+  //疑似废弃
   //下单请求
   function orders (data) {
     $.post('/index.php?g=restful&m=HsOrder&a=union_add',data,function(data){
@@ -587,7 +589,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
           success: function(data){
               if(data.status==1){
                   // console.log(data.data)
-                  var ok_url = GV.pay_url+'hsjsapi.php?order_number=' + data.data + '&digital_goods=0';
+                  var ok_url = GV.pay_url+'native.php?order_number=' + data.data;
                   window.location.href = ok_url;
               }else{
                   $.toast(data.info);
