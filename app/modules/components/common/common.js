@@ -282,11 +282,11 @@ common.prototype.ifLogin = function(toLogin){
 //去往登录页
 common.prototype.toLogin = function(){
 
-    if(!isWeiXin()){
+    // if(!isWeiXin()){
         // location.href = 'https://url.cn/5EVfeob';
         location.href = '/User/Login/index/type/pc.html';
         return;
-    }
+    // }
 
     var nowUrl = encodeURI(location.href);
     // var url = '/Api/Oauth/login?type=weixin&login_http_referer='+nowUrl;
