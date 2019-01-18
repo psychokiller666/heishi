@@ -221,4 +221,7 @@ require('../modules/components/download/system_upgrade');
 //下载app
 require('../modules/components/download/download');
 
+//选择支付方式
+require('../modules/components/success/pay');
+
 

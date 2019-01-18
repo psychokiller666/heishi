@@ -262,6 +262,16 @@ function getApiBaseUrl(){
     return ApiBaseUrl;
 };
 
+common.prototype.getBaseUrl = getBaseUrl;
+function getBaseUrl(){
+  var HostName = location.hostname;
+  var baseurl = 'https://hstest.ontheroadstore.com';
+  if (HostName === "hs.ontheroadstore.com") {
+    baseurl = 'https://hs.ontheroadstore.com';
+  }
+  return baseurl;
+};
+
 //判断是否登录，如果参数toLogin==true，未登录则跳往登录页 注：需要在html中添加隐藏的input.current_user_id
 common.prototype.ifLogin = function(toLogin){
     var $current_user_id = $('.current_user_id');

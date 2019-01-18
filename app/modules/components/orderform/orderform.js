@@ -139,7 +139,13 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
                       "info":"Success",
                       "data":"VR20180820151512ZST5UV"
                   }*/
-                  var ok_url = GV.pay_url+'native.php?order_number=' + data.data;
+                  var ok_url = ''
+                  if(GV.device === 'moblie'){
+                    //移动端非微信h5环境使用
+                    ok_url = '/Portal/HsPayment/pay.html?order_number=' + data.data
+                  }else{
+                    ok_url = GV.pay_url+'native.php?order_number=' + data.data;
+                  }
                   window.location.href = ok_url;
               }else{
                   $.toast(data.info);
