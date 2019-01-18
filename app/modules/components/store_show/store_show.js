@@ -402,7 +402,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }else{
       goodsLimit.canBuy = undefined;
       $('.good_limit_num').hide();
-      $('.buy_btn:not(.confirm)').html('买他妈的').removeClass('disable');
+      $('.buy_btn:not(.confirm)').html('立即购买').removeClass('disable');
     }
 
   }

@@ -215,6 +215,8 @@ require('../modules/components/activity/christmas');
 require('../modules/components/activity/clear_cart');
 //电子烟活动推送
 require('../modules/components/activity/e_cigarette');
+//新年酒活动
+require('../modules/components/activity/wine_act');
 
 //系统升级
 require('../modules/components/download/system_upgrade');
