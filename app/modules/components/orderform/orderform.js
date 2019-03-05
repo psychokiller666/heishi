@@ -139,7 +139,7 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
                       "info":"Success",
                       "data":"VR20180820151512ZST5UV"
                   }*/
-                  if(!isWeiXin()){
+                  if(!init.isWeiXin()){
                     var ok_url = GV.pay_url+'native.php?order_number=' + data.data;
                   } else {
                     var ok_url = GV.pay_url+'hsjsapi.php?order_number=' + data.data;
