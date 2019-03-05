@@ -589,8 +589,12 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
           success: function(data){
               if(data.status==1){
                   // console.log(data.data)
+                if(!isWeiXin()){
                   var ok_url = GV.pay_url+'native.php?order_number=' + data.data;
-                  window.location.href = ok_url;
+                } else {
+                  var ok_url = GV.pay_url+'hsjsapi.php?order_number=' + data.data;
+                }
+                window.location.href = ok_url;
               }else{
                   $.toast(data.info);
               }
