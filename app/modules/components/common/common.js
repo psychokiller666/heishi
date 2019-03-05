@@ -6,6 +6,9 @@ var wx = require('weixin-js-sdk');
 //神策sdk
 var sensors = require('../../../modules/components/sa_sdk/sensorsdata.min.js')
 
+//md5
+var md5 = require('../../../modules/components/plugin/md5.min');
+
 function common(page){
   this.page = page;
   // 控制.hs-page高度
@@ -35,6 +38,7 @@ function common(page){
   this.ImgBaseUrl = 'https://img8.ontheroadstore.com';
   addCss();
   initSensorsdata();
+  partnerInviteUser();
 };
 
 //判断域名是否是生产环境
@@ -153,7 +157,7 @@ common.prototype.wx_share = function(options,callback){
       // 分享
       wx.onMenuShareTimeline({
         title: $.trim(options.title),
-        link: options.link,
+        link: partnerUrlFix(options.link),
         imgUrl: options.img,
         success: function(){
           // 用户确认分享后执行的回调函数
@@ -169,7 +173,7 @@ common.prototype.wx_share = function(options,callback){
       wx.onMenuShareAppMessage({
         title: $.trim(options.title),
         desc: $.trim(options.desc),
-        link: options.link,
+        link: partnerUrlFix(options.link),
         imgUrl: options.img,
         success:function(){
           // 用户确认分享后执行的回调函数
@@ -222,20 +226,23 @@ common.prototype.getUrlParam = function(name) {
     var r = window.location.search.substr(1).match(reg);
     if (r != null) return unescape(r[2]); return null;
 };
-common.prototype.setCookie = function (name,value,days) {
+common.prototype.setCookie = setCookie;
+function setCookie(name,value,days) {
     var Days = parseFloat(days)>0 ? parseFloat(days) : 30;
     var exp = new Date();
     exp.setTime(exp.getTime() + Days*24*60*60*1000);
     document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString() + ';path=/;';
 };
-common.prototype.getCookie = function (name) {
+common.prototype.getCookie = getCookie;
+function getCookie(name) {
     var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
     if(arr=document.cookie.match(reg))
         return unescape(arr[2]);
     else
         return null;
 };
-common.prototype.delCookie = function (name) {
+common.prototype.delCookie = delCookie;
+function delCookie(name) {
     var exp = new Date();
     exp.setTime(exp.getTime() - 1);
     var cval=getCookie(name);
@@ -243,7 +250,8 @@ common.prototype.delCookie = function (name) {
         document.cookie= name + "="+cval+";expires="+exp.toGMTString();
 };
 
-common.prototype.getApiBaseUrl = function(){
+common.prototype.getApiBaseUrl = getApiBaseUrl;
+function getApiBaseUrl(){
     var HostName = location.hostname;
     var ApiBaseUrl = 'https://apitest.ontheroadstore.com';
 
@@ -274,7 +282,8 @@ common.prototype.ifLogin = function(toLogin){
 common.prototype.toLogin = function(){
 
     if(!isWeiXin()){
-        location.href = 'https://url.cn/5EVfeob';
+        // location.href = 'https://url.cn/5EVfeob';
+        location.href = '/User/Login/index/type/pc.html';
         return;
     }
 
@@ -603,7 +612,7 @@ function getPageType (){
         {name:'商品详情页',path:'/Portal/HsArticle/index/id/'},
         {name:'卖家店铺页',path:'/User/index/index/id/'},
         {name:'我的优惠券页',path:'/Portal/Coupon/userCoupon.html'},
-        {name:'我的收藏页',path:'/index.php/user/HsLike/index.html'},
+        {name:'我的收藏页',path:'/user/HsLike/index.html'},
         {name:'确认订单页',path:'/User/HsOrder/add/object_id/'},
         {name:'确认订单页',path:'/User/MyChart/buy.html'},
         {name:'私信页',path:'/User/HsMessage/detail/from_uid/'},
@@ -615,6 +624,11 @@ function getPageType (){
         {name:'哆嗦列表页',path:'/Portal/HsArticle/comment_list/id/,/type/2.html'},
         {name:'登录注册页',path:'/User/Login/mobile.html'},
         {name:'抽奖页',path:'/Portal/Lottery/lottery.html'},
+        {name:'抽奖页',path:'/Portal/Lottery/lottery_act.html'},
+        {name:'公路传教士注册页',path:'/Portal/Partner/partner_join.html'},
+        {name:'公路传教士',path:'/Portal/Partner/partner_detail.html'},
+        {name:'购物车礼金',path:'/Portal/Index/clear_cart.html'},
+        {name:'仓库小姐姐的福利',path:'/Portal/Index/miss_treasury.html'},
     ];
 
 
@@ -636,6 +650,196 @@ function getPageType (){
         }
     }
     return '';
+}
+
+
+//合伙人分享url追加 referCode
+function partnerUrlFix(url){
+    var uid = getUserId();
+    var md5Uid = '';
+    if(uid){
+        md5Uid = md5('hsontheroadstore'+uid);
+        url = replaceUrlParams(url,{referCode:md5Uid});
+    }
+    // console.log('shareurl:',url);
+    return url;
+}
+
+//获取用户id
+function getUserId(){
+    var $current_user_id = $('.current_user_id');
+    var uid='';
+    if($current_user_id.length>0){
+        uid = $current_user_id.attr('uid');
+        if(typeof uid === 'string' && uid.length>0){
+            //已登录
+            return uid;
+        }
+    }
+    return false;
+}
+
+//解析url
+function parseURL(url) {
+    var a = document.createElement('a');
+    a.href = url;
+    return {
+        source: url,
+        protocol: a.protocol.replace(':', ''),
+        host: a.hostname,
+        port: a.port,
+        query: a.search,
+        params: (function () {
+            var ret = {},
+                seg = a.search.replace(/^\?/, '').split('&'),
+                len = seg.length, i = 0, s;
+            for (; i < len; i++) {
+                if (!seg[i]) { continue; }
+                s = seg[i].split('=');
+                ret[s[0]] = s[1];
+            }
+            return ret;
+
+        })(),
+        file: (a.pathname.match(/\/([^\/?#]+)$/i) || [, ''])[1],
+        hash: a.hash.replace('#', ''),
+        path: a.pathname.replace(/^([^\/])/, '/$1'),
+        relative: (a.href.match(/tps?:\/\/[^\/]+(.+)/) || [, ''])[1],
+        segments: a.pathname.replace(/^\//, '').split('/')
+    };
+}
+
+//替换url中的同名参数值，url:原本的url;newParams:新的参数对象
+function replaceUrlParams(url, newParams) {
+    var parsedUrl = parseURL(url);
+
+    for (var x in newParams) {
+        var hasInMyUrlParams = false;
+        for (var y in parsedUrl.params) {
+            if (x.toLowerCase() == y.toLowerCase()) {
+                parsedUrl.params[y] = newParams[x];
+                hasInMyUrlParams = true;
+                break;
+            }
+        }
+        //原来没有的参数则追加
+        if (!hasInMyUrlParams) {
+            parsedUrl.params[x] = newParams[x];
+        }
+    }
+    var _result = parsedUrl.protocol + "://" + parsedUrl.host + (parsedUrl.port ? ":" + parsedUrl.port : '') + parsedUrl.path + "?";
+
+    for (var p in parsedUrl.params) {
+        _result += (p + "=" + parsedUrl.params[p] + "&");
+    }
+
+    if (_result.substr(_result.length - 1) == "&") {
+        _result = _result.substr(0, _result.length - 1);
+    }
+
+    if (parsedUrl.hash != "") {
+        _result += "#" + parsedUrl.hash;
+    }
+    return _result;
+}
+
+
+//新用户访问分享链接
+function partnerInviteUser(){
+
+    var clearLocalStorage = getUrlParam('CLEAR');
+
+    if(clearLocalStorage==1){
+        localStorage.setItem('partnerData','');//todo 清除localstorage
+    }
+
+
+    // 如果当前页面链接含有 referCode ，读取 localstorage，判断是否与之前存储的相同，
+    // 如果相同，记录本次访问时间，检查上次调用接口时间，如果超过12小时，再次发送
+    // 如果不相同，记录 referCode，记录本次访问时间，检查是否登录，
+    // 如果已登录，检查上次调用接口时间，如果未发送过或超过12小时，调用接口并记录
+    // 如果已经记录为老用户，则不再发送。
+/*    var tempData = {
+        referCode:'',
+        visitTime:'',//访问该链接的时间
+        sendTime:'',//上次发送接口的时间，没有值就是没发送过
+        isOldUser:false,//是否是老用户
+    }*/
+    var uid = getUserId();
+    var nowTime = parseInt((new Date()).getTime()/1000);
+    var delayTime = 21600;//多长时间间隔后调用接口 6小时=21600 todo:修改时长
+    var expireTime = 604800;//过期时间 7天=604800
+    var ifsend = true;//是否调用接口
+
+    var partnerData = {};
+    var partnerDataTxt = localStorage.getItem('partnerData');
+    var referCode = getUrlParam('referCode');
+    if(partnerDataTxt){
+        try{
+            partnerData = JSON.parse(partnerDataTxt);
+        }catch (e) {
+            console.log(e);
+        }
+        //todo: 判断，如果当前用户换过账号（对比两个referCode）则清空partnerData
+    }
+
+    if(referCode === partnerData.referCode){
+        partnerData.visitTime = nowTime;
+        ifsend = nowTime - partnerData.sendTime > delayTime;
+    }else if(referCode){
+        partnerData.visitTime = nowTime;
+        partnerData.referCode = referCode;
+        partnerData.sendTime = 0;
+    }else{
+        ifsend = false;
+        partnerData = {};
+    }
+    if(nowTime - partnerData.visitTime > expireTime){
+        ifsend = false;
+        partnerData = {};
+    }
+
+    localStorage.setItem('partnerData',JSON.stringify(partnerData));
+
+
+    if(uid && ifsend && !partnerData.isOldUser){
+        //调用接口
+        partnerBind(referCode,function(data){
+            partnerData.sendTime = nowTime;
+            partnerData.isOldUser = data.oldUserStatus;
+
+            localStorage.setItem('partnerData',JSON.stringify(partnerData));
+        });
+
+    }
+
+}
+
+function partnerBind(referCode,callback){
+
+    var url = '/index.php?g=restful&m=HsPartnerBind&a=bind';
+
+    var PHPSESSID = getCookie('PHPSESSID');
+    var ajaxHeaders = {
+        'phpsessionid': PHPSESSID
+    };
+    $.ajax({
+        type: "GET",
+        url: url,
+        dataType: 'json',
+        data: {referCode:referCode},
+        headers: ajaxHeaders,
+        success: function(data){
+
+            if(typeof callback === "function"){
+                callback(data);
+            }
+
+        },
+        error: function(e){
+            console.log('partnerBind err: ',e);
+        }
+    });
 }
 
 

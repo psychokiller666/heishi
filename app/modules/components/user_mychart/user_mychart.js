@@ -15,6 +15,13 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
   var init = new common(page);
   init.checkfollow();
 
+  var ApiBaseUrl = init.getApiBaseUrl();
+
+  var PHPSESSID = init.getCookie('PHPSESSID');
+  var ajaxHeaders = {
+      'phpsessionid': PHPSESSID
+  };
+
   //限购json
   var $cartData = $('.cartData');
   var chartData = null;
@@ -441,6 +448,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
     })
     postage();
     countCompletePrice();
+    window.FUNgetAddress();
     $(".user-mychart-buy").css("display","block");
   }
   //buy 加邮费计算总价格
@@ -466,7 +474,57 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
     if(payment_status){
       return $.toast('订单正在生成中');
     }
+    var addressid = $(this).attr('data-address_id');
+
+    if(addressid==0){
+        return $.toast('请先选择地址');
+    }
     payment_status = true;
+
+    var orderData = {
+        "address_id":addressid,
+        "orders":[
+            /*{
+                "attach":'',//备注
+                "seller_name":'',
+                "seller_uid":'',
+                "items":[
+                    {
+                        "counts":'',
+                        "item_id":'',//商品id
+                        "mid":'',//款式id
+                    }
+                ],
+            }*/
+        ],
+        "type":1, //类型 1商品订单 0打赏
+        // "user_coupon_id":""
+    };
+    $('.lists').each(function(index){
+        var that = this;
+
+        var order = {
+            attach: $(this).find('.attach').val(),
+            seller_name: $(this).data('name'),
+            seller_uid: $(this).data('seller_user_id'),
+            items: []
+        };
+
+        //子订单
+        $(this).find('.good_info').each(function(i){
+            var item = {
+                counts: $(this).find('.good_num').attr('data-numbers'),
+                item_id: $(this).data('object_id'),
+                mid: $(this).attr('data-type'),
+            };
+            order.items.push(item);
+        });
+
+        orderData.orders.push(order);
+    })
+    createOrder(orderData);
+
+/*
     var post_data = {
       // 'order[orders][0][object_id]': $(this).data('id'), //id
       // 'order[orders][0][counts]': order_number.val(),     //数量
@@ -498,7 +556,12 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
       })
     })
     orders(post_data);
+*/
+
+
+
   })
+  //疑似废弃
   //下单请求
   function orders (data) {
     $.post('/index.php?g=restful&m=HsOrder&a=union_add',data,function(data){
@@ -510,6 +573,41 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
         $.toast(data.info);
       }
     })
+  }
+
+    //    创建订单api接口
+  function createOrder(data){
+      //    创建订单api接口
+
+      $.ajax({
+          type: "POST",
+          url: ApiBaseUrl + '/appv6/createorder',
+          dataType: 'json',
+          data: data,
+          headers: ajaxHeaders,
+
+          success: function(data){
+              if(data.status==1){
+                  // console.log(data.data)
+                if(!isWeiXin()){
+                  var ok_url = GV.pay_url+'native.php?order_number=' + data.data;
+                } else {
+                  var ok_url = GV.pay_url+'hsjsapi.php?order_number=' + data.data;
+                }
+                window.location.href = ok_url;
+              }else{
+                  $.toast(data.info);
+              }
+              payment_status = false;
+
+          },
+          error: function(e){
+              payment_status = false;
+              $.toast('网络故障，请稍后重试');
+              console.log('createOrder err: ',e);
+          }
+      });
+
   }
   // 设置每个卖家商品的最高邮费
   function postage(){
