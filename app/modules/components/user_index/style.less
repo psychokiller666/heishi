@@ -333,19 +333,39 @@
         }
         .hs-icon{
           .font-dpr(30px);
-          margin-bottom: 0.3rem;
+          margin:  0 auto;
+          margin-bottom: 0.27rem;
+          width: 0.8rem; 
+          height: 0.8rem;
+          display: block;
         }
         .payment:after{
           content: "\e62f";
         }
-        .deliver:after{
-          content: "\e712";
+        // .deliver:after{
+        //   content: "\e712";
+        // }
+        // .receive:after{
+        //   content: "\e713";
+        // }
+        // .complete:after{
+        //   content: "\e64f";
+        // }
+        .deliver{
+          background: url(https://img8.ontheroadstore.com/H5_Icon/receive-order.png?20190326) no-repeat;
+          background-size:100% 100%; 
         }
-        .receive:after{
-          content: "\e713";
+        .complete{
+          background: url(https://img8.ontheroadstore.com/H5_Icon/all-order.png?20190326) no-repeat;
+          background-size:100% 100%; 
         }
-        .complete:after{
-          content: "\e64f";
+        .receive{
+          background: url(https://img8.ontheroadstore.com/H5_Icon/stay-order.png?20190326) no-repeat;
+          background-size:100% 100%; 
+        }
+        .return{
+          background: url(https://img8.ontheroadstore.com/H5_Icon/return-order.png?20190326) no-repeat;
+          background-size:100% 100%; 
         }
         .deliver_num,
         .receive_num{
@@ -363,6 +383,32 @@
           padding: 0 0.15rem;
           box-sizing: border-box;
         }
+      }
+      .last{
+        &::before{
+          display: block;
+          content: '';
+          width: 0.1rem;
+          height: 100%;
+          background: url(//img8.ontheroadstore.com/H5_Icon/split-line.png?20190326) no-repeat;
+          background-size: 100% 100%;
+          position: absolute;
+          left: -0.56rem;
+        }
+        // &::after{
+        //   display: block;
+        //   content: '';
+        //   width: 0.1rem;
+        //   height: 0.1rem;
+        //   background: #fff;
+        //   border-top: 0.02rem solid #999;
+        //   border-right: 0.02rem solid #999;
+        //   position: absolute;
+        //   left: -0.60rem;
+        //   top: 50%;
+        //   transform: translateY(-0.05rem)  rotate(45deg);
+        // }
+
       }
     }
   }
@@ -383,6 +429,12 @@
           .font-dpr(29px);
           margin-right: 0.3rem;
         }
+        .change_coupon{
+          .font-dpr(14px);
+          color: #999;
+          float: right;
+          margin: 0;
+        }
         .collect:after{
           content: "\e63f";
         }
@@ -399,6 +451,11 @@
           content: "\e64a";
         }
       }
+    }
+    .arrow{
+      float: right;
+      color: #999;
+      .font-dpr(14px);
     }
   }
 }
