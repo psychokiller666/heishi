@@ -8,9 +8,17 @@ $(document).on('pageInit','.login', function(e, id, page){
   var init = new common(page);
   $('.hs-main').css('height',"100%");
   //  登录初始化
+  $("input").blur(function(){
+  	document.body.scrollTop = 0;
+	  document.documentElement.scrollTop = 0;
+  });
   $('.get_pass').attr('disabled','disabled');
-  $('.get_pass').on('click', function(){
+  $('.verify').on('click', function(){
     var that = this;
+    if($('.verify').html()!=='重新发送'){
+      
+      return false
+    }
     $.post('/Api/HsChangeUserInfo/ajax_change_mobile',{
       mobile: $('.tel').val()
     },function(res){
@@ -23,7 +31,27 @@ $(document).on('pageInit','.login', function(e, id, page){
       }
     });
   })
-
+  //获取验证码
+  function getVcode(){
+    if(!(/^1[34578]\d{9}$/.test($('.tel').val()))){
+      $.toast('请输入正确的手机号');
+      speed_error()
+      return false
+    }
+    var that = this;
+    $.post('/Api/HsChangeUserInfo/ajax_change_mobile',{
+      mobile: $('.tel').val()
+    },function(res){
+      if(res.status == 1){
+        $.toast('验证码已发送');
+        $(that).attr('disabled', 'disabled');
+        count_down($('.verify'));
+      } else {
+        $.toast(res.info);
+      
+      }
+    });
+  }
   $('.login_in').click(function(){
     var mobile = $('.tel').val();
     var verify = $('.pass_num').val();
@@ -54,14 +82,16 @@ $(document).on('pageInit','.login', function(e, id, page){
   // 倒计时
   function count_down(that){
     var clearTime = null;
-    var num = 59;
+    var num =59;
+    console.log(num)
     clearTime = setInterval(function(){
       if(num == 0){
         clearInterval(clearTime);
         $(that).removeAttr('disabled');
-        $(that).text('获取验证码');
+        $(that).text('重新发送');
       }else{
-        $(that).text(num + 's');
+        // $(that).text(num + 's');
+        that.html('00:'+num + '')
       }
       num--;
     },1000)
@@ -76,7 +106,7 @@ $(document).on('pageInit','.login', function(e, id, page){
   window.onload = function(){
     speedOffsetLeft = $('.speed').offset().left;
     speedWidth = $('.speed').width();
-    verifyWidth = $('.verify').width();
+    verifyWidth = $('.verify').width()- $('.verify').height()/5;
   }
   if(IsPC()){   
     $('.verify').on('mousedown', '.speed', mousedown);
@@ -91,6 +121,7 @@ $(document).on('pageInit','.login', function(e, id, page){
     statusMove = true;
   }
   function mousemove(e){
+    console.log(e)
     if(statusMove){
       var num = e.clientX - speedOffsetLeft + 40;
       touchLast = num;
@@ -139,8 +170,10 @@ $(document).on('pageInit','.login', function(e, id, page){
     $('.verify').off('mousedown', '.speed', mousedown);
     $('.verify').off('mousemove', mousemove);
     $('body').off('mouseup', mouseup);
-    $('.speed').addClass('speed_pass').attr('disabled','disabled').css({'background': '#63b083', 'opacity': '1'});
+    // $('.speed').addClass('speed_pass').attr('disabled','disabled').css({'background': '#63b083', 'opacity': '1'});
+    $('.verify').addClass('speed-pass');
     $('.get_pass').removeAttr('disabled');
+    getVcode()
   }
   function speed_error() {
     $('.speed').removeClass('speed_pass').removeAttr('disabled','disabled').css('background', '#fff').animate({'width': speedWidth + 'px'}, 400,function(){
@@ -152,6 +185,7 @@ $(document).on('pageInit','.login', function(e, id, page){
         $('.verify').on('touchmove', '.speed', touchmove);
         $('.verify').on('touchend', '.speed', touchend);
       }
+      $('.verify').removeClass('speed-pass');
     });
   }
   function IsPC() {

@@ -1,5 +1,9 @@
 .login{
+<<<<<<< HEAD
   background-image: url(//img8.ontheroadstore.com/upload/171220/812e248b49ad89c1cdcabdfefa30cf9c.png);
+=======
+  background-image: url(//img8.ontheroadstore.com/upload/190325/login_bg.jpg);
+>>>>>>> 586880e... [首页+退货+地址bug修复
   background-size: 100% 100%;
   background-repeat: no-repeat;
   height: 100%;
@@ -12,7 +16,7 @@
     color: white;
       .name{
         width: 4.56rem;
-        margin: 2.213rem auto 0.6rem;
+        margin: 2.77rem auto 0.6rem;
         display: block;
       }
       .close{
@@ -31,21 +35,35 @@
         margin-bottom: 0.4rem;
       }
       .redact{
-        top: 9.6rem;
+        bottom: 1.25rem;
         position: absolute;
-        width: 6.066rem;
-        left: 1.967rem;
+        width:7.253rem;
+        left: 1.386rem;
+        input::-webkit-input-placeholder {
+          color:#FEFEFE;
+        }
+        input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+          color:#FEFEFE;
+        }
+        input::-moz-placeholder { /* Mozilla Firefox 19+ */
+          color:#FEFEFE;
+        }
+        input:-ms-input-placeholder { /* Internet Explorer 10+ */
+          color:#FEFEFE;
+        }
         .phone,
         .verify,
         .password{
           width: 100%;
-          height: 0.8rem;
+          height: 1.386rem;
           color: white;
-          margin-bottom: 0.667rem;
+          margin-bottom: 0.4rem;
           position: relative;
         }
+       
         .phone{
-          border-bottom: 0.02rem solid #b1b1b1;
+          border: 0.02rem solid #fff;
+          border-radius: 0.693rem;
           .mobile_tel{
             .font-dpr(16px);
             position: absolute;
@@ -68,20 +86,24 @@
         .verify{
           border: 0.02rem solid #b1b1b1;
           text-align: center;
-          line-height: 0.8rem;
+          line-height: 0.933rem;
           .font-dpr(14px);
-          color: #b1b1b1;
+          color: #fff;
+          background: rgba(248,248,248,0.5);
+          border-radius: 0.466rem;
+          height: 0.933rem;
           .speed{
             .font-dpr(14px);
-            color: #b1b1b1;
+            color: #fff;
             width: 1.02rem;
-            height: 100%;
+            height: 80%;
             background: #fff;
             position: absolute;
-            left: 0;
-            top: 0;
+            left: 0.093rem;
+            top: 10%;
             border: none;
-            border-right: 0.02rem solid #b1b1b1;
+            border-right: 0.02rem solid #fff;
+            border-radius: 26rem;
           }
           .speed:before{
             content: "\e6ae";
@@ -91,9 +113,15 @@
             color: white;
           }
         }
+        .speed-pass{
+          background: #fff;
+          color: #000000;
+          opacity: 1;
+        }
         .password{
-          border-bottom: 0.02rem solid #b1b1b1;
-          margin-bottom: 0;
+          border: 0.02rem solid #fff;
+          border-radius: 0.693rem;
+          margin-bottom: 0.293rem;
           .password_info{
             .font-dpr(16px);
             position: absolute;
@@ -139,12 +167,15 @@
         }
         .login_in{
           margin-top: 1.4667rem;
+         
         }
         .bind_tel{
           margin-top: 1rem;
         }
         .agreement{
-          margin-top: 0.6667rem;
+          margin-bottom: 0.82rem;
+          height: 0.4rem;
+          
           .font-dpr(12px);
           .title{
             float: left;
