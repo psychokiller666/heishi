@@ -222,10 +222,23 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     var remain = $(this).attr('data-remain');
     var presell = $(this).attr('data-presell');
     var special = $(this).attr('data-special');
+    var special_price = $(this).attr('data-special_price')
+    var special_start = $(this).attr('data-special_start')
+    var special_end = $(this).attr('data-special_end')
+   
+
+    //判断特卖时间
+    let _startTime =  new Date(special_start).getTime()
+    let _startEnd =  new Date(special_end).getTime()
+    let _now = new Date().getTime()
+    if(!(_startEnd<_now<_startTime)){
+      special=0
+    }
+
     var type_desc = $(this).text();
     $('.select').find('.select_type').text(type_desc);
     $('.buy').find('.add').attr('data-remain', remain);
-    update_status(price, item_id, remain, presell, special);
+    update_status(price, item_id, remain, presell, special,special_price);
     // 设置立即购买跳转链接
     var id = $(this).data("id");
     var article_id = $(this).data("articleid");
@@ -330,7 +343,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
   })*/
 
-  function update_status(price, item_id, remain, presell, special) {
+  function update_status(price, item_id, remain, presell, special,special_price) {
     $('.postage').css('display', 'none');
     $('.remain_tension').css('display', 'none');
     $('.remain').css('display', 'none');
@@ -349,9 +362,12 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       $('.presell').css('display', 'block').find('.time').text(presell);
       $('.presell_item').css('display', 'block').find('.time').text(presell);
     }
-/*    if(special == 1){
-      return $('.special_offer').css('display', 'block');
-    }*/
+   if(special == 1){
+      $('.origin_price').css('display', 'block');
+      $('.origin_price').html('￥'+parseInt(special_price));
+      return true
+
+    }
 
     if(remain > 5 && remain < 10){
       $('.remain_tension').css('display', 'block');
