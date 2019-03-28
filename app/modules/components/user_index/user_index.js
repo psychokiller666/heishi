@@ -619,6 +619,85 @@ $(document).on('pageInit','.center', function(e, id, page){
         });
     }
 
+    //合伙人
+    var $partner_wrap = $('.partner_wrap');
+    if($partner_wrap.length>0){
+        var ApiBaseUrl = init.getApiBaseUrl();
+        var PHPSESSID = init.getCookie('PHPSESSID');
+        var ajaxHeaders = {
+            'phpsessionid': PHPSESSID
+        };
+        var url = ApiBaseUrl + '/appv5/user/center/summary/buyer';
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType: 'json',
+            data: {},
+            headers: ajaxHeaders,
+            success: function (data) {
+                if (data.status == 1) {
+
+                    initPartner(data.data);
+
+                }
+            },
+            error: function (e) {
+                console.log('getSetting err: ', e);
+            }
+        });
+
+        function initPartner(data){
+
+            if(data.partner_status == 0){
+            //    合伙人状态 1 显示合伙人模块 0关闭合伙人模块
+                return;
+            }
+
+            var status = data.is_partner;//当前用户状态 0未加入，1已加入，-1已锁定
+            if(status===-1){
+                status = 2; //2已锁定
+            }
+
+            var url = '';//点击跳转的url
+
+            var $partner_today = $partner_wrap.find('.partner_today');
+            var $partner_total = $partner_wrap.find('.partner_total');
+            var $partner_content = $partner_wrap.find('.partner_content');
+            var $partner_join = $partner_wrap.find('.partner_join');
+            $partner_wrap.attr('status',status);
+            $partner_content.attr('status',status);
+
+            if(status===0){
+                url = '/Portal/Partner/partner_join.html';
+                $partner_join.css('background-image','url('+data.partner_image_url+')');
+            }else if(status===1){
+                url = '/Portal/Partner/partner_detail.html';
+                $partner_today.find('.partner_money').html(data.partner_today_income);
+                $partner_total.find('.partner_money').html(data.partner_cumulative_income);
+
+            }else if(status===2){
+                $partner_today.find('.partner_money').html(data.partner_today_income);
+                $partner_total.find('.partner_money').html(data.partner_cumulative_income);
+                var reason = data.partner_ban_reason||'';
+                reason = escape(reason);
+                url = '/Portal/Partner/partner_lock.html?reason='+reason;
+            }
+
+            $partner_wrap.on('click',function(){
+                if(status===0){
+                    init.sensors.track('buttonClick', {
+                        pageType : '我的页面（买家版）',
+                        buttonName : '立即加入',
+                    })
+                }
+                location.href = url;
+            });
+
+            $partner_wrap.show();
+        }
+
+    }
+
   //  个人用户中心页
   if(store_list.length == 0){
     // 弹出绑定手机窗口 自己的个人中心

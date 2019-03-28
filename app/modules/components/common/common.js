@@ -98,7 +98,7 @@ common.prototype.checkfollow = function(){
     }else if(res.data == 1){
       $('.open_app').hide();
       $('.open_hs').hide();
-      $('.open_app').show(); //TODO： 隐藏下载app顶部条
+      // $('.open_app').show(); //TODO： 隐藏下载app顶部条
       if($('.show-list').length == 1){
         $('.show-list').find('.return_top').css('bottom', '0.946rem');
       }
@@ -221,7 +221,8 @@ common.prototype.system_query = function() {
 }
 
 //获取url中的参数
-common.prototype.getUrlParam = function(name) {
+common.prototype.getUrlParam = getUrlParam;
+function getUrlParam(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);
     if (r != null) return unescape(r[2]); return null;
@@ -281,11 +282,11 @@ common.prototype.ifLogin = function(toLogin){
 //去往登录页
 common.prototype.toLogin = function(){
 
-    if(!isWeiXin()){
+    // if(!isWeiXin()){
         // location.href = 'https://url.cn/5EVfeob';
         location.href = '/User/Login/index/type/pc.html';
         return;
-    }
+    // }
 
     var nowUrl = encodeURI(location.href);
     // var url = '/Api/Oauth/login?type=weixin&login_http_referer='+nowUrl;
@@ -459,7 +460,6 @@ function initSensorsdata(){
     var showlog = false;
     if(localStorage.getItem('SALOG')==='SHOWLOG'){
         showlog = true;
-        console.log(server_url.split('?')[1]);
         window.sensors = sensors;
     }
     sensors.init({

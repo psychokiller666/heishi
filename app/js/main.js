@@ -156,29 +156,6 @@ require('../modules/components/get_coupon/get_coupon');
 require('../modules/components/issue_coupon/issue_coupon');
 
 
-//鬼市
-//鬼市商品详情
-// require('../modules/components/ghost_market_article/ghost_market_article');
-//鬼市评论(弹窗)
-// require('../modules/components/comment/gs_comment');
-//鬼市评论列表页
-// require('../modules/components/ghost_market_comment_list/index');
-
-//velocity动画插件
-// require('../modules/components/plugin/velocity.min');
-
-
-
-
-//鬼市首页
-// require('../modules/components/ghost_market_article_home/index');
-//鬼市卖家详情页
-// require('../modules/components/ghost_market_seller/index');
-//鬼市创建订单页面
-// require('../modules/components/ghost_market_buy/index');
-//鬼市支付成功页面
-// require('../modules/components/ghost_market_pay_success/index');
-
 
 //评分详情页
 require('../modules/components/score_details/score_details');
@@ -197,4 +174,53 @@ require('../modules/components/lottery/lottery_user');
 require('../modules/components/lottery/lottery_evaluation');
 //抽奖活动-抽奖彩蛋
 require('../modules/components/lottery/lottery_act');
+
+
+
+//鬼市
+//鬼市商品详情
+// require('../modules/components/ghost_market_article/ghost_market_article');
+//鬼市评论(弹窗)
+// require('../modules/components/comment/gs_comment');
+//鬼市评论列表页
+// require('../modules/components/ghost_market_comment_list/index');
+
+//velocity动画插件
+// require('../modules/components/plugin/velocity.min');
+
+//鬼市首页
+// require('../modules/components/ghost_market_article_home/index');
+//鬼市卖家详情页
+// require('../modules/components/ghost_market_seller/index');
+//鬼市创建订单页面
+// require('../modules/components/ghost_market_buy/index');
+//鬼市支付成功页面
+require('../modules/components/ghost_market_pay_success/index');
+
+
+//合伙人详情
+require('../modules/components/partner/partner_detail');
+//加入合伙人
+require('../modules/components/partner/partner_join');
+//合伙人已锁定
+require('../modules/components/partner/partner_lock');
+
+
+
+
+
+//圣诞活动页
+require('../modules/components/activity/christmas');
+//清空购物车活动页
+require('../modules/components/activity/clear_cart');
+//电子烟活动推送
+require('../modules/components/activity/e_cigarette');
+//新年酒活动
+require('../modules/components/activity/wine_act');
+
+//系统升级
+require('../modules/components/download/system_upgrade');
+//下载app
+require('../modules/components/download/download');
+
 

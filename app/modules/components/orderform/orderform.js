@@ -139,11 +139,7 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
                       "info":"Success",
                       "data":"VR20180820151512ZST5UV"
                   }*/
-                  if(!isWeiXin()){
-                    var ok_url = GV.pay_url+'native.php?order_number=' + data.data;
-                  } else {
-                    var ok_url = GV.pay_url+'hsjsapi.php?order_number=' + data.data;
-                  }
+                  var ok_url = GV.pay_url+'native.php?order_number=' + data.data;
                   window.location.href = ok_url;
               }else{
                   $.toast(data.info);
@@ -159,4 +155,6 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
       });
 
   })
+
+
 });

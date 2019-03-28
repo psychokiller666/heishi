@@ -236,6 +236,7 @@ var SearchInit = function () {
                 query: query,
                 page: start / 20 + 1
             },
+            //todo 加header
 		    success: function(data){
 
                 var message = '';

@@ -108,19 +108,20 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
           console.log(xhr);
         }
       });
+
         init.sensors.track('subscribe', {
             pageType : '推荐页',
             operationType : '关注',
-            sellerID : $(this).data('data-uid'),
-            storeName : $(this).parents('.item').find('.user_nicename').html(),
+            sellerID : $(that).data('uid'),
+            storeName : $(that).parents('.item').find('.user_nicename').html(),
         })
     } else {
       $.confirm('确定取消吗？', function () {
           init.sensors.track('subscribe', {
               pageType : '推荐页',
               operationType : '取关',
-              sellerID : $(this).data('data-uid'),
-              storeName : $(this).parents('.item').find('.user_nicename').html(),
+              sellerID : $(that).data('uid'),
+              storeName : $(that).parents('.item').find('.user_nicename').html(),
           })
 
         $.ajax({
@@ -239,8 +240,10 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
   };
 
 
-  // 鬼市首页入口
-    setGS();
+    // 鬼市首页入口
+    if($('.ghost_store_ad_wrap').length>0){
+        setGS();
+    }
     function setGS(){
         var url = ApiBaseUrl + '/ghostmarket/getSetting';
         $.ajax({
@@ -486,8 +489,34 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
 
     }
 
+    //抽奖顶部入口
+    var $go_to_lottery = $(page).find('.go_to_lottery');
+    if($go_to_lottery.length>0){
+        showLottery();
+    }
+    function showLottery(){
+        var url = ApiBaseUrl + '/appv6_2/getLotterySwitch';
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType: 'json',
+            data: {},
+            headers: ajaxHeaders,
+            success: function (data) {
+                if (data.status == 1) {
+                    if(data.data==1){
+                        $go_to_lottery.show();
+                    }
+                }
+            },
+            error: function (e) {
+                console.log('getLotterySwitch err: ', e);
+            }
 
-  //  神策埋点事件
+        });
+    }
+
+    //  神策埋点事件
     sensorsEvent();
     function sensorsEvent() {
         $(page).find('.go_to_search').on('click',function(){

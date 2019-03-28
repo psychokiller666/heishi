@@ -6,16 +6,28 @@ $(document).on('pageInit','.big_project', function (e, id, page) {
     return false;
   }
   var init = new common(page);
+
+  //微信分享图片
+  var shareImgUrl = 'https://jscache.ontheroadstore.com/tpl/simplebootx_mobile/Public/i/logo.png';
+  var $project_share_img = $(page).find('.project_share_img');
+  if($project_share_img.length>0){
+    shareImgUrl = $project_share_img.attr('value') || shareImgUrl;
+  }
+
   // 调用微信分享sdk
   var share_data = {
     title: $('.project_name').attr('data-name') + ' — 公路商店',
     desc: $('.desc').text(),
     link: window.location.href,
-    img: 'http://jscache.ontheroadstore.com/tpl/simplebootx_mobile/Public/i/logo.png'
+    img: shareImgUrl
   };
 
   init.wx_share(share_data);
   init.checkfollow(1);
+
+  if(init.isWeiXin()){
+    $(page).find('.return_home_page_text').show();
+  }
 
 
   $('.project_names').find('.item').eq(0).addClass('active');
@@ -54,12 +66,21 @@ $(document).on('pageInit','.big_project', function (e, id, page) {
         project_status = false;
         $('.project_list').find('ul').removeClass('active');
         $(this).addClass('active');
+        window.location.hash = id;
       }
     })
     if(project_status){
       ajax_posts(id);
     }
   })
+
+/*  var hash = window.location.hash.replace('#','');
+  $('.project_names').find('.item').each(function(){
+      if(hash == $(this).attr('data-id')){
+          $(this).trigger('click');
+      }
+  });*/
+
 
   function ajax_posts(id){
     var picture_root_url = $('.picture_root_url').val();
@@ -73,7 +94,7 @@ $(document).on('pageInit','.big_project', function (e, id, page) {
           $('.project_list').append(ul);
           $.each(data.data, function(i, item){
             var str = '<li>'
-                      +'<a href="/Portal/HsArticle/index/id/'+item.id +'.html">'
+                      +'<a class="external" href="/Portal/HsArticle/index/id/'+item.id +'.html">'
                       +'<div class="images" data-layzr="'+picture_root_url+item.filepath+'@640w_1l" data-layzr-bg></div>'
                       +'<span>'+item.post_title+'</span>'
                       +'</a>'
