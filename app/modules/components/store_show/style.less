@@ -305,13 +305,25 @@
         .font-dpr(14px);
         margin: 0 0.4rem;
         width: 9.2rem;
+        position: relative;
+        &.select_hide{
+            display: none;
+        }
         .hs-cf;
         .label{
             color: #AFAFAF;
             width: 1.28rem;
             float: left;
         }
-        .select_type{
+        .last{
+            position: absolute;
+            right: 0.6rem;
+            width: 2rem;
+            color: #afafaf;
+            top: 0;
+            text-align: right;
+        }
+        .select_r{
             float: left;
             position: relative;
             display: inline-block;
@@ -325,6 +337,70 @@
                 right: 0;
                 transform: translateY(-50%);
             }
+
+            .coupon_tag{
+                display: inline-block;
+                font-size: 0.32rem;
+                height: 0.32rem;
+                color: #fff;
+                line-height:1;
+                padding: .08rem .21333rem 0.10667rem;
+                background: #AE2121;
+                border-radius: 0.10667rem;
+                margin-right: 0.4rem;
+                position: relative;
+                &::before{
+                    content: '';
+                    display: block;
+                    width: .2rem;
+                    height: .2rem;
+                    background: #fff;
+                    border-radius: 100%;
+                    left: -.1rem;
+                    top: .16rem;
+                    position: absolute;
+                }
+                &::after{
+                    content: '';
+                    display: block;
+                    width: .2rem;
+                    height: .2rem;
+                    background: #fff;
+                    border-radius: 100%;
+                    right: -.1rem;
+                    top: .16rem;
+                    position: absolute;
+                }
+
+                &.coupon_back{
+                    background: #202123;
+                }
+            }
+            .tip{
+                float: right;
+                color: #8E8E8E;
+                font-size: 0.37333rem;
+                margin-right: 0.48rem;
+            }
+        }
+    }
+    .delivery_time_wrap{
+        display: none;
+        height: 1.173rem;
+        line-height: 1.173rem;
+        border-bottom: 0.0133rem solid #E8E8E8;
+        .font-dpr(14px);
+        margin: 0 0.4rem;
+        width: 9.2rem;
+        .hs-cf;
+        .delivery_time_label{
+            color: #AFAFAF;
+            width: 1.28rem;
+            float: left;
+        }
+        .delivery_time_txt{
+            color: #000;
+            float: left;
         }
     }
     .presell{
