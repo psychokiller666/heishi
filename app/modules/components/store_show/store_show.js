@@ -42,6 +42,51 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       }
     });
   }
+  var timer=null;
+  clearInterval(timer);
+  //  let specailStart = '{$goods_profiles[0].special_offer_start}'
+  //  let specailEnd = '{$goods_profiles[0].special_offer_end}'
+  let specailStart = $('.specailStart').val()
+  let specailEnd = $('.specailEnd').val()
+   // console.log(specailStart)
+   let _startTime =  new Date(specailStart).getTime()
+   let _endTime =  new Date(specailEnd).getTime()
+   let _nowTime = new Date().getTime()
+   //console.log(_nowTime>_startTime||_endTime>_nowTime)
+     if(_endTime>_nowTime>_startTime||_endTime>_nowTime){
+       //倒计时逻辑
+       $('.specail-time').css('display','block')
+       countDown((_endTime-new Date().getTime())/1000)
+
+     }else{
+       $('.specail-time').css('display','none')
+
+   }    
+   function countDown(times){
+     timer=setInterval(function(){
+       var day=0,
+         hour=0,
+         minute=0,
+         second=0;//时间默认值
+       if(times > 0){
+         day = Math.floor(times / (60 * 60 * 24));
+         hour = Math.floor(times / (60 * 60)) - (day * 24);
+         minute = Math.floor(times / 60) - (day * 24 * 60) - (hour * 60);
+         second = Math.floor(times) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+       }
+       if (day <= 9) day = '0' + day;
+       if (hour <= 9) hour = '0' + hour;
+       if (minute <= 9) minute = '0' + minute;
+       if (second <= 9) second = '0' + second;
+       $('.specail-time').html(day+"DAY | "+hour+":"+minute+":"+second)
+       times--;
+     },1000);
+     if(times<=0){
+       clearInterval(timer);
+       $('.specail-time').css('display','none')
+
+     }
+ }
 
 
   var init = new common(page);
