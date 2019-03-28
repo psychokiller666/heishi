@@ -268,6 +268,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     var remain = $(this).attr('data-remain');
     var presell = $(this).attr('data-presell');
     var special = $(this).attr('data-special');
+    var item_id = $(this).attr('data-id')
     var special_price = $(this).attr('data-special_price')
     var special_start = $(this).attr('data-special_start')
     var special_end = $(this).attr('data-special_end')
@@ -383,11 +384,11 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   }
   // 状态更新
   // 如果商品当中有款式为特价 则其他状态不显示
-  $('.types').find('span').each(function(){
-    if($(this).attr('data-special') == 1){
-      $('.special_offer').css('display', 'block');
-    }
-  })*/
+  // $('.types').find('span').each(function(){
+  //   if($(this).attr('data-special') == 1){
+  //     $('.special_offer').css('display', 'block');
+  //   }
+  // })
 
   function update_status(price, item_id, remain, presell, special,special_price) {
     $('.postage').css('display', 'none');
@@ -407,7 +408,8 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
    if(special == 1){
       $('.origin_price').css('display', 'block');
-      $('.origin_price').html('￥'+parseInt(special_price));
+      $('.price').find('.font_din').text(parseInt(special_price));
+      $('.origin_price').html('￥'+price);
       return true
 
     }
