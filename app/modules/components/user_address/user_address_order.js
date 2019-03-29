@@ -7,7 +7,28 @@ $(document).on('pageInit','.address_order', function(e, id, page){
     return false;
   }
   var init = new common(page);
-
+  $.ajax({
+    url: '/index.php?g=restful&m=HsJsapi&a=jssign',
+    type: 'POST',
+    data: {
+      url: encodeURIComponent(window.location.href)
+    }
+  }).done(function(data){
+      wx.config({
+        debug: false,
+        appId: data.appId,
+        timestamp: data.timestamp,
+        nonceStr: data.nonceStr,
+        signature: data.signature,
+        jsApiList: [
+        'checkJsApi',
+        'openAddress'
+        ]
+    })
+  })
+ 
+  //原本的逻辑是选择一个地址后设置为默认地址，然后跳回确认订单页并使用默认地址
+  //现改为选择一个地址，保存到sessionStorage里，然后跳回确认订单页，并使用
   $('.address_info').click(function(){
     var that = this;
     $.ajax({
@@ -30,6 +51,14 @@ $(document).on('pageInit','.address_order', function(e, id, page){
     })
   })
   $('.open_wx_address').click(function(){
+    wx.checkJsApi({
+      jsApiList: ['openAddress'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+      success: function(res) {
+      // 以键值对的形式返回，可用的api值true，不可用为false
+      // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
+      console.log(res)
+      }
+    });
     wx.openAddress({
       success: function (res) {
         var post_data = {

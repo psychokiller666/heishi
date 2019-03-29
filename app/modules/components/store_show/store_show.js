@@ -128,6 +128,21 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   var single = type_items_span.eq(0);
   if(type_items_span.length == 1){
     $('.select').remove();
+
+    //发货周期
+    var delivery_cycle = single.attr('data-delivery_cycle');
+    if(delivery_cycle && delivery_cycle>0){
+        var txt = '';
+        if(delivery_cycle<=3){
+            txt = delivery_cycle * 24 + '小时内发货';
+        }else{
+            txt = delivery_cycle + '天内发货';
+        }
+        $('.delivery_time_wrap').show().find('.delivery_time_txt').html(txt);
+    }else{
+        $('.delivery_time_wrap').hide();
+    }
+    console.log(delivery_cycle)
     update_status(single.data('price'), single.data('postage'), single.data('remain'), single.data('presell'), single.data('special'));
     if(single.hasClass('no_repertory')){
       $('.footer_nav').find(".buy_btn").attr("data-remain",single.data('remain')).addClass('no_repertory');
@@ -312,6 +327,9 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
    if(special == 1){
       $('.origin_price').css('display', 'block');
+      if(special_price==undefined){
+        return
+      }
       $('.price').find('.font_din').text(parseInt(special_price));
       $('.origin_price').html('￥'+price);
       return true
