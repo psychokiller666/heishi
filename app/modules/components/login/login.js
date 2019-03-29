@@ -8,10 +8,10 @@ $(document).on('pageInit','.login', function(e, id, page){
   var init = new common(page);
   $('.hs-main').css('height',"100%");
   //  登录初始化
-  $("input").blur(function(){
-  	document.body.scrollTop = 0;
-	  document.documentElement.scrollTop = 0;
-  });
+  // $("input").blur(function(){
+  // 	document.body.scrollTop = 0;
+	//   document.documentElement.scrollTop = 0;
+  // });
   $('.get_pass').attr('disabled','disabled');
   $('.verify').on('click', function(){
     var that = this;
