@@ -26,16 +26,16 @@ $(document).on('pageInit','.shipping_address', function(e, id, page){
   //       ]
   //   })
   // })
-  // $('.wx_address').click(function(){
-  //   wx.openAddress({
-  //     success: function (res) {
-  //       console.log(res);
-  //     },
-  //     fail: function(res) {
-  //       // console.log(JSON.stringify(res));
-  //     }
-  //   })
-  // })
+  $('.wx_address').click(function(){
+    wx.openAddress({
+      success: function (res) {
+        console.log(res);
+      },
+      fail: function(res) {
+        // console.log(JSON.stringify(res));
+      }
+    })
+  })
 
 
   $('title').text('管理收货地址');
