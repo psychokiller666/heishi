@@ -43,8 +43,18 @@
 					display: inline-block;
 					vertical-align: middle;
 					margin-right: 0.467rem;
+					position: relative;
 					&.active{
 						background-image: url(//img8.ontheroadstore.com/upload/180131/de0a1485a92bad497200b030319a42f5.png);
+					}
+					&::before{
+						content: '';
+						display: block;
+						width: 9.4rem;
+						height: 2rem;
+						position: absolute;
+						top: -2.3rem;
+						left:0rem;
 					}
 				}
 			}
@@ -52,18 +62,39 @@
 				float: right;
 				display: block;
 				.font-dpr(13px);
+				position: relative;
 				color: #000;
 				.hs-icon{
 					padding-right: 0.16rem;
 				}
-				.hs-icon:before{
-					content: '\e64e';
+				// .hs-icon:before{
+				// 	content: '\e64e';
+				// }
+				&::before{
+					content: '';
+					display: block;
+					background-image: url(//img8.ontheroadstore.com/H5_Icon/address-edit.png);
+					background-size: 100% 100%;
+					position: absolute;
+					top: 10%;
+					left: -0.334rem;
+					width: 0.32rem;
+					height: 0.32rem;
 				}
 			}
 			.delete_address{
-				padding-right: 0.53rem;
-				.hs-icon:before{
-					content: '\e64c';
+				padding-left: 0.53rem;
+				position: relative;
+				&::before{
+					content: '';
+					display: block;
+					background-image: url(//img8.ontheroadstore.com/H5_Icon/address-del.png);
+					background-size: 100% 100%;
+					position: absolute;
+					top: 10%;
+					left: 0.21rem;
+					width: 0.32rem;
+					height: 0.32rem;
 				}
 			}
 		}
@@ -163,9 +194,11 @@
 				display: inline-block;
 				vertical-align: middle;
 				margin-right: 0.467rem;
+				position: relative;
 				&.active{
 					background-image: url(//img8.ontheroadstore.com/upload/180131/de0a1485a92bad497200b030319a42f5.png);
 				}
+				
 			}
 		}
 		.preserve{
@@ -228,11 +261,15 @@
 			right: 0;
 			color: #333;
 			&:after{
-				content: '\e62f';
+				content: '';
 				.font-dpr(15px);
+				background-image: url(//img8.ontheroadstore.com/H5_Icon/address-edit.png);
+				background-size: 100% 100%;
 				position: absolute;
 				top: 50%;
 				right: 0.334rem;
+				width: 0.45rem;
+				height: 0.45rem;
 				transform: translateY(-50%);
 			}
 		}
@@ -242,38 +279,70 @@
         width: 10rem;
         position: fixed;
         z-index: 11;
-        bottom: 0;
+		bottom: 0;
+		display: flex;
         .add_address{
         	line-height: 1.06rem;
         	height: 1.06rem;
         	text-align: center;
         	background: #333;
         	.font-dpr(15px);
-        	width: 9.04rem;
-        	margin-left: 0.48rem;
+        	width: 4.6rem;
+        	// margin-left: 0.48rem;
         	color: #FFF;
-        	display: block;
-        }
-	}
-	.open_wx_address{
-		height: 1.28rem;
-		border-bottom: 0.013rem solid rgba(153,153,153,0.3);
-        .font-dpr(13px);
-		padding-left: 1.14rem;
-		line-height: 1.28rem;
-		font-weight: 500;
-		position: relative;
-		margin-bottom: 2rem;
-		&:before{
-			content: '\e6b8';
-	        .font-dpr(24px);
-	        position: absolute;
-	        left: 0.334rem;
-	        top: 0;
-	        height: 100%;
-	        line-height: 1.28rem;
+			display: block;
+			position: relative;
+			&:before{
+				content: '+';
+				.font-dpr(24px);
+				position: absolute;
+				left: 0.76rem;
+				top: 0;
+				height: 100%;
+				line-height: 1.06rem;
+			}
+		}
+		.open_wx_address{
+			width: 4.6rem;
+			line-height: 1.06rem;
+			height: 1.06rem;
+			text-align: center;
+			color: #FFF;
+			.font-dpr(15px);
+			display: block;
+			background: #AE2121;
+			margin-left: 0.4rem;
+			position: relative;
+			&:before{
+				content: '+';
+				.font-dpr(24px);
+				position: absolute;
+				left: 0.68rem;
+				top: 0;
+				height: 100%;
+				line-height: 1.06rem;
+			}
 		}
 	}
+	// .open_wx_address{
+		// height: 1.28rem;
+		// border-bottom: 0.013rem solid rgba(153,153,153,0.3);
+        // .font-dpr(13px);
+		// padding-left: 1.14rem;
+		// line-height: 1.28rem;
+		// font-weight: 500;
+		// position: relative;
+		// margin-bottom: 2rem;
+		// &:before{
+		// 	content: '\e6b8';
+	    //     .font-dpr(24px);
+	    //     position: absolute;
+	    //     left: 0.334rem;
+	    //     top: 0;
+	    //     height: 100%;
+	    //     line-height: 1.28rem;
+		// }
+	// }
 }
 
 .address_order.update,
