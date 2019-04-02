@@ -72,15 +72,19 @@ $(document).on('pageInit','.address_order', function(e, id, page){
           'default_address': 1
         }
          //选择微信地址后设置缓存
-        sessionStorage.setItem('ADDRESS',JSON.stringify(post_data));
+       // sessionStorage.setItem('ADDRESS',JSON.stringify(post_data));
         $.ajax({
           url: '/index.php?g=user&m=HsAddress&a=address_post',
           type: 'POST',
           data: post_data,
           success: function(data) {
             if(data.status == 1){
-             
-              location.href = $('.address_info').attr('data-href');
+              post_data.id = data.data
+              var addrTxt_wx = JSON.stringify(post_data);
+              addrTxt_wx = escape(addrTxt_wx);
+              sessionStorage.setItem('ADDRESS',addrTxt_wx);
+              sessionStorage.setItem('UPDATEADDRESS','1')
+              window.history.go(-1);
             
             }else{
               $.toast(data.info);
