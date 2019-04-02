@@ -119,6 +119,7 @@ $(document).on('pageInit','.shipping_address', function(e, id, page){
         type: 'POST',
         data: post_data,
         success: function(data) {
+          console.log(data)
           if(data.status == 1){
             location.href = '/user/HsAddress/index.html';
           }else{
