@@ -112,8 +112,15 @@ $(document).on('pageInit','.address_order', function(e, id, page){
           data: post_data,
           success: function(data) {
             if(data.status == 1){
-              post_data.id = data.data
-              var addrTxt_wx = JSON.stringify(post_data);
+              var addr ={};
+              addr.provinceName = post_data.proviceFirstStageName
+              addr.cityName = post_data.addressCitySecondStageName
+              addr.countryName = post_data.addressCountiesThirdStageName
+              addr.detailInfo = post_data.addressDetailInfo
+              addr.userName = post_data.username
+              addr.telNumber = post_data.telNumber
+              addr.id = data.data
+              var addrTxt_wx = JSON.stringify(addr);
               addrTxt_wx = escape(addrTxt_wx);
               sessionStorage.setItem('ADDRESS',addrTxt_wx);
               sessionStorage.setItem('UPDATEADDRESS','1')
