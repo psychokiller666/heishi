@@ -78,7 +78,7 @@ $(document).on('pageInit','.address_order', function(e, id, page){
           type: 'POST',
           data: post_data,
           success: function(data) {
-            if(data.status == 1){
+            if(data.data){
               var addr ={};
               addr.provinceName = post_data.proviceFirstStageName
               addr.cityName = post_data.addressCitySecondStageName
@@ -90,10 +90,8 @@ $(document).on('pageInit','.address_order', function(e, id, page){
               var addrTxt_wx = JSON.stringify(addr);
               addrTxt_wx = escape(addrTxt_wx);
               sessionStorage.setItem('ADDRESS',addrTxt_wx);
-              sessionStorage.setItem('UPDATEADDRESS','1')
-              // window.history.go(-1);
-              location.href = $(that).attr('data-href');
-            
+              // sessionStorage.setItem('UPDATEADDRESS','1')
+              window.history.go(-1);
             }else{
               // $.toast(data.info);
             }
