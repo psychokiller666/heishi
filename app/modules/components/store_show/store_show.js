@@ -408,6 +408,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
    if(special == 1){
       $('.origin_price').css('display', 'block');
+      $('.special_offer').css('display', 'block');
       if(special_price==undefined){
         return
       }
