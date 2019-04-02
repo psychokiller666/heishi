@@ -104,32 +104,16 @@ $(document).on('pageInit','.address_order', function(e, id, page){
           'addressPostalCode': res.nationalCode,
           'default_address': 1
         }
-       // sessionStorage.setItem('wxSelectAddress',JSON.stringify(post_data));
+         //选择微信地址后设置缓存
+        sessionStorage.setItem('ADDRESS',JSON.stringify(post_data));
         $.ajax({
           url: '/index.php?g=user&m=HsAddress&a=address_post',
           type: 'POST',
           data: post_data,
           success: function(data) {
             if(data.status == 1){
-              //选择微信地址后设置默认地址跳转回订单页面
-              $.ajax({
-                url: '/index.php?g=user&m=HsAddress&a=set_default',
-                type: 'POST',
-                data: {
-                  id:data.data,
-                  default_address: 1
-                },
-                success: function(res) {
-                  if(res.status == 1){
-                    location.href = $('.address_info').attr('data-href');
-                  }else{
-                    $.toast(res.info);
-                  }
-                },
-                error: function(res) {
-                  $.toast(res.info);
-                }
-              })
+             
+              location.href = $('.address_info').attr('data-href');
             
             }else{
               $.toast(data.info);
