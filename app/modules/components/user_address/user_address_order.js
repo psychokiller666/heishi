@@ -91,10 +91,11 @@ $(document).on('pageInit','.address_order', function(e, id, page){
               addrTxt_wx = escape(addrTxt_wx);
               sessionStorage.setItem('ADDRESS',addrTxt_wx);
               sessionStorage.setItem('UPDATEADDRESS','1')
-              window.history.go(-1);
+              // window.history.go(-1);
+              location.href = $(that).attr('data-href');
             
             }else{
-              $.toast(data.info);
+              // $.toast(data.info);
             }
           },
           error: function(data) {
