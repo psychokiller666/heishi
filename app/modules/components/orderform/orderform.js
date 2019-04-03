@@ -28,7 +28,22 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
       return num;
     }
   }
+    var $addr_sel_wrap = $('.addr_sel_wrap');
+      $addr_sel_wrap.on("click",function(){
+        // openaddress();
+        goToAddressShow();
+      });
 
+      //选择地址跳转到/user/HsAddress/show.html?object_id=1095984&mid=869631&number=6
+      function goToAddressShow(){
+        var object_id = $addr_sel_wrap.attr('object_id')
+        var mid = $addr_sel_wrap.attr('mid')
+        var number = +$('.countNum').text();
+        if(!(number>0)){
+          number = 1;
+        }
+        location.href = '/user/HsAddress/show.html?object_id='+object_id+'&mid='+mid+'&number='+number;
+      }
   $('.min').click(function(){
     var num = parseInt($('.countNum').attr('data-num'));
     if(num <= 1){
