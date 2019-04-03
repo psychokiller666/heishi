@@ -396,7 +396,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     $('.remain').css('display', 'none');
     $('.presell_status').css('display', 'none');
     $('.presell').css('display', 'none');
-    $('.special_offer').css('display', 'none');
+    // $('.special_offer').css('display', 'none');
     $('.presell_item').css('display', 'none');
     // 如果是特价，其他状态不显示
     if(price){
