@@ -326,14 +326,14 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       $('.presell_item').css('display', 'block').find('.time').text(presell);
     }
    if(special == 1){
-      $('.origin_price').css('display', 'block');
-      $('.special_offer').css('display', 'block');
-      if(special_price==undefined){
-        return
-      }
-      $('.price').find('.font_din').text(parseInt(special_price));
-      $('.origin_price').html('￥'+price);
-      return true
+      // $('.origin_price').css('display', 'block');
+      // $('.special_offer').css('display', 'block');
+      // if(special_price==undefined){
+      //   return
+      // }
+      // $('.price').find('.font_din').text(parseInt(special_price));
+      // $('.origin_price').html('￥'+price);
+      // return true
 
     }
 
