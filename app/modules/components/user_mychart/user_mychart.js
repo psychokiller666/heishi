@@ -22,6 +22,10 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
       'phpsessionid': PHPSESSID
   };
   var $addr_sel_wrap = $('.addr_sel_wrap');
+   $("input").blur(function(){
+  	document.body.scrollTop = 0;
+	  document.documentElement.scrollTop = 0;
+  });
   $(page).find('.addr_sel_wrap').on("click",function(){
         // openaddress();
         goToAddressShow();

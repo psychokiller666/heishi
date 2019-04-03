@@ -16,7 +16,10 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
   var ajaxHeaders = {
       'phpsessionid': PHPSESSID
   };
-
+  $("input").blur(function(){
+  	document.body.scrollTop = 0;
+	  document.documentElement.scrollTop = 0;
+  });
   //限购，加减数量判断
   function limitGoodsNum(num){
     var maxBuyNum = parseInt($('.countNum').attr('data-max-buy-num'));
