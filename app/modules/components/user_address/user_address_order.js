@@ -94,7 +94,8 @@ $(document).on('pageInit','.address_order', function(e, id, page){
               window.history.go(-1);
             }else{
               // $.toast(data.info);
-              window.history.go(-1);
+              // window.history.go(-1);
+              $.toast('已添加过此地址')
             }
           },
           error: function(data) {
