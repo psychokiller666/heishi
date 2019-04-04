@@ -37,10 +37,12 @@ var SearchInit = function () {
 	//获取搜索标签
 	$('.search_btn').click(function(){
 		$('.search_list').css('display', 'block');
-	    // 获取热搜词
+		// 获取热搜词
+		var url = ApiBaseUrl + '/appv4/search/hot';
 		$.ajax({
 		    type: 'GET',
-		    url: '/index.php?g=restful&m=HsSearch&a=ajax_get_hot_keywords',
+			// url: '/index.php?g=restful&m=HsSearch&a=ajax_get_hot_keywords',
+			url: url,
 		    success: function(data){
 		    	$.each(data, function(index, item){
 		    		var list = '<span class="word_item" data-type="'+item.type+'" data-url="'+item.url+'" data-url_type="'+item.url_type+'">'+item.keyword+'</span>';
