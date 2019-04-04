@@ -31,7 +31,6 @@ $(document).on('pageInit','.bind_mobile_new', function(e, id, page){
       }
     });
   })
-<<<<<<< HEAD
     //获取验证码
     function getVcode(){
       if(!(/^1[34578]\d{9}$/.test($('.tel').val()))){
@@ -54,10 +53,6 @@ $(document).on('pageInit','.bind_mobile_new', function(e, id, page){
       });
     }
   $('.login_in_by_mobile').click(function(){
-=======
-
-  $('.login_in').click(function(){
->>>>>>> 7b72176f21a534ba0dedf9e35b5e9d6c71896931
     var mobile = $('.tel').val();
     var verify = $('.pass_num').val();
     if(mobile == '' || verify == ''){
@@ -109,11 +104,7 @@ $(document).on('pageInit','.bind_mobile_new', function(e, id, page){
   window.onload = function(){
     speedOffsetLeft = $('.speed').offset().left;
     speedWidth = $('.speed').width();
-<<<<<<< HEAD
     verifyWidth = $('.verify').width()- $('.verify').height()/5;
-=======
-    verifyWidth = $('.verify').width();
->>>>>>> 7b72176f21a534ba0dedf9e35b5e9d6c71896931
   }
   if(IsPC()){   
     $('.verify').on('mousedown', '.speed', mousedown);
@@ -128,10 +119,7 @@ $(document).on('pageInit','.bind_mobile_new', function(e, id, page){
     statusMove = true;
   }
   function mousemove(e){
-<<<<<<< HEAD
     console.log(e)
-=======
->>>>>>> 7b72176f21a534ba0dedf9e35b5e9d6c71896931
     if(statusMove){
       var num = e.clientX - speedOffsetLeft + 40;
       touchLast = num;
@@ -180,15 +168,10 @@ $(document).on('pageInit','.bind_mobile_new', function(e, id, page){
     $('.verify').off('mousedown', '.speed', mousedown);
     $('.verify').off('mousemove', mousemove);
     $('body').off('mouseup', mouseup);
-<<<<<<< HEAD
     // $('.speed').addClass('speed_pass').attr('disabled','disabled').css({'background': '#63b083', 'opacity': '1'});
     $('.verify').addClass('speed-pass');
     $('.get_pass').removeAttr('disabled');
     getVcode()
-=======
-    $('.speed').addClass('speed_pass').attr('disabled','disabled').css({'background': '#63b083', 'opacity': '1'});
-    $('.get_pass').removeAttr('disabled');
->>>>>>> 7b72176f21a534ba0dedf9e35b5e9d6c71896931
   }
   function speed_error() {
     $('.speed').removeClass('speed_pass').removeAttr('disabled','disabled').css('background', '#fff').animate({'width': speedWidth + 'px'}, 400,function(){
@@ -200,10 +183,7 @@ $(document).on('pageInit','.bind_mobile_new', function(e, id, page){
         $('.verify').on('touchmove', '.speed', touchmove);
         $('.verify').on('touchend', '.speed', touchend);
       }
-<<<<<<< HEAD
       $('.verify').removeClass('speed-pass');
-=======
->>>>>>> 7b72176f21a534ba0dedf9e35b5e9d6c71896931
     });
   }
   function IsPC() {

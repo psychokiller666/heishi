@@ -16,14 +16,10 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
   var ajaxHeaders = {
       'phpsessionid': PHPSESSID
   };
-<<<<<<< HEAD
   $("input").blur(function(){
   	document.body.scrollTop = 0;
 	  document.documentElement.scrollTop = 0;
   });
-=======
-
->>>>>>> 7b72176f21a534ba0dedf9e35b5e9d6c71896931
   //限购，加减数量判断
   function limitGoodsNum(num){
     var maxBuyNum = parseInt($('.countNum').attr('data-max-buy-num'));
@@ -35,7 +31,6 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
       return num;
     }
   }
-<<<<<<< HEAD
     var $addr_sel_wrap = $('.addr_sel_wrap');
       $addr_sel_wrap.on("click",function(){
         // openaddress();
@@ -52,9 +47,6 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
         }
         location.href = '/user/HsAddress/show.html?object_id='+object_id+'&mid='+mid+'&number='+number;
       }
-=======
-
->>>>>>> 7b72176f21a534ba0dedf9e35b5e9d6c71896931
   $('.min').click(function(){
     var num = parseInt($('.countNum').attr('data-num'));
     if(num <= 1){
