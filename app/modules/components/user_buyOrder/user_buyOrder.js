@@ -86,7 +86,7 @@ $(document).on('pageInit','.buyOrder', function(e, id, page){
 
   // 退款跳转到下载app
   $('.order_list').on('click', '.refund_status', function(){
-    location.href = GV.server_url;
+     location.href = GV.app_url;
   })
   // 下拉加载
   var loading = false;
