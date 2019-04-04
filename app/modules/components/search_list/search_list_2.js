@@ -38,7 +38,7 @@ var SearchInit = function () {
 	$('.search_btn').click(function(){
 		$('.search_list').css('display', 'block');
 		// 获取热搜词
-		var url = ApiBaseUrl + '/appv4/search/hot';
+		var url = apiBaseUrl + '/appv4/search/hot';
 		$.ajax({
 		    type: 'GET',
 			// url: '/index.php?g=restful&m=HsSearch&a=ajax_get_hot_keywords',

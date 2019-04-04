@@ -20,11 +20,21 @@ var SearchInit = function () {
 		start_num = 0;
 		search_content = null;
 		last_page = null;
-    })
+	})
+	//获取baseUrl
+	function getApiBaseUrl(){
+		var HostName = location.hostname;
+		var ApiBaseUrl = 'https://apitest.ontheroadstore.com';
+		if (HostName === "hs.ontheroadstore.com") {
+		  ApiBaseUrl = 'https://api.ontheroadstore.com';
+		}
+		return ApiBaseUrl;
+	  };
 
 	$('.search_btn').click(function(){
 		$('.search_list').css('display', 'block');
 		// 获取热搜词
+		var ApiBaseUrl = getApiBaseUrl();
 		var url = ApiBaseUrl + '/appv4/search/hot';
 		$.ajax({
 		    type: 'GET',
