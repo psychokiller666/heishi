@@ -44,10 +44,13 @@ var SearchInit = function () {
 			// url: '/index.php?g=restful&m=HsSearch&a=ajax_get_hot_keywords',
 			url: url,
 		    success: function(data){
-		    	$.each(data, function(index, item){
-		    		var list = '<span class="word_item" data-type="'+item.type+'" data-url="'+item.url+'" data-url_type="'+item.url_type+'">'+item.keyword+'</span>';
-			    	$('.search_list').find('.showall_search_items').append(list);
-		    	})
+				if(data.status==1){
+					$.each(data.data, function(index, item){
+						var list = '<span class="word_item" data-type="'+item.type+'" data-url="'+item.url+'" data-url_type="'+item.url_type+'">'+item.keyword+'</span>';
+						$('.search_list').find('.showall_search_items').append(list);
+					})
+				}
+		    	
 		    }
 		});
 
