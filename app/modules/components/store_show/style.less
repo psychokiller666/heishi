@@ -175,6 +175,21 @@
                 transform: translate(-50%, -50%);
             }
         }
+        .specail-time{
+            display: none;
+            width: 3.6rem;
+            height: 0.6rem;
+            line-height: 0.6rem;
+            background: rgba(0, 0, 0, 0.3);
+            font-size: 0.35rem;
+            text-align: center;
+            color: #fff;
+            border-radius: 0.3rem;
+            position: absolute;
+            left: 0.5rem;
+            top: 4rem;
+            font-weight: bold;
+        }
         .collect{
             .font-dpr(16px);
             position: absolute;
@@ -269,6 +284,17 @@
             //background: #F5F5F5;
             margin-left: 0.267rem;
             //padding: 0 0.32rem;
+        }
+        .origin_price{
+            display: block;
+            width: 1.5rem;
+            height: 0.5rem;
+            text-align: center;
+            line-height: 0.68rem;
+            font-size: 0.3rem;
+            color: #ccc;
+            text-decoration: line-through;
+            float: left;
         }
         .special_offer{
             width: 2.853rem;
@@ -493,6 +519,7 @@
         .font-dpr(14px);
         margin: 0 0.4rem;
         width: 9.2rem;
+        position: relative;
         &.select_hide{
             display: none;
         }
@@ -502,12 +529,21 @@
             width: 1.28rem;
             float: left;
         }
+        .last{
+            position: absolute;
+            right: 0.6rem;
+            width: 2rem;
+            color: #afafaf;
+            top: 0;
+            text-align: right;
+        }
         .select_r{
             float: left;
             position: relative;
             display: inline-block;
             width: 7.78rem;
             height: 100%;
+            z-index: 2;
             &:after{
                 content: '\e512';
                 display: block;
@@ -528,6 +564,29 @@
                 background: #AE2121;
                 border-radius: 0.10667rem;
                 margin-right: 0.4rem;
+                position: relative;
+                &::before{
+                    content: '';
+                    display: block;
+                    width: .2rem;
+                    height: .2rem;
+                    background: #fff;
+                    border-radius: 100%;
+                    left: -.1rem;
+                    top: .16rem;
+                    position: absolute;
+                }
+                &::after{
+                    content: '';
+                    display: block;
+                    width: .2rem;
+                    height: .2rem;
+                    background: #fff;
+                    border-radius: 100%;
+                    right: -.1rem;
+                    top: .16rem;
+                    position: absolute;
+                }
 
                 &.coupon_back{
                     background: #202123;
@@ -553,6 +612,10 @@
         .delivery_time_label{
             color: #AFAFAF;
             width: 1.28rem;
+            float: left;
+        }
+        .delivery_time_txt{
+            color: #000;
             float: left;
         }
         .delivery_time_txt{

@@ -90,17 +90,17 @@ $(document).on('pageInit','.order_info', function(e, id, page){
   // 退款 售后 预售 跳转到下载app
   $('.order_info').on('click', '.refund_underway', function(){
     $.confirm('申请退款请移步App', function () {
-      location.href = GV.server_url;
+       location.href = GV.app_url;
     });
   })
   $('.order_info').on('click', '.presell', function(){
     $.confirm('申请退款请移步App', function () {
-      location.href = GV.server_url;
+       location.href = GV.app_url;
     });
   })
   $('.order_info').on('click', '.batch_refund', function(){
     $.confirm('申请退款请移步App', function () {
-      location.href = GV.server_url;
+       location.href = GV.app_url;
     });
   })
   // 联系卖家

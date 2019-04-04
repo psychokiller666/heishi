@@ -12,7 +12,26 @@ $(document).on('pageInit','.address_order', function(e, id, page){
     return;
   }
   var init = new common(page);
-
+  $.ajax({
+    url: '/index.php?g=restful&m=HsJsapi&a=jssign',
+    type: 'POST',
+    data: {
+      url: encodeURIComponent(window.location.href)
+    }
+  }).done(function(data){
+      wx.config({
+        debug: false,
+        appId: data.appId,
+        timestamp: data.timestamp,
+        nonceStr: data.nonceStr,
+        signature: data.signature,
+        jsApiList: [
+        'checkJsApi',
+        'openAddress'
+        ]
+    })
+  })
+ 
   //原本的逻辑是选择一个地址后设置为默认地址，然后跳回确认订单页并使用默认地址
   //现改为选择一个地址，保存到sessionStorage里，然后跳回确认订单页，并使用
   $('.address_info').click(function(){
@@ -65,6 +84,14 @@ $(document).on('pageInit','.address_order', function(e, id, page){
     */
   })
   $('.open_wx_address').click(function(){
+    wx.checkJsApi({
+      jsApiList: ['openAddress'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+      success: function(res) {
+      // 以键值对的形式返回，可用的api值true，不可用为false
+      // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
+      console.log(res)
+      }
+    });
     wx.openAddress({
       success: function (res) {
         var post_data = {
@@ -77,15 +104,31 @@ $(document).on('pageInit','.address_order', function(e, id, page){
           'addressPostalCode': res.nationalCode,
           'default_address': 1
         }
+         //选择微信地址后设置缓存
+       // sessionStorage.setItem('ADDRESS',JSON.stringify(post_data));
         $.ajax({
           url: '/index.php?g=user&m=HsAddress&a=address_post',
           type: 'POST',
           data: post_data,
           success: function(data) {
             if(data.status == 1){
-              location.href = $('.address_info').attr('data-href');
+              var addr ={};
+              addr.provinceName = post_data.proviceFirstStageName
+              addr.cityName = post_data.addressCitySecondStageName
+              addr.countryName = post_data.addressCountiesThirdStageName
+              addr.detailInfo = post_data.addressDetailInfo
+              addr.userName = post_data.username
+              addr.telNumber = post_data.telNumber
+              addr.id = data.data
+              var addrTxt_wx = JSON.stringify(addr);
+              addrTxt_wx = escape(addrTxt_wx);
+              sessionStorage.setItem('ADDRESS',addrTxt_wx);
+              sessionStorage.setItem('UPDATEADDRESS','1')
+              window.history.go(-1);
             }else{
-              $.toast(data.info);
+              // $.toast(data.info);
+              // window.history.go(-1);
+              $.toast('已添加过此地址')
             }
           },
           error: function(data) {

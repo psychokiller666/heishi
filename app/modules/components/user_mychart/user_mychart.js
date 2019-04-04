@@ -21,7 +21,26 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
   var ajaxHeaders = {
       'phpsessionid': PHPSESSID
   };
+  var $addr_sel_wrap = $('.addr_sel_wrap');
+   $("input").blur(function(){
+  	document.body.scrollTop = 0;
+	  document.documentElement.scrollTop = 0;
+  });
+  $(page).find('.addr_sel_wrap').on("click",function(){
+        // openaddress();
+        goToAddressShow();
+  });
 
+      //选择地址跳转到/user/HsAddress/show.html?object_id=1095984&mid=869631&number=6
+      function goToAddressShow(){
+        var object_id = $addr_sel_wrap.attr('object_id')
+        var mid = $addr_sel_wrap.attr('mid')
+        var number = +$('.countNum').text();
+        if(!(number>0)){
+          number = 1;
+        }
+        location.href = '/user/HsAddress/show.html?object_id='+object_id+'&mid='+mid+'&number='+number;
+      }
   //限购json
   var $cartData = $('.cartData');
   var chartData = null;
@@ -589,12 +608,8 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
           success: function(data){
               if(data.status==1){
                   // console.log(data.data)
-                if(!init.isWeiXin()){
-                  var ok_url = GV.pay_url+'native.php?order_number=' + data.data;
-                } else {
                   var ok_url = GV.pay_url+'hsjsapi.php?order_number=' + data.data;
-                }
-                window.location.href = ok_url;
+                  window.location.href = ok_url;
               }else{
                   $.toast(data.info);
               }

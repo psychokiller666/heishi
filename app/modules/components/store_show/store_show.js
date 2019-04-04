@@ -42,6 +42,51 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       }
     });
   }
+  var timer=null;
+  clearInterval(timer);
+  //  let specailStart = '{$goods_profiles[0].special_offer_start}'
+  //  let specailEnd = '{$goods_profiles[0].special_offer_end}'
+  let specailStart = $('.specailStart').val()
+  let specailEnd = $('.specailEnd').val()
+   // console.log(specailStart)
+   let _startTime =  new Date(specailStart).getTime()
+   let _endTime =  new Date(specailEnd).getTime()
+   let _nowTime = new Date().getTime()
+   //console.log(_nowTime>_startTime||_endTime>_nowTime)
+     if(_endTime>_nowTime>_startTime||_endTime>_nowTime){
+       //倒计时逻辑
+       $('.specail-time').css('display','block')
+       countDown((_endTime-new Date().getTime())/1000)
+
+     }else{
+       $('.specail-time').css('display','none')
+
+   }    
+   function countDown(times){
+     timer=setInterval(function(){
+       var day=0,
+         hour=0,
+         minute=0,
+         second=0;//时间默认值
+       if(times > 0){
+         day = Math.floor(times / (60 * 60 * 24));
+         hour = Math.floor(times / (60 * 60)) - (day * 24);
+         minute = Math.floor(times / 60) - (day * 24 * 60) - (hour * 60);
+         second = Math.floor(times) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+       }
+       if (day <= 9) day = '0' + day;
+       if (hour <= 9) hour = '0' + hour;
+       if (minute <= 9) minute = '0' + minute;
+       if (second <= 9) second = '0' + second;
+       $('.specail-time').html(day+"DAY | "+hour+":"+minute+":"+second)
+       times--;
+     },1000);
+     if(times<=0){
+       clearInterval(timer);
+       $('.specail-time').css('display','none')
+
+     }
+ }
 
 
   var init = new common(page);
@@ -126,7 +171,8 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }else{
         $('.delivery_time_wrap').hide();
     }
-    update_status(single.data('price'), single.data('id'), single.data('remain'), single.data('presell'), single.data('special'));
+    console.log(delivery_cycle)
+    update_status(single.data('price'), single.data('postage'), single.data('remain'), single.data('presell'), single.data('special'));
     if(single.hasClass('no_repertory')){
       $('.footer_nav').find(".buy_btn").attr("data-remain",single.data('remain')).addClass('no_repertory');
       $('.footer_nav').find(".add_chart").attr("data-remain",single.data('remain')).addClass('no_repertory');
@@ -222,10 +268,24 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     var remain = $(this).attr('data-remain');
     var presell = $(this).attr('data-presell');
     var special = $(this).attr('data-special');
+    var item_id = $(this).attr('data-id')
+    var special_price = $(this).attr('data-special_price')
+    var special_start = $(this).attr('data-special_start')
+    var special_end = $(this).attr('data-special_end')
+   
+
+    //判断特卖时间
+    let _startTime =  new Date(special_start).getTime()
+    let _startEnd =  new Date(special_end).getTime()
+    let _now = new Date().getTime()
+    if(!(_startEnd<_now<_startTime)){
+      special=0
+    }
+
     var type_desc = $(this).text();
     $('.select').find('.select_type').text(type_desc);
     $('.buy').find('.add').attr('data-remain', remain);
-    update_status(price, item_id, remain, presell, special);
+    update_status(price, item_id, remain, presell, special,special_price);
     // 设置立即购买跳转链接
     var id = $(this).data("id");
     var article_id = $(this).data("articleid");
@@ -324,19 +384,19 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   }
   // 状态更新
   // 如果商品当中有款式为特价 则其他状态不显示
-/*  $('.types').find('span').each(function(){
+  $('.types').find('span').each(function(){
     if($(this).attr('data-special') == 1){
       $('.special_offer').css('display', 'block');
     }
-  })*/
+  })
 
-  function update_status(price, item_id, remain, presell, special) {
+  function update_status(price, item_id, remain, presell, special,special_price) {
     $('.postage').css('display', 'none');
     $('.remain_tension').css('display', 'none');
     $('.remain').css('display', 'none');
     $('.presell_status').css('display', 'none');
     $('.presell').css('display', 'none');
-    $('.special_offer').css('display', 'none');
+    // $('.special_offer').css('display', 'none');
     $('.presell_item').css('display', 'none');
 
     showPostage(item_id);
@@ -349,9 +409,17 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       $('.presell').css('display', 'block').find('.time').text(presell);
       $('.presell_item').css('display', 'block').find('.time').text(presell);
     }
-/*    if(special == 1){
-      return $('.special_offer').css('display', 'block');
-    }*/
+   if(special == 1){
+      // $('.origin_price').css('display', 'block');
+      // $('.special_offer').css('display', 'block');
+      // if(special_price==undefined){
+      //   return
+      // }
+      // $('.price').find('.font_din').text(parseInt(special_price));
+      // $('.origin_price').html('￥'+price);
+      // return true
+
+    }
 
     if(remain > 5 && remain < 10){
       $('.remain_tension').css('display', 'block');

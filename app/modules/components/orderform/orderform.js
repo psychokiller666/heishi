@@ -16,7 +16,10 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
   var ajaxHeaders = {
       'phpsessionid': PHPSESSID
   };
-
+  $("input").blur(function(){
+  	document.body.scrollTop = 0;
+	  document.documentElement.scrollTop = 0;
+  });
   //限购，加减数量判断
   function limitGoodsNum(num){
     var maxBuyNum = parseInt($('.countNum').attr('data-max-buy-num'));
@@ -28,7 +31,22 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
       return num;
     }
   }
+    var $addr_sel_wrap = $('.addr_sel_wrap');
+      $addr_sel_wrap.on("click",function(){
+        // openaddress();
+        goToAddressShow();
+      });
 
+      //选择地址跳转到/user/HsAddress/show.html?object_id=1095984&mid=869631&number=6
+      function goToAddressShow(){
+        var object_id = $addr_sel_wrap.attr('object_id')
+        var mid = $addr_sel_wrap.attr('mid')
+        var number = +$('.countNum').text();
+        if(!(number>0)){
+          number = 1;
+        }
+        location.href = '/user/HsAddress/show.html?object_id='+object_id+'&mid='+mid+'&number='+number;
+      }
   $('.min').click(function(){
     var num = parseInt($('.countNum').attr('data-num'));
     if(num <= 1){
@@ -139,11 +157,7 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
                       "info":"Success",
                       "data":"VR20180820151512ZST5UV"
                   }*/
-                  if(!init.isWeiXin()){
-                    var ok_url = GV.pay_url+'native.php?order_number=' + data.data;
-                  } else {
-                    var ok_url = GV.pay_url+'hsjsapi.php?order_number=' + data.data;
-                  }
+                  var ok_url = GV.pay_url+'hsjsapi.php?order_number=' + data.data;
                   window.location.href = ok_url;
               }else{
                   $.toast(data.info);
