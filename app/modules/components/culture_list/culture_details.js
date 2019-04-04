@@ -19,7 +19,15 @@ $(document).on('pageInit','.culture_details', function (e, id, page) {
     link: window.location.href,
     img: $('.frontcover').find('.image').attr('data-share')
   };
-  init.wx_share(share_data);
+  init.wx_share(share_data,function(type){
+      init.sensors.track('share', {
+          shareType: '文章',
+          shareMethod: type === 1 ? '朋友圈' : '微信',//1是朋友圈，2是好友
+          commodityID: $(page).attr('data-id'),
+          // sellerID: '',
+      })
+    });
+
   // 检查是否关注
   init.checkfollow();
 
@@ -66,6 +74,11 @@ $(document).on('pageInit','.culture_details', function (e, id, page) {
   page.find('iframe').parent().css({'height': iframe_ratio*502+'px'});
   // 点赞
   $('.like_list').on('click', '.praise_btn', function(){
+
+    if(init.ifLogin(true) == false){
+        return ;
+    }
+
     var id = $(this).data('id');
     if($(this).hasClass('praise_btn_success')){
       $.ajax({
@@ -159,6 +172,11 @@ $(document).on('pageInit','.culture_details', function (e, id, page) {
   // 点击comment-btn回复
   var reply_tpl = handlebars.compile($("#reply_tpl").html());
   page.on('click','.comment_btn',function(){
+
+    if(init.ifLogin(true) == false){
+        return ;
+    }
+
     var comment_id = $(this).data('id');
     comment_manage.open_comment_box({
       ispic: true,
@@ -176,6 +194,11 @@ $(document).on('pageInit','.culture_details', function (e, id, page) {
 
   // 进行二级回复
   $('.comment_bd').on('click', 'li', function(e){
+
+    if(init.ifLogin(true) == false){
+        return ;
+    }
+
     var that = this;
     if(e.srcElement.className != 'comment_image'){
       comment_manage.open_comment_box({
@@ -196,9 +219,9 @@ $(document).on('pageInit','.culture_details', function (e, id, page) {
     if(e.srcElement.className == 'comment_image') {
       // 调用微信图片
       var arr = [];
-      arr.push('http:'+ $(e.srcElement).data('preview'));
+      arr.push($(e.srcElement).data('preview'));
       wx.previewImage({
-        current: 'http:'+ $(e.srcElement).data('preview'),
+        current: $(e.srcElement).data('preview'),
         urls: arr
       });
     }
@@ -228,6 +251,11 @@ $(document).on('pageInit','.culture_details', function (e, id, page) {
       }
     });
   })
+
+
+  //  给文章内容中的a标签添加external
+    $(page).find('.content_bd a').addClass('external');
+
 
   //统计进入次数
   var user_id = $(".praise_btn").data("id");
@@ -270,4 +298,39 @@ $(document).on('pageInit','.culture_details', function (e, id, page) {
     }, opts.delay);
     return _this;
   };
+
+    //  神策埋点事件
+    sensorsEvent();
+    function sensorsEvent() {
+
+        //相关阅读 文章详情页
+        var $correlationA = $(page).find('.correlation a');
+        $correlationA.on('click',function(){
+            var $this = $(this);
+            var url = $this.attr('href');
+            var index = $correlationA.index($this);
+            var title = $this.find('.title').html();
+            var desc = '商品';
+            var id = init.sensorsFun.getUrlId(url);
+
+            init.sensorsFun.mkt('相关阅读','文章详情页',title,index,desc,id);
+        });
+        //插入的商品 文章详情页
+        var $insertGoods = $(page).find('.content_bd a.article_content');
+        $insertGoods.on('click',function(){
+            var $this = $(this);
+            var url = $this.attr('href');
+            var index = $insertGoods.index($this);
+            var title = $this.children('span').children('span').eq(1).html();
+            var desc = '';
+            var id = init.sensorsFun.getUrlId(url);
+
+            init.sensorsFun.mkt('插入的商品','文章详情页',title,index,desc,id);
+        })
+
+
+    }
+
+
+
 });

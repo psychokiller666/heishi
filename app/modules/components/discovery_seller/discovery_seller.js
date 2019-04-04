@@ -1,3 +1,4 @@
+// 老版卖家推荐，已弃用
 // 页面初始化
 var common = require('../common/common.js');
 

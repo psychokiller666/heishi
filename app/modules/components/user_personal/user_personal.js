@@ -59,7 +59,7 @@ $(document).on('pageInit','#revise_username', function (e, id, page) {
       $(_this).removeAttr('disabled','disabled');
     } else {
       $(_this).removeAttr('disabled','disabled');
-      $.confirm('你确定吗？用户名只他妈能改一次！！！', function () {
+      $.confirm('你确定吗？用户名只能改一次！！！', function () {
         $.post('/Api/HsChangeUserInfo/ajax_change_name',{
           newname:page.find('[name=username]').val()
         },function(res){

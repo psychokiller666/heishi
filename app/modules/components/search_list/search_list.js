@@ -1,4 +1,5 @@
 // 搜索
+//旧的搜索弹窗，已弃用，改为点击搜索跳到新页面。
 var SearchInit = function () {
   	var start_num = 0;
 	var search_content = null;

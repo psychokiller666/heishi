@@ -11,7 +11,7 @@ if(hs_footer.length){
     }
     var IMnim = null;
     // 测试环境 网易id加hstest
-    if(GV.HOST != 'http://hs.ontheroadstore.com/'){
+    if((GV.HOST != 'http://hs.ontheroadstore.com/') && (GV.HOST != 'https://hs.ontheroadstore.com/')){
         IMmyId = 'hstest' + IMmyId;
     }
     $.ajax({

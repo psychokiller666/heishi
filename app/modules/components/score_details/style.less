@@ -1,0 +1,271 @@
+//评分详情
+.score_details{
+  &.page{
+    background-color: #F9F9F9;
+  }
+  .wrap{
+    min-height: ~"calc(100% + 1px)";
+    .hofm_header{
+      padding: 0.53333rem 0;
+      margin: 0 0.4rem;
+      border-bottom: 0.0133rem solid #e8e8e8;
+      .hofm_header_a{
+        display: block;
+        color: inherit;
+        background: #fff;
+        border-radius: 0.16rem;
+        padding: 0.64rem 0 0.56rem 0.64rem;
+        font-size: 0;
+        position: relative;
+
+        &:after{
+          content: '\e512';
+          display: block;
+          position: absolute;
+          font-size: 0.26667rem;
+          top: 50%;
+          right: 0.56rem;
+          transform: translateY(-50%);
+        }
+
+        .hofm_img{
+          display: inline-block;
+          width: 2.18667rem;
+          height: 0.85333rem;
+          vertical-align: middle;
+        }
+        .hofm_right{
+          display: inline-block;
+          vertical-align: middle;
+          margin-left: 0.72rem;
+          .hofm_average{
+            font-size:0.37333rem;
+            font-weight:600;
+            color:#303030;
+            line-height:1;
+          }
+          .hofm_txt{
+            margin-top: 0.4rem;
+            font-size:0.32rem;
+            font-weight:400;
+            color:#8E8E8E;
+            line-height:1;
+          }
+        }
+        .hofm_tip{
+          font-size: 0.32rem;
+          line-height: 0.42667rem;
+          margin-top: 0.4rem;
+          color: #AE2121;
+          i{
+            display: inline-block;
+            font-size: 0.42667rem;
+            line-height: 1;
+            vertical-align: middle;
+            transform: rotateZ(180deg);
+          }
+          span{
+            padding-left: 0.16rem;
+            vertical-align: middle;
+          }
+        }
+      }
+    }
+
+    .score_ul{
+      margin-top: 0.53333rem;
+      padding: 0 0.4rem;
+      .score_li{
+        margin-bottom: 0.8rem;
+        .title{
+          font-size:0.37333rem;
+          font-weight:500;
+          color:#202123;
+          line-height:1;
+        }
+        .scores{
+          margin: 0.21333rem 0 0.4rem ;
+          .stars{
+            display: inline-block;
+            vertical-align: middle;
+            width: 2.13333rem;
+            height: 0.32rem;
+            font-size: 0.26667rem;
+
+            &[stars="0"]{
+              background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/0_2x.png');
+            }
+            &[stars="1"]{
+              background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/1_2x.png');
+            }
+            &[stars="2"]{
+              background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/2_2x.png');
+            }
+            &[stars="3"]{
+              background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/3_2x.png');
+            }
+            &[stars="4"]{
+              background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/4_2x.png');
+            }
+            &[stars="5"]{
+              background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/5_2x.png');
+            }
+
+            background-image: url('https://img8.ontheroadstore.com/static/image/renzheng/5_2x.png');
+
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+          }
+          .score_num{
+            display: inline-block;
+            vertical-align: middle;
+            font-size:0.37333rem;
+            font-weight:600;
+            color:#202123;
+            line-height:1;
+            margin-left: 0.26667rem;
+          }
+        }
+        .score_desc{
+          font-size:0.34667rem;
+          font-weight:400;
+          color: #45484E;
+          line-height:0.45333rem;
+        }
+        .score_note{
+          background:#F2F2F2;
+          border-radius:0.16rem;
+          padding: 0.26667rem;
+          margin-top: 0.26667rem;
+          font-size:0.32rem;
+          font-weight:400;
+          color: #8E8E8E;
+          line-height: 0.42667rem;
+        }
+      }
+    }
+
+    .score_ul_new{
+      margin-top: 0.53333rem;
+      .score_ul_new_li{
+        background: #fff;
+        margin: 0 0.4rem 0.8rem;
+        padding: 0 0.4rem;
+        font-size:0.37333rem;
+        line-height: 1;
+        color: #202123;
+        font-weight: 600;
+        box-shadow:0 0.10667rem 0.32rem 0 rgba(0,0,0,0.06);
+        border-radius: 0.24rem;
+        .title{
+          padding: 0.4rem 0 0.32rem;
+        }
+        .stars_wrap{
+          height: 0.37333rem;
+          .stars{
+            width: 2.66667rem;
+            height: 0.16rem;
+            font-size: 0.26667rem;
+            transform: translateY(0.08rem);
+            position: relative;
+            &:before{
+              content: '';
+              display: block;
+              width: 0;
+              height: 0.16rem;
+              background-color: #202123;
+              border-radius:0.08rem;
+            }
+            &:after{
+              content: '0 级';
+              display: block;
+              position: absolute;
+              right: -0.16rem;
+              top: 50%;
+              transform: translate(100%,-50%);
+              color: #202123;
+              font-size:0.37333rem;
+              line-height: 1;
+
+            }
+            &[stars="0"]:before{
+
+            }
+            &[stars="1"]:before{
+              width: 20%;
+            }
+            &[stars="2"]:before{
+              width: 40%;
+            }
+            &[stars="3"]:before{
+              width: 60%;
+            }
+            &[stars="4"]:before{
+              width: 80%;
+            }
+            &[stars="5"]:before{
+              width: 100%;
+            }
+            &[stars="1"]:after{
+              content: '1 级';
+            }
+            &[stars="2"]:after{
+              content: '2 级';
+            }
+            &[stars="3"]:after{
+              content: '3 级';
+            }
+            &[stars="4"]:after{
+              content: '4 级';
+            }
+            &[stars="5"]:after{
+              content: '5 级';
+            }
+            background: #D8D8D8;
+            border-radius:0.08rem;
+          }
+        }
+      }
+      .stars_lv_wrap{
+        padding: 0.24rem 0 0.16rem;
+        .stars_lv{
+          position: relative;
+          font-size: 0.34667rem;
+          line-height: 0.45333rem;
+          padding: 0.26667rem 0;
+          color: #8E8E8E;
+          background: #fff;
+
+          .stars_lv_sel{
+            position: absolute;
+            left: -0.53333rem;
+            top: -0.05333rem;
+            z-index: 10;
+            width: 9.46667rem;
+            line-height: 0.45333rem;
+            box-sizing: border-box;
+            padding:0.32rem 0.53333rem;
+            color: #202123;
+            background: #fff;
+            box-shadow:0 0.10667rem 0.24rem 0 rgba(0,0,0,0.12);
+            border-radius:4px;
+            &:before{
+              content: '';
+              display: block;
+              position: absolute;
+              left: 0;
+              top: 50%;
+              transform: translateY(-50%);
+              width: 0.16rem;
+              height: 0.77333rem;
+              background: #AE2121;
+              border-radius:0 0.85333rem 0.85333rem 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+
+}

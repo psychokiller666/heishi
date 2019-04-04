@@ -374,6 +374,16 @@
       display: block;
       clear: both;
     }
+    a{
+      display: block;
+      height: 100%;
+      color: #000;
+      &:after{
+        content: "";
+        display: block;
+        clear: both;
+      }
+    }
     .cover{
       float: left;
       width: 3.47rem;
@@ -440,12 +450,16 @@
     padding: 0.4rem 0;
     border-bottom: 0.0133rem solid #E8E8E8;
     .font-dpr(13px);
+    .coupon,
     .postage,
     .price_details{
       span{
         float: right;
         margin-right: 0.2rem;
       }
+    }
+    .coupon{
+      margin-top: 0.267rem;
     }
     .price_details{
       margin-top: 0.267rem;
