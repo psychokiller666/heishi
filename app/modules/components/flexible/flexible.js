@@ -1,10 +1,36 @@
 // 手淘flexible
 ! function(a, b) {
+    var ua = navigator.userAgent;
+    var isIOS = /(iPhone|iPad|iPod)/.test(ua);
+    function fixRem(){
+        var docW = document.documentElement.getBoundingClientRect().width
+        var fs = document.documentElement.style.fontSize
+
+        var $FixRemDom = $('#FixRemDom');
+        if($FixRemDom.length === 0){
+            $('body').append('<div id="FixRemDom" style="width:10rem;"></div>');
+        }
+        $FixRemDom = $('#FixRemDom');
+        if($FixRemDom.length > 0){
+            var divW = $FixRemDom[0].clientWidth;
+            if(docW < divW){
+                var fixFontSize = docW * parseFloat(fs) / divW;
+                document.documentElement.style.fontSize=fixFontSize+'px'
+            }
+        }
+    }
+
     function c() {
         var b = f.getBoundingClientRect().width;
         b / i > 540 && (b = 540 * i);
         var c = b / 10;
         f.style.fontSize = c + "px", k.rem = a.rem = c
+
+        if (!isIOS) {
+            setTimeout(function(){
+                fixRem();
+            },5)
+        }
     }
     var d, e = a.document,
         f = e.documentElement,

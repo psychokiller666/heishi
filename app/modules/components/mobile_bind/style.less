@@ -1,0 +1,191 @@
+.bind_mobile_new{
+ 
+  height: 100%;
+  position: absolute;
+  z-index: 999;
+  .login_main{
+    width: 100%;
+    height: 20.03rem;
+    // height: 100%;
+    background: url(//img8.ontheroadstore.com/upload/190329/login_bg.jpg) center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: absolute;
+    color: white;
+      .name{
+        width: 4.56rem;
+        margin: 2.77rem auto 0.6rem;
+        display: block;
+      }
+      .close{
+        position: absolute;
+        top: 0.76rem;
+        left: 0.76rem;
+        .font-dpr(24px);
+      }
+      .close:before{
+        content: "\e66b";
+      }
+      .intro{
+        .font-dpr(13px);
+        .font-line-height(13px);
+        text-align: center;
+        margin-bottom: 0.4rem;
+      }
+      .redact{
+        top: 2.25rem;
+        position: absolute;
+        width:7.253rem;
+        left: 1.386rem;
+        input::-webkit-input-placeholder {
+          color:#FEFEFE;
+        }
+        input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+          color:#FEFEFE;
+        }
+        input::-moz-placeholder { /* Mozilla Firefox 19+ */
+          color:#FEFEFE;
+        }
+        input:-ms-input-placeholder { /* Internet Explorer 10+ */
+          color:#FEFEFE;
+        }
+        .phone,
+        .verify,
+        .password{
+          width: 100%;
+          height: 1.386rem;
+          color: white;
+          margin-bottom: 0.4rem;
+          position: relative;
+        }
+       
+        .phone{
+          border-bottom: 0.02rem solid #fff;
+          // border-radius: 0.693rem;
+          .mobile_tel{
+            .font-dpr(16px);
+            position: absolute;
+            bottom: 0.13rem;
+          }
+          .mobile_tel:before{
+            content: "\e74f";
+          }
+          .tel{
+            .font-dpr(14px);
+            background: none;
+            border: none;
+            width: 100%;
+            height: 100%;
+            color: white;
+            // padding-left: 0.6rem;
+            box-sizing: border-box;
+          }
+        }
+        .verify{
+          border: 0.02rem solid #b1b1b1;
+          text-align: center;
+          line-height: 0.933rem;
+          .font-dpr(14px);
+          color: #fff;
+          background: rgba(248,248,248,0.5);
+          border-radius: 0.466rem;
+          height: 0.933rem;
+          .speed{
+            .font-dpr(14px);
+            color: #fff;
+            width: 1.02rem;
+            height: 80%;
+            background: #fff;
+            position: absolute;
+            left: 0.093rem;
+            top: 10%;
+            border: none;
+            border-right: 0.02rem solid #fff;
+            border-radius: 26rem;
+          }
+          .speed:before{
+            content: "\e6ae";
+          }
+          .speed_pass:before{
+            content: "验证通过";
+            color: white;
+          }
+        }
+        .speed-pass{
+          background: #fff;
+          color: #000000;
+          opacity: 1;
+        }
+        .password{
+          border-bottom: 0.02rem solid #fff;
+          // border-radius: 0.693rem;
+          margin-bottom: 0.54rem;
+          .password_info{
+            .font-dpr(16px);
+            position: absolute;
+            bottom: 0.13rem;
+          }
+          .password_info:before{
+            content: "\e54a";
+          }
+          .pass_num{
+            .font-dpr(14px);
+            background: none;
+            border: none;
+            width: 100%;
+            height: 100%;
+            color: white;
+            // padding-left: 0.6rem;
+            box-sizing: border-box;
+          }
+          .get_pass{
+            border: none;
+            background: none;
+            color: white;
+            .font-dpr(14px);
+            position: absolute;
+            right: 0;
+            top: 0;
+            line-height: 0.8rem;
+            min-width: 140px;
+          }
+        }
+        .login_in,
+        .bind_tel{
+          border: none;
+          background: none;
+          box-sizing: border-box;
+          width: 100%;
+          height: 1.07rem;
+          border: 0.04rem solid #e6e6e6;
+          line-height: 1.07rem;
+          .font-dpr(16px);
+          text-align: center;
+          color: white;
+        }
+        .login_in{
+          margin-top: 1.4667rem;
+         
+        }
+        .bind_tel{
+          margin-top: 1rem;
+        }
+        .agreement{
+          margin-bottom: 0.82rem;
+          height: 0.4rem;
+          
+          .font-dpr(12px);
+          .title{
+            float: left;
+            color: #b1abab;
+          }
+          .word{
+            float: right;
+            a{
+              color: white;
+            }
+          }
+        }
+      }
+  }
+}

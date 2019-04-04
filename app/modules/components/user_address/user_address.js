@@ -7,7 +7,13 @@ $(document).on('pageInit','.shipping_address', function(e, id, page){
     return false;
   }
   var init = new common(page);
-
+  // $.ajax({
+  //   url: '/index.php?g=restful&m=HsJsapi&a=jssign',
+  //   type: 'POST',
+  //   data: {
+  //     url: encodeURIComponent(options.link.split('#')[0])
+  //   }
+  // }).done(function(data){
   //     wx.config({
   //       debug: false,
   //       appId: data.appId,
@@ -18,18 +24,20 @@ $(document).on('pageInit','.shipping_address', function(e, id, page){
   //       'checkJsApi',
   //       'openAddress'
   //       ]
-  //     $('.wx_address').click(function(){
-  //       wx.openAddress({
-  //         success: function (res) {
-  //           console.log(res);
-  //         },
-  //         fail: function(res) {
-  //           // console.log(JSON.stringify(res));
-  //         }
-  //       })
-  //     })
-  //   }
+  //   })
   // })
+  $('.wx_address').click(function(){
+    wx.openAddress({
+      success: function (res) {
+        console.log(res);
+      },
+      fail: function(res) {
+        // console.log(JSON.stringify(res));
+      }
+    })
+  })
+
+
   $('title').text('管理收货地址');
   $('.delete_address').click(function(){
     var that = this;
@@ -111,6 +119,7 @@ $(document).on('pageInit','.shipping_address', function(e, id, page){
         type: 'POST',
         data: post_data,
         success: function(data) {
+          console.log(data)
           if(data.status == 1){
             location.href = '/user/HsAddress/index.html';
           }else{

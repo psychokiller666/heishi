@@ -1,4 +1,5 @@
 // 搜索
+//旧的搜索弹窗，已弃用，改为点击搜索跳到新页面。
 var SearchInit = function () {
   	var start_num = 0;
 	var search_content = null;
@@ -20,19 +21,34 @@ var SearchInit = function () {
 		start_num = 0;
 		search_content = null;
 		last_page = null;
-    })
+	})
+	//获取baseUrl
+	function getApiBaseUrl(){
+		var HostName = location.hostname;
+		var ApiBaseUrl = 'https://apitest.ontheroadstore.com';
+		if (HostName === "hs.ontheroadstore.com") {
+		  ApiBaseUrl = 'https://api.ontheroadstore.com';
+		}
+		return ApiBaseUrl;
+	  };
 
 	$('.search_btn').click(function(){
 		$('.search_list').css('display', 'block');
-	    // 获取热搜词
+		// 获取热搜词
+		var ApiBaseUrl = getApiBaseUrl();
+		var url = ApiBaseUrl + '/appv4/search/hot';
 		$.ajax({
 		    type: 'GET',
-		    url: '/index.php?g=restful&m=HsSearch&a=ajax_get_hot_keywords',
+			// url: '/index.php?g=restful&m=HsSearch&a=ajax_get_hot_keywords',
+			url:url,
 		    success: function(data){
-		    	$.each(data, function(index, item){
-		    		var list = '<span class="word_item" data-type="'+item.type+'" data-url="'+item.url+'" data-url_type="'+item.url_type+'">'+item.keyword+'</span>';
-			    	$('.search_list').find('.showall_search_items').append(list);
-		    	})
+				if(data.status==1){
+						$.each(data.data, function(index, item){
+						var list = '<span class="word_item" data-type="'+item.type+'" data-url="'+item.url+'" data-url_type="'+item.url_type+'">'+item.keyword+'</span>';
+						$('.search_list').find('.showall_search_items').append(list);
+		    		})
+				}
+		    	
 		    }
 		});
 

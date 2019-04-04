@@ -14,6 +14,15 @@ $(document).on('pageInit','.detail', function (e, id, page) {
   // 初始底部
   $('.hs-main').css('bottom', $('.reply_content').height() + 'px');
 
+  var sensorFrom = init.getUrlParam('from')||'';
+  if(sensorFrom==1){
+      init.sensors.track('contactSeller', {
+          pageType : '私信页',
+          buttonName : '私信',
+          commodityID : '',
+          sellerID : $(page).find('#user_id').val(),
+      })
+  }
 
   var uploadingStatus = false;
   $('.uploading').click(function(){
@@ -123,7 +132,7 @@ $(document).on('pageInit','.detail', function (e, id, page) {
   var user_line_status = true;
   // 默认用户ID 为网易IM ID
   // 测试环境 网易id加hstest
-  if(GV.HOST != 'http://hs.ontheroadstore.com/'){
+  if((GV.HOST != 'http://hs.ontheroadstore.com/') && (GV.HOST != 'https://hs.ontheroadstore.com/')){
     IMmyId = 'hstest' + IMmyId;
     IMuserId = 'hstest' + IMuserId;
   }

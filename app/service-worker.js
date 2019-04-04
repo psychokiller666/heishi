@@ -5,7 +5,7 @@
 var data = [];
 //全局变量
 var GV = {
-  HOST: "http://hstest.ontheroadstore.com/",
-  pay_url :"http://hs.ontheroadstore.com/payment/test_pay/",
-  img_url :"http://img8.ontheroadstore.com/"
+  HOST: "https://hstest.ontheroadstore.com/",
+  pay_url :"https://hs.ontheroadstore.com/payment/test_pay/",
+  img_url :"https://img8.ontheroadstore.com/"
 };

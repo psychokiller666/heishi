@@ -123,11 +123,13 @@ gulp.task('styles', function() {
   .pipe($.less())
   .pipe($.autoprefixer({browsers: AUTOPREFIXER_BROWSERS}))
   // .pipe(gulp.dest('dist/css'))
-  .pipe(gulp.dest('php_thinkcmf_h5/tpl/heishiv2_mobile/Public/css'))
+  .pipe(gulp.dest('D:/phpstudy/WWW/php_thinkcmf_h5/tpl/heishiv2_mobile/Public/css'))
+  // .pipe(gulp.dest('php_thinkcmf_h5/tpl/heishiv2_mobile/Public/css'))
   .pipe($.csso())
   .pipe($.rename({suffix: '.min'}))
   // .pipe(gulp.dest('dist/css'))
-  .pipe(gulp.dest('php_thinkcmf_h5/tpl/heishiv2_mobile/Public/css'))
+  .pipe(gulp.dest('D:/phpstudy/WWW/php_thinkcmf_h5/tpl/heishiv2_mobile/Public/css'))
+  // .pipe(gulp.dest('php_thinkcmf_h5/tpl/heishiv2_mobile/Public/css'))
   .pipe($.size({title: 'styles'}));
 });
 
@@ -157,11 +159,13 @@ var bundleInit = function() {
     .pipe(source('main.js'))
     .pipe(buffer())
     // .pipe(gulp.dest('dist/js'))
-    .pipe(gulp.dest('php_thinkcmf_h5/tpl/heishiv2_mobile/Public/js'))
+    .pipe(gulp.dest('D:/phpstudy/WWW/php_thinkcmf_h5/tpl/heishiv2_mobile/Public/js'))
+    // .pipe(gulp.dest('php_thinkcmf_h5/tpl/heishiv2_mobile/Public/js'))
     .pipe($.uglify())
     .pipe($.rename({suffix: '.min'}))
     // .pipe(gulp.dest('dist/js'));
-    .pipe(gulp.dest('php_thinkcmf_h5/tpl/heishiv2_mobile/Public/js'));
+    .pipe(gulp.dest('D:/phpstudy/WWW/php_thinkcmf_h5/tpl/heishiv2_mobile/Public/js'))
+    // .pipe(gulp.dest('php_thinkcmf_h5/tpl/heishiv2_mobile/Public/js'));
   };
 
   gulp.task('browserify', bundleInit);

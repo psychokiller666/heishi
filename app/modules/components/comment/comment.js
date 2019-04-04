@@ -381,7 +381,7 @@ $(document).on('pageInit','.user_comment_list', function (e, id, page) {
     return false;
   }
   var init = new common(page);
-  $('title').text('全部评论');
+  $('title').text('评论列表');
   var comment_box = $('#comment');
   var comment_bd = comment_box.find('.comment_bd');
   var comment_manage = new Comment();
@@ -396,13 +396,23 @@ $(document).on('pageInit','.user_comment_list', function (e, id, page) {
     }
   });
 
+  if(!init.ifLogin()){
+      $(page).find('.reply_input').on('click',function(){
+          if(init.ifLogin(true) == false){
+              return ;
+          }
+      });
+      $(page).find('.reply_input .uploading input').attr('type','');
+  }
+
   var loading = false;
-  var comment_type = $('.comment_type').val();
-  comment_list(comment_box.data('id'), '', comment_type);
-  function comment_list(post_id, cur_cid, comment_type){
+  var comment_type = $('.comment_type').val();//**丫的变量定义重复了，由于不知道这个变量的作用，暂时新增一个变量。
+  var ajax_comment_type = $('.comment_type').val();
+  comment_list(comment_box.data('id'), '', ajax_comment_type);
+  function comment_list(post_id, cur_cid, ajax_comment_type){
     comment_manage.add_data_comment({
       post_id: post_id,
-      type: comment_type,
+      type: ajax_comment_type,
       cur_cid: cur_cid
     },function(data){
       if(data.status == 1){
@@ -431,7 +441,7 @@ $(document).on('pageInit','.user_comment_list', function (e, id, page) {
       return false;
     }
     loading = true;
-    comment_list(comment_box.data('id'), comment_box.data('cid'), comment_type);
+    comment_list(comment_box.data('id'), comment_box.data('cid'), ajax_comment_type);
     $.refreshScroller();
   });
 
@@ -471,7 +481,7 @@ $(document).on('pageInit','.user_comment_list', function (e, id, page) {
   // 是否正在提交
   var submit_status = false;
   // 一级/二级评论
-  var comment_type = 1;
+  var comment_type = 1;//**这就是上文说到的重复定义变量的地方
   // 二级评论需要传入element
   var el_li = null;
   var text_list = [
@@ -479,6 +489,9 @@ $(document).on('pageInit','.user_comment_list', function (e, id, page) {
   'V信','wechat','VX','蘑菇','邮票','LSD','taobao','tb','操你妈','草你妈','🍃'];
   esc.init(text_list);
   $('.submit').click(function(){
+    if(init.ifLogin(true) == false){
+        return ;
+    }
     if(submit_status){
       return false;
     }

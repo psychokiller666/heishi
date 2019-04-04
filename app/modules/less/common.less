@@ -84,7 +84,7 @@ input::-webkit-inner-spin-button {
 
 /* sui补丁 */
 .page,.page-group {
-  background-color: #333;
+  background-color: #ffffff;
 }
 .page-group {
     // -webkit-animation-duration: 0s;
@@ -546,4 +546,19 @@ body > & {
     .content-block {
        width: 10rem;
    }
+}
+
+//单行显示省略号
+.ellipsis{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+//2行显示省略号
+.ellipsis_2{
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;/*辣鸡的gulp less 无法识别该属性，暂时无法使用。*/
+    -webkit-line-clamp: 2;
 }

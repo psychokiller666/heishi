@@ -1,8 +1,9 @@
+// 分类页
 // 初始化
 var common = require('../common/common.js');
 var handlebars = require('../../../../node_modules/handlebars/dist/handlebars.min.js');
 // 搜索
-var SearchInit = require('../search_list/search_list.js');
+// var SearchInit = require('../search_list/search_list.js');
 
 $(document).on('pageInit','.categories', function(e, id, page){
   if (page.selector == '.page'){
@@ -12,7 +13,9 @@ $(document).on('pageInit','.categories', function(e, id, page){
   init.checkfollow();
 
   // 搜索初始
-  SearchInit();
+  // SearchInit();
+
+
   // 初始化title
   $('title').text('分类');
   // 存储每个子分类位置
@@ -57,4 +60,49 @@ $(document).on('pageInit','.categories', function(e, id, page){
     $('.label_content').css('display', 'none');
     $('.bg').removeClass('bg_right');
   })
+
+    //  神策埋点事件
+    sensorsEvent();
+    function sensorsEvent() {
+        $(page).find('.search_btn').on('click',function(){
+            init.sensors.track('buttonClick', {
+                pageType : '分类页',
+                buttonName : '搜索',
+            })
+        });
+        init.sensorsFun.bottomNav();
+
+        //分类 分类列表页
+        $(page).find('.classify_two').on('click','a',function(){
+            var $this = $(this);
+            var $li = $this.parents('li');
+            var url = $this.attr('href');
+            var index = $li.index();
+            var title = $this.find('span').html();
+
+            init.sensorsFun.mkt('分类','分类列表页',title,index,'','');
+        });
+
+        //标签 标签列表页
+        $(page).find('.label_content .tags_list').on('click','a',function(){
+            var $this = $(this);
+            var $li = $this;
+            var url = $this.attr('href');
+            var index = $li.index();
+            var title = init.sensorsFun.getUrlKey(url,'tag');
+
+            init.sensorsFun.mkt('标签','标签列表页',title,index,'','');
+        });
+
+        //黑市书摊 标签列表页
+        $(page).find('.label_content').children('a').on('click',function(){
+            var $this = $(this);
+            var url = $this.attr('href');
+            init.sensorsFun.mkt('黑市书摊','标签列表页',url,'','','');
+        });
+
+    }
+
+
+
 });
