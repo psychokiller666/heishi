@@ -223,4 +223,7 @@ require('../modules/components/download/system_upgrade');
 //下载app
 require('../modules/components/download/download');
 
+//分类top10页面
+require('../modules/components/category_top10/category_top10');
+
 
