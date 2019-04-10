@@ -221,6 +221,44 @@
             margin-right: 0.2rem;
         }
     }*/
+
+    .goods_filter{
+        display: flex;
+        height: 1.2rem;
+        width: 10rem;
+        background: #fff;
+        position: fixed;
+        top:0;
+        left: 0;
+        right: 0;
+        z-index: 5;
+        margin: 0 auto;
+        div{
+            flex: 1;
+            color: #8E8E8E;
+            .font-dpr(16px);
+            text-align: center;
+            line-height: 1.2rem;
+            position: relative;
+            font-weight: bolder;
+        }
+        .price{
+            span{
+                display: inline-block;
+                width: 0.34rem;
+                height: 0.4rem;
+                background-image: url(//img8.ontheroadstore.com/H5_Icon/price_arrow.png);
+                background-size: cover;
+                &.active{
+                    background-image: url(//img8.ontheroadstore.com/H5_Icon/price_arrow_up.png);
+                    background-size: cover;
+                }
+            }
+        }
+        .active{
+            color: #202123;
+        }
+    }
     .categories_list{
         position: relative;
         z-index: 1;
@@ -370,6 +408,7 @@
         }
     }
     .goods_content{
+        margin-top: 1.2rem;
         .goods_list{
             padding-top: 0.533rem;
             margin: 0 0.4rem;
@@ -407,10 +446,10 @@
                 letter-spacing: 0.01rem;
             }
             .good_price{
-                .font-dpr(16px);
+                .font-dpr(20px);
                 position: absolute;
                 left: 4.8rem;
-                line-height: 1em;
+                line-height: 1.6em;
                 bottom: 0;
             }
             .user_info{
