@@ -476,6 +476,8 @@ $(document).on('pageInit','.user_comment_list', function (e, id, page) {
     $('.uploading').removeClass('no_uploading');
     $('.uploading').css({'display': 'block', 'color': '#000'});
     $('.uploading').find('.webuploader-element-invisible').removeAttr('disabled','disabled');
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
   })
   // 提交
   // 是否正在提交

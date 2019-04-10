@@ -138,7 +138,8 @@ $(document).on('pageInit','.categories_good', function(e, id, page){
               <div class="ad" 
               data-type='${data.data.ad[cur_page-1].url_type}'
               data-url='${data.data.ad[cur_page-1].url}'
-              style="background-image: url(${data.data.ad[cur_page-1].img});
+              style="background:url(${data.data.ad[cur_page-1].img}) no-repeat center center;
+              background-size:100% 100%;
               height: 2.9rem;
               width:9.2rem;
               margin:0.7rem auto 0.18rem;
@@ -185,7 +186,7 @@ $(document).on('pageInit','.categories_good', function(e, id, page){
       // 设置flag
       loading = true;
       curPage = curPage + 1;
-      add_goods(categoryID, tagName, curPage,order_types[0]);
+      add_goods(categoryID, tagName, curPage,order_types[orderTypeIndex]);
       $.refreshScroller();
     }
   });

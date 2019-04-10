@@ -99,6 +99,8 @@ $(document).on('pageInit','.detail', function (e, id, page) {
   $('.reply_text').blur(function(){
     $('.content').css('overflow-y', 'auto');
     $('.reply_input').css('padding-bottom', '0');
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
   })
   if(isiOS){
     $('.reply_text').change(function(){
