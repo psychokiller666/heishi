@@ -296,17 +296,9 @@
             text-decoration: line-through;
             float: left;
         }
-        .special_offer{
-            width: 2.853rem;
-            height: 0.61rem;
-            float: right;
-            display: none;
-            background-image: url(//img8.ontheroadstore.com/upload/180420/14e10fcd2a5c0bc5d0490047ad90a3f3.png);
-            background-size: 100% 100%;
-            margin-left: 0.267rem;
-        }
+      
     }
-
+  
     //认证
     .authentication{
         margin: 0 0.4rem;
@@ -1319,7 +1311,7 @@
         margin-bottom: 0.4rem;
     }
     .status{
-        padding: 0 0.4rem 0.4rem 0.4rem;
+        padding: 0 0.4rem 1.2rem 0.4rem;
         border-bottom: 0.21333rem solid #F2F2F2;
         //margin-bottom: 0.4rem;
         .hs-cf;
@@ -1344,16 +1336,9 @@
             margin-left: 0.267rem;
             padding: 0 0.32rem;
         }
-        .special_offer{
-            width: 2.853rem;
-            height: 0.61rem;
-            display: none;
-            float: right;
-            background-image: url(//img8.ontheroadstore.com/upload/180420/14e10fcd2a5c0bc5d0490047ad90a3f3.png);
-            background-size: 100% 100%;
-            margin-left: 0.267rem;
-        }
+       
     }
+  
     .delivery_cycle{
         display: none;
         position: relative;
@@ -1769,6 +1754,65 @@
             margin: 0.53333rem auto 0;
         }
     }
+}
+.special_offer{
+    // width: 2.853rem;
+    height: 0.61rem;
+    display: none;
+    float: left;
+    background: #ae2121;
+    color: #fff;
+    font-size: .3rem;
+    padding: 0 .5rem 0 .2rem;
+    border-radius: .31rem;
+    line-height: .61rem;
+    position: relative;
+    // background-image: url(//img8.ontheroadstore.com/upload/180420/14e10fcd2a5c0bc5d0490047ad90a3f3.png);
+    // background-size: 100% 100%;
+    margin-left: 0.4rem;
+    &::after{
+        content: '';
+      display: block;
+      position: absolute;
+      background-image: url(https://img8.ontheroadstore.com/H5_Icon/arrow_right.png?1);
+      background-size: 100% 100%;
+      width: .18rem;
+      height: .24rem;
+      top: .17rem;
+      right: .2rem;
+
+    }
+}
+
+.special_offer_1{
+    // width: 2.853rem; 
+    display: block;
+    height: 0.61rem;
+    line-height: .61rem;
+    opacity: 0;
+    float: left;
+    color: #fff;
+     font-size: .32rem;
+    padding: 0 .5rem 0 .2rem;
+    border-radius: .31rem;
+    position: absolute;
+    background: #ae2121;
+    // background-image: url(//img8.ontheroadstore.com/upload/180420/14e10fcd2a5c0bc5d0490047ad90a3f3.png);
+    // background-size: 100% 100%;
+    margin-left: 0.4rem;
+    top: 4rem;
+    &::after{
+        content:'';
+        display: block;
+        position: absolute;
+        background-image: url(https://img8.ontheroadstore.com/H5_Icon/arrow_right.png?1);
+        background-size: 100% 100%;
+        width: .18rem;
+        height: .24rem;
+        top: .17rem;
+        right: .2rem;
+      }
+    
 }
 
 
