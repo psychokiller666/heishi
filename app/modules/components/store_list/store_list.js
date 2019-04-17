@@ -239,6 +239,30 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     return _this;
   };
 
+    //获取首页广告位bannner
+    function getAdBanner(){
+      var url = ApiBaseUrl + '/appv6_5/homepage';
+      $.ajax({
+        type: "GET",
+        url: url,
+        dataType: 'json',
+        data: {},
+        headers: ajaxHeaders,
+        success: function (data) {
+            if (data.status == 1) {
+                if(data.data.userCenterStatusH5){
+                    $('.ghost_store_ad_img').css({'background':'url("'+ data.data.secondFloorBackgroundImgH5 +'@640w_1l") no-repeat center center','background-size': 'cover'});
+                    $('.ghost_store_ad_wrap').show();
+                    initGS();
+                }
+            }
+        },
+        error: function (e) {
+            console.log('getSetting err: ', e);
+        }
+
+      });
+    }
 
     // 鬼市首页入口
     if($('.ghost_store_ad_wrap').length>0){

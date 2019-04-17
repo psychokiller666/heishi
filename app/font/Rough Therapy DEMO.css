@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+@font-face {
+  font-family: "Rough Therapy DEMO";
+  src: url("Rough Therapy DEMO.woff2") format("woff2"),
+       url("Rough Therapy DEMO.woff") format("woff"),
+       url("Rough Therapy DEMO.ttf") format("truetype"),
+       url("Rough Therapy DEMO.eot") format("embedded-opentype"),
+       url("Rough Therapy DEMO.svg") format("svg"),
+       url("Rough Therapy DEMO.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
