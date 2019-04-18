@@ -15,14 +15,12 @@ $(document).on('pageInit','.categories_good', function(e, id, page){
     link: window.location.href,
     img: $('.categories_icon').val()
   };
-  var ApiBaseUrl = init.getApiBaseUrl();
   init.wx_share(share_data);
   init.checkfollow();
 
   // 搜索初始
   // SearchInit();
   // 初始化title
-  $('.goods_filter').find('div').eq(0).addClass('active')
   $('title').text($('.categories_name').val());
   // 是否显示查看下拉
   var length = $('.categories_list_row').find('.categories_item').length - 1;
@@ -42,7 +40,7 @@ $(document).on('pageInit','.categories_good', function(e, id, page){
     $('.categories_content').css('display', 'none');
     $('.categories_list_row').css('display', 'block');
   })
-  // 分类切换 以下这个函数前端已经注释
+  // 分类切换
   $('.categories_item').click(function(){
     var status = $(this).hasClass('categories_item_all');
     $('.categories_item').removeClass('active');
@@ -61,10 +59,10 @@ $(document).on('pageInit','.categories_good', function(e, id, page){
     }else{
       tagName = '';
     }
-    reset_load(categoryID, tagName, curPage,order_types[0]);
+    reset_load(categoryID, tagName, curPage);
   })
 
-  // 标签切换 以下这个函数前端已经注释
+  // 标签切换
   $('.tag_list').on('click', '.tag_item',function(){
     $('.tag_item').removeClass('active');
     $(this).addClass('active');
@@ -72,29 +70,6 @@ $(document).on('pageInit','.categories_good', function(e, id, page){
     reset_load(categoryID, tagName, curPage);
 
   })
-
-  //筛选切换 v4.5新增
-  var orderTypeIndex=0;
-  $('.goods_filter').on('click', 'div',function(){
-    if($(this).index()==3){
-      orderTypeIndex=orderTypeIndex==3?4:3;
-      if($(this).find('span').hasClass('active')){
-        $(this).find('span').removeClass('active')
-      }else{
-        $(this).find('span').addClass('active')      
-      }
-      $('.goods_filter div').removeClass('active');
-      $(this).addClass('active');
-
-    }else{
-      orderTypeIndex=$(this).index()
-      $('.goods_filter div').removeClass('active');
-      $(this).addClass('active');
-    }
-    reset_load(categoryID, tagName, curPage,order_types[orderTypeIndex]);
-
-  })
-
   var categories_index_tpl = handlebars.compile($("#categories_index_tpl").html());
 
   // 下拉加载
@@ -113,40 +88,20 @@ $(document).on('pageInit','.categories_good', function(e, id, page){
   var curPage = 1;
   var loading = false;
   var add_goods_status = false;
-  var order_types = ["sort_by_zonghe","sort_by_xiaoliang","post_modified","sort_by_jiage_di","sort_by_jiage_gao" ]
   // 第一次以当前页id查询
-  add_goods(categoryID, tagName, curPage,order_types[0]);
-  function add_goods(category_id, tag, cur_page,order_type){
-    let url =   ApiBaseUrl + '/appv6_4/category/posts';
+  add_goods(categoryID, tagName, curPage);
+  function add_goods(category_id, tag, cur_page){
     $.ajax({
       type: 'GET',
-      // url: '/index.php?g=restful&m=HsCategories&a=ajax_posts',
-      url: url,
+      url: '/index.php?g=restful&m=HsCategories&a=ajax_posts',
       data: {
         category_id: category_id,
-        // tag: tag,
-        page_size:10,
-        cur_page: cur_page,
-        order: order_type 
+        tag: tag,
+        cur_page: cur_page
       },
       success: function(data){
         if(data.status == 1){
           $('.goods_content').append(categories_index_tpl(data.data));
-          if(data.data.ad[cur_page-1]){
-            $('.goods_content').append(
-              `
-              <div class="ad" 
-              data-type='${data.data.ad[cur_page-1].url_type}'
-              data-url='${data.data.ad[cur_page-1].url}'
-              style="background-image: url(${data.data.ad[cur_page-1].img});
-              height: 2.9rem;
-              width:9.2rem;
-              margin:0.7rem auto 0.18rem;
-              border-radius:0.16rem;
-              ">
-              `
-            )
-          }
           if(nowCategoryID && !tag){
             if(data.data.my_tag && data.data.my_tag.length > 0){
               $('.tag_list').css('height', '1.36rem');
@@ -158,7 +113,7 @@ $(document).on('pageInit','.categories_good', function(e, id, page){
             }
           }
           $('.infinite-scroll-preloader').css('display', 'block');
-          if(data.data.item_list.result.length < 5){
+          if(data.data.posts.length < 5){
             $('.infinite-scroll-preloader').css('display', 'none');
           }
         } else {
@@ -185,50 +140,20 @@ $(document).on('pageInit','.categories_good', function(e, id, page){
       // 设置flag
       loading = true;
       curPage = curPage + 1;
-      add_goods(categoryID, tagName, curPage,order_types[0]);
+      add_goods(categoryID, tagName, curPage);
       $.refreshScroller();
     }
   });
-  function reset_load(categoryID, tagName, curPage,order_type){
+  function reset_load(categoryID, tagName, curPage){
     curPage = 1;
     loading = true;
     add_goods_status = false;
     $('.goods_content').html('');
     $('.infinite-scroll-preloader').css('display', 'none');
-    add_goods(categoryID, tagName, curPage,order_type);
+    add_goods(categoryID, tagName, curPage);
   }
 
-  $('.goods_content').on('click','.ad',function(){
-      var type = $(this).attr('data-type') 
-      var url = $(this).attr('data-url') 
-      console.log(type)
-      switch(type){
-        case "1":
-        location.href=`/Portal/HsArticle/index/id/${url}.html`
-          break;
-        case "2":
-        location.href=`/Portal/HsArticle/culture/id/${url}.html`
-          break;
-        case "3":
-        location.href=`/HsProject/index/pid/${url}.html`
-          break;
-        case "4":
-        location.href=`/HsProject/index/pid/${url}.html`
-          break;
-        case "5":
-        location.href=`${url}`
-          break;
-        case "6":
-        location.href=`/HsCategories/category_index/id/${url}.html`
-          break;
-        case "15":
-        location.href=`/Portal/Index/category_top10/id/${url}.html`
-          break;
-        default:
-        break;
-      }
 
-  })
   $(".content").on('scroll',function(){
     if($('.content').scrollTop() > 1000){
       $('.return_top').css('display', 'block');
