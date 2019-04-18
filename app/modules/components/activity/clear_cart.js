@@ -131,11 +131,12 @@ $(document).on('pageInit','.clear_cart', function(e, id, page) {
 
             success: function(data){
                 if(data.status==1){
-                    if(pageTitle='购物车礼金' && $popup_wrap.length>0){
-                        showPopup();
-                    }else{
-                        $.toast('领取成功');
-                    }
+                    // if(pageTitle='购物车礼金' && $popup_wrap.length>0){
+                    //     showPopup();
+                    // }else{
+                    //     $.toast('领取成功');
+                    // }
+                    $.toast('领取成功');
                 }else{
                     var info = data.info;
                     if(info && str_length(info)>30){
