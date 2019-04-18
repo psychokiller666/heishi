@@ -275,12 +275,12 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
    
 
     //判断特卖时间
-    let _startTime =  new Date(special_start).getTime()
-    let _startEnd =  new Date(special_end).getTime()
-    let _now = new Date().getTime()
-    if(!(_startEnd<_now<_startTime)){
-      special=0
-    }
+    // let _startTime =  new Date(special_start).getTime()
+    // let _startEnd =  new Date(special_end).getTime()
+    // let _now = new Date().getTime()
+    // if(!(_startEnd<_now<_startTime)){
+    //   special=0
+    // }
 
     var type_desc = $(this).text();
     $('.select').find('.select_type').text(type_desc);
@@ -396,7 +396,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     $('.remain').css('display', 'none');
     $('.presell_status').css('display', 'none');
     $('.presell').css('display', 'none');
-    // $('.special_offer').css('display', 'none');
+    $('.special_offer_1').css('opacity', '0');
     $('.presell_item').css('display', 'none');
 
     showPostage(item_id);
@@ -405,29 +405,40 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     if(price){
       $('.price').find('.font_din').text(price);
     }
+   
     if(presell){
       $('.presell').css('display', 'block').find('.time').text(presell);
       $('.presell_item').css('display', 'block').find('.time').text(presell);
     }
-   if(special == 1){
-      // $('.origin_price').css('display', 'block');
-      // $('.special_offer').css('display', 'block');
-      // if(special_price==undefined){
-      //   return
-      // }
-      // $('.price').find('.font_din').text(parseInt(special_price));
-      // $('.origin_price').html('￥'+price);
-      // return true
-
-    }
-
+  
     if(remain > 5 && remain < 10){
       $('.remain_tension').css('display', 'block');
     }else if(remain >= 1 && remain <= 5){
+      $('.remain_tension').css('display', 'block');
       $('.remain').css('display', 'block').find('span').text(remain);
     }
     if(presell){
       $('.presell_status').css('display', 'block');
+    }
+    if(special == 1){
+      // $('.origin_price').css('display', 'block');
+    
+      if(special_price == ""||special_price == undefined){
+        return
+      }
+      setTimeout(()=>{
+        $('.special_offer_1').css('opacity', '1');
+        // $('.special_offer_1').css('background', '#ae2121');
+        $('.special_offer_1').html('APP购买享特价￥'+parseInt(special_price))
+        $('.special_offer').html('APP购买享特价￥'+parseInt(special_price))
+      },100)
+    
+      
+     
+      // $('.price').find('.font_din').text(parseInt(special_price));
+      // $('.origin_price').html('￥'+price);  
+      return true
+
     }
   }
 
@@ -680,6 +691,13 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
           pageType : '商品详情页',
           buttonName : '打开APP',
       })
+    location.href= GV.app_url;
+  })
+  $('.special_offer_1').click(function(){
+    init.sensors.track('buttonClick', {
+        pageType : '商品详情页',
+        buttonName : '打开APP',
+    })
     location.href= GV.app_url;
   })
   // 卖家全部商品
