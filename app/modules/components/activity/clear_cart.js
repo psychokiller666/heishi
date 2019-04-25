@@ -22,16 +22,29 @@ $(document).on('pageInit','.clear_cart', function(e, id, page) {
     var ajaxHeaders = {
         'phpsessionid': PHPSESSID
     };
+    var $page_share = $(page).find('.page_share');
+    var page_share_data = {
+      title: $page_share.attr('title')||pageTitle,
+      subtitle: $page_share.attr('subtitle')||'为你不着边际的企图心',
+      url: $page_share.attr('url')||window.location.href,
+      img: $page_share.attr('img')||'https://jscache.ontheroadstore.com/tpl/simplebootx_mobile/Public/i/logo.png',
+    }
 
-    // 调用微信分享sdk
-    var share_data = {
-        title: pageTitle,
-        desc: '为你不着边际的企图心',
-        link: window.location.href,
-        img: 'https://jscache.ontheroadstore.com/tpl/simplebootx_mobile/Public/i/logo.png'
+   // 调用微信分享sdk
+   var share_data = {
+        title: page_share_data.title,
+        desc: page_share_data.subtitle,
+        link: page_share_data.url,
+        img: page_share_data.img
     };
     init.wx_share(share_data);
-
+    if(isApp){
+        sendAppJson({
+          title: page_share_data.title,
+          url: page_share_data.url,
+          subtitle: page_share_data.subtitle,
+        })
+      }
 
     // $('body,.page, .page-group').css('background','#9c0404');
 
