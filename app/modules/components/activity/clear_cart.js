@@ -94,8 +94,72 @@ $(document).on('pageInit','.clear_cart', function(e, id, page) {
     function hidePopup(){
         $popup_wrap.hide();
     }
-
-
+    //传递json协议
+//     function sendAppJson(data) {
+//         var txt = JSON.stringify(data);
+//         location.href = 'send-json://' + txt;
+//         sendDataByOC(txt);
+//     }
+  
+//   //与app交互专用方法
+//   function sendDataByOC(data) {
+//     try {
+//       window.webkit.messageHandlers.shareData.postMessage(data);
+//     } catch (e) {
+  
+//     }
+//   }
+    // $(page).on('click','.jumpBuy',function(){
+    //     if(!loginStatus){
+    //         if(deviceType==='WECHAT' || deviceType==='NO'){
+    //             if(init.ifLogin(true) == false){
+    //                 return ;
+    //             }
+    //         }else{
+    //             appReLogin()
+    //             return;
+    //         }
+    //     }else{
+    //         if(isApp){
+                
+    //             sendAppJson({
+    //                 title: share_data.title,
+    //                 url: "https://hs.ontheroadstore.com/Portal/HsArticle/index/id/20498.html",
+    //                 subtitle: share_data.desc,
+    //                 shareIcon: share_data.img,
+    //               })
+                
+    //           }
+    //           else{
+    //             location.href="https://hs.ontheroadstore.com/Portal/HsArticle/index/id/20498.html"
+    //           }
+    //     }
+      
+    // })
+    $(page).on('click','.jumpLottery',function(){
+        if(!loginStatus){
+            if(deviceType==='WECHAT' || deviceType==='NO'){
+                if(init.ifLogin(true) == false){
+                    return ;
+                }
+            }else{
+                $.toast('请先登录');
+                appReLogin()
+                return;
+            }
+        }else{
+            if(isApp){
+                location.href="lottery-index://"
+              }
+              else{
+                location.href="https://hs.ontheroadstore.com/portal/Lottery/lottery_act.html"
+              }
+        }
+      
+    })
+    function appReLogin() {
+        location.href = 'login://'
+    }
     $(page).on('click','.get_coupon_btn',function(){
 
         if(!loginStatus){
