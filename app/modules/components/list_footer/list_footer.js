@@ -21,7 +21,11 @@ if(hs_footer.length){
             user_id: myId
         },
         success: function(res){
-            var data = JSON.parse(res);
+            // var data = JSON.parse(res);
+            var data = res
+            if(!data.data){
+                return
+            }
             var token = data.data.token;
             var appKey = data.data.app_key;
             IMnim = NIM.getInstance({

@@ -539,7 +539,10 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   
 
   //预留狠人说中图片的宽高
-  setDescImgWH();
+  setTimeout(function(){
+    setDescImgWH();
+  },0)
+ 
   function setDescImgWH(){
     var $imgWrap = $('.post_desc_img');
 

@@ -1,7 +1,7 @@
 // 分类页
 // 初始化
 var common = require('../common/common.js');
-var handlebars = require('../../../../node_modules/handlebars/dist/handlebars.min.js');
+// var handlebars = require('../../../../node_modules/handlebars/dist/handlebars.min.js');
 // 搜索
 // var SearchInit = require('../search_list/search_list.js');
 
