@@ -53,13 +53,21 @@ $(document).on('pageInit','.culture_list', function (e, id, page) {
       timeout: 4000,
       success: function(data){
         if(data.status == 1){
-          culture_list.find('ul').append(culture_list_tpl(data.data));
-          // 更新最后加载的序号
-          page_num++;
-          pages = data.pages;
-          culture_list.attr('pagenum',page_num);
-          culture_list.attr('pages',data.pages);
-          init.loadimg();
+          if (page_num >= data.pages) {
+            $.detachInfiniteScroll($('.infinite-scroll'));
+            $('.infinite-scroll-preloader').remove();
+            $.toast('😒 没有了');
+           return
+          }else{
+            culture_list.find('ul').append(culture_list_tpl(data.data));
+            // 更新最后加载的序号
+            page_num++;
+            pages = data.pages;
+            culture_list.attr('pagenum',page_num);
+            culture_list.attr('pages',data.pages);
+            init.loadimg();
+          }
+       
         } else {
           $.toast('请求错误');
         }

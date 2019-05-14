@@ -387,6 +387,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   $('.types').find('span').each(function(){
     if($(this).attr('data-special') == 1){
       $('.special_offer').css('display', 'block');
+     
     }
   })
 
@@ -397,6 +398,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     $('.presell_status').css('display', 'none');
     $('.presell').css('display', 'none');
     $('.special_offer_1').css('opacity', '0');
+    $('.special_offer').css('display', 'none');
     $('.presell_item').css('display', 'none');
 
     showPostage(item_id);
@@ -427,11 +429,15 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         return
       }
       setTimeout(()=>{
+        $('.special_offer').css('display', 'block');
         $('.special_offer_1').css('opacity', '1');
         // $('.special_offer_1').css('background', '#ae2121');
         $('.special_offer_1').html('APP购买享特价￥'+parseInt(special_price))
         $('.special_offer').html('APP购买享特价￥'+parseInt(special_price))
+        $('.special_offer').css("padding","0 .5rem 0 .2rem")
+        $('.special_offer').css("top","-.3rem")
       },100)
+  
     
       
      
