@@ -72,6 +72,7 @@ $(document).on('pageInit','.wine_act', function(e, id, page) {
         title: page_share_data.title,
         url: page_share_data.url,
         subtitle: page_share_data.subtitle,
+        shareIcon:page_share_data.img
       })
     }
 
@@ -99,9 +100,8 @@ $(document).on('pageInit','.wine_act', function(e, id, page) {
     }
 
 
-
+    //页面上有一组优惠券
     $(page).on('click','.get_coupon_btn',function(){
-
         if(!loginStatus){
             if(deviceType==='WECHAT' || deviceType==='NO'){
                 if(init.ifLogin(true) == false){
@@ -135,7 +135,35 @@ $(document).on('pageInit','.wine_act', function(e, id, page) {
 
 
     });
+    //页面上有多组优惠券
+    $(page).on('click','.get_coupons_btn',function(){
+       let cid = $(this).attr('data-couponid')
+       alert(loginStatus)
+        if(!loginStatus){
+            if(deviceType==='WECHAT' || deviceType==='NO'){
+               
+                if(init.ifLogin(true) == false){
+                    return ;
+                }
+            }else{
+                $.toast('请先登录');
+                appReLogin();
+                return;
+            }
+        }
+        var $this = $(this);
+        if($this.attr('clicked')==='1'){
+            return false;
+        }
+        var ids = [cid];
 
+        getACoupon($this,ids);
+        init.sensors.track('buttonClick', {
+            pageType : pageTitle,
+            buttonName : '领取优惠券',
+        })
+
+    });
     //领取优惠券
     function getACoupon($btn,ids){
 
