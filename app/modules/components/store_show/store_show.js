@@ -111,6 +111,61 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   // 检查是否关注
   init.checkfollow();
 
+  //判断是否是从九折购买点击进来
+  var fromNineDiscount = null;
+  if(getQueryString("from")=="nineDiscount"){
+    getNineDiscount()
+    fromNineDiscount=true
+  }
+  //获取到九折优惠优惠券
+  function getNineDiscount(){
+    //检查是不是玩过九折的活动
+    if(window.localStorage.getItem('selectStar')&&window.localStorage.getItem('answer')){
+      let url = 'https://img8.ontheroadstore.com/dev_test/1-A-B-C.json?callback=callback'
+      let _url =`https://img8.ontheroadstore.com/dev_test/${window.localStorage.getItem('selectStar')}-${window.localStorage.getItem('answer')}.json`
+      $.getJSON(url,function(data){
+    
+        // getDiscountCoupon([data.coupon_id]) 
+        getDiscountCoupon(["2019042216583878122"]) 
+        $('.nine_discount').show()
+        $('.nine_discount').find('.dis_select_type').html(data.posts.post_title)
+
+        //立即购买订单信息
+        $('.buy').find(".buy_btn").attr("data-id",data.posts.post_title).attr("data-articleid",data.posts.post_title);
+        $('.buy').find(".add_chart").attr("data-id",data.posts.post_title).attr("data-articleid",data.posts.post_title);
+        //设置跳转到下单页的链接
+        // location.href = "/User/HsOrder/add/object_id/"+1111+"/mid/"+1111+"/number/"+1+".html";
+      })
+    }
+   
+  }
+ //领取九折优惠券
+  function getDiscountCoupon(ids){
+    var url = ApiBaseUrl + '/appv6/coupon/receiveMultipleCoupon';
+    $.ajax({
+      type: "POST",
+      url: url,
+      dataType: 'json',
+      data: {couponList:ids},
+      headers: {
+        'phpsessionid': PHPSESSID
+      },
+      success: function(data){
+        console.log('已经获取九折优惠券')
+      },
+      error: function(xhr){
+          $.toast('你还没有九折优惠资格');
+          console.log('getACoupon err: ',e);
+      }
+    });
+  }
+  function getQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null)
+        return decodeURI(r[2]);
+    return null;
+  }
   //判断是否登录
   var loginStatus = init.ifLogin();
 
@@ -249,6 +304,11 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     operation(this, 0);
   })
   $('.buy').on("click",".buy_btn",function() {
+    //九折购买
+    if(fromNineDiscount){
+     console.log('九折下单附带优惠券')
+    //  location.href = "11111111111111111"
+    }
     //限购
     if($(this).hasClass('disable')){
         return;
