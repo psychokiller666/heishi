@@ -219,6 +219,10 @@ $(document).on('pageInit','.clear_cart', function(e, id, page) {
                     if(info && str_length(info)>30){
                         info = cut_str(info,15) + '…';
                     }
+                  
+                    if(page_share_data.title=="公路商店礼物券"){
+                        info = "您已领取过了"
+                    }
                     $.toast(info || '领取失败,请刷新后重试');
                 }
                 $btn.attr('clicked','0');
