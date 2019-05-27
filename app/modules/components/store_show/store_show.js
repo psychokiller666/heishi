@@ -113,7 +113,11 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
 
   //判断是否是从九折购买点击进来
   var fromNineDiscount = null;
-  if(getQueryString("from")=="nineDiscount"){
+  if(getQueryString("fromxsxw")=="nineDiscount"){
+    //不显示加入购物车
+    $('.footer_nav').find(".add_chart").hide()
+    $('.footer_nav').find(".buy_btn").css('width','6.1rem')
+    $('.select').hide()
     getNineDiscount()
     fromNineDiscount=true
   }
@@ -121,20 +125,21 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   function getNineDiscount(){
     //检查是不是玩过九折的活动
     if(window.localStorage.getItem('selectStar')&&window.localStorage.getItem('answer')){
-      let url = 'https://img8.ontheroadstore.com/dev_test/1-A-B-C.json?callback=callback'
-      let _url =`https://img8.ontheroadstore.com/dev_test/${window.localStorage.getItem('selectStar')}-${window.localStorage.getItem('answer')}.json`
+      // let url = 'https://img8.ontheroadstore.com/dev_test/1-A-B-C.json?callback=callback'
+      let url =`https://img8.ontheroadstore.com/dev_test/${window.localStorage.getItem('jsonname')}.json?123`
       $.getJSON(url,function(data){
-    
-        // getDiscountCoupon([data.coupon_id]) 
-        getDiscountCoupon(["2019042216583878122"]) 
+        $('.good_single_price').find('.font_din').html(localStorage.getItem('xsxwprice'))
+        if(loginStatus){
+          getDiscountCoupon([data.coupon_id]) 
+          // getDiscountCoupon(["2019051615403329357"]) 
+        
+        }
+        //跳转到下单页面
+        // var str = "/User/HsOrder/add/object_id/"+articleid+"/mid/"+id+"/number/"+num+".html";
+        var str = "/User/HsOrder/add/object_id/"+data.object_id+"/mid/"+data.goods_id+"/number/"+1+".html?fromxsxw=nineDiscount";
+        $('.footer_nav').find(".buy_btn").attr("data-url",str);
         $('.nine_discount').show()
         $('.nine_discount').find('.dis_select_type').html(data.posts.post_title)
-
-        //立即购买订单信息
-        $('.buy').find(".buy_btn").attr("data-id",data.posts.post_title).attr("data-articleid",data.posts.post_title);
-        $('.buy').find(".add_chart").attr("data-id",data.posts.post_title).attr("data-articleid",data.posts.post_title);
-        //设置跳转到下单页的链接
-        // location.href = "/User/HsOrder/add/object_id/"+1111+"/mid/"+1111+"/number/"+1+".html";
       })
     }
    
@@ -153,8 +158,8 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       success: function(data){
         console.log('已经获取九折优惠券')
       },
-      error: function(xhr){
-          $.toast('你还没有九折优惠资格');
+      error: function(e){
+          $.toast('你还没有九折优惠资格 这个提示需要删掉');
           console.log('getACoupon err: ',e);
       }
     });
@@ -232,9 +237,15 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       $('.footer_nav').find(".buy_btn").attr("data-remain",single.data('remain')).addClass('no_repertory');
       $('.footer_nav').find(".add_chart").attr("data-remain",single.data('remain')).addClass('no_repertory');
     }else{
-      var str = "/User/HsOrder/add/object_id/"+single.attr('data-articleid')+"/mid/"+single.attr('data-id')+"/number/1.html";
-      $('.footer_nav').find(".buy_btn").attr("data-url",str);
-      $('.footer_nav').find(".add_chart").attr("data-id", single.attr('data-id')).attr("data-articleid", single.attr('data-articleid'));
+      //九折购买过来的不更新信息
+      if(fromNineDiscount){
+        
+      }else{
+        var str = "/User/HsOrder/add/object_id/"+single.attr('data-articleid')+"/mid/"+single.attr('data-id')+"/number/1.html";
+        $('.footer_nav').find(".buy_btn").attr("data-url",str);
+        $('.footer_nav').find(".add_chart").attr("data-id", single.attr('data-id')).attr("data-articleid", single.attr('data-articleid'));
+      }
+     
     }
   }
   page.on("click",".select_type",function(){
@@ -260,6 +271,12 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
 
   $('.footer_nav').on("click",".buy_btn",function() {
     var url = $(this).attr('data-url');
+    //九折购买
+    if(fromNineDiscount){
+      location.href = url;
+      return
+    }
+
     if($(this).hasClass('no_repertory')){
       return $.toast('当前商品没有库存');
     }
@@ -267,6 +284,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     if($(this).hasClass('disable')){
         return;
     }
+  
     if(type_items_span.length == 1){
       location.href = url;
     }else{
@@ -304,11 +322,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     operation(this, 0);
   })
   $('.buy').on("click",".buy_btn",function() {
-    //九折购买
-    if(fromNineDiscount){
-     console.log('九折下单附带优惠券')
-    //  location.href = "11111111111111111"
-    }
+   
     //限购
     if($(this).hasClass('disable')){
         return;
@@ -452,6 +466,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   })
 
   function update_status(price, item_id, remain, presell, special,special_price) {
+   
     $('.postage').css('display', 'none');
     $('.remain_tension').css('display', 'none');
     $('.remain').css('display', 'none');

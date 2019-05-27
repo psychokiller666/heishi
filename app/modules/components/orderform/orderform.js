@@ -20,6 +20,75 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
   	document.body.scrollTop = 0;
 	  document.documentElement.scrollTop = 0;
   });
+  //如果是九折购买
+  var user_coupon_id = null
+  window.user_coupon_price =null
+  if(getQueryString("fromxsxw")=="nineDiscount"){
+    //检查是不是玩过九折的活动
+    $('.numbers').find('.min').hide()
+    $('.numbers').find('.add').hide()
+    if(window.localStorage.getItem('selectStar')&&window.localStorage.getItem('answer')){
+      // let url = 'https://img8.ontheroadstore.com/dev_test/1-A-B-C.json?callback=callback'
+      let url =`https://img8.ontheroadstore.com/dev_test/${window.localStorage.getItem('jsonname')}.json?123`
+      $.getJSON(url,function(data){
+        localStorage.setItem('xsxwcouponid',data.coupon_id)
+        getCouponId(data.coupon_id) //  2019051615403329357
+      })
+    }
+  }
+  function getQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null)
+        return decodeURI(r[2]);
+    return null;
+  }
+  //获取可使用的优惠券id
+  function getCouponId(id){
+    var orderData = {
+      "address_id":'',
+      "orders":[
+          {
+              "attach":$('.attach').val(),//备注
+              "items":[
+                  {
+                      "counts":1,
+                      "item_id":$(".payment").data('id'),//商品id
+                      "mid":$(".payment").data('mid'),//款式id
+                  }
+              ],
+              "seller_name":$(".payment").data('username'),
+              "seller_uid":$(".payment").data('seller_uid'),
+          }
+      ],
+      "type":1 //类型 1商品订单 0打赏
+     
+  };
+    var url = ApiBaseUrl + '/appv6/coupon/getOrderCouponList';
+    $.ajax({
+      type: "POST",
+      url: url,
+      dataType: 'json',
+      data: orderData,
+      headers: {
+        'phpsessionid': PHPSESSID
+      },
+      success: function(data){
+        console.log(data.data.useCoupon)
+        let useCoupon = data.data.useCoupon
+        useCoupon.forEach(v => {
+          if(v.coupon_id==id){
+            user_coupon_id = v.id
+          }
+        });
+        
+      },
+      error: function(e){
+          $.toast('你还没有九折优惠资格 这个提示需要删掉');
+          console.log('getACoupon err: ',e);
+      }
+    });
+  }
   //限购，加减数量判断
   function limitGoodsNum(num){
     var maxBuyNum = parseInt($('.countNum').attr('data-max-buy-num'));
@@ -80,6 +149,11 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
     var countNum = parseInt($('.countNum').attr('data-num'));
     var postage = parseInt($('.all_postage_num').attr('data-postage'));
     var m = good_price * countNum + postage;
+    
+    if(localStorage.getItem('xsxwcouponprice')){
+      m=m-localStorage.getItem('xsxwcouponprice')
+      $('.good_price').text(m)
+    }
     $('.all_price_num').text(m);
   }
   // 生成订单
@@ -138,7 +212,7 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
               }
           ],
           "type":1, //类型 1商品订单 0打赏
-          // "user_coupon_id":""
+          "user_coupon_id":user_coupon_id
       };
 
       $.ajax({
