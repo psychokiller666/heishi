@@ -126,9 +126,12 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     //检查是不是玩过九折的活动
     if(window.localStorage.getItem('selectStar')&&window.localStorage.getItem('answer')){
       // let url = 'https://img8.ontheroadstore.com/dev_test/1-A-B-C.json?callback=callback'
-      let url =`https://img8.ontheroadstore.com/dev_test/${window.localStorage.getItem('jsonname')}.json?123`
+      let url =`https://img8.ontheroadstore.com/perfume/json/${window.localStorage.getItem('jsonname')}.json?1134`
       $.getJSON(url,function(data){
         $('.good_single_price').find('.font_din').html(localStorage.getItem('xsxwprice'))
+        $('.origin_price').show()
+        $('.origin_price').css('font-weight','900')
+        $('.origin_price').html('¥'+data.posts.goods.price)
         if(loginStatus){
           getDiscountCoupon([data.coupon_id]) 
           // getDiscountCoupon(["2019051615403329357"]) 
@@ -139,7 +142,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         var str = "/User/HsOrder/add/object_id/"+data.object_id+"/mid/"+data.goods_id+"/number/"+1+".html?fromxsxw=nineDiscount";
         $('.footer_nav').find(".buy_btn").attr("data-url",str);
         $('.nine_discount').show()
-        $('.nine_discount').find('.dis_select_type').html(data.posts.post_title)
+        $('.nine_discount').find('.dis_select_type').html(data.posts.goods.type_desc)
       })
     }
    
@@ -159,7 +162,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         console.log('已经获取九折优惠券')
       },
       error: function(e){
-          $.toast('你还没有九折优惠资格 这个提示需要删掉');
+          // $.toast('你还没有九折优惠资格 这个提示需要删掉');
           console.log('getACoupon err: ',e);
       }
     });

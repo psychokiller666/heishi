@@ -29,10 +29,10 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
     $('.numbers').find('.add').hide()
     if(window.localStorage.getItem('selectStar')&&window.localStorage.getItem('answer')){
       // let url = 'https://img8.ontheroadstore.com/dev_test/1-A-B-C.json?callback=callback'
-      let url =`https://img8.ontheroadstore.com/dev_test/${window.localStorage.getItem('jsonname')}.json?123`
+      let url =`https://img8.ontheroadstore.com/perfume/json/${window.localStorage.getItem('jsonname')}.json?123`
       $.getJSON(url,function(data){
-        localStorage.setItem('xsxwcouponid',data.coupon_id)
-        getCouponId(data.coupon_id) //  2019051615403329357
+        localStorage.setItem('xsxwcouponid',data.coupon_id) 
+        getDiscountCoupon([data.coupon_id])
       })
     }
   }
@@ -42,6 +42,28 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
     if (r != null)
         return decodeURI(r[2]);
     return null;
+  }
+
+   //领取九折优惠券
+   function getDiscountCoupon(ids){
+    var url = ApiBaseUrl + '/appv6/coupon/receiveMultipleCoupon';
+    $.ajax({
+      type: "POST",
+      url: url,
+      dataType: 'json',
+      data: {couponList:ids},
+      headers: {
+        'phpsessionid': PHPSESSID
+      },
+      success: function(data){
+       
+        getCouponId(ids)
+      },
+      error: function(e){
+          // $.toast('你还没有九折优惠资格 这个提示需要删掉');
+          console.log('getACoupon err: ',e);
+      }
+    });
   }
   //获取可使用的优惠券id
   function getCouponId(id){
@@ -74,17 +96,20 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
         'phpsessionid': PHPSESSID
       },
       success: function(data){
+  
         console.log(data.data.useCoupon)
         let useCoupon = data.data.useCoupon
         useCoupon.forEach(v => {
-          if(v.coupon_id==id){
+          if(v.coupon_id==id[0]){
+           
             user_coupon_id = v.id
+          
           }
         });
         
       },
       error: function(e){
-          $.toast('你还没有九折优惠资格 这个提示需要删掉');
+          // $.toast('你还没有九折优惠资格 这个提示需要删掉');
           console.log('getACoupon err: ',e);
       }
     });
@@ -171,6 +196,19 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
     if(payment_status){
       return $.toast('订单正在生成中');
     }
+    //九折
+    if(getQueryString("fromxsxw")=="nineDiscount"){
+      if(!user_coupon_id){
+        let url =`https://img8.ontheroadstore.com/perfume/json/${window.localStorage.getItem('jsonname')}.json?1134`
+        $.getJSON(url,function(data){
+          localStorage.setItem('xsxwcouponid',data.coupon_id) 
+          
+          getDiscountCoupon([data.coupon_id])
+        })
+        return $.toast('订单正在生成中')
+      }
+    }
+   
     payment_status = true;
 /*    var post_data = {
       'order[orders][0][seller_name]':$(this).data('username'),
