@@ -174,11 +174,12 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
     var countNum = parseInt($('.countNum').attr('data-num'));
     var postage = parseInt($('.all_postage_num').attr('data-postage'));
     var m = good_price * countNum + postage;
-    
+    if(getQueryString("fromxsxw")=="nineDiscount"){
     if(localStorage.getItem('xsxwcouponprice')){
       m=m-localStorage.getItem('xsxwcouponprice')
       $('.good_price').text(m)
     }
+  }
     $('.all_price_num').text(m);
   }
   // 生成订单
