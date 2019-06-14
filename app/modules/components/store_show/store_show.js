@@ -126,7 +126,13 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     //检查是不是玩过九折的活动
     if(window.localStorage.getItem('selectStar')&&window.localStorage.getItem('answer')){
       // let url = 'https://img8.ontheroadstore.com/dev_test/1-A-B-C.json?callback=callback'
-      let url =`https://img8.ontheroadstore.com/perfume/json/${window.localStorage.getItem('jsonname')}.json?1134`
+     // let url =`https://img8.ontheroadstore.com/perfume/json/${window.localStorage.getItem('jsonname')}.json?1134`
+      let url
+      if(localStorage.getItem('xsxw2Report')){
+        url =`https://img8.ontheroadstore.com/perfume/jsons/${window.localStorage.getItem('jsonname')}.json`
+      }else{
+        url =`https://img8.ontheroadstore.com/perfume/json/${window.localStorage.getItem('jsonname')}.json`
+      }
       $.getJSON(url,function(data){
         $('.good_single_price').find('.font_din').html(localStorage.getItem('xsxwprice'))
         $('.origin_price').show()

@@ -29,7 +29,13 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
     $('.numbers').find('.add').hide()
     if(window.localStorage.getItem('selectStar')&&window.localStorage.getItem('answer')){
       // let url = 'https://img8.ontheroadstore.com/dev_test/1-A-B-C.json?callback=callback'
-      let url =`https://img8.ontheroadstore.com/perfume/json/${window.localStorage.getItem('jsonname')}.json?123`
+      let url
+      if(localStorage.getItem('xsxw2Report')){
+        url =`https://img8.ontheroadstore.com/perfume/jsons/${window.localStorage.getItem('jsonname')}.json`
+      }else{
+        url =`https://img8.ontheroadstore.com/perfume/json/${window.localStorage.getItem('jsonname')}.json`
+      }
+     
       $.getJSON(url,function(data){
         localStorage.setItem('xsxwcouponid',data.coupon_id) 
         getDiscountCoupon([data.coupon_id])
@@ -200,7 +206,13 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
     //九折
     if(getQueryString("fromxsxw")=="nineDiscount"){
       if(!user_coupon_id){
-        let url =`https://img8.ontheroadstore.com/perfume/json/${window.localStorage.getItem('jsonname')}.json?1134`
+        // let url =`https://img8.ontheroadstore.com/perfume/json/${window.localStorage.getItem('jsonname')}.json?1134`
+        let url
+        if(localStorage.getItem('xsxw2Report')){
+          url =`https://img8.ontheroadstore.com/perfume/jsons/${window.localStorage.getItem('jsonname')}.json`
+        }else{
+          url =`https://img8.ontheroadstore.com/perfume/json/${window.localStorage.getItem('jsonname')}.json`
+        }
         $.getJSON(url,function(data){
           localStorage.setItem('xsxwcouponid',data.coupon_id) 
           
