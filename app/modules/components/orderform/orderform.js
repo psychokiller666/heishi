@@ -190,7 +190,16 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
   }
   // 生成订单
   var payment_status = false;
+  //防止多次点击
+  let clickFlag = false
   $('.payment').click(function(){
+    if(clickFlag==true){
+      return
+    }
+    clickFlag = true
+    setTimeout(()=>{
+      clickFlag = false
+    },600)
     var number = $('.countNum').attr('data-num');
     var addressid = $(this).attr('data-address_id');
 
