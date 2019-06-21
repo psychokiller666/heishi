@@ -232,6 +232,108 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
       })
     });
   })
+
+    //输入框失去焦点时
+    let isIdCardOk = false
+    $('.post_card input').blur(function(){
+      if(checkIdCard()){
+        let url = ApiBaseUrl + '/appv6/checkIdNumber';
+        let addId = $('.payment').attr('data-address_id')
+        let idNum =  $('.post_card input').val()
+        $.ajax({
+          type: "POST",
+          url: url,
+          dataType: 'json',
+          headers: ajaxHeaders,
+          data: {
+            address_id: addId,
+            id_number: idNum
+          },
+        
+          success: function(data){
+            if(data.code==1){
+              $('.post_card input').hide()
+              $('.post_card .finish_id').show()
+              $('.post_card input').val(idNum)
+              $('.post_card .finish_id').html(idNum.substr(0,4)+'**********'+idNum.substr(14,4))
+              $.toast('保存成功')
+              isIdCardOk =true
+            }else{
+              $.toast(data.info)
+              isIdCardOk =false
+            }
+           
+          },
+          error: function(e){
+            isIdCardOk = false
+          }
+        });
+  
+      }
+    })
+    //点击重新输入新的
+    $('.finish_id').click(function(){
+      $('.post_card input').show()
+      $('.post_card .finish_id').hide()
+      isIdCardOk =false
+    })
+    //检查身份证号js
+    function checkIdCard(){
+      let _postCard = false
+      let postCard = $('.post_card input').val()
+      var p = /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
+      if(!p.test(postCard)){
+        $.toast('请检查身份证号')
+        isIdCardOk =false
+      } else{
+        isIdCardOk =true
+        _postCard = postCard
+      }
+      return _postCard
+    }
+    //验证是否有海外商品
+    let isOverSeas = false
+    function checkNeedIdCard(){
+      let url = ApiBaseUrl + '/appv6/getPostRequireDuty';
+      let addId = $('.payment').attr('data-address_id')
+      if(addId==0){
+        return
+      }
+      let list = []
+      $('.lists').each(function(index){
+        $(this).find('.good_info').each(function(i){
+          list.push($(this).data('object_id')) 
+        });
+      })
+
+      $.ajax({
+        type: "GET",
+        url: url,
+        dataType: 'json',
+        headers: ajaxHeaders,
+        data: {
+          address_id: addId,
+          post_list: list
+        },
+        success: function(data){
+          // $.toast('保存成功')
+          if(data.data.status){
+            isOverSeas= true
+            $('.post_card').show()
+            if(data.data.shenfenzheng!=""){
+              isIdCardOk = true
+            }
+          }
+        },
+        error: function(e){
+  
+        }
+      });
+    }
+    setTimeout(()=>{
+      checkNeedIdCard()
+    },100)
+   
   //商品加减
   page.on("click",".minus",function(){
     //如果商品售空直接返回
@@ -352,6 +454,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
       boolean = false;
     }
     sessionStorage.cid = JSON.stringify(arr);
+    
     return boolean;
   })
   //计算总价
@@ -497,6 +600,12 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
 
     if(addressid==0){
         return $.toast('请先选择地址');
+    }
+    //如果是海外商品
+    if(isOverSeas){
+      if(!isIdCardOk){
+        return $.toast('请检查身份证号');
+      }
     }
     payment_status = true;
 
