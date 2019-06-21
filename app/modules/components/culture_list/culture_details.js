@@ -119,10 +119,10 @@ $(document).on('pageInit','.culture_details', function (e, id, page) {
       var str = '<a class="praise_btn hs-icon" data-id="'+ id +'"></a>';
       $('.like_list').find('a').remove();
       $.each(data.data.data ,function(index, item){
-        if(item && index < 6){
+        if(item && index < 7){
           str += '<a href="/User/index/index/id/'+item.uid+'.html" data-layzr="'+item.avatar+'" data-layzr-bg class="external"></a>';
-        }else if(item && index == 6){
-          str += '<a href="/Portal/HsArticle/like_list/id/'+ id +'.html" class="more"></a>';
+        }else if(item && index == 7){
+          // str += '<a href="/Portal/HsArticle/like_list/id/'+ id +'.html" class="more"></a>';
         }else{
           str += '<a></a>';
         }

@@ -46,7 +46,7 @@ $(document).on('pageInit','.address_order', function(e, id, page){
     addr.detailInfo = $this.attr('detailInfo')
     addr.userName = $this.attr('userName')
     addr.telNumber = $this.attr('telNumber')
-
+    addr.shenfenzheng = $this.attr('shenfenzheng')
     var addrTxt = JSON.stringify(addr);
     addrTxt = escape(addrTxt);
     sessionStorage.setItem('ADDRESS',addrTxt);
@@ -164,6 +164,7 @@ $(document).on('pageInit','.address_order', function(e, id, page){
         proviceFirstStageName: address_region_arr[0],
         addressCitySecondStageName: address_region_arr[1],
         addressCountiesThirdStageName: address_region_arr[2],
+        shenfenzheng: $('#sfz').val()
       }
       if(address.hasClass('update')){
         post_data['id'] = $(that).attr('data-id');

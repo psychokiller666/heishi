@@ -521,6 +521,7 @@ function setSensorsHeader(){
         var obj = sensors.getPresetProperties();
         obj.platformType = 'H5';
         xhr.setRequestHeader('SCProperties',encodeURI(JSON.stringify(obj)));
+        xhr.setRequestHeader('version','4.5'); 
     }
 };
 
