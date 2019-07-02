@@ -58,7 +58,7 @@ var SearchInit = function () {
 		    url: '/index.php?g=restful&m=HsSearch&a=ajax_get_searching_history',
 		    success: function(data){
 		    	$.each(data, function(index, item){
-		    		var list = '<span class="word_item">'+item+'</span>';
+		    		var list = '<span class="word_item">'+item+'<span class="delete_one">X</span></span>';
 			    	$('.search_list').find('.history_search_items').append(list);
 		    	})
 		    }
@@ -122,6 +122,7 @@ var SearchInit = function () {
 	});
 	$('.searchBtn').click(function(){
 		search_content = $('.search_content').val();
+	
 		if(search_content){
 			$('.search_goods_list ul').empty();
 			start_num = 0;
@@ -178,6 +179,7 @@ var SearchInit = function () {
 		ajax_search(search_content, start_num*20);
   	});
 	function ajax_search(query, start){
+	
 		$.ajax({
 	    	type: 'GET',
 		    url: '/index.php?g=restful&m=HsSearch&a=ajax_search',
@@ -186,6 +188,7 @@ var SearchInit = function () {
 		    	start: start
 		    },
 		    success: function(data){
+				
 		    	if(data.status == 1){
 		    		if(data.data.total_pages == 1){
 		    			$('.infinite-scroll-preloader').hide();

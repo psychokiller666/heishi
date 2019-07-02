@@ -2,7 +2,10 @@
 
 var common = require('../common/common.js');
 var apiBaseUrl = common.prototype.getApiBaseUrl();
-
+var PHPSESSID = common.prototype.getCookie('PHPSESSID');
+var ajaxHeaders = {
+		'phpsessionid': PHPSESSID
+};
 
 // 搜索页修改版，为单页化搜索页定制(原先搜索页是个弹窗，现在改为单独的页面，并且可以保持当前的搜索结果及状态)
 var SearchInit = function () {
@@ -22,8 +25,20 @@ var SearchInit = function () {
         'isHistory':false,//是否是历史记录
         'isRecommend':false,//是否是推荐词
     };
-
-
+		//筛选的条件
+	var	searchClassTypes = 	sessionStorage.getItem('searchClassTypes')? sessionStorage.getItem('searchClassTypes') : 1
+	var searchSortTypes = 1
+	//物理返回做的tab状态保存
+	if(sessionStorage.getItem('searchClassTypes')){
+		let _searchTypes = parseInt(searchClassTypes)
+		let tabsHtml =`
+		<span class="${_searchTypes==1?'active':''}">综合</span>
+		<span class="${_searchTypes==2?'active':''}">销量</span>
+		<span class="${_searchTypes==3?'active':''}">新品</span>
+		<span class="price ${_searchTypes==4?'active':''}">价格</span>
+		` 
+		$('.tabs').html(tabsHtml)
+	}
     //取消按钮
     $('.search_list').find('.cancelBtn').click(function(){
 
@@ -57,28 +72,126 @@ var SearchInit = function () {
 		// 获取历史搜索词
 		$.ajax({
 		    type: 'GET',
-		    url: '/index.php?g=restful&m=HsSearch&a=ajax_get_searching_history',
+				url: apiBaseUrl + '/appv4/search/suggestions',
+				headers: ajaxHeaders,
 		    success: function(data){
-		    	$.each(data, function(index, item){
-		    		var list = '<span class="word_item">'+item+'</span>';
-			    	$('.search_list').find('.history_search_items').append(list);
-		    	})
+					if(data.data.searching_history){
+						$.each(data.data.searching_history, function(index, item){
+							var list = '<span class="word_item" item='+item+'>'+item+'<span class="delete_one"></span></span>';
+							$('.search_list').find('.history_search_items').append(list);
+						})
+					}
 		    }
 		});
 	})
 
 	// 删除全部搜索历史
 	$('.delete_all_word').click(function(){
+	
+			$(this).hide()
+			$('.delete_all').show()
+			$('.finish').show()
+			$('.delete_one').show()
+		
+	})
+	//点击完成
+	$('.finish').click(function(){
+		$('.delete_all_word').show()
+		$('.delete_all').hide()
+		$('.finish').hide()
+		$('.delete_one').hide()
+	})
+	//全部删除
+	$('.delete_all').click(function(){
 		$.confirm('是否清空所有搜索历史', function () {
 			$.ajax({
 			    type: 'GET',
 			    url: '/index.php?g=restful&m=HsSearch&a=ajax_clean_searching_history',
 			    success: function(data){
-			   		$('.search_list').find('.history_search_items').empty();
+						 $('.search_list').find('.history_search_items').empty();
+						 $('.delete_all_word').show()
+						 $('.delete_all').hide()
+						 $('.finish').hide()
+						 $('.delete_one').hide()
 			    }
 			});
 		});
 	})
+	//单个删除
+	let deleteFlag = true
+	$('.history_search_items').on('click','.delete_one',function(e){
+		if(!deleteFlag){
+			return
+		}
+		deleteFlag =false
+		setTimeout(()=>{
+			deleteFlag =true
+		},200)
+		e.stopPropagation(); 
+		e.preventDefault(); 
+
+		$.ajax({
+			type: 'GET',
+			url: '/index.php?g=restful&m=HsSearch&a=ajax_del_searching_history',
+			data: {
+				keyword: $(this).parent().attr('item')
+			},
+			success: function(data){
+				$('.search_list').find('.history_search_items').empty();
+				$.each(data, function(index, item){
+					var list = '<span class="word_item" item='+item+'>'+item+'<span class="delete_one" style="display:block;"></span></span>';
+					$('.search_list').find('.history_search_items').append(list);
+				})
+			}
+		});
+	})
+	//点击搜索历史
+$('.history_search_items').on('click','.word_item',function(){
+	if(!deleteFlag){
+		return
+	}
+	search_content = $(this).text();
+	$('.search_content').val(search_content);
+	$('.search_goods_list ul').empty();
+	start_num = 0;
+				sensorsTrack.isRecommend = false;
+				sensorsTrack.isHistory = true;
+	ajax_search(search_content, start_num,searchClassTypes,searchSortTypes);
+		$('.infinite-scroll-preloader').show();
+})
+
+var clickTabs = false
+//点击筛选条件
+$('.tabs').on('click','span',function(){
+	clickTabs = true
+	start_num= 0
+	setTimeout(()=>{
+		clickTabs=false
+	},1000)
+	$('.search_goods_list ul').empty();
+	if($(this).index()==3){
+		searchClassTypes = 4
+		$(this).removeClass('price')
+		if($('.tabs').find('.price-active-2').length){
+			searchSortTypes=2
+			$(this).addClass('price-active-1').siblings().removeClass('active').siblings().removeClass('price-active-2')
+		}else{
+			searchSortTypes=1
+			$(this).addClass('price-active-2').siblings().removeClass('active').siblings().removeClass('price-active-1')
+		}
+	
+	}else{
+		searchClassTypes = $(this).index()+1
+		searchSortTypes=1
+		if($('.tabs').find('.price-active-1')||$('.tabs').find('.price-active-2')){
+			$('.tabs').find('.price-active-1').addClass('price')
+			$('.tabs').find('.price-active-2').addClass('price')
+		}
+		$(this).addClass('active').siblings().removeClass('active').siblings().removeClass('price-active-2').siblings().removeClass('price-active-1')
+	}
+	sessionStorage.setItem('searchClassTypes',searchClassTypes)
+	ajax_search($('.search_content').val(), 0,searchClassTypes,searchSortTypes);
+})
 
 	// 长按删除单个
 	$(".history_search_items").on('touchstart', '.word_item', function(e){
@@ -88,12 +201,13 @@ var SearchInit = function () {
 	        	$(that).addClass('delete_item');
 	        }, 1500);
 		}
-        e.preventDefault();
+				e.preventDefault();
+			
 	});
 	$(".history_search_items").on('touchend', '.word_item', function(e){
         clearTimeout(timeOutEvent);
         var that = $(this);
-        
+			
 		if(timeOutEventStatue == 1){
 			$.ajax({
 			    type: 'GET',
@@ -110,14 +224,15 @@ var SearchInit = function () {
 			    }
 			});
 		}else if(timeOutEvent != 0 && !that.hasClass('delete_item')){
-			search_content = that.text();
-			$('.search_content').val(search_content);
-			$('.search_goods_list ul').empty();
-			start_num = 0;
-            sensorsTrack.isRecommend = false;
-            sensorsTrack.isHistory = true;
-			ajax_search(search_content, start_num);
-		    $('.infinite-scroll-preloader').show();
+			
+			// search_content = that.text();
+			// $('.search_content').val(search_content);
+			// $('.search_goods_list ul').empty();
+			// start_num = 0;
+      //       sensorsTrack.isRecommend = false;
+      //       sensorsTrack.isHistory = true;
+			// ajax_search(search_content, start_num);
+		  //   $('.infinite-scroll-preloader').show();
 		}
 		if(that.hasClass('delete_item')){
         	timeOutEventStatue = 1;
@@ -134,7 +249,7 @@ var SearchInit = function () {
 
 			$('.search_goods_list ul').empty();
 			start_num = 0;
-			ajax_search(search_content, start_num);
+			ajax_search(search_content, start_num,searchClassTypes,searchSortTypes);
 		    $('.infinite-scroll-preloader').show();
 
 		}else{
@@ -144,7 +259,6 @@ var SearchInit = function () {
 
 	//所有的标签项点击事件
 	$('.showall_search').on('click', '.word_item', function(){
-
 		var type = $(this).attr('data-type');
 		var url_type = $(this).attr('data-url_type');
 		if(type == 0){
@@ -155,7 +269,7 @@ var SearchInit = function () {
 			start_num = 0;
             sensorsTrack.isRecommend = true;
             sensorsTrack.isHistory = false;
-            ajax_search(search_content, start_num);
+            ajax_search(search_content, start_num,searchClassTypes,searchSortTypes);
 		    $('.infinite-scroll-preloader').show();
 			return false;
 		}else{
@@ -198,9 +312,12 @@ var SearchInit = function () {
 		if(search_nodata_status){
 			return false;
 		}
+		if(clickTabs){
+			return false;
+		}
 		loading = true;
 		start_num++;
-		ajax_search(search_content, start_num*20);
+		ajax_search(search_content, start_num*20,searchClassTypes,searchSortTypes);
   	});
 
 
@@ -216,7 +333,8 @@ var SearchInit = function () {
                     goods_id: v.id,
                     goods_title: v.title,
                     goods_cover_img: v.cover,
-                    goods_keywords: [(v.traits && v.traits[0]) ? v.traits[0].name : ''],
+										goods_keywords: [(v.traits && v.traits[0]) ? v.traits[0].name : ''],
+										goods_price: v.min_price,
                     goods_comments: "",
                     goods_hits: "",
                     goods_likes: "",
@@ -230,17 +348,18 @@ var SearchInit = function () {
     }
 
 	//搜索接口
-	function ajax_search(query, start){
-
-        sessionStorage.setItem('searchStart',start_num);
-
+	function ajax_search(query, start,_cla,_sor){
+    sessionStorage.setItem('searchStart',start_num);
 		$.ajax({
 	    	type: 'GET',
             url: apiBaseUrl + '/appv6_1/search/posts',
             data: {
-                query: query,
+								query: query,
+								searchtype: _cla,
+								sort: _sor,
                 page: start / 20 + 1
-            },
+						},
+						headers: ajaxHeaders,
             //todo 加header
 		    success: function(data){
 
@@ -261,7 +380,8 @@ var SearchInit = function () {
                         setSearchNullMsg(searchMsg);
                         $('.search_null').show();
                         // $('.conjecture_like').show();
-                        $('.search_goods_list').show();
+												$('.search_goods_list').show();
+												$('.tabs-box').show()
                         $('.search_correlation').hide();
                         var items = transData(data.data.items);
                         output(items);
@@ -278,9 +398,27 @@ var SearchInit = function () {
                         last_page = data.data.total_pages;
                         $('.search_null').hide();
                         // $('.conjecture_like').hide();
-                        $('.search_goods_list').show();
+												$('.search_goods_list').show();
+												$('.tabs-box').show()
                         $('.search_correlation').hide();
-                        var items = transData(data.data.items);
+												var items = transData(data.data.items);
+												//如果是0  添加分类按钮
+												if(start==0&&data.data.catelist.length){
+													let cateList = data.data.catelist[0]
+													let jumpCateHtml = `
+													<a class="articles external" href="/HsCategories/category_index/id/${cateList.category_id}.html">
+														<div class="jump_cate_box">
+															<img class="cate_left" src="${cateList.category_icon}">
+															<div class="cate_right">
+																<p class="name">${cateList.category_name}</p>
+																<p class="desc">${cateList.category_desc}</p>
+															</div>
+															<div class="btn">去分类逛逛</div>
+														</div>
+													</a>
+													`
+													$('.search_goods_list ul').append(jumpCateHtml);
+												}
                         output(items);
 					}
 
@@ -323,12 +461,12 @@ var SearchInit = function () {
 							              <span>'+item.goods_author_nickname+'</span>\
 							            </a>\
 							          </div>\
-							          <div class="classify">';
-						if(item.goods_keywords[0]){
-							str += '<a href="/HsCategories/tag_index/tag/'+item.goods_keywords[0]+'.html" class="external classify_keyword">'+item.goods_keywords[0]+'</a></div></div></li>';
-						}else{
-							str += '<a class="classify_keyword classify_keyword_none"></a></div></div></li>';
-						}
+							          <span class="price">￥'+item.goods_price+'</span>';
+						// if(item.goods_keywords[0]){ <div class="classify">
+						// 	str += '<a href="/HsCategories/tag_index/tag/'+item.goods_keywords[0]+'.html" class="external classify_keyword">'+item.goods_keywords[0]+'</a></div></div></li>';
+						// }else{
+						// 	str += '<a class="classify_keyword classify_keyword_none"></a></div></div></li>';
+						// }
 						$('.search_goods_list ul').append(str);
 
 		    		})
@@ -387,7 +525,8 @@ var SearchInit = function () {
                     $('.search_null').show();
                     // $('.conjecture_like').show();
                 }
-                $('.search_goods_list').show();
+								$('.search_goods_list').show();
+								$('.tabs-box').show()
                 $('.search_correlation').hide();
 
                 $('.search_content').val(searchQuery);
