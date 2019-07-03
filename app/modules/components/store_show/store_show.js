@@ -49,8 +49,8 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   let specailStart = $('.specailStart').val()
   let specailEnd = $('.specailEnd').val()
    // console.log(specailStart)
-   let _startTime =  new Date(specailStart).getTime()
-   let _endTime =  new Date(specailEnd).getTime()
+   let _startTime =  new Date(specailStart.replace(/-/g, "/")).getTime()
+   let _endTime =  new Date(specailEnd.replace(/-/g, "/")).getTime()
    let _nowTime = new Date().getTime()
    //console.log(_nowTime>_startTime||_endTime>_nowTime)
      if(_endTime>_nowTime>_startTime||_endTime>_nowTime){
@@ -241,7 +241,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         $('.delivery_time_wrap').hide();
     }
     console.log(delivery_cycle)
-    update_status(single.data('price'), single.data('postage'), single.data('remain'), single.data('presell'), single.data('special'));
+    update_status(single.data('price'), single.data('postage'), single.data('remain'), single.data('presell'), single.data('special'), single.data('special_price'));
     if(single.hasClass('no_repertory')){
       $('.footer_nav').find(".buy_btn").attr("data-remain",single.data('remain')).addClass('no_repertory');
       $('.footer_nav').find(".add_chart").attr("data-remain",single.data('remain')).addClass('no_repertory');
@@ -346,6 +346,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
     $('.type_item').find('span').removeClass('active');
     $(this).addClass('active');
+    $('.origin_price').hide();
     var price = $(this).attr('data-price');
     var item_id = $(this).attr('data-id');
     var remain = $(this).attr('data-remain');
@@ -469,7 +470,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   // 如果商品当中有款式为特价 则其他状态不显示
   $('.types').find('span').each(function(){
     if($(this).attr('data-special') == 1){
-      $('.special_offer').css('display', 'block');
+     // $('.special_offer').css('display', 'block');
      
     }
   })
@@ -481,8 +482,8 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     $('.remain').css('display', 'none');
     $('.presell_status').css('display', 'none');
     $('.presell').css('display', 'none');
-    $('.special_offer_1').css('opacity', '0');
-    $('.special_offer').css('display', 'none');
+    //$('.special_offer_1').css('opacity', '0');
+    //$('.special_offer').css('display', 'none');
     $('.presell_item').css('display', 'none');
 
     showPostage(item_id);
@@ -507,26 +508,26 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       $('.presell_status').css('display', 'block');
     }
     if(special == 1){
-      // $('.origin_price').css('display', 'block');
+      $('.origin_price').css('display', 'block');
     
       if(special_price == ""||special_price == undefined){
         return
       }
       setTimeout(()=>{
-        $('.special_offer').css('display', 'block');
-        $('.special_offer_1').css('opacity', '1');
-        // $('.special_offer_1').css('background', '#ae2121');
-        $('.special_offer_1').html('APP购买享特价￥'+parseInt(special_price))
-        $('.special_offer').html('APP购买享特价￥'+parseInt(special_price))
-        $('.special_offer').css("padding","0 .5rem 0 .2rem")
-        $('.special_offer').css("top","-.3rem")
+        // $('.special_offer').css('display', 'block');
+        // $('.special_offer_1').css('opacity', '1');
+        // // $('.special_offer_1').css('background', '#ae2121');
+        // $('.special_offer_1').html('APP购买享特价￥'+parseInt(special_price))
+        // $('.special_offer').html('APP购买享特价￥'+parseInt(special_price))
+        // $('.special_offer').css("padding","0 .5rem 0 .2rem")
+        // $('.special_offer').css("top","-.3rem")
       },100)
   
     
       
      
-      // $('.price').find('.font_din').text(parseInt(special_price));
-      // $('.origin_price').html('￥'+price);  
+      $('.price').find('.font_din').text(parseInt(special_price));
+      $('.origin_price').html('￥'+price);  
       return true
 
     }

@@ -311,10 +311,23 @@
 					}
 					.money{
 						float: right;
-						height: 0.96rem;
+						height: 1.46rem;
 						line-height: 0.96rem;
 						.font-dpr(13px);
 						color: #AE2121;
+						.prePrice {
+							display: inline-block;
+						}
+						.unitPrice {
+							display: inline-block;
+							height: .5rem;
+						}
+						.originPrice {
+							display: block;
+							line-height: .5rem;
+							color: #8E8E8E;
+							text-decoration: line-through;
+						}
 						i{
 							font-style: normal;
 						}
