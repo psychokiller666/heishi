@@ -14,7 +14,7 @@
   display: none;
   justify-content: center;
   align-items: center;
-  border-bottom:  0.0133rem solid #E8E8E8;
+  border-bottom:  0.0183rem solid #E8E8E8;
   span{
     width: 2.3rem;
     font-size: .36rem;
@@ -164,7 +164,7 @@
   .search_correlation{
     padding: 0 0.334rem;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
     height: 100%;
     .history_search,
     .showall_search{
@@ -191,7 +191,7 @@
           height: 0.667rem;
           margin-right: 0.2rem;
           margin-bottom: 0.33rem;
-          border: 0.013rem solid #E8E8E8;
+          border: 1px solid #E8E8E8;
           line-height: 0.667rem;
           text-align: center;
           padding: .06rem 0.33rem;
@@ -224,8 +224,9 @@
         display: none;
       }
       .history_search_items .word_item{
-        min-width: 0.8rem;
-        position: relative;
+        // min-width: 0.8rem;
+        // position: relative;
+        // z-index: 2;
         &.delete_item:after{
           content: '删除';
           width: 100%;
@@ -273,7 +274,7 @@
         height: 1.5rem;
         padding: .4rem 0;
         margin: 0 .4rem .4rem;
-        border-bottom:  0.0133rem solid #E8E8E8;
+        border-bottom:  0.0183rem solid #E8E8E8;
       
         .cate_left{
           float: left;
@@ -315,7 +316,7 @@
         }
       }
       li {
-          border-bottom: 0.0133rem solid #E8E8E8;
+          border-bottom: 0.0183rem solid #E8E8E8;
           margin: 0 0.4rem 0.533rem;
           .hs-cf;
           &:last-child {

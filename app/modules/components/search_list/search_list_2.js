@@ -103,7 +103,7 @@ var SearchInit = function () {
 	})
 	//全部删除
 	$('.delete_all').click(function(){
-		$.confirm('是否清空所有搜索历史', function () {
+		// $.confirm('是否清空所有搜索历史', function () {
 			$.ajax({
 			    type: 'GET',
 			    url: '/index.php?g=restful&m=HsSearch&a=ajax_clean_searching_history',
@@ -115,11 +115,11 @@ var SearchInit = function () {
 						 $('.delete_one').hide()
 			    }
 			});
-		});
+		// });
 	})
 	//单个删除
 	let deleteFlag = true
-	$('.history_search_items').on('click','.delete_one',function(e){
+	$('.history_search').on('click','.delete_one',function(e){
 		if(!deleteFlag){
 			return
 		}
@@ -129,7 +129,6 @@ var SearchInit = function () {
 		},200)
 		e.stopPropagation(); 
 		e.preventDefault(); 
-
 		$.ajax({
 			type: 'GET',
 			url: '/index.php?g=restful&m=HsSearch&a=ajax_del_searching_history',
@@ -146,7 +145,7 @@ var SearchInit = function () {
 		});
 	})
 	//点击搜索历史
-$('.history_search_items').on('click','.word_item',function(){
+$('.history_search').on('click','.word_item',function(){
 	if(!deleteFlag){
 		return
 	}
@@ -194,51 +193,51 @@ $('.tabs').on('click','span',function(){
 })
 
 	// 长按删除单个
-	$(".history_search_items").on('touchstart', '.word_item', function(e){
-		var that = this;
-		if(timeOutEventStatue == 0){
-	        timeOutEvent = setTimeout(function(){
-	        	$(that).addClass('delete_item');
-	        }, 1500);
-		}
-				e.preventDefault();
+	// $(".history_search_items").on('touchstart', '.word_item', function(e){
+	// 	var that = this;
+	// 	if(timeOutEventStatue == 0){
+	//         timeOutEvent = setTimeout(function(){
+	//         	$(that).addClass('delete_item');
+	//         }, 1500);
+	// 	}
+	// 			e.preventDefault();
 			
-	});
-	$(".history_search_items").on('touchend', '.word_item', function(e){
-        clearTimeout(timeOutEvent);
-        var that = $(this);
+	// });
+	// $(".history_search_items").on('touchend', '.word_item', function(e){
+  //       clearTimeout(timeOutEvent);
+  //       var that = $(this);
 			
-		if(timeOutEventStatue == 1){
-			$.ajax({
-			    type: 'GET',
-			    url: '/index.php?g=restful&m=HsSearch&a=ajax_del_searching_history',
-			    data: {
-			    	keyword: that.text()
-			    },
-			    success: function(data){
-				    $('.search_list').find('.history_search_items').empty();
-			    	$.each(data, function(index, item){
-			    		var list = '<span class="word_item">'+item+'</span>';
-				    	$('.search_list').find('.history_search_items').append(list);
-			    	})
-			    }
-			});
-		}else if(timeOutEvent != 0 && !that.hasClass('delete_item')){
+	// 	if(timeOutEventStatue == 1){
+	// 		$.ajax({
+	// 		    type: 'GET',
+	// 		    url: '/index.php?g=restful&m=HsSearch&a=ajax_del_searching_history',
+	// 		    data: {
+	// 		    	keyword: that.text()
+	// 		    },
+	// 		    success: function(data){
+	// 			    $('.search_list').find('.history_search_items').empty();
+	// 		    	$.each(data, function(index, item){
+	// 		    		var list = '<span class="word_item">'+item+'</span>';
+	// 			    	$('.search_list').find('.history_search_items').append(list);
+	// 		    	})
+	// 		    }
+	// 		});
+	// 	}else if(timeOutEvent != 0 && !that.hasClass('delete_item')){
 			
-			// search_content = that.text();
-			// $('.search_content').val(search_content);
-			// $('.search_goods_list ul').empty();
-			// start_num = 0;
-      //       sensorsTrack.isRecommend = false;
-      //       sensorsTrack.isHistory = true;
-			// ajax_search(search_content, start_num);
-		  //   $('.infinite-scroll-preloader').show();
-		}
-		if(that.hasClass('delete_item')){
-        	timeOutEventStatue = 1;
-        }
-        e.preventDefault();
-	});
+	// 		// search_content = that.text();
+	// 		// $('.search_content').val(search_content);
+	// 		// $('.search_goods_list ul').empty();
+	// 		// start_num = 0;
+  //     //       sensorsTrack.isRecommend = false;
+  //     //       sensorsTrack.isHistory = true;
+	// 		// ajax_search(search_content, start_num);
+	// 	  //   $('.infinite-scroll-preloader').show();
+	// 	}
+	// 	if(that.hasClass('delete_item')){
+  //       	timeOutEventStatue = 1;
+  //       }
+  //       e.preventDefault();
+	// });
 
 	// 开始搜索
 	$('.searchBtn').click(function(){
