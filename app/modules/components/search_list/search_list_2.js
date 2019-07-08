@@ -162,6 +162,13 @@ $('.history_search').on('click','.word_item',function(){
 var clickTabs = false
 //点击筛选条件
 $('.tabs').on('click','span',function(){
+	if(clickTabs){
+		return
+	}
+	if($('.search_content').val()==''){
+		$.toast('请输入查找的关键词');
+		return
+	}
 	clickTabs = true
 	start_num= 0
 	setTimeout(()=>{
