@@ -13,7 +13,10 @@ $(document).on('pageInit','.detail', function (e, id, page) {
   var init = new common(page);
   // 初始底部
   $('.hs-main').css('bottom', $('.reply_content').height() + 'px');
-
+  $("input").blur(function(){
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  });
   var sensorFrom = init.getUrlParam('from')||'';
   if(sensorFrom==1){
       init.sensors.track('contactSeller', {
@@ -501,7 +504,7 @@ $(document).on('pageInit','.detail', function (e, id, page) {
       }
       //用户存在，没有错误
       if(msg.status == 'success'){
-        var str = '<li class="me"><span class="avatar"></span><div class="content_bd">'+msg.text+'</div><span class="date">'+messageTime(msg['time'])+'</span></li>';
+        var str = '<li class="me"><span class="avatar"  style="background-image: url('+myAvatar+')"></span><div class="content_bd">'+msg.text+'</div><span class="date">'+messageTime(msg['time'])+'</span></li>';
         chat_list.find('ul').append(str);
         $('.reply_text').val('');
         $('.content').scrollTop($('.content ul').height());
