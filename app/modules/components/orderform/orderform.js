@@ -238,14 +238,16 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
     
       success: function(data){
         // $.toast('保存成功')
-        
-        if(data.data.status){
-          isOverSeas= true
-          $('.post_card').show()
-          if(data.data.shenfenzheng!=""){
-            isIdCardOk = true
+        if(data.data){
+           if(data.data.status){
+            isOverSeas= true
+            $('.post_card').show()
+            if(data.data.shenfenzheng!=""){
+              isIdCardOk = true
+            }
           }
         }
+       
       },
       error: function(e){
         sessionStorage.setItem('ADDRESS','')

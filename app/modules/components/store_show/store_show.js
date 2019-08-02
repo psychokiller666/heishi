@@ -52,8 +52,8 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
    let _startTime =  new Date(specailStart.replace(/-/g, "/")).getTime()
    let _endTime =  new Date(specailEnd.replace(/-/g, "/")).getTime()
    let _nowTime = new Date().getTime()
-   //console.log(_nowTime>_startTime||_endTime>_nowTime)
-     if(_endTime>_nowTime>_startTime||_endTime>_nowTime){
+   //console.log(_nowTime>_startTime||_endTime>_nowTime)_endTime>_nowTime>_startTime||_endTime>_nowTime
+     if(_nowTime>_startTime&&_endTime>_nowTime){
        //倒计时逻辑
        $('.specail-time').css('display','block')
        countDown((_endTime-new Date().getTime())/1000)
@@ -226,7 +226,6 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   var single = type_items_span.eq(0);
   if(type_items_span.length == 1){
     $('.select').remove();
-
     //发货周期
     var delivery_cycle = single.attr('data-delivery_cycle');
     if(delivery_cycle && delivery_cycle>0){
@@ -241,7 +240,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         $('.delivery_time_wrap').hide();
     }
     console.log(delivery_cycle)
-    update_status(single.data('price'), single.data('postage'), single.data('remain'), single.data('presell'), single.data('special'), single.data('special_price'));
+    update_status(single.data('price'), single.data('postage'), single.data('remain'), single.data('presell'), single.data('special'), single.data('special_price'),single.data('vip_id'),single.data('vip_price'),single.data('vip_only'));
     if(single.hasClass('no_repertory')){
       $('.footer_nav').find(".buy_btn").attr("data-remain",single.data('remain')).addClass('no_repertory');
       $('.footer_nav').find(".add_chart").attr("data-remain",single.data('remain')).addClass('no_repertory');
@@ -356,6 +355,9 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     var special_price = $(this).attr('data-special_price')
     var special_start = $(this).attr('data-special_start')
     var special_end = $(this).attr('data-special_end')
+    var vipId = $(this).attr('data-vip_id')
+    var vipPrice = $(this).attr('data-vip_price')
+    var vipOnly = $(this).attr('data-vip_only')
    
 
     //判断特卖时间
@@ -369,7 +371,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     var type_desc = $(this).text();
     $('.select').find('.select_type').text(type_desc);
     $('.buy').find('.add').attr('data-remain', remain);
-    update_status(price, item_id, remain, presell, special,special_price);
+    update_status(price, item_id, remain, presell, special,special_price,vipId,vipPrice,vipOnly);
     // 设置立即购买跳转链接
     var id = $(this).data("id");
     var article_id = $(this).data("articleid");
@@ -459,6 +461,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     if(type == 0){
       shopping(article_id, styles_id, num);
     }else if(type == 1){
+      
       location.href = "/User/HsOrder/add/object_id/"+article_id+"/mid/"+styles_id+"/number/"+num+".html";
     }
     if($(that).hasClass('confirm')){
@@ -475,7 +478,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
   })
 
-  function update_status(price, item_id, remain, presell, special,special_price) {
+  function update_status(price, item_id, remain, presell, special,special_price,vip_id,vip_price,vip_only) {
    
     $('.postage').css('display', 'none');
     $('.remain_tension').css('display', 'none');
@@ -485,9 +488,23 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     //$('.special_offer_1').css('opacity', '0');
     //$('.special_offer').css('display', 'none');
     $('.presell_item').css('display', 'none');
-
-    showPostage(item_id);
-
+    $('.vip-price').remove()
+    $('.vip-mark').remove()
+    showPostage(item_id,vip_only);
+    if(vip_price!='0'){
+      let addHtmlPrice = `
+        <span class="vip-price">￥${vip_price}</span>
+      ` 
+      $('.good_single_price').append(addHtmlPrice)
+    }
+    if(vip_only!="0"){
+      $('.good_tag').hide()
+      let addHtmlMark = `
+        <span class="vip-mark"></span>
+      ` 
+      $('.good_single_price').append(addHtmlMark)
+    }
+    
     // 如果是特价，其他状态不显示
     if(price){
       $('.price').find('.font_din').text(price);
@@ -524,10 +541,12 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       },100)
   
     
-      
+      if(_nowTime>_startTime&&_endTime>_nowTime){
+        $('.price').find('.font_din').text(parseInt(special_price));
+        $('.origin_price').html('￥'+price);  
+      }
      
-      $('.price').find('.font_din').text(parseInt(special_price));
-      $('.origin_price').html('￥'+price);  
+     
       return true
 
     }
@@ -536,8 +555,9 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   showPostage();//初始化显示隐藏包邮标签
 
     //显示/隐藏包邮
-  function showPostage(item_id) {
+  function showPostage(item_id,vip_only) {
       var postageObj = window.POSTAGE_OBJ;
+      // console.log(item_id)
       var postage = 0;
       if (postageObj) {
           if (item_id) {
@@ -555,6 +575,12 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
               $('.postage').css('display', 'none');
           }
       }
+      //会员商品隐藏标签
+      if(vip_only!="0"){
+        $('.good_tag').hide()
+      }
+      
+     
   }
 
 

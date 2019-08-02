@@ -264,11 +264,48 @@
         //border-bottom: 0.213rem solid #F5F5F5;
         .hs-cf;
         .price{
-            .font-dpr(20px);
+            .font-dpr(12px);
             line-height: 0.61rem;
             float: left;
             margin-left: -0.1rem;
             color: #ae2121;
+            position: relative;
+            .font_din{
+                .font-dpr(24px);
+                font-weight: 900;
+            }
+            .vip-price{
+                .font-dpr(16px);
+                display: inline-block;
+                height: .45rem;
+                line-height: .45rem;
+                color: #000;
+                font-weight: 900;
+                margin-left: .3rem;
+                position: relative;
+                &::after{
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    right: -1rem;
+                    top: 0;
+                    width: .95rem;
+                    height: .45rem;
+                    background: url(//img8.ontheroadstore.com/H5_Icon/vip-sign-icon.png) center center;
+                    background-size: cover;
+                }
+                
+            }
+            .vip-mark{
+                position: absolute;
+                left: 6.5rem;
+                top: .18rem;
+                display: block;
+                width: 2.6rem;
+                height: .35rem;
+                background: url(//img8.ontheroadstore.com/H5_Icon/vip-good-mark.png) center center;
+                background-size: cover;
+            }
         }
         .good_limit_num,
         .remain,

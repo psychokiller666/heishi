@@ -94,7 +94,10 @@ $(document).on('pageInit','.chat_list_group', function (e, id, page) {
   var myId = $('#cnzz_user_id').val();
   var IMmyId = $('#cnzz_user_id').val();
   var nim = null;
-  if(GV.HOST == '//hstest.ontheroadstore.com/'){
+  // if(GV.HOST == '//hstest.ontheroadstore.com/'){	  if (GV.HOST == '//hstest.ontheroadstore.com/') {
+  //   IMmyId = 'hstest'+IMmyId;	
+  // }	
+  if (GV.HOST != 'http://hs.ontheroadstore.com/' && GV.HOST != 'https://hs.ontheroadstore.com/') {
     IMmyId = 'hstest'+IMmyId;
   }
   $.ajax({
