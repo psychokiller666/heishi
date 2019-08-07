@@ -20,6 +20,43 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
   	document.body.scrollTop = 0;
 	  document.documentElement.scrollTop = 0;
   });
+  //检测是否能购买会员商品
+  var vipInfo = JSON.parse($('.vipInfo').val())
+  // vipInfo=[]
+  var goodInfo = JSON.parse($('.goodInfo').val())
+  let backFlag = true // true：不能买 ;  false：能买
+  console.log(vipInfo)
+  console.log(goodInfo)
+  if(goodInfo.vip_only==1){
+    backFlag = true
+    vipInfo.forEach(v=>{
+      if(v.vip_id==goodInfo.vip_id){
+        backFlag= false
+      }
+    })
+  }else{
+     backFlag = false
+  }
+
+  if(backFlag){
+    $('.backLayer').show()
+  }else{
+    $('.backLayer').hide()
+    if(goodInfo.vip_price!=0){
+        $('.appUseVip').show()
+      }
+  }
+
+  
+  $('.backLayer').on('click','.back',function(){
+    location.href="/Portal/Index/index.html"
+  })
+  $('.backLayer').on('click','.vip',function(){
+    location.href=""
+  })
+  $('body').on('click','.closeAppUseVip',function(){
+    $('.appUseVip').hide()
+  })
   //如果是九折购买
   var user_coupon_id = null
   window.user_coupon_price =null

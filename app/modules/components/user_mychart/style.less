@@ -1,4 +1,48 @@
 .user-mychart{
+	.isVipLayer,.checkVipLayer{
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		z-index: 100;
+		display: none;
+		.mask{
+			width: inherit;
+			height: inherit;
+			background: rgba(0,0,0,0.6);
+			position: absolute;
+			z-index: 101;
+		}
+		.layer{
+			width: 7rem;
+			min-height: 4rem;
+			position: fixed;
+			left: 1.5rem;
+			top: 50%;
+			transform: translateY(-50%);
+			z-index: 102;
+			background: #FFF;
+			border-radius: .1rem;
+			overflow: hidden;
+			.font-dpr(14px);
+			.msg{
+				padding: .8rem .5rem 1.8rem .5rem;
+				text-align: center;
+			}
+			.btn{
+				width: 100%;
+				height: 1.5rem;
+				position: absolute;
+				bottom: 0;
+				text-align: center;
+				border-top: 1px solid #333;
+				line-height: 1.5rem;
+				.font-dpr(16px);
+				font-weight: 900;
+			}
+		}
+	}
 	.post_card{
 		width: 9.2rem;
 		height: 1.2rem;

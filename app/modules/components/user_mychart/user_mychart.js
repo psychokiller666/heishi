@@ -49,7 +49,6 @@ $(document).on('pageInit', '.user-mychart', function (e, id, page) {
     chartData = JSON.parse($cartData.attr('value'));
     initLimitBuy(chartData);
   }
-  console.log(chartData)
   init.sensorsFun.bottomNav();
 
   $(page).find('.recommend').on('click', function () {
@@ -64,7 +63,7 @@ $(document).on('pageInit', '.user-mychart', function (e, id, page) {
     _vipInfo = JSON.parse(_vipInfo.attr('value'));
   }
   //测试非会员
-  //_vipInfo = []
+  // _vipInfo = []
 
 
   //初始加载
@@ -447,9 +446,11 @@ $(document).on('pageInit', '.user-mychart', function (e, id, page) {
   })
 
   //点击购买前的判断
+  var jumpBeforeCheck = 0;//检查结果的参数
   page.on("click", ".purchase", function () {
     var arr = [],
       boolean = true;
+    let vipGoodList = '';
     $('.checkbox').each(function () {
       if ($(this).data("cid") && $(this).hasClass("noInventory")) return;
       var num = parseInt($(this).parents(".item").find('.countNum').text());
@@ -463,11 +464,22 @@ $(document).on('pageInit', '.user-mychart', function (e, id, page) {
         }
         arr.push(obj);
       }
+      if($(this).data("vip_price") && $(this).hasClass("affirm")){
+        jumpBeforeCheck = 1
+        vipGoodList+= $(this).data('title')+'、'
+      }
     })
     if (!arr.length) {
       $.toast('请选择要购买的商品', 1000);
       boolean = false;
     }
+    if(jumpBeforeCheck==1&&_vipInfo.length>0){
+      $('.isVipLayer').show()
+      $('.isVipLayer').find('.msg').html(`${vipGoodList.substring(0,vipGoodList.length-1)}商品去APP上购买才能享受VIP价格`)
+      boolean = false;
+    }
+  
+  
     sessionStorage.cid = JSON.stringify(arr);
     return boolean;
   })
@@ -1248,7 +1260,6 @@ $(document).on('pageInit', '.user-mychart', function (e, id, page) {
 
   //检查是否有资格购买
   function checkCanBuy(el) {
-    console.log('click222')
     let boolean = true
     if ($(el).data('cid') && isEditGood == false) {
       if ($(el).data('vip_only') == 1) {
@@ -1261,16 +1272,24 @@ $(document).on('pageInit', '.user-mychart', function (e, id, page) {
             }
           });
         } else {
-          $.confirm(`${$(el).data('title')}为会员专属商品，需要成为会员才有资格购买`, function () {
+          // $.confirm(`${$(el).data('title')}为会员专属商品，需要成为会员才有资格购买`, function () {
 
-          });
+          // });
+          $('.checkVipLayer').show()
+          $('.checkVipLayer').find('.msg').html(`${$(el).data('title')}为会员专属商品，需要成为会员才有资格购买`)
         }
       }
     }
     return boolean
   }
-
-
+  //close提示
+  $(page).find('.checkVipLayer').on('click','.btn',function(){
+    $('.checkVipLayer').hide()
+  })
+   //close提示
+   $(page).find('.isVipLayer').on('click','.btn',function(){
+    $('.isVipLayer').hide()
+  })
   //    购物车页神策
   //  神策埋点事件
   sensorsEvent();
