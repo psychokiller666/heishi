@@ -361,9 +361,8 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
    
 
     //判断特卖时间
-    let _startTime =  new Date(special_start).getTime()
-    let _endTime =  new Date(special_end).getTime()
-    
+    let _startTime =  new Date(special_start.replace(/-/g, "/")).getTime()
+    let _endTime =  new Date(special_end.replace(/-/g, "/")).getTime()
 
     var type_desc = $(this).text();
     $('.select').find('.select_type').text(type_desc);

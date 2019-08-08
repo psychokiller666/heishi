@@ -63,7 +63,7 @@ $(document).on('pageInit', '.user-mychart', function (e, id, page) {
     _vipInfo = JSON.parse(_vipInfo.attr('value'));
   }
   //测试非会员
-  // _vipInfo = []
+  _vipInfo = []
 
 
   //初始加载
@@ -465,7 +465,10 @@ $(document).on('pageInit', '.user-mychart', function (e, id, page) {
         arr.push(obj);
       }
       if($(this).data("vip_price") && $(this).hasClass("affirm")){
-        jumpBeforeCheck = 1
+        if(jumpBeforeCheck==0){
+          jumpBeforeCheck = 1
+        }
+       
         vipGoodList+= $(this).data('title')+'、'
       }
     })
@@ -478,8 +481,7 @@ $(document).on('pageInit', '.user-mychart', function (e, id, page) {
       $('.isVipLayer').find('.msg').html(`${vipGoodList.substring(0,vipGoodList.length-1)}商品去APP上购买才能享受VIP价格`)
       boolean = false;
     }
-  
-  
+    // boolean = false;
     sessionStorage.cid = JSON.stringify(arr);
     return boolean;
   })
@@ -525,9 +527,10 @@ $(document).on('pageInit', '.user-mychart', function (e, id, page) {
   //全选优化判断
   function allOption(that) {
     var state = true;
+   
     $(that).parents('.list').find(".details .checkbox").each(function () {
       //vip商品非必选项
-      if (!$(this).hasClass('affirm')&&$(this).data('vip_only') == 0) {
+      if (!$(this).hasClass('affirm')) {
         state = false;
         return;
       }
@@ -540,8 +543,12 @@ $(document).on('pageInit', '.user-mychart', function (e, id, page) {
     var status = true;
     $(".context").find(".checkbox").each(function () {
       //vip商品非必选项
-      if (!$(this).hasClass('affirm') && $(this).data('vip_only') == 0) {
-        status = false;
+      if (!$(this).hasClass('affirm')) {
+        if($(this).data('vip_only') == 0){
+          status = false;
+        }
+        $(this).parents('.list').find(".title .checkbox").removeClass('affirm');
+       
         return;
       }
     })
@@ -1173,6 +1180,7 @@ $(document).on('pageInit', '.user-mychart', function (e, id, page) {
   //selectBox的click函数
   function selectBoxClick(that) {
     // var that = this;
+    jumpBeforeCheck = 0
     var status = $(that).find('.checkbox').hasClass('affirm');
     var el = $(that).find('.checkbox');
     var elClass = $(that).parent().attr("class");
@@ -1218,6 +1226,7 @@ $(document).on('pageInit', '.user-mychart', function (e, id, page) {
         el.addClass("affirm");
         select(1);
       }
+     
     }
     //计算价格
     count();
@@ -1226,7 +1235,6 @@ $(document).on('pageInit', '.user-mychart', function (e, id, page) {
 
     //禁用/启用其他款式
     disableLimitAll();
-
     //判断是否要全选卖家商品或所有商品
     function select(n) {
       if (elClass == 'title') {
@@ -1236,8 +1244,6 @@ $(document).on('pageInit', '.user-mychart', function (e, id, page) {
             if (checkCanBuy(this)) {
               $(this).addClass("affirm");
             }
-
-
           } else {
             $(this).removeClass("affirm");
           }
@@ -1289,6 +1295,7 @@ $(document).on('pageInit', '.user-mychart', function (e, id, page) {
    //close提示
    $(page).find('.isVipLayer').on('click','.btn',function(){
     $('.isVipLayer').hide()
+    jumpBeforeCheck=2
   })
   //    购物车页神策
   //  神策埋点事件
