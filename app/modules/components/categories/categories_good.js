@@ -21,8 +21,11 @@ $(document).on('pageInit','.categories_good', function(e, id, page){
 
   // 搜索初始
   // SearchInit();
-  // 初始化title
-  $('.goods_filter').find('div').eq(0).addClass('active')
+  // 初始化title 修复返回时点击状态的不正确
+  if(!$('.goods_filter').find('div').hasClass('active')){
+    $('.goods_filter').find('div').eq(0).addClass('active')
+  }
+
   $('title').text($('.categories_name').val());
   // 是否显示查看下拉
   var length = $('.categories_list_row').find('.categories_item').length - 1;
