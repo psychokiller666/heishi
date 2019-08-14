@@ -381,20 +381,21 @@ $(document).on('pageInit','.user_comment_list', function (e, id, page) {
     return false;
   }
   var init = new common(page);
-  $('title').text('评论列表');
+  var ApiBaseUrl = init.getApiBaseUrl();
+  $('title').text('哆嗦列表');
   var comment_box = $('#comment');
   var comment_bd = comment_box.find('.comment_bd');
   var comment_manage = new Comment();
-  var comment_list_tpl = handlebars.compile($("#comment_list_tpl").html());
-  var comment_list_reply_tpl = handlebars.compile($("#reply_tpl").html());
+  // var comment_list_tpl = handlebars.compile($("#comment_list_tpl").html());
+  // var comment_list_reply_tpl = handlebars.compile($("#reply_tpl").html());
   // 增加模板引擎判断
-  handlebars.registerHelper('eq', function(v1, v2, options) {
-    if(v1 == v2){
-      return options.fn(this);
-    } else {
-      return options.inverse(this);
-    }
-  });
+  // handlebars.registerHelper('eq', function(v1, v2, options) {
+  //   if(v1 == v2){
+  //     return options.fn(this);
+  //   } else {
+  //     return options.inverse(this);
+  //   }
+  // });
 
   if(!init.ifLogin()){
       $(page).find('.reply_input').on('click',function(){
@@ -405,261 +406,362 @@ $(document).on('pageInit','.user_comment_list', function (e, id, page) {
       $(page).find('.reply_input .uploading input').attr('type','');
   }
 
+  var _page = 1;
+  var _rows = 15;
   var loading = false;
   var comment_type = $('.comment_type').val();//**丫的变量定义重复了，由于不知道这个变量的作用，暂时新增一个变量。
   var ajax_comment_type = $('.comment_type').val();
-  comment_list(comment_box.data('id'), '', ajax_comment_type);
-  function comment_list(post_id, cur_cid, ajax_comment_type){
-    comment_manage.add_data_comment({
-      post_id: post_id,
-      type: ajax_comment_type,
-      cur_cid: cur_cid
-    },function(data){
-      if(data.status == 1){
-        if(data.comments != null){
-          comment_bd.append(comment_list_tpl(data));
-          comment_box.attr('data-cid',comment_bd.find('.father').last().data('id'));
-          init.loadimg();
-        }
-        // 评论数不足一屏幕
-        if($('.comment_bd').height() < $('body').height()){
-          $('.infinite-scroll-preloader').remove();
-          $('.bottom_alert').css('display', 'block');
-        }
-      }else{
-        $.detachInfiniteScroll($('.infinite-scroll'));
-        $('.infinite-scroll-preloader').remove();
-        $('.bottom_alert').css('display', 'block');
-      }
-      loading = false;
-    },function(xhr, type){
-      console.log(type);
-    })
-  }
+  var _post_id = $('.article_id').val()
   page.on('infinite', function() {
     if (loading) {
       return false;
     }
     loading = true;
-    comment_list(comment_box.data('id'), comment_box.data('cid'), ajax_comment_type);
-    $.refreshScroller();
+    _page++
+    getDSList()
+    $('.infinite-scroll-preloader').css('display', 'block');
+   
   });
 
-  // 点击回复框
-  page.on('click','.comment_bd li',function(e){
-    // 图片
-    e.stopPropagation();
-    e.preventDefault();
-    if(e.srcElement.className == 'comment_image') {
-      // 调用微信图片
-      var arr = [];
-      arr.push($(e.srcElement).data('preview'));
-      wx.previewImage({
-        current: $(e.srcElement).data('preview'),
-        urls: arr
-      });
-    } else {
-      comment_type = 2;
-      el_li = $(this);
-      $('.uploading').addClass('no_uploading');
-      $('.uploading').find('.webuploader-element-invisible').attr('disabled','disabled');
-      $('.reply_text').attr('placeholder', '回复 '+ $(this).attr('data-username')).focus().val('');
-    }
-  });
-  // 适配输入框
-  $('.reply_text').focus(function(){
-    $('.content').css('overflow-y', 'hidden');
-  })
-  $('.reply_text').blur(function(){
-    $('.content').css('overflow-y', 'auto');
-    $('.reply_text').attr('placeholder', '有话快说，有屁快放。');
-    $('.uploading').removeClass('no_uploading');
-    $('.uploading').css({'display': 'block', 'color': '#000'});
-    $('.uploading').find('.webuploader-element-invisible').removeAttr('disabled','disabled');
-  })
-  // 提交
-  // 是否正在提交
-  var submit_status = false;
-  // 一级/二级评论
-  var comment_type = 1;//**这就是上文说到的重复定义变量的地方
-  // 二级评论需要传入element
-  var el_li = null;
-  var text_list = [
-  '燃料','大麻','叶子','淘宝','taobao.com','共产党','有飞','想飞','要飞','微信','加我','大妈','飞吗','飞嘛','qq','拿货','weed','机长','thc',
-  'V信','wechat','VX','蘑菇','邮票','LSD','taobao','tb','操你妈','草你妈','🍃'];
-  esc.init(text_list);
-  $('.submit').click(function(){
-    if(init.ifLogin(true) == false){
-        return ;
-    }
-    if(submit_status){
-      return false;
-    }
-    submit_status = true;
-    replyText(comment_type, el_li);
-  })
-  function replyText(father, element){
-    var comment_content = $('.reply_text').val();
-    // 如果为空
-    if(!comment_content.length){
-      $.toast('评论不能为空');
-      submit_status = false;
-      return false;
-    }
-    // 判断是否为空并且过滤关键词
-    if (esc.find(comment_content).length) {
-      $.toast('🚔 我要报警了');
-      submit_status = false;
-      return false;
-    }
-    // 评论回复参数
-    var post_data = null;
-    // 一级评论回复参数
-    if(father == 1){
-      post_data = {
-        content: comment_content,
-        post_table: comment_box.data('table'),
-        post_id: comment_box.data('id'),
-        to_uid: 0,
-        parentid: 0,
-        type: 0
-      }
-    }
-    // 二级回复
-    if(father == 2){
-      post_data = {
-        content: comment_content,
-        post_table: comment_box.data('table'),
-        post_id: comment_box.data('id'),
-        to_uid: element.data('uid'),
-        parentid: element.data('id'),
-        type: 0
-      }
-    }
-    // 根据文章类型，改变推送url
-    if($('.article_type').val() == 1){
-      post_data.url = window.location.origin + '/Portal/HsArticle/index/id/'+$('.article_id').val()+'.html';
-    }else{
-      post_data.url = window.location.origin + '/Portal/HsArticle/culture/id/'+$('.article_id').val()+'.html';
-    }
-    ajaxCommentPost(post_data, father, element);
-  }
-  function ajaxCommentPost(post_data, father, element){
+  function getDSList(){
+    
+    var url = ApiBaseUrl + `/appv5_2/goods/${_post_id}/getPurchaseList`;
     $.ajax({
-      type: 'POST',
-      url: '/index.php?g=comment&m=comment&a=post',
-      data: post_data,
-      success: function(data){
-        if(data.status == 1){
-          // 成功评论
-          $.toast('😄 评论成功');
-          $('.reply_text').val('');
-          // 一级评论
-          if(father == 1) {
-            var reply_data = {
-              is_father: true,
-              type: post_data.type,
-              comment: post_data.content,
-              username: comment_box.data('username'),
-              avatar: comment_box.data('avatar'),
-              uid: comment_box.data('uid'),
-              id: data.data.id
-            };
-            comment_bd.prepend(comment_list_reply_tpl(reply_data));
-          }
-          // 二级回复
-          if(father == 2){
-            var reply_data = {
-              is_father: false,
-              type: 0,
-              comment: post_data.content,
-              username: comment_box.data('username'),
-              parent_full_name: element.data('username'),
-              uid: comment_box.data('uid'),
-              id: data.data.id
-            };
-            if(element.hasClass('father')){
-              if(!element.find('.comment-content .reply').length){
-                element.find('.comment-content').append('<ul class="reply"></ul>');
-                element.find('.comment-content .reply').prepend(comment_list_reply_tpl(reply_data));
-              }else{
-                element.find('.comment-content .reply').prepend(comment_list_reply_tpl(reply_data));
-              }
-            }else{
-              element.parent('.reply').prepend(comment_list_reply_tpl(reply_data));
-            }
-
-          }
-          init.loadimg();
-        } else {
-          $.toast(data.info);
-        }
-        $.refreshScroller();
-        uploadReply.reset();
-        submit_status = false;
-        comment_type = 1;
-        el_li = null;
+      type: "GET",
+      url: url,
+      dataType: 'json',
+      data:{
+        page: _page,
+        rows: _rows
       },
-      error: function(xhr, type){
-        submit_status = false;
-        uploadReply.reset();
-        $.toast('网络错误 code:'+xhr);
+      success: function(data){
+      
+        $('.infinite-scroll-preloader').css('display', 'none');
+        let _addHtml = ''
+        data.data.userlist.forEach(v => {
+          let time = transTime(v.createtime)
+          _addHtml+= `
+          <li class="father">
+            <a href="/User/index/index/id/${v.uid}.html" class="avatar external" data-layzr="${v.avatar}/64">
+              <img src="${v.avatar}/64" />
+            </a>
+            <div class="username">
+              <span class="hs-fl">${v.nickname}</span>
+              <span class="hs-fr date">${time}</span>
+            </div>
+            <div class="comment-content">
+              <div class="color_2">${v.content}</div>
+            </div>
+          </li>
+          `
+        });
+        loading=false
+       if(_addHtml==''){
+        _addHtml=
+        `
+          <li  class="end">触碰到了一条很高的底线</li>
+        `
+        loading=true
+       }
+        $('.comment_bd_1').append(_addHtml)
+      
+      },
+      error: function(e){
+          console.log('哆嗦List err:',e);
       }
-    });
-  }
-  // 监听input file是否有文件添加进来
-  $('.uploading').on("change",'.webuploader-element-invisible', function(e) {
-    uploadReply.addFiles(e.target.files);
-    uploadReply.upload();
+
   });
-  var uploadReply = WebUploader.create({
-    fileNumLimit: 1,
-    auto: true,
-    server: '/index.php?g=api&m=HsFileupload&a=upload',
-    sendAsBinary: true,
-    accept: {
-      title: 'Images',
-      extensions: 'gif,jpg,jpeg,bmp,png,webp',
-      mimeTypes: 'image/*'
+
+  }
+
+  function transTime (timeTxt){
+    // 1分钟刚刚 1小时-几分钟前 n小时 n天 n周 n月 三月以上就显示年月日时分
+    timeTxt = timeTxt.replace(/-/g, "/");//ios 无法识别2018-07-23这样的格式，需要转换为2018/07/23这样的格式
+    let oldTime = new Date(timeTxt).getTime();//获取13位时间戳
+    let nowTime =  new Date().getTime();//获取当前13位时间戳
+    let diffTime = parseInt((nowTime - oldTime)/1000); //时间差，精度 : 秒
+
+    let txt = timeTxt;
+    let n = '';
+    if (diffTime < 60) {
+      txt = '刚刚'; 
+    }else if (diffTime < 60*60) {
+      txt = '几分钟前';
+    }else if (diffTime < 24*60*60) {
+      n = parseInt(diffTime / (60 * 60));
+      txt = n + '小时前';
+    }else if (diffTime < 7*24*60*60) {
+      n = parseInt(diffTime / (24 * 60 * 60));
+      txt = n + '天前';
+    }else if (diffTime < 30*24*60*60) {
+      n = parseInt(diffTime / (7 * 24 * 60 * 60));
+      txt = n + '周前';
+    }else if (diffTime < 3*30*24*60*60) {
+      n = parseInt(diffTime / (30 * 24 * 60 * 60));
+      txt = n + '个月前';
+    }else{
+      txt = timeTxt.substr(0,16)
     }
-  });
-  // 上传成功 直接评论
-  uploadReply.onUploadSuccess = function(file,response) {
-    var post_data = {
-      content: response.data,
-      post_table: comment_box.data('table'),
-      post_id: comment_box.data('id'),
-      to_uid: 0,
-      parentid: 0,
-      type: 4,
-      url:window.location.origin + window.location.pathname
-    }
-    ajaxCommentPost(post_data, 1, '');
+
+    return txt;
   }
-  // 控制进度条
-  uploadReply.onUploadProgress = function(file,percentage) {
-    var str = '正在上传：'+ percentage * 100 + '%';
-    $('.reply_text').val(str);
+  if(comment_type==2){
+    getDSList()
+    return
   }
-  // 上传出错
-  uploadReply.onUploadError = function(file,reason) {
-    uploadReply.reset();
-    $.toast(reason);
-  }
-  // 当图片初始化
-  uploadReply.onReset = function(){
-    $('.uploading').empty().append('<input type="file" class="webuploader-element-invisible" name="file" accept="image/*">');
-  }
-  // 选择时文件出错
-  uploadReply.onError = function(type){
-    if(type == 'Q_EXCEED_NUM_LIMIT'){
-      $.toast('最多可上传1张');
-    } else if(type == 'Q_EXCEED_SIZE_LIMIT') {
-      $.toast('太大了，不让传');
-    } else if(type == 'Q_TYPE_DENIED') {
-      $.toast('兄弟必须是图片');
-    }
-    uploadReply.reset();
-  }
+  // if(comment_type)
+  // comment_list(comment_box.data('id'), '', ajax_comment_type);
+  // function comment_list(post_id, cur_cid, ajax_comment_type){
+  //   comment_manage.add_data_comment({
+  //     post_id: post_id,
+  //     type: ajax_comment_type,
+  //     cur_cid: cur_cid
+  //   },function(data){
+  //     if(data.status == 1){
+  //       if(data.comments != null){
+  //         comment_bd.append(comment_list_tpl(data));
+  //         comment_box.attr('data-cid',comment_bd.find('.father').last().data('id'));
+  //         init.loadimg();
+  //       }
+  //       // 评论数不足一屏幕
+  //       if($('.comment_bd').height() < $('body').height()){
+  //         $('.infinite-scroll-preloader').remove();
+  //         $('.bottom_alert').css('display', 'block');
+  //       }
+  //     }else{
+  //       $.detachInfiniteScroll($('.infinite-scroll'));
+  //       $('.infinite-scroll-preloader').remove();
+  //       $('.bottom_alert').css('display', 'block');
+  //     }
+  //     loading = false;
+  //   },function(xhr, type){
+  //     console.log(type);
+  //   })
+  // }
+  // page.on('infinite', function() {
+  //   if (loading) {
+  //     return false;
+  //   }
+  //   loading = true;
+  //   comment_list(comment_box.data('id'), comment_box.data('cid'), ajax_comment_type);
+  //   $.refreshScroller();
+  // });
+
+  // // 点击回复框
+  // page.on('click','.comment_bd li',function(e){
+  //   // 图片
+  //   e.stopPropagation();
+  //   e.preventDefault();
+  //   if(e.srcElement.className == 'comment_image') {
+  //     // 调用微信图片
+  //     var arr = [];
+  //     arr.push($(e.srcElement).data('preview'));
+  //     wx.previewImage({
+  //       current: $(e.srcElement).data('preview'),
+  //       urls: arr
+  //     });
+  //   } else {
+  //     comment_type = 2;
+  //     el_li = $(this);
+  //     $('.uploading').addClass('no_uploading');
+  //     $('.uploading').find('.webuploader-element-invisible').attr('disabled','disabled');
+  //     $('.reply_text').attr('placeholder', '回复 '+ $(this).attr('data-username')).focus().val('');
+  //   }
+  // });
+  // // 适配输入框
+  // $('.reply_text').focus(function(){
+  //   $('.content').css('overflow-y', 'hidden');
+  // })
+  // $('.reply_text').blur(function(){
+  //   $('.content').css('overflow-y', 'auto');
+  //   $('.reply_text').attr('placeholder', '有话快说，有屁快放。');
+  //   $('.uploading').removeClass('no_uploading');
+  //   $('.uploading').css({'display': 'block', 'color': '#000'});
+  //   $('.uploading').find('.webuploader-element-invisible').removeAttr('disabled','disabled');
+  // })
+  // // 提交
+  // // 是否正在提交
+  // var submit_status = false;
+  // // 一级/二级评论
+  // var comment_type = 1;//**这就是上文说到的重复定义变量的地方
+  // // 二级评论需要传入element
+  // var el_li = null;
+  // var text_list = [
+  // '燃料','大麻','叶子','淘宝','taobao.com','共产党','有飞','想飞','要飞','微信','加我','大妈','飞吗','飞嘛','qq','拿货','weed','机长','thc',
+  // 'V信','wechat','VX','蘑菇','邮票','LSD','taobao','tb','操你妈','草你妈','🍃'];
+  // esc.init(text_list);
+  // $('.submit').click(function(){
+  //   if(init.ifLogin(true) == false){
+  //       return ;
+  //   }
+  //   if(submit_status){
+  //     return false;
+  //   }
+  //   submit_status = true;
+  //   replyText(comment_type, el_li);
+  // })
+  // function replyText(father, element){
+  //   var comment_content = $('.reply_text').val();
+  //   // 如果为空
+  //   if(!comment_content.length){
+  //     $.toast('评论不能为空');
+  //     submit_status = false;
+  //     return false;
+  //   }
+  //   // 判断是否为空并且过滤关键词
+  //   if (esc.find(comment_content).length) {
+  //     $.toast('🚔 我要报警了');
+  //     submit_status = false;
+  //     return false;
+  //   }
+  //   // 评论回复参数
+  //   var post_data = null;
+  //   // 一级评论回复参数
+  //   if(father == 1){
+  //     post_data = {
+  //       content: comment_content,
+  //       post_table: comment_box.data('table'),
+  //       post_id: comment_box.data('id'),
+  //       to_uid: 0,
+  //       parentid: 0,
+  //       type: 0
+  //     }
+  //   }
+  //   // 二级回复
+  //   if(father == 2){
+  //     post_data = {
+  //       content: comment_content,
+  //       post_table: comment_box.data('table'),
+  //       post_id: comment_box.data('id'),
+  //       to_uid: element.data('uid'),
+  //       parentid: element.data('id'),
+  //       type: 0
+  //     }
+  //   }
+  //   // 根据文章类型，改变推送url
+  //   if($('.article_type').val() == 1){
+  //     post_data.url = window.location.origin + '/Portal/HsArticle/index/id/'+$('.article_id').val()+'.html';
+  //   }else{
+  //     post_data.url = window.location.origin + '/Portal/HsArticle/culture/id/'+$('.article_id').val()+'.html';
+  //   }
+  //   ajaxCommentPost(post_data, father, element);
+  // }
+  // function ajaxCommentPost(post_data, father, element){
+  //   $.ajax({
+  //     type: 'POST',
+  //     url: '/index.php?g=comment&m=comment&a=post',
+  //     data: post_data,
+  //     success: function(data){
+  //       if(data.status == 1){
+  //         // 成功评论
+  //         $.toast('😄 评论成功');
+  //         $('.reply_text').val('');
+  //         // 一级评论
+  //         if(father == 1) {
+  //           var reply_data = {
+  //             is_father: true,
+  //             type: post_data.type,
+  //             comment: post_data.content,
+  //             username: comment_box.data('username'),
+  //             avatar: comment_box.data('avatar'),
+  //             uid: comment_box.data('uid'),
+  //             id: data.data.id
+  //           };
+  //           comment_bd.prepend(comment_list_reply_tpl(reply_data));
+  //         }
+  //         // 二级回复
+  //         if(father == 2){
+  //           var reply_data = {
+  //             is_father: false,
+  //             type: 0,
+  //             comment: post_data.content,
+  //             username: comment_box.data('username'),
+  //             parent_full_name: element.data('username'),
+  //             uid: comment_box.data('uid'),
+  //             id: data.data.id
+  //           };
+  //           if(element.hasClass('father')){
+  //             if(!element.find('.comment-content .reply').length){
+  //               element.find('.comment-content').append('<ul class="reply"></ul>');
+  //               element.find('.comment-content .reply').prepend(comment_list_reply_tpl(reply_data));
+  //             }else{
+  //               element.find('.comment-content .reply').prepend(comment_list_reply_tpl(reply_data));
+  //             }
+  //           }else{
+  //             element.parent('.reply').prepend(comment_list_reply_tpl(reply_data));
+  //           }
+
+  //         }
+  //         init.loadimg();
+  //       } else {
+  //         $.toast(data.info);
+  //       }
+  //       $.refreshScroller();
+  //       uploadReply.reset();
+  //       submit_status = false;
+  //       comment_type = 1;
+  //       el_li = null;
+  //     },
+  //     error: function(xhr, type){
+  //       submit_status = false;
+  //       uploadReply.reset();
+  //       $.toast('网络错误 code:'+xhr);
+  //     }
+  //   });
+  // }
+  // // 监听input file是否有文件添加进来
+  // $('.uploading').on("change",'.webuploader-element-invisible', function(e) {
+  //   uploadReply.addFiles(e.target.files);
+  //   uploadReply.upload();
+  // });
+  // var uploadReply = WebUploader.create({
+  //   fileNumLimit: 1,
+  //   auto: true,
+  //   server: '/index.php?g=api&m=HsFileupload&a=upload',
+  //   sendAsBinary: true,
+  //   accept: {
+  //     title: 'Images',
+  //     extensions: 'gif,jpg,jpeg,bmp,png,webp',
+  //     mimeTypes: 'image/*'
+  //   }
+  // });
+  // // 上传成功 直接评论
+  // uploadReply.onUploadSuccess = function(file,response) {
+  //   var post_data = {
+  //     content: response.data,
+  //     post_table: comment_box.data('table'),
+  //     post_id: comment_box.data('id'),
+  //     to_uid: 0,
+  //     parentid: 0,
+  //     type: 4,
+  //     url:window.location.origin + window.location.pathname
+  //   }
+  //   ajaxCommentPost(post_data, 1, '');
+  // }
+  // // 控制进度条
+  // uploadReply.onUploadProgress = function(file,percentage) {
+  //   var str = '正在上传：'+ percentage * 100 + '%';
+  //   $('.reply_text').val(str);
+  // }
+  // // 上传出错
+  // uploadReply.onUploadError = function(file,reason) {
+  //   uploadReply.reset();
+  //   $.toast(reason);
+  // }
+  // // 当图片初始化
+  // uploadReply.onReset = function(){
+  //   $('.uploading').empty().append('<input type="file" class="webuploader-element-invisible" name="file" accept="image/*">');
+  // }
+  // // 选择时文件出错
+  // uploadReply.onError = function(type){
+  //   if(type == 'Q_EXCEED_NUM_LIMIT'){
+  //     $.toast('最多可上传1张');
+  //   } else if(type == 'Q_EXCEED_SIZE_LIMIT') {
+  //     $.toast('太大了，不让传');
+  //   } else if(type == 'Q_TYPE_DENIED') {
+  //     $.toast('兄弟必须是图片');
+  //   }
+  //   uploadReply.reset();
+  // }
   
 });
