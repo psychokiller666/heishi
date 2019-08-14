@@ -36,15 +36,16 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
 
   // 搜索初始
   // SearchInit();
-
-  var mySwiper = new Swiper('.swiper-container',{
-    loop: true,
+  var mySwiper = new Swiper('.swiper-container-home',{ 
     pagination: '.swiper-pagination',
-    lazyLoading: true,
+    // lazyLoading: true,
+    loop: true,
     autoplay: 3000,
     speed:300,
-    autoplayDisableOnInteraction : false
+    watchSlidesVisibility : true,
+    autoplayDisableOnInteraction : false,
   })
+ 
   var myHitposts = new Swiper('.swiper-hitposts',{
     slidesPerView: 1.15,
     spaceBetween: '2.67%',
