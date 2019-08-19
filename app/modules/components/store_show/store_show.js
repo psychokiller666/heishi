@@ -496,6 +496,10 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     $('.footer_nav').find('.buy_btn').show()
     
     $('.vip-buy-btn').hide()
+    //vip客服按钮
+    // $('.chat_btn').find('.not-vip').css({
+    //   "display": "block"
+    // })
     showPostage(item_id,vip_only);
     // if(vip_price!='0'){
     //   let addHtmlPrice = `
@@ -514,6 +518,25 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       $('.vip-buy-btn').show()
     
       $('.good_single_price').append(addHtmlMark)
+
+      //判断user是否有vip的资格用来显示VIP客服icon
+      //let vipInfo=JSON.parse($('.vipInfo').val())
+      // vipInfo=[{
+      //   vip_id:1
+      // }]
+      // if(vipInfo){
+      //   vipInfo.forEach(v => {
+      //     if (v.vip_id == vip_id) {
+      //      $('.chat_btn').find('.not-vip').hide()
+      //      $('.chat_btn').find('.is-vip').css({
+      //        "display": "block"
+      //      })
+      //     }
+      //   });
+      // }
+
+    }else{
+      $('.chat_btn').find('.is-vip').hide()
     }
     
     // 如果是特价，其他状态不显示

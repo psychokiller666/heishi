@@ -21,9 +21,18 @@ $(document).on('pageInit','.categories_good', function(e, id, page){
 
   // 搜索初始
   // SearchInit();
+  var orderTypeIndex=0;
   // 初始化title 修复返回时点击状态的不正确
   if(!$('.goods_filter').find('div').hasClass('active')){
+    localStorage.setItem('catepage',1)
     $('.goods_filter').find('div').eq(0).addClass('active')
+  }else{
+    $('.goods_filter').find('div').forEach((v,i) => {
+      if($(v).hasClass('active')){
+        orderTypeIndex = i
+        localStorage.setItem('catepage', parseInt(localStorage.getItem('catepage'))+1)
+      }
+    });
   }
 
   $('title').text($('.categories_name').val());
@@ -77,8 +86,9 @@ $(document).on('pageInit','.categories_good', function(e, id, page){
   })
 
   //筛选切换 v4.5新增
-  var orderTypeIndex=0;
   $('.goods_filter').on('click', 'div',function(){
+    localStorage.setItem('catepage',1)
+    curPage =1
     if($(this).index()==3){
       orderTypeIndex=orderTypeIndex==3?4:3;
       if($(this).find('span').hasClass('active')){
@@ -113,13 +123,14 @@ $(document).on('pageInit','.categories_good', function(e, id, page){
 
   var categoryID = nowCategoryID;
   var tagName = nowTagName;
-  var curPage = 1;
+  var curPage = parseInt(localStorage.getItem('catepage'));
   var loading = false;
   var add_goods_status = false;
   var order_types = ["sort_by_zonghe","sort_by_xiaoliang","post_modified","sort_by_jiage_di","sort_by_jiage_gao" ]
   // 第一次以当前页id查询
-  add_goods(categoryID, tagName, curPage,order_types[0]);
+  add_goods(categoryID, tagName, curPage,order_types[orderTypeIndex]);
   function add_goods(category_id, tag, cur_page,order_type){
+    localStorage.setItem('catepage',cur_page)
     let url =   ApiBaseUrl + '/appv6_4/category/posts';
     $.ajax({
       type: 'GET',

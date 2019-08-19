@@ -63,7 +63,7 @@ $(document).on('pageInit', '.user-mychart', function (e, id, page) {
     _vipInfo = JSON.parse(_vipInfo.attr('value'));
   }
   //测试非会员
-  _vipInfo = []
+  // _vipInfo = []
 
 
   //初始加载
