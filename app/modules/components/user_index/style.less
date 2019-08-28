@@ -541,9 +541,10 @@
     background: #F2F2F2;
   }
   .header {
-    height: 4.24rem;
-    background-image: url('https://img8.ontheroadstore.com/upload/180110/a8e0ca6f97110dda7934cba1022686e3.png');
-    background-color: #000;
+    height: 6.24rem;
+    // background-image: url('https://img8.ontheroadstore.com/upload/180110/a8e0ca6f97110dda7934cba1022686e3.png');
+    // background-color: #000;
+    background: #AE2121;
     background-position: 50% 50%;
     background-repeat: no-repeat;
     background-size: cover;
@@ -580,6 +581,71 @@
       line-height: 1;
       text-align: left;
       color: #fff;
+    }
+  }
+  .vip_card_list{
+    width: 10rem;
+    height: 3.15rem;
+    position: absolute;
+    top: 2.5rem;
+    z-index: 9;
+    // padding-left: .48rem;
+    overflow: hidden;
+    .swiper-vipcard-center{
+      width: 90vw;
+      margin: 0 auto;
+      // overflow: hidden;
+    }
+    .swiper-slide{
+      // width: 8.24rem!important;
+      width: 90vw;
+      box-sizing: border-box;
+      height: 2.5rem;
+      border: .01333rem solid #FDBB25;
+      border-radius:.25rem;
+      padding: .33rem;
+      // margin-right: .25rem;
+      background: #000;
+      .font-dpr(16px);
+      color: #fff;
+      >a{
+        display: block;
+        height: inherit;
+        color: #fff;
+      }
+      .left{
+        width: 5.5rem;
+        float: left;
+        .zh_lang{
+          font-weight: bold;
+          letter-spacing:.15rem;
+        }
+      }
+      .right{
+        width: 2.5rem;
+        float: right;
+        .font-dpr(12px);
+        .vip_center{
+          float: right;
+          position: relative;
+          padding-right: .4rem;
+          &::after{
+            content: '\e512';
+            display: block;
+            position: absolute;
+            .font-dpr(14px);
+            top: .05rem;
+            right: 0;
+          }
+        }
+      }
+      .vip_mark{
+        color: #FDBB25;
+        letter-spacing:.05rem;
+      }
+    }
+    .black_bg{
+      background: #000;
     }
   }
   .ctx_wrap{

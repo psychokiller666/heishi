@@ -516,7 +516,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       $('.footer_nav').find('.add_chart').hide()
       $('.footer_nav').find('.buy_btn').hide()
       $('.vip-buy-btn').show()
-    
+      $('.vip-buy-btn').html('')
       $('.good_single_price').append(addHtmlMark)
 
       //判断user是否有vip的资格用来显示VIP客服icon

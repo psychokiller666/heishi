@@ -636,8 +636,10 @@ $(document).on('pageInit','.center', function(e, id, page){
             headers: ajaxHeaders,
             success: function (data) {
                 if (data.status == 1) {
-
                     initPartner(data.data);
+                    if(data.data.vip.length){
+                      initVipCard(data.data.vip)
+                    }
 
                 }
             },
@@ -694,6 +696,39 @@ $(document).on('pageInit','.center', function(e, id, page){
             });
 
             $partner_wrap.show();
+        }
+        function initVipCard(list){
+          let vipListHtml = ''
+          list.forEach(v => {
+            //判断跳转链接去  申请页  或者  会员中心
+            vipListHtml+=`
+            <div class="swiper-slide ${v.valid_thru?'black_bg':''}">
+              <a class="external" href="${v.valid_thru?'会员中心':'立即申请'}">
+                <div class="left">
+                  <p class="zh_lang">${v.vip_name}<span class="vip_mark">VIP</span></p>
+                  <p class="en_lang">${v.vip_english}</p>
+                </div>
+                <div class="right">
+                  <p class="vip_center hs-icon">${v.valid_thru?'会员中心':'立即申请'}</p>
+                </div>
+              </a>
+            </div>
+            `
+            if(v.valid_thru){
+              $('.header').css('background','#000')
+            }
+          });
+          $('.vip_card_list').find('.vip_wrap').append(vipListHtml)
+          var myVipCardSwiper = new Swiper('.swiper-vipcard-center',{ 
+            initialSlide:0,
+            speed:300,
+            spaceBetween: 30,
+            watchSlidesVisibility : true,
+            autoplayDisableOnInteraction : false,
+          })
+        //修复轮播小数点问题 轮播整数px
+         $('.vip_card_list').find('.vip_wrap').css('width',$('.vip_card_list').find('.vip_wrap').width()+'px')
+         $('.vip_card_list').find('.swiper-vipcard-center').css('width',$('.vip_card_list').find('.vip_wrap').width()+'px')
         }
 
     }
