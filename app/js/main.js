@@ -226,4 +226,7 @@ require('../modules/components/download/download');
 //分类top10页面
 require('../modules/components/category_top10/category_top10');
 
+//酒类专区主 页面
+require('../modules/components/wine_club/wine_club');
+
 

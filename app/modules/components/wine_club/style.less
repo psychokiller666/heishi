@@ -1,0 +1,262 @@
+.wine_club{
+  width: 100%;
+  background: #F4F4F4;
+  .hs-page{
+    width: 100%;
+    background: #F4F4F4;
+    font-size: .373rem;
+    color: #000;
+    .wine_wrap{
+      background: #D6D6D6;
+      height: 2.38rem;
+      padding-top: .5rem;
+    }
+    .wine_search{
+      width: 9.466rem;
+      height: 1.066rem;
+      margin: 0 auto;
+      background: #DDDDDD;
+      color: #B8B8B8;
+      line-height: 1.066rem;
+      font-size: .32rem;
+      position: relative;
+      vertical-align: middle;
+      .icon{
+       background: url('https://img8.ontheroadstore.com/H5_Icon/wine_search.png') no-repeat center center;
+       float: left;
+        width: 1.06rem;
+        height: 1.06rem;
+        background-size:50% 50%; 
+      }
+    }
+
+    .tab_list{
+      height: 1.546rem;
+      overflow-x: auto;
+      white-space: nowrap;
+      span{
+        display: inline-block;
+        margin: 0 .29rem;
+        padding-top: .3rem;
+        padding-bottom: .1rem;
+        position: relative;
+        color: #B2B2B2;
+        font-size: .48rem;
+        &.active{
+          color: #000;
+          &::after{
+            content: '';
+            width: 100%;
+            height: 0.025rem;
+            position: absolute;
+            bottom: 0;
+            background: #000;
+            left: 0;
+            background:rgba(0,0,0,1);
+            box-shadow:1px 1px 4px 0px rgba(0,0,0,0.5),0px 0px 1px 0px rgba(0,0,0,0.4);
+            border-radius:1px;
+          }
+        }
+      }
+    }
+
+    .wine_swiper_wrap{
+      width: 100%;
+      height: 7.146rem;
+      padding: 0;
+      .swiper-slide{
+        background: url('https://img8.ontheroadstore.com/upload/150810/08faa633d663dbcfd1d325091778c0d7.jpg') no-repeat center center;
+        background-size: cover; 
+      }
+      .swiper-pagination-bullet{
+        width: .2rem;
+        height: .2rem;
+        background: #ffffff;
+      }
+      .swiper-pagination-bullet-active{
+        background: #8F8F92;
+      }
+    }
+
+
+    .swiper_wrap_bottom{
+      width: 10rem;
+      height: .693rem;
+      background: red;
+    }
+
+    .ad_1{
+      width: 7.84rem;
+      height: 2.933rem;
+      margin: 1.066rem;
+      background: red;
+      img{
+        width: inherit;
+        height: inherit;
+      }
+    }
+
+    //四个格子
+    .four_box{
+      width: 9.466rem;
+      margin: 0 auto;
+      border-top: 0.01333rem solid #D4D4D4;
+      margin-bottom: 1.09rem;
+      &:after {
+        content: " ";
+        display: table;
+      }
+      &:after {
+        clear: both;
+      }
+      .mgt_10{
+        margin-top: .266rem;
+        border-bottom: .01333rem solid #D4D4D4; 
+      }
+      .bor_right{
+        border-right: .01333rem solid #D4D4D4; 
+      }
+      a{
+        display: block;
+        width: 50%;
+        height: 4.73rem;
+        float: left;
+        box-sizing: border-box;
+        padding: .2rem;
+        img{
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+
+    // 公路酒单
+    .road_wine_list{
+      width: 9.466rem;
+      margin: 0 auto;
+      border-top: 0.01333rem solid #D4D4D4;
+      // margin-bottom: 1.09rem;
+      .sub_tit{
+        font-size: .533rem;
+        line-height: 1.2rem;
+        font-weight: 900;
+      }
+      .nowrap_list{
+        height: 4.8rem;
+        overflow-x: auto;
+        white-space: nowrap;
+        margin-bottom: 1.09rem;
+        .wine_item{
+          width: 2.213rem;
+          height: 4.186rem;
+          display: inline-block;
+          margin: 0 0.08rem;
+          img{
+            width: 2.213rem;
+            height: 3.12rem;
+          }
+          p{
+            overflow: hidden;
+          }
+        }
+      }
+    }
+
+    // 多个酒的分类
+    .wine_cate_list{
+      width: 9.74rem;
+      padding-bottom: 2rem;
+      margin-left: .26rem;
+      position: relative;
+      border: 0;
+      border-bottom: 1px solid #F4F4F4;
+      &.wine_cate_hide{
+        height: 7.3rem;
+        overflow: hidden;
+        
+      }
+      &:after {
+        content: " ";
+        display: table;
+      }
+      &:after {
+        clear: both;
+      }
+      .cate_item{
+        width: 4.61rem;
+        height: 3.39rem;
+        margin: 0 .26rem .26rem 0;
+        background: #8F8F92;
+        float: left;
+        position: relative;
+        img{
+          width: inherit;
+          height: inherit;
+        }
+        .look_num{
+          position: absolute;
+          top: 0;
+          left: 0;
+          color: #ffffff;
+        }
+      }
+      .toggle_cate{
+        width: 9.7rem;
+        height: 2.1rem;
+        position: absolute;
+        bottom: -.1rem;
+        left: -.1rem;
+        background: #f4f4f4;
+        z-index: 2;
+        div{
+          float: left;
+          width: 9.47rem;
+          height: 1.39rem;
+          line-height: 1.386rem;
+          text-align: center;
+          background: #ffffff;
+          color: #AE2121;
+          font-size: .373rem;
+          margin-top: .25rem;
+        }
+      }
+    }
+
+    // tab标签
+    .tab_list_bot{
+      margin-top: 1rem;
+      height: 1.1rem;
+      overflow-x: auto;
+      white-space: nowrap;
+      border-bottom: .01333rem solid #8F8F92;
+      span{
+        display: inline-block;
+        margin: 0 .29rem;
+        padding-top: .3rem;
+        padding-bottom: .3rem;
+        position: relative;
+        color: #B2B2B2;
+        font-size: .48rem;
+        &.active{
+          color: #000;
+          &::after{
+            content: '';
+            width: 100%;
+            height: 0.025rem;
+            position: absolute;
+            bottom: 0;
+            background: #000;
+            left: 0;
+            background:rgba(0,0,0,1);
+            box-shadow:1px 1px 4px 0px rgba(0,0,0,0.5),0px 0px 1px 0px rgba(0,0,0,0.4);
+            border-radius:1px;
+          }
+        }
+      }
+    }
+    .tab_content{
+      height: 5rem;
+    }
+
+  }
+}
