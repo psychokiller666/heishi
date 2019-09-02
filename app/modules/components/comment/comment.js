@@ -442,8 +442,8 @@ $(document).on('pageInit','.user_comment_list', function (e, id, page) {
           let time = transTime(v.createtime)
           _addHtml+= `
           <li class="father">
-            <a href="/User/index/index/id/${v.uid}.html" class="avatar external" data-layzr="${v.avatar}/64">
-              <img src="${v.avatar}/64" />
+            <a href="/User/index/index/id/${v.uid}.html" class="avatar external" data-layzr="${v.avatar}">
+              <img src="${v.avatar}" />
             </a>
             <div class="username">
               <span class="hs-fl">${v.nickname}</span>

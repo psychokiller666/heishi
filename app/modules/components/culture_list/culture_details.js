@@ -30,7 +30,39 @@ $(document).on('pageInit','.culture_details', function (e, id, page) {
 
   // 检查是否关注
   init.checkfollow();
-
+  $.fn.scrollTo = function (options) {
+    var defaults = {
+      toT: 0, //滚动目标位置  
+      durTime: 300, //过渡动画时间  
+      delay: 30, //定时器时间  
+      callback: null //回调函数  
+    };
+    var opts = $.extend(defaults, options),
+      timer = null,
+      _this = this,
+      curTop = _this.scrollTop(), //滚动条当前的位置  
+      subTop = opts.toT - curTop, //滚动条目标位置和当前位置的差值  
+      index = 0,
+      dur = Math.round(opts.durTime / opts.delay),
+      smoothScroll = function(t) {
+        index++;
+        var per = Math.round(subTop / dur);
+        if(index >= dur) {
+          _this.scrollTop(t);
+          window.clearInterval(timer);
+          if(opts.callback && typeof opts.callback == 'function') {
+            opts.callback();
+          }
+          return;
+        } else {
+          _this.scrollTop(curTop + index * per);
+        }
+      };
+    timer = window.setInterval(function() {
+      smoothScroll(opts.toT);
+    }, opts.delay);
+    return _this;
+  }
 
   // 监听滚动增加返回顶部按钮
   $(".content").on('scroll',function(){
@@ -43,7 +75,7 @@ $(document).on('pageInit','.culture_details', function (e, id, page) {
   $('.return_top').click(function(){
     $('.content').scrollTo();
   })
-
+;
 
   //适配pc端换行间距
   if(location.href.indexOf('culture') > 0 && IsPC()){
@@ -265,39 +297,7 @@ $(document).on('pageInit','.culture_details', function (e, id, page) {
         url: '/index.php?g=restful&m=HsArticle&a=ajax_hits&id='+user_id
     });
   },300)
-    $.fn.scrollTo = function (options) {
-    var defaults = {
-      toT: 0, //滚动目标位置  
-      durTime: 300, //过渡动画时间  
-      delay: 30, //定时器时间  
-      callback: null //回调函数  
-    };
-    var opts = $.extend(defaults, options),
-      timer = null,
-      _this = this,
-      curTop = _this.scrollTop(), //滚动条当前的位置  
-      subTop = opts.toT - curTop, //滚动条目标位置和当前位置的差值  
-      index = 0,
-      dur = Math.round(opts.durTime / opts.delay),
-      smoothScroll = function(t) {
-        index++;
-        var per = Math.round(subTop / dur);
-        if(index >= dur) {
-          _this.scrollTop(t);
-          window.clearInterval(timer);
-          if(opts.callback && typeof opts.callback == 'function') {
-            opts.callback();
-          }
-          return;
-        } else {
-          _this.scrollTop(curTop + index * per);
-        }
-      };
-    timer = window.setInterval(function() {
-      smoothScroll(opts.toT);
-    }, opts.delay);
-    return _this;
-  };
+  
 
     //  神策埋点事件
     sensorsEvent();
