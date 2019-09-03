@@ -71,6 +71,11 @@ $(document).on('pageInit','.categories_good', function(e, id, page){
 
   })
   var categories_index_tpl = handlebars.compile($("#categories_index_tpl").html());
+  //初始化内容
+  $('.goods_content').html('');
+  $('.categories_item').removeClass('active');
+  $('.categories_item_all').addClass('active');
+ 
 
   // 下拉加载
   var nowCategoryID = '';
