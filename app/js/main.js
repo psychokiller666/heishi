@@ -229,4 +229,7 @@ require('../modules/components/category_top10/category_top10');
 //酒类专区主 页面
 require('../modules/components/wine_club/wine_club');
 
+//酒类专区全部  页面
+require('../modules/components/wine_total/wine_total');
+
 
