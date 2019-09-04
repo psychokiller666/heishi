@@ -33,7 +33,7 @@ $(document).on('pageInit','.login', function(e, id, page){
   })
   //获取验证码
   function getVcode(){
-    if(!(/^1[34578]\d{9}$/.test($('.tel').val()))){
+    if(!(/^[1]([3-9])[0-9]{9}$/.test($('.tel').val()))){
       $.toast('请输入正确的手机号');
       speed_error()
       return false
