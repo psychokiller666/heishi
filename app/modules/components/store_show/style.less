@@ -383,6 +383,8 @@
             line-height: 0.61rem;
             float: left;
             margin-left: -0.1rem;
+            color: #000;
+            font-weight: 900;
         }
         .good_limit_num,
         .remain,
@@ -413,8 +415,13 @@
         }
         .aboutPrice{
             .torem(height,64);
+            color: #000;
             >div{
+                font-weight: 400;
                 .torem(line-height,64);
+                span{
+                    font-weight: 400;
+                }
             }
             .about_postage{
                 display: inline-block;
@@ -463,6 +470,7 @@
             font-family:PingFangSC-Regular;
             .font-dpr(13px);
             .torem(line-height,64);
+            font-weight:400;
         }
       
     }
@@ -727,6 +735,8 @@
             color: #000000;
             width: 1.28rem;
             float: left;
+            .font-dpr(13px);
+            font-weight:600;
         }
         .last{
             position: absolute;
@@ -744,6 +754,8 @@
             height: 100%;
             z-index: 2;
             color:#8F8F8F;
+            font-weight:300;
+            .font-dpr(12px);
             &:after{
                 content: '\e512';
                 display: block;
@@ -1317,27 +1329,28 @@
             position: relative;
             .hs-cf;
             .user_img{
-                width: 1.067rem;
-                height: 1.067rem;
+                width: 1.12rem;
+                height: 1.12rem;
                 border-radius: 50%;
                 float: left;
-                margin-right: 0.4rem;
+                margin-right: 0.3rem;
             }
             .user_name{
                 .font-dpr(14px);
-                line-height: 0.44rem;
+                line-height: 0.40rem;
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 width: 5.4rem;
                 float: left;
+                margin-top: .1rem;
             }
             .user_signature{
                 .font-dpr(12px);
                 float: left;
                 width: 5.4rem;
                 line-height: 0.32rem;
-                margin-top: 0.266rem;
+                margin-top: 0.136rem;
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
@@ -1350,7 +1363,7 @@
                 .font-dpr(12px);
                 line-height: 1em;
                 position: absolute;
-                top: 50%;
+                top: 20%;
                 right: 0.4rem;
                 text-align: center;
                 transform: translateY(-50%);
@@ -1387,13 +1400,17 @@
                     .torem(width,286);
                     .torem(height,410);
                     .image {
-                        background-color: #F5F5F5;
+                        background-color: #DDDDDD;
                         background-position: 50% 50%;
                         background-repeat: no-repeat;
                         background-size: cover;
                         width: 100%;
                         height: 3.68rem;
                         // border-radius: 0.16rem;
+                    }
+                    .goods_item_bottom{
+                        width: 100%;
+                        height: 1.5rem;
                     }
                     .post_title{
                         .font-dpr(13px);
@@ -1433,6 +1450,7 @@
             margin-right: .4rem;
             position: relative;
             line-height: 1.84rem;
+            font-weight: 600;
             &.active{
                 color: #000;
                 &::after{
@@ -1462,7 +1480,7 @@
             border-top: 0.0133rem solid #e8e8e8;
         }
         .goods_content{
-            .torem(padding-left,20);
+            // .torem(padding-left,20);
             &:after {
                 content: " ";
                 display: table;
@@ -1473,23 +1491,27 @@
             width: 10rem;
             .goods_list{
                 .torem(margin-bottom,30);
-                .torem(margin-right,20);
-                .torem(width,345);
+                // .torem(margin-right,20);
+                .torem(width,374);
                 position: relative;
                 float: left;
+                &:nth-child(odd) {
+                    .torem(margin-right,2);
+                }
+              
                 .hs-cf;
                 &:last-child{
                     border: none;
                 }
                 .filepath{
                     display: block;
-                    .torem(width,345);
-                    .torem(height,345);
+                    .torem(width,374);
+                    .torem(height,374);
                     .image{
                         width: 100%;
                         height: 100%;
                         overflow: hidden;
-                        background-color: #F5F5F5;
+                        background-color: #DDDDDD;
                         background-position: 50% 50%;
                         background-repeat: no-repeat;
                         background-size: cover;
@@ -1499,20 +1521,22 @@
                 .post_title{
                     color: #8E8E8E;
                     width: 4.4rem;
-                    height: 2.4em;
+                    max-height: 2.4em;
                     line-height: 1.2em;
                     .font-dpr(14px);
                     overflow: hidden;
                     float: left;
                     font-weight: 500;
                     margin-top: .2rem;
+                    margin-left: .3rem;
                 }
                 .good_price{
                     .font-dpr(16px);
                     // position: absolute;
                     // left: 4.8rem;
                     // bottom: 0;
-                    color: #D4231C;
+                    color: #000;
+                    margin-left: .3rem;
                 }
                 .user_info{
                     width: 4.4rem;

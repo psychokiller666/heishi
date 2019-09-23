@@ -416,6 +416,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     // }
 
     var type_desc = $(this).text();
+    console.log(type_desc)
     $('.select').find('.select_type').text(type_desc);
     $('.buy').find('.add').attr('data-remain', remain);
     update_status(price, item_id, remain, presell, special,special_price);
