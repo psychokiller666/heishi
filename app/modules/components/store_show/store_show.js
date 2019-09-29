@@ -46,17 +46,25 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   clearInterval(timer);
 
   // swiper初始化 banner
-  var mySwiper = new Swiper('.swiper-container-article',{ 
-    pagination: '.swiper-pagination',
-    // lazyLoading: true,
-    loop: true,
-    autoplay: false,
-    speed:300,
-    watchSlidesVisibility : true,
-    autoplayDisableOnInteraction : false,
-  })
-
-
+ // swiper-container-article
+ let swiperIndex = 1
+ var swipervideo = new Swiper('.swiper-container-article', {
+  direction: 'horizontal',
+  speed:500,
+  spaceBetween : 0,
+  loop:false,
+  pagination : '.swiper-pagination',
+  onSlideChangeEnd: function(swiper){
+    swiperIndex=swiper.activeIndex
+    var videolist = $(".swiper-container-article .swiper-slide").find("video");//video对象数组
+    var videoBglist = $(".swiper-container-article .swiper-slide").find("video_bg");//video对象数组
+    for(var k = 0 ;k<videolist.length;k++){
+      $(videoBglist[k]).show()
+      videolist[k].pause();
+      $(videolist[k]).hide()
+    }
+  }
+});
   //  let specailStart = '{$goods_profiles[0].special_offer_start}'
   //  let specailEnd = '{$goods_profiles[0].special_offer_end}'
   let specailStart = $('.specailStart').val()
@@ -212,24 +220,72 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
 
 
   // 如果有视频就放在封面图位置
+  //初始化图片
+  $('.video_bg').css('opacity',1);
+  $('.video_bg_one').css('opacity',1);
   var video_status = 0;
   if($('.video_bg').length > 0){
     $('.video_bg').click(function(){
       if(video_status == 0){
         video_status = 1;
-        $('.video_el')[0].play();
+        // $('.video_el')[0].play();
+        var videolist = $(".swiper-container-article .swiper-slide").find("video");//video对象数组
+        var videoBglist = $(".swiper-container-article .swiper-slide").find("video_bg");//video对象数组
+        for(let k = 0 ;k<videolist.length;k++){
+          $(videoBglist[k]).hide()
+           
+              $(videolist[k]).show()
+              // setTimeout(()=>{
+                videolist[k].play();
+              // },50)
+            
+        }
+
+        $('.video_el')[0].addEventListener('playing',function(){
+          $('.video_loading').css('display','none');
+          $('.video_bg').css('opacity',0);
+        })
+        $('.video_el')[0].addEventListener('pause',function(){
+          video_status = 0;
+          $('.video_bg').css('opacity',1);
+        })
+        $('.video_el')[0].addEventListener('ended',function(){
+          video_status = 0;
+          $($('.video_el')[0]).hide()
+          $('.video_bg').css('opacity',1);
+        })
         $('.video_loading').css('display','block');
         $('.video_bg').css('opacity',0);
       }
     })
-    $('.video_el')[0].addEventListener('playing',function(){
+   
+  }
+  var video_status_1 = 0
+  if($('.video_one').length > 0){
+    $('.video_bg_one').click(function(){
+      if(video_status_1 == 0){
+        video_status_1 = 1;
+        $($('.video_one')[0]).show()
+        $('.video_one')[0].play()
+        $('.video_loading').css('display','block');
+        $('.video_bg_one').css('opacity',0);
+      }
+    })
+    $('.video_one')[0].addEventListener('playing',function(){
       $('.video_loading').css('display','none');
     })
-    $('.video_el')[0].addEventListener('pause',function(){
-      video_status = 0;
+    $('.video_one')[0].addEventListener('pause',function(){
+      video_status_1 = 0;
+      $('.video_bg_one').css('opacity',1);
+    })
+    $('.video_one')[0].addEventListener('ended',function(){
+      video_status_1 = 0;
+      $($('.video_one')[0]).hide()
       $('.video_bg').css('opacity',1);
     })
   }
+
+
 
   // 初始输入框
   $('.dialog_comment').css('display', 'none');
@@ -276,6 +332,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
   }
   page.on("click",".select_type",function(){
+    hideAllVideo()
     $('.buy').css('display', 'block');
     $('.buy').find('.countNum').attr('data-num',1).text(1);
     $('.content').css('overflow-y', 'hidden');
@@ -297,6 +354,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   })
 
   $('.footer_nav').on("click",".buy_btn",function() {
+    hideAllVideo()
     var url = $(this).attr('data-url');
     //九折购买
     if(fromNineDiscount){
@@ -322,6 +380,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
   })
   $('.footer_nav').on("click",".add_chart",function() {
+    hideAllVideo()
       if(!loginStatus){
           init.toLogin();
           return false;
@@ -1200,6 +1259,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
 
     //显示领券按钮及弹窗
     function showCouponGet(data){
+         hideAllVideo()
         var $jsCouponGet= $('.js_coupon_get');
         var $couponGetRight = $jsCouponGet.find('.select_r');
         // var html = '';
@@ -1208,7 +1268,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         // }
         // $couponGetRight.html(html);
         $jsCouponGet.show();
-
+        
         var $getCouponMask = $('.get_coupon_mask');
         var $getCouponUl = $getCouponMask.find('.get_coupon_ul');
         var liHtml = '';
@@ -1518,7 +1578,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
               html += '</li>'
             }
 
-            $(page).find('.lottery_evaluation_ul').html(html);
+            $(page).find('.lottery_evaluation_ul').html(html)
             //测评先删除掉  不知道以后还要不要
             // $(page).find('.lottery_evaluation').show();
         }
@@ -1585,10 +1645,21 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     })
     $(page).find('.select_specs').on('click',function(){
       $('.specs').show()
+      hideAllVideo()
     })
     $(page).find('.specs').on('click',function(){
       $('.specs').hide()
     })
+
+    function hideAllVideo(){
+      var videolist = $("body").find("video");//video对象数组
+      var videoBglist = $("body").find("video_bg");//video对象数组
+      for(var k = 0 ;k<videolist.length;k++){
+        $(videoBglist[k]).show()
+        videolist[k].pause();
+        $(videolist[k]).hide();
+      }
+    }
 
     //  神策埋点事件
     sensorsEvent();
