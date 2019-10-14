@@ -294,7 +294,7 @@ common.prototype.toLogin = function(){
     // location.href = url;
 
     var postForm = document.createElement("form");//表单对象
-    postForm.method="post" ;
+    postForm.method="post";
     postForm.action = '/Api/Oauth/login' ;
 
     var typeInput = document.createElement("input") ; //type input
@@ -842,6 +842,17 @@ function partnerBind(referCode,callback){
         }
     });
 }
+//设置主域phpsession 兼容H5.ontheroadstore.com  的身份信息
+
+function setDomainCookie(name,value,days) {
+    var value = getCookie('PHPSESSID');
+    var name = 'PHPSESSID'
+    var Days =  30;
+    var exp = new Date();
+    exp.setTime(exp.getTime() + Days*24*60*60*1000);
+    document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString() + ";domain=ontheroadstore.com;path=/;";
+};
+setDomainCookie()
 
 
 
