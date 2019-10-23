@@ -182,6 +182,17 @@
                 transform: translate(-50%, -50%);
             }
         }
+
+        //最上面的广告位
+        .detail_ad_top{
+            a{
+                .image{
+                    .torem(width,750);
+                    .torem(height, 146);
+                }
+            }
+        }
+      
         .specail-time{
             display: none;
             width: 3.6rem;
@@ -284,7 +295,24 @@
             }
         }
     }
-
+    //卖点
+    .maidian{
+        .torem(width,780);
+        .torem(height, 242);
+        background: url(//img8.ontheroadstore.com/H5_Icon/detail_maidian.png) no-repeat;
+        background-size: cover;
+        margin-left: -.4rem;
+        position: relative;
+        .font-dpr(12px);
+        color: #525151;
+        div{
+            position: absolute;
+            .torem(width,550);
+            .torem(height,200);
+            .torem(top,50);
+            .torem(left,180);
+        }
+    }
     // 一级分类广告
     .cate_one_ad{
         .torem(width,750);
@@ -1386,6 +1414,17 @@
             .font-dpr(20px);
             text-indent: .45rem;
             border-top: 0.0133rem solid #e8e8e8;
+        }
+        .alike_maybe{
+            .torem(width,710);
+            .torem(height,234);
+            float: left;
+            .torem(margin-left,20);
+            .torem(margin-bottom,40);
+            .image{
+                .torem(width,710);
+                .torem(height,234); 
+            }
         }
         .goods_content{
             // .torem(padding-left,20);
