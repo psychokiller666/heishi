@@ -357,7 +357,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
     var n = $(that).parents('.message').find('.countNum').text();
     n--;
     if(n < 1) return;
-    var minNum = -1;//默认设置减1
+    // var minNum = -1;//默认设置减1
     //限购判断 减的时候不做判断
     // var limitNum = fixLimitNum(n, $item);
     // if(n > limitNum){
@@ -368,10 +368,10 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
     // $(that).parents('.message').find('.number').text(n);//需要注释掉，跟下面调用接口重复
     // $(that).parents('.message').find('.countNum').text(n);
     $item.attr('num_editing','1');
-    editShoppingNum({
+    reduceShoppingNum({
       object_id: $(that).attr('data-id'),
       mid: $(that).attr('data-mid'),
-      nums: minNum,//接口要传入加多少或减多少
+      nums: n,//接口要传入加多少或减多少
     },function(data){
       $(that).parents('.message').find('.number').text(data.data);
       $(that).parents('.message').find('.countNum').text(data.data);
@@ -532,6 +532,22 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
     $.ajax({
       type: 'POST',
       url: '/index.php?g=restful&m=HsShoppingCart&a=add',
+      data: data,
+      success: callBack,
+      error: function(xhr, type){
+        console.log(type);
+      },
+      complete: function(){
+        if(typeof complete === "function"){
+          complete();
+        }
+      }
+    })
+  }
+  function reduceShoppingNum(data, callBack,complete){
+    $.ajax({
+      type: 'POST',
+      url: '/index.php?g=restful&m=HsShoppingCart&a=set',
       data: data,
       success: callBack,
       error: function(xhr, type){
