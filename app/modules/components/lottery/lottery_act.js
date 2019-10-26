@@ -87,7 +87,7 @@ $(document).on('pageInit', '.lottery_act', function (e, id1, page) {
     //传递json            lottery-json://
 
   };
-
+  let lottery_type = 1
   if (Authorization && Authorization.length > 0) {
     isApp = true;
     ajaxHeaders = {
@@ -130,13 +130,15 @@ $(document).on('pageInit', '.lottery_act', function (e, id1, page) {
         if (data.status == 1) {
           // console.log(data.data)
           var lotteryData = data.data;
-
+          lottery_type = lotteryData.lottery.type
           lotteryCache[lotteryData.lottery.id] = {
             data: lotteryData,
             time: init.getTimestamp(),
           };
           console.log(lotteryCache);
+          getLotteryAd()
           initLotteryFun(lotteryData);
+          
         }
       },
       error: function (e) {
@@ -776,7 +778,15 @@ $(document).on('pageInit', '.lottery_act', function (e, id1, page) {
   }
 
   function getLotteryAd() {
-    var url = ApiBaseUrl + "/appv6_5/getAdvertList?area=16384&size=1"
+    var url
+    if(lottery_type==1){
+      url = ApiBaseUrl + "/appv6_5/getAdvertList?area=32768&size=1"
+    }
+    if(lottery_type==2){
+      url = ApiBaseUrl + "/appv6_5/getAdvertList?area=65536&size=1"
+    }
+    
+    
     $.ajax({
       type: "GET",
       url: url,
@@ -794,17 +804,35 @@ $(document).on('pageInit', '.lottery_act', function (e, id1, page) {
                 location.href = `${location.origin}/Portal/HsArticle/index/id/${id}.html`
                 break;
               case 2:
-                location.href = "subject-read://" + id
+                if(isApp){
+                  location.href = "subject-read://" + id
+                }else{
+                  window.location.href=`${location.origin}/Portal/HsArticle/culture/id/${id}.html`
+                }
+              
 
                 break;
               case 3:
-                location.href = "stopic://" + id
+                if(isApp){
+                  if(isIOS){
+                    location.href = `${location.origin}/HsProject/index/pid/${id}.html`
+                  }else{
+                    location.href = "stopic://" + id
+                  }  
+                }else{
+                  location.href = `${location.origin}/HsProject/index/pid/${id}.html`
+                }
+                
                 break;
               case 5:
                 window.location.href = `${id}`
                 break;
               case 6:
-                location.href = 'category-list://' + id
+                if(isApp){
+                  location.href = 'category-list://' + id
+                }else{
+                  window.location.href=`${location.origin}/HsCategories/category_index/id/${id}.html`
+                }
                 break;
               default:
                 console.log('没找到这样的类型')
@@ -819,7 +847,7 @@ $(document).on('pageInit', '.lottery_act', function (e, id1, page) {
       }
     });
   }
-  getLotteryAd()
+ 
   //分享成功后抽奖码数量增加，增加抽奖码code
   function addUserLotteryCount(codeArr) {
     if (codeArr instanceof Array && codeArr.length > 0) {
