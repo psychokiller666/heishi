@@ -4,6 +4,65 @@
         background-color: #fff;
         .hs-cf;
     }
+    //满减商品
+    .has_full_reduce{
+        width: 9.2rem;
+        margin: 0 auto;
+        min-height: 1.173rem;
+        .font-dpr(14px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: .0133rem solid #e8e8e8;
+        font-family: "iconfont"!important;
+        font-style: normal;
+        -webkit-font-smoothing: antialiased;
+        position: relative;
+        &::after{
+            content: '\e512';
+            display: block;
+            position: absolute;
+            .font-dpr(14px);
+            top: 50%;
+            right: 0;
+            -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+        }
+        .label{
+            width: 1.28rem;
+            color: #afafaf;
+        }
+        .tag{
+            display: inline-block;
+            font-size: .32rem;
+            height: .32rem;
+            color: #fff;
+            line-height: 1;
+            padding: .08rem .21333rem .10667rem;
+            background: #ae2121;
+            border-radius: .10667rem;
+            // margin-right: .4rem;
+            position: relative;
+            margin-left: .2rem;
+            width: 1.4rem;
+            text-align: center;
+        }
+        .center{
+            width: 4rem;
+            margin-left: .2rem;
+
+        }
+        .to_list{
+            color: #AFAFAF;
+
+        }
+       img{
+           width: .14rem;
+           height: .24rem;
+           float: right;
+           margin-left: .3rem;
+       }
+    }
     .hs-store-show-footer{
         width: 10rem;
         overflow: hidden;
@@ -95,6 +154,7 @@
             text-align: center;
             line-height: 1.306rem;
         }
+       
         .buy_btn{
             background: #AE2121;
             color: #FFF;
@@ -106,6 +166,11 @@
             border-left: 0.0133rem solid #E8E8E8;
             box-sizing: border-box;
             color: #000;
+        }
+        .only_chart{
+            width: 6.28rem;
+            background: #202123;
+            color: #fff;
         }
         .deblocking,
         .download_app{
@@ -268,7 +333,6 @@
             line-height: 0.61rem;
             float: left;
             margin-left: -0.1rem;
-            color: #ae2121;
         }
         .good_limit_num,
         .remain,
@@ -1343,7 +1407,6 @@
             font-size: 0.53333rem;
             line-height: 1;
             float: left;
-            color: #ae2121;
         }
         .good_limit_num,
         .remain,
@@ -1412,7 +1475,7 @@
                     padding: 0.133rem 0.4rem;
                     .font-dpr(13px);
                     border-radius: 0.1rem;
-                    border: 1px solid #999;
+                    border: 0.0133rem solid #999;
                     color: #999;
                     line-height: 1em;
                     margin-bottom: 0.32rem;
@@ -1485,6 +1548,11 @@
         background: #000;
         color: #FFF;
         left: 0;
+    }
+    .only_chart{
+        width: 10rem;
+        background: #202123;
+        color: #fff;
     }
     .buy_btn{
         background: #AE2121;

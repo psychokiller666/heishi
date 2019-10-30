@@ -50,6 +50,33 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
       initLimitBuy(chartData);
   }
 
+  //满减json
+  var $saleInfo = $('.saleInfo');
+  var saleData = null;
+  let _saleData = []
+  var limitBuyData = null;
+  if($saleInfo.length>0){
+    saleData = JSON.parse($saleInfo.attr('value'));
+    
+  }
+  //初始化满减信息
+  function initsaleDate(){
+    _saleData =[]
+    if(saleData){
+      for(var item in saleData){
+        let obj = saleData[item]
+        obj.id = item
+        _saleData.push(obj)
+        }
+      _saleData.forEach(v=>{
+        v.selectPrice = 0
+        v.sp_level.forEach(n=>{
+          n.isFull = false
+        })
+      })
+    }
+  }
+  initsaleDate()
     init.sensorsFun.bottomNav();
 
     $(page).find('.recommend').on('click',function(){
@@ -462,6 +489,8 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
   })
   //计算总价
   function count () {
+    //重置满减的数据
+    initsaleDate()
     var num = 0;
     $('.item').each(function () {
       var status = $(this).find('.checkbox').hasClass('affirm');
@@ -470,9 +499,74 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
         var n = parseInt($(this).find('.unitPrice').text());
         var m = parseInt($(this).find('.number').text());
         num += n*m;
+        if($(this).find('.checkboxSale').hasClass('affirm')){
+         _saleData.forEach(v=>{
+           v.goods_list.forEach(u=>{
+             if(u==$(this).attr('data-postid')){
+               v.selectPrice+= m*n
+             }
+           })
+         })
+        }
       }
     })
     $('.price').find('span').text(num);
+    countFull()
+  }
+  //计算满减的价格
+  function countFull(){
+     let reduceMoney = 0 //总共满减的金额
+    _saleData.forEach(v=>{
+      let arrReduce = []
+      v.sp_level.forEach(u=>{
+        if(v.selectPrice>=u.min_price){
+          u.isFull =true
+          arrReduce.push(u.coupon_price)
+        }
+      })
+      if(arrReduce.length){
+        reduceMoney += parseInt(Math.max.apply(null,arrReduce))
+      }
+    })
+    //修改价格的dom 需要储存
+    if(reduceMoney){
+      sessionStorage.setItem("reduceMoney", reduceMoney);
+      $('.fix_price').addClass('active')
+      $('.reduce_price').html('已优惠: ￥'+'<span>'+reduceMoney+'</span>')
+      let _allPrice = parseInt($('.price').find('span').text());
+      $('.price').find('span').text(_allPrice-reduceMoney)
+
+    }else{
+      $('.reduce_price').html('')
+      $('.fix_price').removeClass('active')
+    }
+    //修改满减的msg
+    _saleData.forEach(v=>{
+      let msg = ''
+      for (let i = 0; i < v.sp_level.length; i++) {
+          if(v.sp_level[i].isFull){
+            msg+= `已${v.sp_level[i].title}<span style="color:#AE2121;">(已减￥${v.sp_level[i].coupon_price})</span>`
+            if(i!=0){
+            let willFull =  v.sp_level[i-1].min_price-v.selectPrice
+            msg+= `,再买${willFull},减${ v.sp_level[i-1].coupon_price}`
+            }
+            break
+          }
+        
+      }
+      if(msg){
+        $(`.full_${v.id}`).find('.msgs').html(msg)
+        $(`.full_${v.id}`).find('.right span').html('再逛逛')
+      }else{
+        $(`.full_${v.id}`).find('.right span').html('去凑单')
+      }
+     
+     
+      
+    })
+    
+
+
   }
   //当商品被清空
   function clear() {
@@ -502,16 +596,31 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
   //全选优化判断
   function allOption (that){
     var state = true;
-    $(that).parents('.list').find(".details .checkbox").each(function(){
+    let normalStatus = true;
+    let saleStatus =true;
+    $(that).parents('.list').find(".details .checkboxNormal").each(function(){
       if(!$(this).hasClass('affirm')){
         state = false;
+        normalStatus =false
         return;
       }
     })
-    if(state){
-      $(that).parents('.list').find(".title .checkbox").addClass('affirm');
+    $(that).parents('.list').find(".details .checkboxSale").each(function(){
+      if(!$(this).hasClass('affirm')){
+        state = false;
+        saleStatus = false
+        return;
+      }
+    })
+    if(normalStatus){
+      $(that).parents('.list').find(".title .checkboxNormal").addClass('affirm');
     }else{
-      $(that).parents('.list').find(".title .checkbox").removeClass('affirm');
+      $(that).parents('.list').find(".title .checkboxNormal").removeClass('affirm');
+    }
+    if(saleStatus){
+      $(that).parents('.list').find(".title .checkboxSale").addClass('affirm');
+    }else{
+      $(that).parents('.list').find(".title .checkboxSale").removeClass('affirm');
     }
     var status = true;
     $(".context").find(".checkbox").each(function(){
@@ -606,7 +715,16 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
       all_postage += n;
     })
     all_price += all_postage;
-    $('.all_price_num').text(all_price);
+    let reducePrice = parseInt(sessionStorage.getItem("reduceMoney"));
+    if(reducePrice){
+      $('.full_reduce').show()
+      $('.full_reduce').find('.price').html('￥'+reducePrice)
+      $('.all_price_num').text(all_price-reducePrice);
+    }else{
+      $('.all_price_num').text(all_price);
+      $('.full_reduce').hide()
+    }
+   
     // $('.all_postage_num').text(all_postage); //总运费初始化为"请填写地址"所以不需要初始化。
   }
   //下订单
@@ -1218,15 +1336,24 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
 
         //判断是否要全选卖家商品或所有商品
         function select(n){
-            if(elClass == 'title'){
-                //全选卖家商品
-                $(that).parents('.list').find('.checkbox').each(function(){
+            if(elClass == 'title normal'){
+                //全选卖家普通商品
+                $(that).parents('.list').find('.checkboxNormal').each(function(){ 
                     if(n == 1){
                         $(this).addClass("affirm");
                     }else{
                         $(this).removeClass("affirm");
                     }
                 })
+            }else if(elClass == 'title sale'){
+              //全选满减活动商品
+              $(that).parents('.list').find('.checkboxSale').each(function(){
+                if(n == 1){
+                    $(this).addClass("affirm");
+                }else{
+                    $(this).removeClass("affirm");
+                }
+            })
             }else if(elClass == 'allPrice'){
                 //全选所有商品
                 $('.checkbox').each(function(){

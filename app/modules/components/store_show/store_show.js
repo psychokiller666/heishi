@@ -1440,7 +1440,11 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
             $faq_wrap.show();
         }
     }
-
+    //跳转去满减活动
+    $('.has_full_reduce').click(function(){
+      let fid = $(this).attr('data-id')
+      location.href=`${window.location.origin}/Portal/Index/fullReduce?fid=${fid}`
+    })
     //评论
     getGoodsEvaluation();
 
