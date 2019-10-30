@@ -542,6 +542,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
       $('.price').find('span').text(_allPrice-reduceMoney)
 
     }else{
+      sessionStorage.setItem("reduceMoney", '');
       $('.reduce_price').html('')
       $('.fix_price').removeClass('active')
     }
