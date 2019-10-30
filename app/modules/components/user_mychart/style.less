@@ -1,4 +1,93 @@
 .user-mychart{
+	//满减提示
+	.full_reduce_tip{
+		display: block;
+		height: 1rem;
+		line-height: 1rem;
+		.font-dpr(12px);
+		background:rgba(174,33,33,0.03);
+		.left{
+			margin-left: .4rem;
+			float: left;
+			background: #AE2121;
+			color: #fff;
+			max-width: 2rem;
+			height: .5rem;
+			line-height: .5rem;
+			border-radius: .2rem;
+			padding: 0 .25rem;
+			margin-top: .25rem;
+		}
+		.msgs{
+			float: left;
+			margin-left: .4rem;
+			height: 1rem;
+			overflow: hidden;
+			width: 5rem;
+			color: #000;
+		}
+		.right{
+			float: right;
+			margin-right: .4rem;
+			color: #AE2121;
+			img{
+				width: .25rem;
+				height: .25rem;
+			}
+		}
+	}
+	//满减价格显示
+	.reduce_price{
+		position: absolute;
+		right: .4rem;
+		top: .7rem;
+		color: #AE2121;
+		float: right;
+		.font-dpr(12px);
+		line-height: 1em;
+		margin-right: .2rem;
+		span{
+			font-weight: 900;
+		}
+	}
+	//购物车价格底部显示更改
+	.fix_price{
+		position: relative;
+		float: right;
+		&.active{
+			height: .7rem;
+			line-height: .7rem;
+		}
+	}
+	//确认订单页满减提示
+	.full_reduce{
+		height: 1.3rem;
+    background-color: #fff;
+    position: absolute;
+    bottom: 1.3rem;
+    left: 0;
+    width: 100%;
+    z-index: 99;
+		border-top: .0133rem solid #e8e8e8;
+		.font-dpr(13px);
+		line-height: 1.3rem;
+		display: none;
+		.label{
+			float: left;
+			margin-left: .4rem;
+		}
+		.price{
+			color: #AE2121;
+			float: right;
+		}
+		img{
+			float: right;
+			width: .3rem;
+			height: .3rem;
+			margin-top: .5rem;
+			margin-right: .4rem;
+		}
+	}
 	.post_card{
 		width: 9.2rem;
 		height: 1.2rem;
@@ -76,8 +165,11 @@
 			}
 		}
 		.hide_content{
-			margin-right: 0.25rem;
+			margin-right: 0.2rem;
 			color: #b1b1b1;
+		}
+		.unPostage{
+			.font-dpr(10px);
 		}
 		.price{
 			font-weight: 700;
@@ -222,8 +314,8 @@
 				content: "";
 				position: absolute;
 				width: 10rem;
-				height: 0.2rem;
-				background-color: #F5F5F5;
+				// height: 0.2rem;
+				// background-color: #F5F5F5;
 				bottom: -0.2rem;
 				left: 0;
 			}
@@ -443,20 +535,24 @@
 					content: "";
 				}
 			}
+			.fitem{
+				background:rgba(174,33,33,0.03);
+			}
 		}
 		.title{
 			position: relative;
 			height: 1.1rem;
 			line-height: 1.1rem;
 			border-bottom: 0.0133rem solid #E8E8E8;
-			margin: 0 0.4rem;
+			padding: 0 0.4rem;
+			border-top: .2rem solid #F5F5F5;
 			.sellerName{
 				float: left;
 				margin-left: 0.827rem;
 				color: #000;
 			}
 			.selectBox{
-				left: 0;
+				left: .4rem;
 			}
 
 			//优惠券
