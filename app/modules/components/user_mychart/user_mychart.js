@@ -163,9 +163,14 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
           var list = $(that).parents('.list');
           $(that).parents('.item').remove();
           //当卖家列表中没有商品时
-          var items = list.find('.item').length;
-          if(items == 0){
-              list.remove();
+          // var items = list.find('.item').length;
+          let normalItem =  list.find('.checkboxNormal').length
+          let saleItem = list.find('.checkboxSale').length
+          if(normalItem == 1){
+           $(list.find('.checkboxNormal')[0]).parents('.title').remove()
+          }
+          if(saleItem==1){
+            $(list.find('.checkboxSale')[0]).parents('.title').remove()
           }
           $.toast(data.info,800);
           count();
@@ -541,6 +546,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
       $('.fix_price').removeClass('active')
     }
     //修改满减的msg
+    console.log(chartData)
     _saleData.forEach(v=>{
       let msg = ''
       for (let i = 0; i < v.sp_level.length; i++) {
@@ -554,10 +560,16 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
           }
         
       }
+     
       if(msg){
         $(`.full_${v.id}`).find('.msgs').html(msg)
         $(`.full_${v.id}`).find('.right span').html('再逛逛')
       }else{
+        let unMsg = ''
+        v.sp_level.forEach(p=>{ 
+          unMsg+= p.title+','
+        })
+        $(`.full_${v.id}`).find('.msgs').html(unMsg.substr(0,unMsg.length-1))
         $(`.full_${v.id}`).find('.right span').html('去凑单')
       }
      
