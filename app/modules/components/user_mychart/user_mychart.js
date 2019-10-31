@@ -731,7 +731,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
     let reducePrice = parseInt(sessionStorage.getItem("reduceMoney"));
     if(reducePrice){
       $('.full_reduce').show()
-      $('.full_reduce').find('.price').html('￥'+reducePrice)
+      $('.full_reduce').find('.price').html('-￥'+reducePrice)
       $('.all_price_num').text(all_price-reducePrice);
     }else{
       $('.all_price_num').text(all_price);
