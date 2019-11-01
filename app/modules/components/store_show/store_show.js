@@ -196,8 +196,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     goodsLimit.type = 2;//款式限购
   }
 
-
-
+  var goSettle = false
   // 如果有视频就放在封面图位置
   var video_status = 0;
   if($('.video_bg').length > 0){
@@ -258,6 +257,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
   }
   page.on("click",".select_type",function(){
+    goSettle =false
     $('.buy').css('display', 'block');
     $('.buy').find('.countNum').attr('data-num',1).text(1);
     $('.content').css('overflow-y', 'hidden');
@@ -304,6 +304,12 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
   })
   $('.footer_nav').on("click",".add_chart",function() {
+    if($(this).hasClass('full_buy')){
+      goSettle = true
+    }else{
+      goSettle = false
+    }
+     
       if(!loginStatus){
           init.toLogin();
           return false;
@@ -316,6 +322,9 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       var styles_id = $(this).data("id");
       var article_id = $(this).data("articleid");
       shopping(article_id, styles_id, 1);
+      if(goSettle){
+        location.href = `${location.origin}/User/MyChart/index`
+      }
     }else{
       $('.buy').css('display', 'block');
       $('.content').css('overflow-y', 'hidden');
@@ -329,6 +338,10 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
           return false;
       }
     operation(this, 0);
+    
+    if(goSettle){
+      location.href = `${location.origin}/User/MyChart/index`
+    }
   })
   $('.buy').on("click",".buy_btn",function() {
    
@@ -456,6 +469,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
     $('.buy').css('display', 'none');
     $('.content').css('overflow-y', 'auto');
+   
     if(type == 0){
       shopping(article_id, styles_id, num);
     }else if(type == 1){
