@@ -147,11 +147,11 @@ $(document).on('pageInit', '.categories', function (e, id, page) {
     let url = genrateUrl(firstCategory.url, firstCategory.url_type);
     let basicTitle = ''
     return basicTitle =
-      '<a href="' + url + '"><div class="categories_title categories_title' + firstCategory.id + '" data-id="' + firstCategory.id + '">' +
-      '<div class="categories_bg" data-layzr="' + firstCategory.ad_image + '" data-layzrstatus="1" style="background-image: url(' + firstCategory.ad_image + ');"></div>' +
-      '<h4>' + firstCategory.name + '</h4>' +
-      '<div>' + firstCategory.desc + '</div>' +
-      '</div></a>'
+      `<a href="${url}"><div class="categories_title categories_title${firstCategory.id}" data-id="${ firstCategory.id}"> 
+      <div class="categories_bg" data-layzr="${firstCategory.ad_image?firstCategory.ad_image:firstCategory.banner_image}" data-layzrstatus="1" style="background-image: url(${firstCategory.ad_image?firstCategory.ad_image:firstCategory.banner_image});"></div> 
+      <h4>${ firstCategory.name}</h4> 
+      <div>${firstCategory.desc}</div> 
+      </div></a>`
   }
 
   function freshSecondLevelCategory(firstCategory) {
