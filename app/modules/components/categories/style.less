@@ -107,6 +107,13 @@
         padding: 0.533rem 0.533rem 2rem;
         box-sizing: border-box;
         right: 0;
+        .tit{
+            .font-dpr(14px);
+            line-height: 1.2rem;
+        }
+        .border_bot{
+            border-bottom: 0.0143rem solid #E8E8E8;
+        }
         .categories_title{
             width: 6.48rem;
             height: 1.627rem;
@@ -137,11 +144,12 @@
         }
         .classify_two_list{
             .hs-cf;
-            padding: 0.533rem 0 1.2rem 0;
+            padding: 0.533rem 0 .8rem 0;
             width: 6.48rem;
             &:last-child{
-                min-height: 12rem;
+                // min-height: 10rem;
             }
+           
             li{
                 width: 1.6rem;
                 margin-right: 0.84rem;
@@ -150,6 +158,7 @@
                 &:nth-child(3n){
                     margin-right: 0;
                 }
+              
                 a{
                     .font-dpr(14px);
                     color: #000;
@@ -163,6 +172,8 @@
                     span{
                         display: block;
                         padding-top: 0.27rem;
+                        height: 1.2em;
+                        overflow: hidden;
                     }
                 }
             }
@@ -201,11 +212,89 @@
         }
     }
 }
+.goods_filter{
+    display: flex;
+    height: 1.2rem;
+    width: 10rem;
+    background: #fff;
+    position: absolute;
+    top:0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+    margin: 0 auto;
+    border-bottom: 1px solid #8E8E8E;
+    div{
+        flex: 1;
+        color: #8E8E8E;
+        .font-dpr(16px);
+        text-align: center;
+        line-height: 1.2rem;
+        position: relative;
+        font-weight: bolder;
+    }
+    .price{
+        span{
+            display: inline-block;
+            width: 0.34rem;
+            height: 0.4rem;
+            background-image: url(//img8.ontheroadstore.com/H5_Icon/price_arrow.png);
+            background-size: cover;
+            &.active{
+                background-image: url(//img8.ontheroadstore.com/H5_Icon/price_arrow_up.png);
+                background-size: cover;
+            }
+        }
+    }
+    .active{
+        color: #202123;
+    }
+}
 .tag_index,
 .categories_index{
     .fixed_content{
         background: #fff;
         width: 10rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 100;
+        .tags_list_new{
+            overflow-x: auto;
+            height: 2.6rem;
+            white-space: nowrap;
+            padding-top: 0.4rem;
+            display: none;
+            .all_tag_item{
+                background-image: url(//img8.ontheroadstore.com/upload/180417/719e56f8da69898f3e4bb48ec8d75007.png);
+            }
+            .tag_item{
+                white-space: nowrap;
+                display: inline-block;
+                height:1rem;
+                width: 2rem;
+                margin-left: 0.26rem;
+                border-radius: 0.106rem;
+                position: relative;
+                background-size: cover;
+                background-position: center;
+                .font-dpr(16px);
+                text-align: center;
+                line-height: 1rem;
+                color: #fff;
+                &.active:after{
+                    content: '';
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 0.1rem;
+                    background: #000;
+                    left: 0;
+                    bottom: 0;
+                   
+                }
+            }
+        }
     }
     /*.search_btn{
         margin: 0.334rem 0.36rem 0 0.36rem;
@@ -369,12 +458,15 @@
             }
         }
     }
+    
     .goods_content{
+        margin-top: 1.2rem;
         .goods_list{
             padding-top: 0.533rem;
             margin: 0 0.4rem;
             width: 9.2rem;
             position: relative;
+            // margin-top: 1.2rem;
             .hs-cf;
             &:last-child{
                 border: none;
@@ -407,7 +499,7 @@
                 letter-spacing: 0.01rem;
             }
             .good_price{
-                .font-dpr(16px);
+                .font-dpr(20px);
                 position: absolute;
                 left: 4.8rem;
                 line-height: 1em;
