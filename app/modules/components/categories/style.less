@@ -78,14 +78,16 @@
         .classify_one{
             padding-bottom: 1.306rem;
             li{
-                width: 100%;
+                width: 150%;
                 height: 1.6rem;
                 line-height: 1.6rem;
                 text-align: left;
                 .font-dpr(14px);
                 color: #333;
                 // background-color: #F8F8F8;
-                overflow: hidden;
+                // overflow: hidden;
+                position: relative;
+                margin-left: .29rem;
                 border-top: .0143rem solid #979797;
                 &:last-child{
                     border-bottom: .0143rem solid #979797;
@@ -93,8 +95,11 @@
                 span{
                     display: inline-block;
                     width: .24rem;
-                    height: 104%;
+                    height: 100%;
                     vertical-align: middle;
+                    position: absolute;
+                    left: -0.29rem;
+                    top: -.02rem;
                 }
                 &.active{
                     // background-color: #FFF;
