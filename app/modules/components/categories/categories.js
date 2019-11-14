@@ -178,9 +178,11 @@ $(document).on('pageInit', '.categories', function (e, id, page) {
   }
   function freshSecondLevelContent(firstCategory) {
     let content = '';
+    let hasBorder = typeof firstCategory.children === 'object' && firstCategory.children.length > 0
+    let isBorder = hasBorder?"border_bot":""
     if (typeof firstCategory.adList === 'object' && firstCategory.adList.length > 0) {
       content += '<div class="tit">热门推荐</div>'
-      content = content + '<ul class="classify_two_list border_bot classify_two_list">';
+      content = content + '<ul class="classify_two_list '+isBorder+' classify_two_list">';
       for (let adListNum in firstCategory.adList) {
         content = content + freashAdLi(firstCategory.adList[adListNum]);
       }
