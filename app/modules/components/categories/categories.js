@@ -120,6 +120,11 @@ $(document).on('pageInit', '.categories', function (e, id, page) {
       var that = this;
       $('.classify_one li').removeClass('active');
       $(that).addClass('active');
+      $(that).siblings().find('span').css('opacity','0')
+      $(that).find('span').css('opacity','1')
+      $(that).siblings().css('color','#333')
+      let Fontcolor =   $(that).find('span').css('background-color')
+      $(that).css('color',Fontcolor)
       var class_name = 'categories_title' + $(that).attr('data-id');
       $(".classify_two").scrollTop(categoriesTitlePosition[class_name]);
     })
@@ -146,9 +151,12 @@ $(document).on('pageInit', '.categories', function (e, id, page) {
   function freshSecondLevelTitle(firstCategory) {
     let url = genrateUrl(firstCategory.url, firstCategory.url_type);
     let basicTitle = ''
+    if(!firstCategory.banner_image){
+      return ''
+    }
     return basicTitle =
       `<a href="${url}"><div class="categories_title categories_title${firstCategory.id}" data-id="${ firstCategory.id}"> 
-      <div class="categories_bg" data-layzr="${firstCategory.ad_image?firstCategory.ad_image:firstCategory.banner_image}" data-layzrstatus="1" style="background-image: url(${firstCategory.ad_image?firstCategory.ad_image:firstCategory.banner_image});"></div> 
+      <div class="categories_bg" data-layzr="${firstCategory.banner_image}" data-layzrstatus="1" style="background-image: url(${firstCategory.banner_image});"></div> 
       <h4>${ firstCategory.name}</h4> 
       <div>${firstCategory.desc}</div> 
       </div></a>`
@@ -163,9 +171,9 @@ $(document).on('pageInit', '.categories', function (e, id, page) {
   }
   function freshFirstLevelCategory(firstCategory, num) {
     if (num === 0 || num === '0') {
-      return '<li data-id="' + firstCategory.id + '" class="active categories categories' + firstCategory.id + '">' + firstCategory.name + '</li>';
+      return '<li data-id="' + firstCategory.id + '"style="color:'+firstCategory.mini_color+';"class="active categories categories' + firstCategory.id + '">' +'<span style="background-color:'+firstCategory.mini_color+';opacity:1;"></span>'+'<img src="'+firstCategory.mini_icon+'">'+ firstCategory.name + '</li>';
     } else {
-      return '<li data-id="' + firstCategory.id + '" class="categories categories' + firstCategory.id + '">' + firstCategory.name + '</li>';
+      return '<li data-id="' + firstCategory.id + '" class="categories categories' + firstCategory.id + '">'+'<span style="background-color:'+firstCategory.mini_color+';opacity:0;"></span>'+'<img src="'+firstCategory.mini_icon+'">' + firstCategory.name + '</li>';
     }
   }
   function freshSecondLevelContent(firstCategory) {
@@ -179,7 +187,7 @@ $(document).on('pageInit', '.categories', function (e, id, page) {
       content = content + '</ul>';
     }
     if (typeof firstCategory.children === 'object' && firstCategory.children.length > 0) {
-      content += '<div class="tit">精选分类</div>'
+      content += '<div class="tit tit2">精选分类</div>'
       content = content + '<ul class="classify_two_list classify_two_list">';
       for (let kidCategoryNum in firstCategory.children) {
         content = content + freashKidLi(firstCategory.children[kidCategoryNum]);

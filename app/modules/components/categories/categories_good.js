@@ -73,8 +73,20 @@ $(document).on('pageInit','.categories_good', function(e, id, page){
   })
 
   //筛选切换 v4.5新增
+  let flagClick  = false
   var orderTypeIndex=0;
+
+  //初始化清空设置
+  $('.goods_content').html('');
+
   $('.goods_filter').on('click', 'div',function(){
+    if(flagClick){
+      return
+    }
+    flagClick = true
+    setTimeout(()=>{
+      flagClick = false
+    },1000)
     if($(this).index()==3){
       orderTypeIndex=orderTypeIndex==3?4:3;
       if($(this).find('span').hasClass('active')){
@@ -136,7 +148,7 @@ $(document).on('pageInit','.categories_good', function(e, id, page){
             let tagsDom = ''
             $('.tags_list_new').html('')
             data.data.children_categories.forEach(v=>{
-              tagsDom+=`<span class="tag_item" data-id="${v.id}" data-name="${v.name}" style="background: url(${v.icon}) #000;">${v.name}</span>`
+              tagsDom+=`<span class="tag_item" data-id="${v.id}" data-name="${v.name}" style="background: url(${v.icon}) #000;background-size: cover;">${v.name}</span>`
             })
             console.log(tagsDom)
             $('.tags_list_new').html(tagsDom)
