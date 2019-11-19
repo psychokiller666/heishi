@@ -86,7 +86,7 @@ $(document).on('pageInit','.categories_good', function(e, id, page){
     flagClick = true
     setTimeout(()=>{
       flagClick = false
-    },1000)
+    },1500)
     if($(this).index()==3){
       orderTypeIndex=orderTypeIndex==3?4:3;
       if($(this).find('span').hasClass('active')){
