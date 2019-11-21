@@ -1375,10 +1375,14 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
             success: function(data){
                 if(data.status==1){
                     // console.log(data.data)
-                    initAuth(data.data.authentication);
-                    initHofm(data.data.hoffman);
-                    initNoun(data.data.noun);
-                    initFQA(data.data.problem);
+                    if(data.data){
+                      initAuth(data.data.authentication);
+                      initHofm(data.data.hoffman);
+                      initNoun(data.data.noun);
+                      initFQA(data.data.problem);
+                    }
+                  
+                  
                 }
             },
             error: function(e){
@@ -1519,7 +1523,6 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
 
         return html;
     }
-
 
     //商品特征标签说明弹窗
     function initGoodsNounPopup(data) {
