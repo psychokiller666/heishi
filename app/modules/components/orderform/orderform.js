@@ -158,6 +158,7 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
     $('.countNum').text(num);
     $('.good_num').attr('data-num', num);
     $('.good_num').find('span').text(num);
+    $('.quanyi').find('.num').text('x'+num);
     all_price();
   })
   //输入框失去焦点时
@@ -267,14 +268,16 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
     $('.countNum').text(num);
     $('.good_num').attr('data-num', num);
     $('.good_num').find('span').text(num);
+    $('.quanyi').find('.num').text('x'+num);
     all_price();
   })
   all_price();
   function all_price() {
-    var good_price = parseInt($('.good_price').attr('data-price'));
+    var good_price = parseInt($('.good_price').attr('data-price'))+parseInt($('.quanyi').find('.price').html());
     var countNum = parseInt($('.countNum').attr('data-num'));
     var postage = parseInt($('.all_postage_num').attr('data-postage'));
     var m = good_price * countNum + postage;
+    
     if(getQueryString("fromxsxw")=="nineDiscount"){
     if(localStorage.getItem('xsxwcouponprice')){
       m=m-localStorage.getItem('xsxwcouponprice')
@@ -283,6 +286,13 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
   }
     $('.all_price_num').text(m);
   }
+   //跳转去权益卡页面
+   $('.quanyi').click(function(){
+    let price =$(this).attr('data-price')
+    location.href=`/Portal/HsArticle/quanyi_desc.html?price=${price}`
+  })
+
+
   // 生成订单
   var payment_status = false;
   //防止多次点击

@@ -86,6 +86,11 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
         })
     });
 
+  //跳转去权益卡页面
+  $('.quanyi').click(function(){
+    let price =$(this).find('.price').html()
+    location.href=`/Portal/HsArticle/quanyi_desc.html?price=${price}`
+  })
 
   //初始加载
   var lis = $('.context li').length;
@@ -350,7 +355,8 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
         },
         success: function(data){
           // $.toast('保存成功')
-          if(data.data.status){
+          
+          if(data.data){
             isOverSeas= true
             $('.post_card').show()
             if(data.data.shenfenzheng!=""){
@@ -698,6 +704,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
     window.FUNgetAddress();
     $(".user-mychart-buy").css("display","block");
   }
+  
   //buy 加邮费计算总价格
   function countCompletePrice(){
     var all_price = 0;
@@ -705,6 +712,13 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
     $(".good_info").each(function(){
       var n = parseInt($(this).find('.good_price').attr('data-price')),
       m = parseInt($(this).find('.good_num').attr('data-numbers'));
+      
+      if($(this).find('.quanyi_price').html()){
+        n =  parseInt($(this).find('.good_price').attr('data-price'))+parseInt($(this).find('.quanyi_price').html());
+        $(this).parent().find('.quanyi').show()
+        // $(this).parent().find('.quanyi').find('.price').html($(this).find('.quanyi_price').html())
+        // $(this).parent().find('.quanyi').find('.num').html('x'+$(this).find('.good_num').attr('data-numbers'))
+       }
       all_price += n*m;
     })
     $('.lists').each(function(){

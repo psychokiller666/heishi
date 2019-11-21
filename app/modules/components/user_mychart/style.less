@@ -871,11 +871,67 @@
 				}
 				.good_num{
 					position: absolute;
-					bottom: 0.4rem;
+					top: 1.8rem;
 					right: 0;
 					color: #8E8E8E;
 				}
 			}
+			.quanyi_price{
+				position: absolute;
+				opacity: 0;
+			}
+			.quanyi{
+        .font-dpr(15px);
+        .hs-cf;
+        padding: 0.2rem 0 0 0;
+        // border-bottom: 0.013rem solid rgba(153,153,153,0.3);
+        position: relative;
+				width: 100%;
+				color: #8E8E8E;
+        .tip{
+          margin-left: .3rem;
+					.font-dpr(10px);
+					position: relative;
+					&::after{
+						content: '';
+						display: block;
+						position: absolute;
+						width: .28rem;
+						height: .28rem;
+						top: 0.05rem;
+						right: -.35rem;
+						background-image: url(//img8.ontheroadstore.com/H5_Icon/quanyi_desc_icon.png);
+						background-size: 100% 100%;
+					}
+				}
+				.quanyi_icon{
+					width: .36rem;
+					height: .23rem;
+					background-image: url(//img8.ontheroadstore.com/H5_Icon/quanyi_order_icon.png);
+					background-size: 100% 100%;
+					position: relative;
+					top: .2rem;
+				}
+        .select{
+          width: .35rem;
+          height: .35rem;
+          background-image: url(//img8.ontheroadstore.com/upload/180424/d1ac26b48e521572b13042cabe0bf49d.png);
+          background-size: 100% 100%;
+          position: absolute;
+          top: .58rem;
+          right: 0rem;
+        }
+        .right{
+          // margin-right: 1rem;
+          float: right;
+          color: #AE2121;
+          .num{
+            .font-dpr(13px);
+            color: #999;
+          }
+        }
+       
+      }
 			.express{
 				.font-dpr(12px);
 				padding: 0.47rem 0;
