@@ -571,8 +571,9 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     showPostage(item_id);
 
     // 如果是特价，其他状态不显示
+    let quanyi_price_value =$('.quanyi_price_value').val()
     if(price){
-      $('.price').find('.font_din').text(price);
+      $('.price').find('.font_din').text(price*1+quanyi_price_value*1);
     }
    
     if(presell){
