@@ -1942,6 +1942,7 @@
 
 //权益卡页面
 .quanyi_card_desc{
+    min-height: 100vh;
     .quanyi_card{
         width: 7.63rem;
         height: 4.55rem;
@@ -1980,7 +1981,7 @@
             border-bottom: 1px solid #8C7F6B;
         }
     }
-
+    
     .jump_create_order{
         margin: 0 auto;
         margin-top: 2rem;
@@ -1992,13 +1993,22 @@
         color: #4F4F4F;
         .font-dpr(14px);
         border-radius: .1rem;
-        position: fixed;
-        bottom: 3rem;
-        left: 3.44rem;
         box-shadow:0px .17rem .35rem 0px rgba(0,0,0,1);
         border-radius: .17rem;
+        position: relative;
+        z-index: 2;
 
     }
+    
+}
+.quanyi_bg{
+    width: 10rem;
+    height: 5.25rem;
+    position: absolute;
+    background:  url(https://img8.ontheroadstore.com/H5_Icon/quanyi_bg.png);
+    background-size: 100% 100%;
+    bottom: 0; 
+    left: 0;
 }
 
 
