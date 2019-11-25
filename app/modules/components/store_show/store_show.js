@@ -609,8 +609,8 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     
       
      
-      $('.price').find('.font_din').text(parseInt(special_price));
-      $('.origin_price').html('￥'+price);  
+      $('.price').find('.font_din').text(parseInt(special_price)+quanyi_price_value*1);
+      $('.origin_price').html('￥'+(price*1+quanyi_price_value*1));  
       return true
 
     }
