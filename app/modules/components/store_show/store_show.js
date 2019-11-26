@@ -374,7 +374,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     $('.type_item').find('span').removeClass('active');
     $(this).addClass('active');
     $('.origin_price').hide();
-    var price = $(this).attr('data-price')*1+$(this).attr('data-quanyi_price')*1;
+    var price = $(this).attr('data-price')*1;
     var item_id = $(this).attr('data-id');
     var remain = $(this).attr('data-remain');
     var presell = $(this).attr('data-presell');
