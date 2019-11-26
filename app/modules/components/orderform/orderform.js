@@ -273,11 +273,13 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
   })
   all_price();
   function all_price() {
-    var good_price = parseInt($('.good_price').attr('data-price'))+parseInt($('.quanyi').find('.price').html());
+    var good_price = parseInt($('.good_price').attr('data-price'))
+    if($('.quanyi').find('.price').html()){
+       good_price = parseInt($('.good_price').attr('data-price'))+parseInt($('.quanyi').find('.price').html());
+    }
     var countNum = parseInt($('.countNum').attr('data-num'));
     var postage = parseInt($('.all_postage_num').attr('data-postage'));
     var m = good_price * countNum + postage;
-    
     if(getQueryString("fromxsxw")=="nineDiscount"){
     if(localStorage.getItem('xsxwcouponprice')){
       m=m-localStorage.getItem('xsxwcouponprice')
