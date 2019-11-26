@@ -195,7 +195,6 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   }else if(goodsLimit.data.goodsInfo && Object.keys(goodsLimit.data.goodsInfo).length>0){
     goodsLimit.type = 2;//款式限购
   }
-
   var goSettle = false
   // 如果有视频就放在封面图位置
   var video_status = 0;
@@ -255,6 +254,21 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       }
      
     }
+  }
+  //多个款式计算最小价格 区间
+  if(type_items_span.length > 1){
+    let savePriceList = []
+    type_items_span.forEach(v=>{
+      let _price
+      if($(v).attr('data-special_price')){
+         _price= $(v).attr('data-quanyi_price')*1+$(v).attr('data-special_price')*1
+      }else{
+         _price= $(v).attr('data-quanyi_price')*1+$(v).attr('data-price')*1
+      }
+      savePriceList.push(_price)
+    })
+    let minPrice = savePriceList.sort()[0]
+    $('.price').find('.font_din').text(minPrice);
   }
   page.on("click",".select_type",function(){
     goSettle =false
@@ -360,7 +374,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     $('.type_item').find('span').removeClass('active');
     $(this).addClass('active');
     $('.origin_price').hide();
-    var price = $(this).attr('data-price');
+    var price = $(this).attr('data-price')*1+$(this).attr('data-quanyi_price')*1;
     var item_id = $(this).attr('data-id');
     var remain = $(this).attr('data-remain');
     var presell = $(this).attr('data-presell');
@@ -369,8 +383,12 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     var special_price = $(this).attr('data-special_price')
     var special_start = $(this).attr('data-special_start')
     var special_end = $(this).attr('data-special_end')
-   
-
+    $('.quanyi_price_value').val($(this).attr('data-quanyi_price'))
+    if($(this).attr('data-quanyi_price')>0){
+      $('.is_quanyi').show()
+    }else{
+      $('.is_quanyi').hide()
+    }
     //判断特卖时间
     // let _startTime =  new Date(special_start).getTime()
     // let _startEnd =  new Date(special_end).getTime()
@@ -490,7 +508,6 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   })
 
   function update_status(price, item_id, remain, presell, special,special_price) {
-   
     $('.postage').css('display', 'none');
     $('.remain_tension').css('display', 'none');
     $('.remain').css('display', 'none');
@@ -540,7 +557,6 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   
     
       
-     
       $('.price').find('.font_din').text(parseInt(special_price)+quanyi_price_value*1);
       $('.origin_price').html('￥'+(price*1+quanyi_price_value*1));  
       return true
