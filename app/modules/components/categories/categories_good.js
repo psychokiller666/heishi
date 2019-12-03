@@ -152,8 +152,8 @@ $(document).on('pageInit','.categories_good', function(e, id, page){
             })
             console.log(tagsDom)
             $('.tags_list_new').html(tagsDom)
-            $('.goods_filter').css('top','1.6rem')
-            $('.goods_content').css('margin-top','3rem')
+            // $('.goods_filter').css('top','1.6rem')
+            $('.goods_content').css('margin-top',$('.fixed_content').height()+'px')
           }
           if(data.data.ad[cur_page-1]){
             $('.goods_content').append(
