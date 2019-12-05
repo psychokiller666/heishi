@@ -69,8 +69,15 @@ $(document).on('pageInit','.bind_mobile_new', function(e, id, page){
       },
       success: function(res) {
         if(res.status == 1){
-          var str = $('.redirect_uri').val();
-          location.href = str;
+          //兼容新版登录的回调
+          if(init.getUrlParam('rediectVueUrl')){
+            let rUrl = decodeURIComponent(init.getUrlParam('rediectVueUrl'))
+            location.href = rUrl;
+          }else{
+            var str = $('.redirect_uri').val();
+            location.href = str;
+          }
+         
         } else {
           $.toast(res.info);
           console.log(res);
