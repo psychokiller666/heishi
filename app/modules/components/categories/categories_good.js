@@ -102,6 +102,7 @@ $(document).on('pageInit','.categories_good', function(e, id, page){
       $('.goods_filter div').removeClass('active');
       $(this).addClass('active');
     }
+    curPage =1
     reset_load(categoryID, tagName, curPage,order_types[orderTypeIndex]);
 
   })
@@ -141,7 +142,7 @@ $(document).on('pageInit','.categories_good', function(e, id, page){
         order: order_type 
       },
       success: function(data){
-        if(data.status == 1){
+        if(data.status == 1){ 
           $('.goods_content').append(categories_index_tpl(data.data));
           if(data.data.children_categories.length){
             $('.tags_list_new').show()
