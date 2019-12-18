@@ -2322,7 +2322,98 @@
     bottom: 0; 
     left: 0;
 }
+.buyer_show{
+    .font-dpr(14px);
+    .float_left{
+        float: left;
+    }
+    .float_right{
+        float: right;
+    }
+    .show_txt{
+        .torem(width,702);
+        margin: 0 auto;
+        .res_item{
+            border-bottom: 0.0134rem solid #979797;
+        }
+        .tit{
+            .torem(height,74);
+            color: #151515;
+           .float_right{
+            .font-dpr(12px);
+            color: #8E8E8E;
+           }
+            
+        }
+        .user_info{
+            width: 100%;
+            .torem(height,74);
+            color: #979797;
+            margin-top: .32rem;
+            .avatar{
+                .torem(width,74);
+                .torem(height,74);
+                border-radius: 100%;
+                margin-right: .3rem;
+            }
+            .name_time{
+                p{
+                    line-height: .5rem;
 
+                }
+            }
+            .float_right{
+                color: #D5231C;
+                .font-dpr(12px);
+            }
+        }
+        .msg{
+            .torem(padding, 14);
+            color: #151515;
+            line-height: .48rem;
+        }
+        .res_raise{
+            .torem(height, 80);
+            span{
+                float: right;
+            }
+        }
+    }
+    .show_image{
+        white-space: nowrap;
+        >div{
+            position: relative;
+            .torem(width,260);
+            .torem(height,260);
+            display: inline-block;
+            img{
+                .torem(width,260);
+                .torem(height,260);
+                margin-right: .0267rem;
+                position: relative;
+                z-index: 1;
+               
+            }
+            span{
+                display: block;
+                .torem(width,72);
+                .torem(height,260);
+                box-sizing: border-box;
+                .torem(padding,20);
+                position: absolute;
+                z-index: 0;
+                .torem(right,-74);
+                top: 0;
+                background: #000;
+                color: #fff;
+                white-space:normal;
+                word-break:break-all;
+                word-wrap:break-word;
+                .torem(line-height,40);
+            }
+        }
+    }
+}
 
 
 

@@ -1501,6 +1501,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
             $auth.find('.auth_txt').html(data.message);
         }
     }
+    
     //评分部分
     function initHofm(data) {
         if(data){
@@ -1554,6 +1555,63 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
             }
             // $faq_wrap.show();
         }
+    }
+
+    //买家秀
+    getBuyerShow()
+    function getBuyerShow(){
+      var url = ApiBaseUrl + '/appv6_5/getRecommendPostShowList/'+ goodsId;
+      $.ajax({
+        type: "GET",
+        url: url,
+        dataType: 'json',
+        data: {},
+
+        success: function(data){
+          if(data.status==1){
+            initRecommend1(data.data.show_list) 
+            initRecommend2(data.data.image_list) 
+          }
+        },
+        error: function(e){
+            console.log('getAssessment err: ',e);
+        }
+      });
+    }
+
+    function initRecommend1(data){
+      let str = `<div class="tit">
+        <span class="float_left">买家秀</span>
+        <span class="float_right">查看全部<i></i></span>
+      </div>`
+      data.forEach((v,idx)=>{
+        str+= `<div class="${idx===0?'res_item':''}">
+        <div class="user_info">
+          <img class="float_left avatar" src="${v.user_img}">
+          <div class="float_left name_time">
+            <p class="name">${v.user_nickname}</p>
+            <p class="time">${v.created_at}</p>
+          </div>
+          <div class="float_right">
+          手一哆嗦搶購了${v.order_goods_count}件
+          </div>
+        </div>
+        <div class="msg">${v.show_text}</div>
+        <div class="res_raise">
+          
+          <span class="raise"><i class="${v.is_zan?'has_raise':'no_raise'}"></i>${v.count_zan}</span>
+          <span class="res"><i></i>${v.count_reply}</span>
+        </div>
+        </div>`
+      })
+      $('.show_txt').html(str)
+    }
+    function initRecommend2(data){
+      let str = ''
+      data.forEach(v=>{
+        str+= `<div><img src='${v}' /><span>查看更多</span></div>`
+      })
+      $('.show_image').html(str)
     }
     //跳转去满减活动
     $('.has_full_reduce').click(function(){
