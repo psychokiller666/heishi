@@ -2350,11 +2350,17 @@
             .torem(height,74);
             color: #979797;
             margin-top: .32rem;
+            a{
+                display: block;
+                .torem(width,74);
+                .torem(height,74);
+                margin-right: .3rem;
+            }
             .avatar{
                 .torem(width,74);
                 .torem(height,74);
                 border-radius: 100%;
-                margin-right: .3rem;
+                // margin-right: .3rem;
             }
             .name_time{
                 p{
@@ -2374,8 +2380,37 @@
         }
         .res_raise{
             .torem(height, 80);
+           
+            .raise{
+                i{
+                    display: inline-block;
+                    .torem(width, 48);
+                    .torem(height, 48);
+                    background: url(https://img8.ontheroadstore.com/H5_Icon/replay_raised.png);
+                    background-size: 100% 100%;
+                }
+                .no_raise{
+                    display: inline-block;
+                    .torem(width, 48);
+                    .torem(height, 48);
+                    background: url(https://img8.ontheroadstore.com/H5_Icon/replay_raise.png);
+                    background-size: 100% 100%;
+                }
+            }
+            .res{
+                i{
+                    display: inline-block;
+                    .torem(width, 48);
+                    .torem(height, 48);
+                    background: url(https://img8.ontheroadstore.com/H5_Icon/replay_respond.png);
+                    background-size: 100% 100%;
+                } 
+            }
             span{
                 float: right;
+                display: flex;
+                justify-content: end;
+                align-items: center;
             }
         }
     }
@@ -2410,6 +2445,10 @@
                 word-break:break-all;
                 word-wrap:break-word;
                 .torem(line-height,40);
+            }
+            .last_one{
+                .torem(right,24);
+                z-index: 3;
             }
         }
     }
