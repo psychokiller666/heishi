@@ -170,6 +170,7 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
       let idNum =  $('.post_card .card_num').val()
       let idName =  $('.post_card .card_name').val()
       if(!idName){
+        $.toast('请检查下单人信息');
         return
       }
       $.ajax({
@@ -334,7 +335,8 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
     //如果是海外商品
     if(isOverSeas){
       if(!checkAliyunCard()){
-        return $.toast('请检查下单人信息');
+        return 
+        //$.toast('请检查下单人信息');
       }
      
     }
