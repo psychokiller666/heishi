@@ -1576,12 +1576,14 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     function initRecommend1(data){
       let str = `<div class="tit">
         <span class="float_left">买家秀</span>
-        <span class="float_right">查看全部<i></i></span>
+        <span class="float_right jump_buy_show">查看全部<i></i></span>
       </div>`
       data.forEach((v,idx)=>{
         str+= `<div class="${idx===0?'res_item':''}">
         <div class="user_info">
-          <img class="float_left avatar" src="${v.user_img}">
+          <a class="float_left" href="/User/index/index/id/${v.user_id}.html">
+            <img class="float_left avatar" src="${v.user_img}">
+          </a>
           <div class="float_left name_time">
             <p class="name">${v.user_nickname}</p>
             <p class="time">${v.created_at}</p>
@@ -1593,20 +1595,33 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         <div class="msg">${v.show_text}</div>
         <div class="res_raise">
           
-          <span class="raise"><i class="${v.is_zan?'has_raise':'no_raise'}"></i>${v.count_zan}</span>
-          <span class="res"><i></i>${v.count_reply}</span>
+          <span class="raise"><i class="jump_buy_show ${v.is_zan?'has_raise':'no_raise'}"></i>${v.count_zan}</span>
+          <span class="res"><i class="jump_buy_show"></i>${v.count_reply}</span>
         </div>
         </div>`
       })
       $('.show_txt').html(str)
     }
+    
     function initRecommend2(data){
       let str = ''
-      data.forEach(v=>{
-        str+= `<div><img src='${v}' /><span>查看更多</span></div>`
+      let num = 0
+      data.forEach((v,idx)=>{
+        if(v){
+          num++
+          str+= `<div><img src='${v}' /><span class="jump_buy_show ${num==3?'last_one':''}">查看更多</span></div>`
+        }
       })
       $('.show_image').html(str)
     }
+    //跳转去买家秀
+    $('.buyer_show').on('click','.jump_buy_show',function(){
+      if(ApiBaseUrl.indexOf('api.')>0){
+        location.href=`https://h5.ontheroadstore.com/buyShow/${goodsId}`
+      }else{
+        location.href=`https://h5test.ontheroadstore.com/buyShow/${goodsId}`
+      }
+    })
     //跳转去满减活动
     $('.has_full_reduce').click(function(){
       let fid = $(this).attr('data-id')
