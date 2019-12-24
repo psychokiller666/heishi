@@ -1574,8 +1574,15 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
 
         success: function(data){
           if(data.status==1){
-            initRecommend1(data.data.show_list) 
-            initRecommend2(data.data.image_list) 
+            if(data.data.show_list){
+              initRecommend1(data.data.show_list) 
+            }
+            if(data.data.image_list){
+              initRecommend2(data.data.image_list)
+            }
+            if(data.data.goods_feature){
+              initFeatureList(data.data.goods_feature)
+            }
           }
         },
         error: function(e){
@@ -1600,14 +1607,14 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
             <p class="time">${v.created_at}</p>
           </div>
           <div class="float_right">
-          手一哆嗦搶購了${v.order_goods_count}件
+          手一哆嗦搶購了${fixNumber(v.order_goods_count)}件
           </div>
         </div>
         <div class="msg">${v.show_text}</div>
         <div class="res_raise">
           
-          <span class="raise"><i class="jump_buy_show ${v.is_zan?'has_raise':'no_raise'}"></i>${v.count_zan}</span>
-          <span class="res"><i class="jump_buy_show"></i>${v.count_reply}</span>
+          <span class="raise"><i class="jump_buy_show ${v.is_zan?'has_raise':'no_raise'}"></i>${fixNumber(v.count_zan)}</span>
+          <span class="res"><i class="jump_buy_show"></i>${fixNumber(v.count_reply)}</span>
         </div>
         </div>`
       })
@@ -1625,6 +1632,53 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       })
       $('.show_image').html(str)
     }
+    function initFeatureList(data){
+      $('.feature_list').show()
+      let themeList = [{
+          bg: '#621446',
+          txt: '#D5921F'
+        },{
+          bg: '#F4B833',
+          txt: '#9A0000'
+        },{
+          bg: '#5EA1A7',
+          txt: '#D4231D'
+        },{
+          bg: '#EBD7F4',
+          txt: '#3AD9DC'
+        }]
+      let str =''
+      data.forEach((v,idx)=>{
+        str+= `<span style="background:${themeList[idx%4].bg};color:${themeList[idx%4].txt};" data-id="${v.id}">${v.title}</span>`
+      })
+      $('.feature_list').html(str)
+
+    }
+    //数据整理
+    function fixNumber(n){
+      let _n = ''
+      switch (true) {
+        case n>10000:
+          _n = Math.round(n/10000)+'w+'
+          break;
+        case n>1000:
+          _n = Math.round(n/1000)+'w+'
+          break;
+        default:
+          _n = n      
+      }
+      return _n
+
+    }
+    //跳转去专辑列表
+    $('.feature_list').on('click','span',function(){
+      let fid = $(this).attr('data-id')
+      if(ApiBaseUrl.indexOf('api.')>0){
+        location.href=`https://h5.ontheroadstore.com/wineFeature/${fid}`
+      }else{
+        location.href=`https://h5test.ontheroadstore.com/wineFeature/${fid}`
+      }
+    })
     //跳转去买家秀
     $('.buyer_show').on('click','.jump_buy_show',function(){
       if(ApiBaseUrl.indexOf('api.')>0){
