@@ -364,8 +364,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
         },
         success: function(data){
           // $.toast('保存成功')
-          
-          if(data.data.status){
+          if(data.data){
             isOverSeas= true
             $('.post_card').show()
             if(data.data.shenfenzheng!=""&&data.data.realname!=""){
@@ -706,22 +705,47 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
  * warning: 下面是初始化订单页的相关功能  /User/MyChart/index.html
  * */
   //buy页面 初始化
-  if(sessionStorage.cid){
-    var selectItems = JSON.parse(sessionStorage.cid);
-    $(".good_info").each(function(){
-      var that = this;
-      //标记 判断是否选中
-      var status = false;
-      $.each(selectItems, function (n, value){
-        var cid = $(that).data("cid");
-        if(value.cid == cid){
-          status = true;
+  if(sessionStorage.cid || init.getCookie('suohalist')){
+    var selectItems;
+    //优先选择sessionStorage 
+    if(sessionStorage.cid){
+      selectItems = JSON.parse(sessionStorage.cid);
+      $(".good_info").each(function(){
+        var that = this;
+        //标记 判断是否选中
+        var status = false;
+        $.each(selectItems, function (n, value){
+          var cid = $(that).data("cid");
+          if(value.cid == cid){
+            status = true;
+          }
+        })
+        if(!status){
+          $(this).remove();
         }
       })
-      if(!status){
-        $(this).remove();
-      }
-    })
+      
+    }else{
+     let _selectItems = JSON.parse(init.getCookie('suohalist'));
+      $(".good_info").each(function(){
+        var that = this;
+        //标记 判断是否选中
+        var status = false;
+        $.each(_selectItems, function (n, value){
+          var mid = $(that).data("modelid");
+          console.log(mid)
+          if(value.mid == mid){
+            status = true;
+          }
+          $('.good_num').html('x 1')
+          $(that).find('.good_num').attr('data-numbers','1')
+        })
+        if(!status){
+          $(this).remove();
+        }
+      })
+
+    }
     
     $(".lists").each(function(){
       if(!$(this).find('.good_info').length){
