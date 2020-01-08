@@ -31,21 +31,16 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
   };
   init.wx_share(share_data);
   init.checkfollow();
-
   var loginStatus = init.ifLogin();
 
   // 搜索初始
-  // SearchInit();
-  var mySwiper = new Swiper('.swiper-container-home',{ 
-    pagination: '.swiper-pagination',
-    // lazyLoading: true,
-    loop: true,
-    autoplay: 3000,
-    speed:300,
-    watchSlidesVisibility : true,
-    autoplayDisableOnInteraction : false,
-  })
- 
+  var H5BaseUrl = ''
+  if(ApiBaseUrl.indexOf('api.')>0){
+    H5BaseUrl=`https://h5.ontheroadstore.com/`
+  }else{
+    H5BaseUrl=`https://h5test.ontheroadstore.com/`
+  }
+
   var myHitposts = new Swiper('.swiper-hitposts',{
     slidesPerView: 1.15,
     spaceBetween: '2.67%',
@@ -57,36 +52,297 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     loop: true,
     loopAdditionalSlides: 1
   })
-  // 获取卖家信息
-  user_info();
-  function user_info(){
-    var arr = [];
-    $('.store_list ul li').each(function() {
-      var id = $(this).find('.title').attr('data-objectId');
-      arr.push(id);
-    })
-    var data = {
-      object_id: arr
-    }
-    $.post('/index.php?g=portal&m=index&a=get_img',data,function(res){
-      if(res.status == 1){
-        $('.store_list ul li').each(function() {
-          var user_id = $(this).find('.user').attr('data-user_id');
-          var that = this;
-          $.each(res.data, function(index, item){
-            var img_src = item.avatar;
-            if(user_id == index){
-              $(that).find('.user .user_info img').attr('src', img_src);
-              $(that).find('.user .user_info span').text(item.name);
-              return false;
-            }
-          })
-        })
-      } else {
-        $.toast(res.info);
+  initNewHomePage()
+  function initNewHomePage(){
+    $.ajax({
+      type: 'POST',
+      url: ApiBaseUrl+'/appv6_5/homepage',
+      data: { 
+        "HomepageAppBanner": [1],
+        "HomepageAppSellerRecommend": [1],
+        "HomepageAppSegmentGoodsList": [1],
+        "HomepageAppFeatureList": [1],
+        "HomepageAppNewGoodsList": [1],
+        "HomepageAppLottery": [1],
+        "HomepageAdvertisement": [1],
+        "cid":7
+      },
+      success: function(data){
+        initNewBanner(data.data.HomepageAppBanner.model_data)
+        initSellerRecommend(data.data.HomepageAppSellerRecommend.model_data)
+        initNewGoodsList(data.data.HomepageAppNewGoodsList.model_data)
+        initNewTopicList(data.data.HomepageAppFeatureList.model_data.fang_list,1)
+        initNewTopicList(data.data.HomepageAppFeatureList.model_data.chang_list,2)
+        initRecomendAndOnly(data.data.HomepageAppSegmentGoodsList.model_data)
+      },
+      error: function(xhr, type){
+        console.log(xhr);
       }
+    });
+
+  }
+  //banner轮播
+  function initNewBanner(data){
+    let str = ``
+    data.forEach(v=>{
+      str+=`<div class="swiper-slide">
+        <a class="external" href='${genrateUrl(v.url,v.url_type)}'>
+          <img src="${v.image}" />
+        </a>
+      </div>`
+    })
+    $('.banners').find('.swiper-wrapper').html(str)
+    var mySwiper = new Swiper('.swiper-container-home',{ 
+      pagination: '.swiper-pagination',
+      // lazyLoading: true,
+      loop: true,
+      autoplay: 3000,
+      speed:300,
+      watchSlidesVisibility : true,
+      autoplayDisableOnInteraction : false,
     })
   }
+ //卖家推荐
+  function initSellerRecommend(data){
+    let str = ``
+    data.forEach((v,i)=>{
+      str+=`<div class="seller_item" data-author="${v.userinfo.author}">
+          <img class="un_active ${i==0?'active':''}" src="${v.userinfo.user_avatar}@160w_1l" />
+          <p class="un_active ${i==0?'active':''}">${v.userinfo.user_name}</p>
+          <span class="un_active ${i==0?'active':''}"></span>
+      </div>`
+      initSellerRecommendGoods(data[i].goods,i)
+      if(i==0){
+        $('.into_shop').attr('href',`/User/index/index/id/${v.userinfo.author}.html`)
+      }
+    })
+    $('.seller_recommend').find('.seller_list').html(str)
+   
+  }
+  function initSellerRecommendGoods(data,index){
+    let str = ``
+    data.forEach(v=>{
+      str+=`<a  href="/Portal/HsArticle/index/id/${v.id}.html" class="seller_good seller_good_${index} external">
+          <img src="${v.cover}@320w_1l" />
+          <p>${v.title}</p>
+          <span>¥${v.price[0]}</span>
+      </a>`
+    })
+    $('.seller_recommend').find('.seller_goods_list').append(str)
+    $('.seller_goods_list').find(`.seller_good`).hide()
+    $('.seller_goods_list').find(`.seller_good_0`).css("display","inline-block")
+  }
+  //新品
+  function initNewGoodsList(data){
+    let str = ``
+    data.forEach(v=>{
+      str+=`<a  href="/Portal/HsArticle/index/id/${v.id}.html" class="new_good external">
+          <img src="${v.cover}@320w_1l" />
+          <p>${v.title}</p>
+          
+      </a>`
+    })
+    $('.new_goods_list').html(str)
+  }
+  //专题
+  function initNewTopicList(data,status){
+    let str= ``
+    data.forEach(v=>{
+      str+=`<div   class="topic" data-type="${v.type}" data-id="${v.id}">
+      <img src="${v.cover}@320w_1l" />
+      <div class="shadow">
+        <p class="tit">${v.title}</p>
+        <p class="sub_tit">${v.subtitle}</p>
+      </div>
+    </div>`
+    })
+    if(status==1){
+      $('.through_topic').html(str)
+    }
+    if(status==2){
+      $('.vertical_topic').html(str)
+    }
+   
+  }
+ 
+  //专栏
+  function initRecomendAndOnly(data){
+    let tab = ``
+    $('.segment_list').html('')
+    data.forEach((v,i)=>{
+      tab+=`<span class="${i==0?'active':''}">${v.title}</span>`
+      let list = `<div class="list_${i}" style="display:${i===0?'block':'none'}"><div class="list">`
+      v.goodslist.forEach(t=>{
+        if(t.type==1){
+          list+=`<div  class="segment_good">
+            <a href="/Portal/HsArticle/index/id/${t.id}.html"  class="external">
+              <img class="cover" src="${t.cover}@320w_1l" />
+            </a>
+          <div class="txt">
+            <a href="/Portal/HsArticle/index/id/${t.id}.html"  class="external">
+              <p class="tit" style="height:${t.title.length>=t.post_subtitle.length?'.96rem':'.48rem'};">${t.title} </p>
+            </a>
+              <p class="sub_tit" style="height:${t.title.length>=t.post_subtitle.length?'.48rem':'.96rem'};">${t.post_subtitle}</p>
+            <p class="txt_end" style="padding-top:.1rem;">
+              <span>¥ ${t.price[0]}</span>`
+              if(t.tag_list){
+                if(t.tag_list.id==1){
+                  list+=`<span class="tag" data-jump="1" data-id="${t.tag_list.id}"><span class="time" data-time="${t.tag_list.count_down}">${countDown(t.tag_list.count_down)}</span>${t.tag_list.title}</span>`
+                }else{
+                  list+=`<span class="tag" data-jump="2" data-id="${t.tag_list.id}" style="margin-top: -.1rem;"><img class="tag_icon" src="${t.tag_list.icon}" />${t.tag_list.title}</span>`
+                }
+              }
+            list+= `</p>
+          </div>
+          
+        </div>`
+        }
+        if(t.type==2){
+          list+=`
+            <a class="ad external" href='${genrateUrl(t.object_id,t.ad_type)}'>
+              <img  src="${t.image}"/>
+            </a>
+          `
+        }
+
+      })
+      list+=`</div></div>`
+      $('.segment_list').append(list)
+      //时间倒计时
+      $('.segment_list').find('.time').forEach(v=>{
+        setInterval(()=>{
+          let time =  countDown($(v).attr('data-time'))
+          $(v).html(time)
+        })
+        
+      },1000)
+
+    })
+    $('.tab_recommend_only').html(tab)
+  }
+  //专栏点击事件
+  $('.tab_recommend_only').on('click','span',function(){
+    let idx = $(this).index()
+    $(this).addClass('active').siblings().removeClass('active')
+    $('.segment_list').find(`.list_${idx}`).show().siblings().hide()
+  })
+  //推荐卖家切换
+  $('.seller_list').on('click','.seller_item',function(){
+    let idx = $(this).index()
+    let author = $(this).attr('data-author')
+    $('.un_active').removeClass('active')
+    $(this).find('img').addClass('active')
+    $(this).find('p').addClass('active')
+    $(this).find('span').addClass('active')
+    $('.into_shop').attr('href',`/User/index/index/id/${author}.html`)
+    $('.seller_goods_list').find(`.seller_good`).hide()
+    $('.seller_goods_list').find(`.seller_good_${idx}`).css("display","inline-block")
+  })
+  //专题跳转
+  $('.topic_selected').on('click','.topic',function(){
+    let id = $(this).attr('data-id');
+    let type = $(this).attr('data-type')
+    switch(type){
+      case  '1':
+        location.href= `${H5BaseUrl}bookListDetail/${id}`;
+        break;
+      case '2':
+        location.href= `${H5BaseUrl}wineFeature/${id}`;
+        break;
+      case '3':
+        location.href= `/Portal/HsArticle/index/id/${id}.html`;
+        break;
+      case '4':
+        location.href= `/HsProject/index/pid/${id}.html`;
+        break;
+      default :
+        console.log('没有找到这个类型，小老弟，看看是哪里的bug')
+        break;
+    }
+  })
+
+  //广告跳转
+  function genrateUrl(url, url_type) {
+    if (url_type === 0 || url_type === '0') {
+      return 'javascript:;';
+    }
+    if (url_type === 1 || url_type === '1') {
+      return `/Portal/HsArticle/index/id/${url}.html`
+    }
+    if (url_type === 2 || url_type === '2') {
+      return `/Portal/HsArticle/culture/id/${url}.html`
+    }
+    if (url_type === 3 || url_type === '3') {
+      return `/HsProject/index/pid/${url}.html`
+    }
+    if (url_type === 5 || url_type === '5') {
+      return url;
+    }
+    if (url_type === 6 || url_type === '6') {
+      return `/HsCategories/category_index/id/${url}.html`
+    }
+
+
+  }
+  $('.segment_list').on('click','.tag',function(){
+    let jumpStatus = $(this).attr('data-jump')
+    let id = $(this).attr('data-id')
+    if(jumpStatus==1){
+      return
+    }
+    location.href= `${H5BaseUrl}segment/${id}`;
+  })
+  function countDown(endTime){
+    // let _endTime = new Date(endTime.replace(/-/g, "/")).getTime()
+    let _endTime = endTime*1000
+    let _startTime = new Date().getTime()
+    let times = (_endTime - _startTime)/1000
+        var day=0,
+          hour=0,
+          minute=0,
+          second=0;//时间默认值
+        if(times > 0){
+          day = Math.floor(times / (60 * 60 * 24));
+          hour = Math.floor(times / (60 * 60)) - (day * 24);
+          minute = Math.floor(times / 60) - (day * 24 * 60) - (hour * 60);
+          second = Math.floor(times) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+        }
+        if (day <= 9) day = '0' + day;
+        if (hour <= 9) hour = '0' + hour;
+        if (minute <= 9) minute = '0' + minute;
+        if (second <= 9) second = '0' + second;
+     return hour+":"+minute+":"+second
+  }
+  // 获取卖家信息
+  // user_info();
+  // function user_info(){
+  //   var arr = [];
+  //   $('.store_list ul li').each(function() {
+  //     var id = $(this).find('.title').attr('data-objectId');
+  //     arr.push(id);
+  //   })
+  //   var data = {
+  //     object_id: arr
+  //   }
+  //   $.post('/index.php?g=portal&m=index&a=get_img',data,function(res){
+  //     if(res.status == 1){
+  //       $('.store_list ul li').each(function() {
+  //         var user_id = $(this).find('.user').attr('data-user_id');
+  //         var that = this;
+  //         $.each(res.data, function(index, item){
+  //           var img_src = item.avatar;
+  //           if(user_id == index){
+  //             $(that).find('.user .user_info img').attr('src', img_src);
+  //             $(that).find('.user .user_info span').text(item.name);
+  //             return false;
+  //           }
+  //         })
+  //       })
+  //     } else {
+  //       $.toast(res.info);
+  //     }
+  //   })
+  // }
   $('.attentionUser').click(function(){
     var that = this;
     var isAtten = $(this).data('isatten');
