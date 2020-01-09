@@ -136,13 +136,34 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
   function initNewGoodsList(data){
     let str = ``
     data.forEach(v=>{
-      str+=`<a  href="/Portal/HsArticle/index/id/${v.id}.html" class="new_good external">
+      str+=`<div class="swiper-slide">
+        <a  href="/Portal/HsArticle/index/id/${v.id}.html" class="new_good external">
           <img src="${v.cover}@320w_1l" />
           <p>${v.title}</p>
           
-      </a>`
+      </a></div>`
     })
-    $('.new_goods_list').html(str)
+    str+=`
+      <div class='swiper-slide'>
+        <img class="jump_new_more" src="https://img8.ontheroadstore.com/H5_Icon/home_new_more.png" />
+      </div>
+    `
+    $('.new_goods_list').find('.swiper-wrapper').html(str)
+    var mySwiper = new Swiper('.swiper-container-new',{ 
+      pagination: '.swiper-pagination',
+      slidesPerView: 2.3,
+      // lazyLoading: true,
+      // loop: true,
+      autoplay: 3000,
+      speed:300,
+      watchSlidesVisibility : true,
+      autoplayDisableOnInteraction : false,
+      autoplayStopOnLast: true
+    })
+
+    $('.new_goods_list').on('click','.jump_new_more',function(){
+      location.href= `${H5BaseUrl}segment/4`;
+    })
   }
   //专题
   function initNewTopicList(data,status){
@@ -209,13 +230,14 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
       list+=`</div></div>`
       $('.segment_list').append(list)
       //时间倒计时
-      $('.segment_list').find('.time').forEach(v=>{
+      let listDom =  $('.segment_list').find('.time')
+      listDom.forEach(v=>{
         setInterval(()=>{
           let time =  countDown($(v).attr('data-time'))
           $(v).html(time)
-        })
+        },1000)
         
-      },1000)
+      })
 
     })
     $('.tab_recommend_only').html(tab)
@@ -250,10 +272,10 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
         location.href= `${H5BaseUrl}wineFeature/${id}`;
         break;
       case '3':
-        location.href= `/Portal/HsArticle/index/id/${id}.html`;
+        location.href= `/HsExplore/project_detail/pid/${id}.html`;
         break;
       case '4':
-        location.href= `/HsProject/index/pid/${id}.html`;
+        location.href= `/Portal/HsArticle/culture/id/${id}.html`;
         break;
       default :
         console.log('没有找到这个类型，小老弟，看看是哪里的bug')
@@ -297,21 +319,24 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     let _endTime = endTime*1000
     let _startTime = new Date().getTime()
     let times = (_endTime - _startTime)/1000
-        var day=0,
-          hour=0,
-          minute=0,
-          second=0;//时间默认值
-        if(times > 0){
-          day = Math.floor(times / (60 * 60 * 24));
-          hour = Math.floor(times / (60 * 60)) - (day * 24);
-          minute = Math.floor(times / 60) - (day * 24 * 60) - (hour * 60);
-          second = Math.floor(times) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
-        }
-        if (day <= 9) day = '0' + day;
-        if (hour <= 9) hour = '0' + hour;
-        if (minute <= 9) minute = '0' + minute;
-        if (second <= 9) second = '0' + second;
-     return hour+":"+minute+":"+second
+    if(times<=0){
+      return
+    }
+    var day=0,
+      hour=0,
+      minute=0,
+      second=0;//时间默认值
+      if(times > 0){
+        day = Math.floor(times / (60 * 60 * 24));
+        hour = Math.floor(times / (60 * 60)) - (day * 24);
+        minute = Math.floor(times / 60) - (day * 24 * 60) - (hour * 60);
+        second = Math.floor(times) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+      }
+      if (day <= 9) day = '0' + day;
+      if (hour <= 9) hour = '0' + hour;
+      if (minute <= 9) minute = '0' + minute;
+      if (second <= 9) second = '0' + second;
+    return hour+":"+minute+":"+second
   }
   // 获取卖家信息
   // user_info();
