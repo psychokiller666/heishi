@@ -7,13 +7,12 @@
     //满减商品
     .has_full_reduce{
         width: 9.2rem;
-        margin: 0 auto;
-        min-height: 1.173rem;
-        .font-dpr(14px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-bottom: .0133rem solid #e8e8e8;
+        padding: 0 .4rem;
+        min-height: .82rem;
+        // display: flex;
+        // align-items: center;
+        // justify-content: center;
+        background: #FFAEA9;
         font-family: "iconfont"!important;
         font-style: normal;
         -webkit-font-smoothing: antialiased;
@@ -22,35 +21,30 @@
             content: '\e512';
             display: block;
             position: absolute;
-            .font-dpr(14px);
+            .font-dpr(16px)!important;
             top: 50%;
-            right: 0;
+            right: .58rem;
+            color: #ffffff;
             -webkit-transform: translateY(-50%);
             transform: translateY(-50%);
         }
         .label{
             width: 1.28rem;
-            color: #afafaf;
+            color: #151515;
+            float: left;
+            line-height: .82rem;
+            .font-dpr(13px);
+            font-weight: 900;
         }
-        .tag{
-            display: inline-block;
-            font-size: .32rem;
-            height: .32rem;
-            color: #fff;
-            line-height: 1;
-            padding: .08rem .21333rem .10667rem;
-            background: #ae2121;
-            border-radius: .10667rem;
-            // margin-right: .4rem;
-            position: relative;
-            margin-left: .2rem;
-            width: 1.4rem;
-            text-align: center;
-        }
+        
         .center{
             width: 4.2rem;
             margin-left: .2rem;
-
+            line-height: .82rem;
+            float: left;
+            color: #979797;
+            .font-dpr(12px);
+            font-weight: 100;
         }
         .to_list{
             color: #AFAFAF;
@@ -71,7 +65,8 @@
         bottom: -0.05rem;
         border-top: 0.0133rem solid #E8E8E8;
         background: #FFF;
-        height: 1.33rem;
+        height: 1.43rem;
+        padding: .05rem 0;
         .footer_nav{
             .hs-cf;
             color: #000;
@@ -99,17 +94,24 @@
                             &.hs-icon {
                                 .font-dpr(18px);
                                 line-height: 0.533rem;
-                                height: 0.533rem;
-                                margin: 0.1867rem 0 0 0;
+                                width: .88rem;
+                                height: 0.88rem;
+                                margin: 0.1867rem 0 0 .13rem;
                                 position: relative;
-                                &.userhome:before {
-                                    content: "\e655";
+                                &.userhome {
+                                    background: url(//img8.ontheroadstore.com/H5_Icon/good_shop_btn.png);
+                                    background-repeat: no-repeat;
+                                    background-size: 100% 100%;
                                 }
-                                &.chat:before {
-                                    content: "\e654";
+                                &.chat {
+                                    background: url(//img8.ontheroadstore.com/H5_Icon/good_chat_btn.png);
+                                    background-repeat: no-repeat;
+                                    background-size: 100% 100%;
                                 }
-                                &.shopping:before {
-                                    content: "\e668";
+                                &.shopping {
+                                    background: url(//img8.ontheroadstore.com/H5_Icon/good_chart_btn.png);
+                                    background-repeat: no-repeat;
+                                    background-size: 100% 100%;
                                 }
                             }
                         }
@@ -150,14 +152,17 @@
             width: 3.146rem;
             .font-dpr(15px);
             float: right;
-            height: 100%;
+            height: 1.33rem;
             text-align: center;
             line-height: 1.306rem;
         }
        
         .buy_btn{
-            background: #AE2121;
+            background: url(//img8.ontheroadstore.com/H5_Icon/good_buy_btn.png);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
             color: #FFF;
+            border-radius: 0 .1rem .1rem 0;
             &.disable{
                 background: #8E8E8E;
             }
@@ -166,6 +171,8 @@
             border-left: 0.0133rem solid #E8E8E8;
             box-sizing: border-box;
             color: #000;
+            box-shadow:0px 0px 8px 0px rgba(0,0,0,0.27);
+            border-radius:8px 0px 0px 8px;
         }
         .only_chart{
             width: 3.14rem;
@@ -219,7 +226,7 @@
         width: 10rem;
         position: relative;
         .swiper-pagination-bullet-active{
-            background: #fff;
+            background: #ED4A42;
         }
         .swiper-pagination-bullet{
            .torem(width,10);
@@ -231,7 +238,7 @@
             background-position: 50% 50%;
             background-repeat: no-repeat;
             background-size: cover;
-            background-color: #F5F5F5;
+            background-color: #FFFFFF;
         }
         .video{
             height:10rem;
@@ -276,20 +283,22 @@
         }
       
         .specail-time{
+            .font-dpr(18px);
             display: none;
-            width: 3.6rem;
-            height: 0.6rem;
-            line-height: 0.6rem;
-            background: rgba(0, 0, 0, 0.3);
+            .torem(width,488);
+            .torem(height, 56);
+            .torem(line-height, 56);
+            background: rgba(255, 255, 255, 0.5);
             font-size: 0.35rem;
             text-align: center;
-            color: #fff;
-            border-radius: 0.3rem;
+            color: #114FFF;
+            border-radius: 0.13rem;
             position: absolute;
-            left: 0.5rem;
-            top: 8rem;
+            .torem(left, 132);
+            top: 8.5rem;
             font-weight: bold;
             z-index: 3;
+            
         }
         .swiper-container-article{
             position: relative;
@@ -456,6 +465,7 @@
                 margin-right: .5rem;
                 float: right;
                 .font-dpr(13px);
+                color: #979797;
             }
            
         }
@@ -481,7 +491,7 @@
         .select_wrap .select_r,.select_wrap .select_r_1{
             width: inherit;
             height: inherit;
-            background:  url(//img8.ontheroadstore.com/H5_Icon/article_get_coupon.png) no-repeat;
+            background:  url(//img8.ontheroadstore.com/H5_Icon/article_get_coupon.png?v1) no-repeat;
             background-size: 100%;
             &::after{
                 display: none;
@@ -490,11 +500,11 @@
         .to_buyer_list_new{
             display: block;
             float: right;
-            margin-right: 1.35rem;
+            // margin-right: 1.35rem;
             text-align: center;
             line-height: 1;
             font-size: 0.32rem;
-            color: #8E8E8E;
+            color: #ED4A42;
             font-family:PingFangSC-Regular;
             .font-dpr(13px);
             .torem(line-height,64);
@@ -543,7 +553,7 @@
             width: 100%;
         }
         .authentication_cut{
-            height: 0.4rem;
+            // height: 0.4rem;
            
         }
     }
@@ -750,7 +760,7 @@
     .select_wrap,.select_specs{
         height: 1.173rem;
         line-height: 1.173rem;
-        border-bottom: 0.0133rem solid #E8E8E8;
+        // border-bottom: 0.0133rem solid #E8E8E8;
         .font-dpr(14px);
         margin: 0 0.4rem;
         width: 9.2rem;
@@ -788,11 +798,11 @@
                 content: '\e512';
                 display: block;
                 position: absolute;
-                .font-dpr(14px);
+                .font-dpr(16px);
                 top: 50%;
                 right: 0;
                 transform: translateY(-50%);
-                color: #fff;
+                color: #979797;
             }
 
             .coupon_tag{
@@ -852,6 +862,7 @@
     .select_specs{
         width: 9.2rem;
         margin: 0;
+        
         padding: 0 .4rem;
         background: #F4F4F4;
     }
@@ -864,6 +875,7 @@
         .font-dpr(14px);
         // margin: 0 0.4rem;
         width: 9.2rem;
+        background: #979797;
         .hs-cf;
         .delivery_time_label{
             color: #000;
@@ -871,20 +883,21 @@
             float: left;
         }
         .delivery_time_txt{
-            color: #8F8F8F;
+            color: #FFFFFF;
             position: relative;
             display: inline-block;
             width: 7.78rem;
             height: 100%;
+            .font-dpr(12px);
             &:after{
                 content: '\e512';
                 display: block;
                 position: absolute;
-                .font-dpr(14px);
+                .font-dpr(16px);
                 top: 50%;
                 right: 0;
                 transform: translateY(-50%);
-                color: #fff;
+                color: #FFFFFF;
             }
         }
 
@@ -1386,9 +1399,10 @@
                 color: #8E8E8E;
             }
             .go_seller_btn{
-                border: 0.0267rem solid #D4CCA7;
+                background: #ACD120;
+                // border: 0.0267rem solid #D4CCA7;
                 border-radius: 0.1rem;
-                padding: 0.133rem 0.267rem;
+                padding: 0.153rem 0.267rem;
                 .font-dpr(12px);
                 line-height: 1em;
                 position: absolute;
@@ -1396,7 +1410,7 @@
                 right: 0.4rem;
                 text-align: center;
                 transform: translateY(-50%);
-                color: #D4CCA7;
+                color: #FFFFFF;
             }
             .cancel_attention,
             .attention{
@@ -1446,25 +1460,41 @@
                         height: 1.5rem;
                     }
                     .post_title{
-                        .font-dpr(13px);
+                        .font-dpr(14px);
                         padding-top: 0.27rem;
                         // overflow: hidden;
                         white-space: normal;
                         // text-overflow: ellipsis;
                         width: 100%;
-                        height: .86rem;
+                        height: .43rem;
+                        line-height: 1.2em;
+                        color: #151515;
+                        font-weight: normal;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 1;
+                        -webkit-box-orient: vertical;                       
+                    }
+                    .post_subtitle{
+                        .font-dpr(14px);
+                        // overflow: hidden;
+                        white-space: normal;
+                        // text-overflow: ellipsis;
+                        width: 100%;
+                        height: .43rem;
                         line-height: 1.2em;
                         color: #8F8F8F;
                         font-weight: normal;
                         overflow: hidden;
                         text-overflow: ellipsis;
                         display: -webkit-box;
-                        -webkit-line-clamp: 2;
+                        -webkit-line-clamp: 1;
                         -webkit-box-orient: vertical;                       
                     }
                     .post_price{
-                        .font-dpr(13px);
-                        color: #8F8F8F;
+                        .font-dpr(14px);
+                        color: #151515;
                     }
                 }
             }
@@ -1473,10 +1503,9 @@
 
     //商品详情和购物须知
     .goods_tab{
-        .torem(height,138);
-        .torem(width,675);
-        margin: 0 auto;
-        .font-dpr(20px);
+        .torem(height,108);
+        .torem(width,750);
+        .font-dpr(16px);
         color: #9E9E9E; 
         div{
             display: inline-block;
@@ -1484,6 +1513,7 @@
             position: relative;
             line-height: 1.84rem;
             font-weight: 600;
+            margin: 0 1.6rem;
             &.active{
                 color: #000;
                 &::after{
@@ -1577,15 +1607,27 @@
                     }
                 }
                 .post_title{
-                    color: #8E8E8E;
+                    color: #151515;
                     width: 4.4rem;
-                    max-height: 2.4em;
+                    max-height: 1.2em;
                     line-height: 1.2em;
                     .font-dpr(14px);
                     overflow: hidden;
                     float: left;
                     font-weight: 500;
                     margin-top: .2rem;
+                    margin-left: .3rem;
+                }
+                .post_subtitle{
+                    color: #8E8E8E;
+                    width: 4.4rem;
+                    max-height: 1.2em;
+                    line-height: 1.2em;
+                    .font-dpr(14px);
+                    overflow: hidden;
+                    float: left;
+                    font-weight: 500;
+                    // margin-top: .2rem;
                     margin-left: .3rem;
                 }
                 .good_price{
@@ -1848,7 +1890,9 @@
         color: #fff;
     }
     .buy_btn{
-        background: #AE2121;
+        background: url(//img8.ontheroadstore.com/H5_Icon/good_buy_btn.png);
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
         color: #FFF;
         right: 0;
         &.disable{
@@ -1898,6 +1942,7 @@
 .specs{
     width: 100%;
     height: 100%;
+    
     position: absolute;
     display: none;
     top: 0;
@@ -2209,6 +2254,7 @@
 .special_offer{
     // width: 2.853rem;
     height: 0.61rem;
+    
     display: none;
     float: left;
     background: #ae2121;
@@ -2238,6 +2284,7 @@
 .special_offer_1{
     // width: 2.853rem; 
     display: none;
+    
     height: 0.61rem;
     line-height: .61rem;
     opacity: 0;
@@ -2345,17 +2392,39 @@
         float: right;
     }
     .show_txt{
-        .torem(width,702);
+        .torem(width,670);
         margin: 0 auto;
+        position: relative;
+       
         .res_item{
-            border-bottom: 0.0134rem solid #979797;
+            
         }
         .tit{
             .torem(height,74);
             color: #151515;
+            position: relative;
+            &::after{
+                content: '\e512';
+                display: block;
+                position: absolute;
+                .font-dpr(18px)!important;
+                top: 50%;
+                right: .1rem;
+                font-family: "iconfont"!important;
+                color: #8E8E8E;
+                -webkit-transform: translateY(-104%);
+                transform: translateY(-104%);
+            }
            .float_right{
             .font-dpr(12px);
             color: #8E8E8E;
+            position: relative;
+            margin-right: .58rem;
+           }
+           .float_left{
+            .font-dpr(17px);
+            color: #151515;
+            font-weight: 900;
            }
             
         }
@@ -2366,24 +2435,29 @@
             margin-top: .32rem;
             a{
                 display: block;
-                .torem(width,74);
-                .torem(height,74);
+                .torem(width,54);
+                .torem(height,54);
                 margin-right: .3rem;
             }
             .avatar{
-                .torem(width,74);
-                .torem(height,74);
+                .torem(width,54);
+                .torem(height,54);
                 border-radius: 100%;
                 // margin-right: .3rem;
             }
             .name_time{
                 p{
-                    line-height: .5rem;
-
+                    line-height: .37rem;
+                    .font-dpr(13px);
+                    color: #515151;
+                }
+                .time{
+                    .font-dpr(9px);
+                    color: #979797;
                 }
             }
             .float_right{
-                color: #D5231C;
+                color: #ED4A42;
                 .font-dpr(12px);
             }
         }
@@ -2391,40 +2465,51 @@
             .torem(padding, 14);
             color: #151515;
             line-height: .48rem;
+            .font-dpr(13px);
+            margin-left: .8rem;
         }
         .res_raise{
             .torem(height, 80);
-           
+            margin-left: .8rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 0.0134rem solid #979797;
+            .font-dpr(9px);
+            color: #979797;
             .raise{
                 i{
                     display: inline-block;
-                    .torem(width, 48);
-                    .torem(height, 48);
-                    background: url(https://img8.ontheroadstore.com/H5_Icon/replay_raised.png);
+                    .torem(width, 40);
+                    .torem(height, 40);
+                    background: url(https://img8.ontheroadstore.com/H5_Icon/replay_zan.png);
                     background-size: 100% 100%;
+                    margin-right: .06rem;
                 }
                 .no_raise{
                     display: inline-block;
-                    .torem(width, 48);
-                    .torem(height, 48);
-                    background: url(https://img8.ontheroadstore.com/H5_Icon/replay_raise.png);
+                    .torem(width, 40);
+                    .torem(height, 40);
+                    background: url(https://img8.ontheroadstore.com/H5_Icon/replay_unzan.png);
                     background-size: 100% 100%;
                 }
             }
             .res{
                 i{
                     display: inline-block;
-                    .torem(width, 48);
-                    .torem(height, 48);
-                    background: url(https://img8.ontheroadstore.com/H5_Icon/replay_respond.png);
-                    background-size: 100% 100%;
+                    .torem(width, 40);
+                    .torem(height, 40);
+                    background: url(https://img8.ontheroadstore.com/H5_Icon/buyer_show_reply.png);
+                    background-size: cover;
+                    margin-right: .06rem;
                 } 
             }
             span{
                 float: right;
                 display: flex;
-                justify-content: end;
+                justify-content: center;
                 align-items: center;
+                flex: 1;
             }
         }
     }
