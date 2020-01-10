@@ -99,7 +99,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
        if (hour <= 9) hour = '0' + hour;
        if (minute <= 9) minute = '0' + minute;
        if (second <= 9) second = '0' + second;
-       $('.specail-time').html(day+"DAY | "+hour+":"+minute+":"+second)
+       $('.specail-time').html(day+"days "+hour+":"+minute+":"+second)
        times--;
      },1000);
      if(times<=0){
@@ -457,7 +457,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
     $('.quanyi_price_value').val($(this).attr('data-quanyi_price'))
     if($(this).attr('data-quanyi_price')>0){
-      $('.is_quanyi').show()
+      $('.is_quanyi').hide()
     }else{
       $('.is_quanyi').hide()
     }
@@ -1596,14 +1596,14 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
             <p class="time">${v.created_at}</p>
           </div>
           <div class="float_right">
-          手一哆嗦搶購了${fixNumber(v.order_goods_count)}件
+          手一哆嗦抢购了${fixNumber(v.order_goods_count)}件
           </div>
         </div>
         <div class="msg">${v.show_text}</div>
         <div class="res_raise">
           
-          <span class="raise"><i class="jump_buy_show ${v.is_zan?'has_raise':'no_raise'}"></i>${fixNumber(v.count_zan)}</span>
           <span class="res"><i class="jump_buy_show"></i>${fixNumber(v.count_reply)}</span>
+          <span class="raise"><i class="jump_buy_show ${v.is_zan?'has_raise':'no_raise'}"></i>${fixNumber(v.count_zan)}</span>
         </div>
         </div>`
       })
@@ -1616,33 +1616,132 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       data.forEach((v,idx)=>{
         if(v){
           num++
-          str+= `<div><img src='${v}' /><span class="jump_buy_show ${num==3?'last_one':''}">查看更多</span></div>`
+          str+= `<div><img src='${v.cover}' /><span class="jump_buy_show ${num==3?'last_one':''}">查看更多</span></div>`
         }
       })
       $('.show_image').html(str)
     }
     function initFeatureList(data){
       $('.feature_list').show()
-      let themeList = [{
-          bg: '#621446',
-          txt: '#D5921F'
+      let str= ``;
+      let themeList = [
+        {
+          bg: '#621546',
+          txt: '#9FBBC9'
         },{
-          bg: '#F4B833',
-          txt: '#9A0000'
+          bg: '#6ACBB7',
+          txt: '#621546'
         },{
-          bg: '#5EA1A7',
-          txt: '#D4231D'
+          bg: '#57656E',
+          txt: '#6ACBB7'
         },{
-          bg: '#EBD7F4',
-          txt: '#3AD9DC'
-        }]
-      let str =''
+          bg: '#F4B835',
+          txt: '#836F92'
+        },{
+          bg: '#EDE2E0',
+          txt: '#9FBBC9'
+        },{
+          bg: '#9FBBC9',
+          txt: '#621546'
+        },{
+          bg: '#283079',
+          txt: '#6ACBB7'
+        },{
+          bg: '#DF4D36',
+          txt: '#F7E45E'
+        },{
+          bg: '#57656E',
+          txt: '#9FBBC9'
+        },{
+          bg: '#57656E',
+          txt: '#DF4D36'
+        },{
+          bg: '#57656E',
+          txt: '#6ACBB7'
+        },{
+          bg: '#57656E',
+          txt: '#EBE7E2'
+        },{
+          bg: '#6ACBB7',
+          txt: '#232323'
+        },{
+          bg: '#6ACBB7',
+          txt: '#F7E45E'
+        },{
+          bg: '#6ACBB7',
+          txt: '#836F92'
+        },{
+          bg: '#EBE7E2',
+          txt: '#F4B835'
+        },{
+          bg: '#EBE7E2',
+          txt: '#621546'
+        },{
+          bg: '#EBE7E2',
+          txt: '#621546'
+        },{
+          bg: '#EBE7E2',
+          txt: '#836F92'
+        },{
+          bg: '#DF4D36',
+          txt: '#9FBBC9'
+        },{
+          bg: '#DF4D36',
+          txt: '#621546'
+        },{
+          bg: '#DF4D36',
+          txt: '#6ACBB7'
+        },{
+          bg: '#DF4D36',
+          txt: '#F7E45E'
+        },{
+          bg: '#F4B835',
+          txt: '#57656E'
+        },{
+          bg: '#F4B835',
+          txt: '#DF4D36'
+        },{
+          bg: '#F4B835',
+          txt: '#621546'
+        },{
+          bg: '#F4B835',
+          txt: '#283079'
+        }
+      ]
+      let _themeList = getArrayItems(themeList,data.length)
+      
       data.forEach((v,idx)=>{
-        str+= `<span style="background:${themeList[idx%4].bg};color:${themeList[idx%4].txt};" data-id="${v.id}">${v.title}</span>`
+        str+= `<span style="background:${_themeList[idx].bg};color:${_themeList[idx].txt};" data-id="${v.id}">${v.title}</span>`
       })
+      console.log(str)
       $('.feature_list').html(str)
 
     }
+    //获取随机
+    function getArrayItems(arr, num) {
+      //新建一个数组,将传入的数组复制过来,用于运算,而不要直接操作传入的数组;
+      var temp_array = new Array();
+      for (var index in arr) {
+          temp_array.push(arr[index]);
+      }
+      //取出的数值项,保存在此数组
+      var return_array = new Array();
+      for (var i = 0; i<num; i++) {
+          //判断如果数组还有可以取出的元素,以防下标越界
+          if (temp_array.length>0) {
+              //在数组中产生一个随机索引
+              var arrIndex = Math.floor(Math.random()*temp_array.length);
+              //将此随机索引的对应的数组元素值复制出来
+              return_array[i] = temp_array[arrIndex];
+              //然后删掉此索引的数组元素,这时候temp_array变为新的数组
+              temp_array.splice(arrIndex, 1);
+          } else {
+              //数组中数据项取完后,退出循环,比如数组本来只有10项,但要求取出20项.
+              break;
+          }
+      }
+      return return_array;
+  }
     //数据整理
     function fixNumber(n){
       let _n = ''
