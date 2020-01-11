@@ -351,7 +351,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     hideAllVideo()
     $('.buy').css('display', 'block');
     $('.buy').find('.countNum').attr('data-num',1).text(1);
-    $('.content').css('overflow-y', 'hidden');
+    // $('.content').css('overflow-y', 'hidden');
   })
   page.on("click",".buy",function(e){
     var el = $(e.target).hasClass('buy');
