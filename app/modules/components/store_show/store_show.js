@@ -1762,9 +1762,9 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     $('.feature_list').on('click','span',function(){
       let fid = $(this).attr('data-id')
       if(ApiBaseUrl.indexOf('api.')>0){
-        location.href=`https://h5.ontheroadstore.com/wineFeature/${fid}`
+        location.href=`https://h5.ontheroadstore.com/column/${fid}`
       }else{
-        location.href=`https://h5test.ontheroadstore.com/wineFeature/${fid}`
+        location.href=`https://h5test.ontheroadstore.com/column/${fid}`
       }
     })
     //跳转去买家秀
