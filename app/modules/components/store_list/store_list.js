@@ -41,17 +41,17 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     H5BaseUrl=`https://h5test.ontheroadstore.com/`
   }
 
-  var myHitposts = new Swiper('.swiper-hitposts',{
-    slidesPerView: 1.15,
-    spaceBetween: '2.67%',
-    lazyLoading: true,
-    centeredSlides: true,
-    autoplay: 3000,
-    speed:300,
-    autoplayDisableOnInteraction: false,
-    loop: true,
-    loopAdditionalSlides: 1
-  })
+  // var myHitposts = new Swiper('.swiper-hitposts',{
+  //   slidesPerView: 1.15,
+  //   spaceBetween: '2.67%',
+  //   lazyLoading: true,
+  //   centeredSlides: true,
+  //   autoplay: 3000,
+  //   speed:300,
+  //   autoplayDisableOnInteraction: false,
+  //   loop: true,
+  //   loopAdditionalSlides: 1
+  // })
   initNewHomePage()
   function initNewHomePage(){
     $.ajax({
@@ -150,7 +150,6 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     `
     $('.new_goods_list').find('.swiper-wrapper').html(str)
     var mySwiper = new Swiper('.swiper-container-new',{ 
-      pagination: '.swiper-pagination',
       slidesPerView: 2.3,
       // lazyLoading: true,
       // loop: true,
@@ -162,7 +161,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     })
 
     $('.new_goods_list').on('click','.jump_new_more',function(){
-      location.href= `${H5BaseUrl}segment/4`;
+      location.href= `${H5BaseUrl}home/new`;
     })
   }
   //专题
