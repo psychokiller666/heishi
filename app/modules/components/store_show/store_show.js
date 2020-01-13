@@ -267,7 +267,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       }
       savePriceList.push(_price)
     })
-    let minPrice = savePriceList.sort()[0]
+    let minPrice = Math.min.apply(null, savePriceList);
     $('.price').find('.font_din').text(minPrice);
   }
   page.on("click",".select_type",function(){
