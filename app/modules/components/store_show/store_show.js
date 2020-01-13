@@ -1897,9 +1897,10 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
 
     
     //19-09大改版新增点击事件
-    $('.goods_tab').on('click','div',function(){
+    $('.goods_tab').on('click','.tab',function(){
       let _idx = $(this).index()
-      $(this).addClass('active').siblings().removeClass('active')
+      $(this).find('span').addClass('active')
+      $(this).siblings().find('span').removeClass('active')
       if(_idx==1){
         $('.content_details').hide()
         $('.faq_wrap').show()
