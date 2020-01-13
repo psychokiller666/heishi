@@ -1417,7 +1417,7 @@
                 white-space: nowrap;
                 position: relative;
                 z-index: 0;
-                float: left;
+                // float: left;
                 // position: absolute;
                 // top: .4rem;
                 // left: 0;
@@ -1487,28 +1487,35 @@
         .torem(width,750);
         .font-dpr(16px);
         color: #9E9E9E; 
-        div{
+        .tab{
+            .torem(width,375); 
             display: inline-block;
-            margin-right: .4rem;
-            position: relative;
-            line-height: 1.84rem;
-            font-weight: 600;
-            margin: 0 1.6rem;
-            &.active{
-                color: #000;
-                &::after{
-                    content: '';
-                    position: absolute;
-                    width: 100%;
-                    .torem(height,4);
-                    background: #000;
-                    box-shadow:2px 2px 8px 0px rgba(0,0,0,0.38),0px 0px 2px 0px rgba(0,0,0,0.22);
-                    border-radius:3px;
-                    bottom: .38rem;
-                    left: 0;
+            float: left;
+            text-align: center;
+            >span{
+                display: inline-block;
+                // margin-right: .4rem;
+                position: relative;
+                line-height: 1.84rem;
+                font-weight: 600;
+                // margin: 0 1.6rem;
+                margin: 0  auto;
+                &.active{
+                    color: #000;
+                    &::after{
+                        content: '';
+                        position: absolute;
+                        width: 100%;
+                        .torem(height,4);
+                        background: #000;
+                        box-shadow:2px 2px 8px 0px rgba(0,0,0,0.38),0px 0px 2px 0px rgba(0,0,0,0.22);
+                        border-radius:3px;
+                        bottom: .38rem;
+                        left: 0;
+                    }
                 }
+            
             }
-           
         }
     }
     .correlation{
@@ -1715,8 +1722,9 @@
     }
     .status{
         padding: 0 0.4rem 1.2rem 0.4rem;
-        border-bottom: 0.21333rem solid #F2F2F2;
+        border-bottom: 0.23033rem solid #F2F2F2;
         //margin-bottom: 0.4rem;
+        // margin: 0 .533rem;
         .hs-cf;
         .price{
             font-size: 0.53333rem;
@@ -1790,15 +1798,15 @@
                     display: block;
                     padding: 0.133rem 0.4rem;
                     .font-dpr(13px);
-                    border-radius: 0.1rem;
-                    border: 1px solid #999;
-                    color: #999;
+                    // border-radius: 0.1rem;
+                    border: 0.0133rem solid #979797;
+                    color: #979797;
                     line-height: 1em;
                     margin-bottom: 0.32rem;
                     &.active{
-                        border-color: #AE2121;
-                        background: #AE2121;
-                        color: #FFF;
+                        border-color: #151515;
+                        background: #151515;
+                        color: #ffffff;
                     }
                     &.no_repertory{
                         background: #F5F5F5;
@@ -1814,6 +1822,7 @@
                     .font-dpr(18px);
                     line-height: 0.64rem;
                     text-align: center;
+                    color: #979797;
                 }
                 .min,
                 .add{
@@ -1823,10 +1832,10 @@
                     float: left;
                 }
                 .min{
-                    background-image: url(//img8.ontheroadstore.com/upload/180411/c8efa2d9c021f33c01172b860e6b2a7c.png);
+                    background-image: url(//img8.ontheroadstore.com/H5_Icon/good_num_reduce.png);
                 }
                 .add{
-                    background-image: url(//img8.ontheroadstore.com/upload/180411/920ed1f36bd27733c53d554ea76d39de.png);
+                    background-image: url(//img8.ontheroadstore.com/H5_Icon/good_num_add.png);
                 }
             }
             .text{
