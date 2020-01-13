@@ -83,6 +83,9 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
   }
   //banner轮播
   function initNewBanner(data){
+    if(!data||data.length==0){
+      return
+    }
     let str = ``
     data.forEach(v=>{
       str+=`<div class="swiper-slide">
@@ -104,6 +107,9 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
   }
  //卖家推荐
   function initSellerRecommend(data){
+    if(!data||data.length==0){
+      return
+    }
     let str = ``
     data.forEach((v,i)=>{
       str+=`<div class="seller_item" data-author="${v.userinfo.author}">
@@ -120,6 +126,12 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
    
   }
   function initSellerRecommendGoods(data,index){
+    if(!data||data.length==0){
+      return
+    }
+    if(!data||data.length==0){
+      return
+    }
     let str = ``
     data.forEach(v=>{
       str+=`<a  href="/Portal/HsArticle/index/id/${v.id}.html" class="seller_good seller_good_${index} external">
@@ -134,6 +146,9 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
   }
   //新品
   function initNewGoodsList(data){
+    if(!data||data.length==0){
+      return
+    }
     let str = ``
     data.forEach(v=>{
       str+=`<div class="swiper-slide">
@@ -166,6 +181,9 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
   }
   //专题
   function initNewTopicList(data,status){
+    if(!data||data.length==0){
+      return
+    }
     let str= ``
     data.forEach(v=>{
       str+=`<div   class="topic" data-type="${v.type}" data-id="${v.id}">
@@ -187,6 +205,9 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
  
   //专栏
   function initRecomendAndOnly(data){
+    if(!data||data.length==0){
+      return
+    }
     let tab = ``
     $('.segment_list').html('')
     data.forEach((v,i)=>{
