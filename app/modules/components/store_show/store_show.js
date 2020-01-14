@@ -390,7 +390,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       location.href = url;
     }else{
       $('.buy').css('display', 'block');
-      $('.content').css('overflow-y', 'hidden');
+      // $('.content').css('overflow-y', 'hidden');
       $('.buy').find('.countNum').attr('data-num',1).text(1);
       $('.buy').find('.confirm').addClass('buy_btn');
     }
@@ -411,7 +411,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       shopping(article_id, styles_id, 1);
     }else{
       $('.buy').css('display', 'block');
-      $('.content').css('overflow-y', 'hidden');
+      // $('.content').css('overflow-y', 'hidden');
       $('.buy').find('.countNum').attr('data-num',1).text(1);
       $('.buy').find('.confirm').addClass('add_chart');
     }
@@ -1878,7 +1878,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     //禁止页面滚动
     function forbidPageScroll(forbid){
         if(forbid){
-            $('.hs-page.content').css('overflow-y','hidden');
+            // $('.hs-page.content').css('overflow-y','hidden');
         }else{
             $('.hs-page.content').css('overflow-y','auto');
         }
