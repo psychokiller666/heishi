@@ -292,7 +292,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
         location.href= `${H5BaseUrl}wineFeature/${id}`;
         break;
       case '3':
-        location.href= `/HsExplore/project_detail/pid/${id}.html`;
+        location.href= `${H5BaseUrl}miniFeature/${id}`;
         break;
       case '4':
         location.href= `/Portal/HsArticle/culture/id/${id}.html`;
