@@ -220,10 +220,12 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
               <img class="cover" src="${t.cover}@320w_1l" />
             </a>
           <div class="txt">
+            <div class="txt_top">
             <a href="/Portal/HsArticle/index/id/${t.id}.html"  class="external">
-              <p class="tit" style="height:${t.title.length>=t.post_subtitle.length?'.96rem':'.48rem'};">${t.title} </p>
+              <p class="tit">${t.title} </p>
             </a>
-              <p class="sub_tit" style="height:${t.title.length>=t.post_subtitle.length?'.48rem':'.96rem'};">${t.post_subtitle}</p>
+              <p class="sub_tit">${t.post_subtitle}</p>
+            </div>
             <p class="txt_end" style="padding-top:.1rem;">
               <span>¥ ${t.price[0]}</span>`
               if(t.tag_list){
