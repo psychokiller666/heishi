@@ -63,6 +63,9 @@
         line-height: @font-size * 3;
     }
 }
+.torem(@name,@px) {
+    @{name}: unit(@px / 75, rem);
+ }
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

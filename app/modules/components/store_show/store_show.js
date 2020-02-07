@@ -44,6 +44,27 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   }
   var timer=null;
   clearInterval(timer);
+
+  // swiper初始化 banner
+ // swiper-container-article
+ let swiperIndex = 1
+ var swipervideo = new Swiper('.swiper-container-article', {
+  direction: 'horizontal',
+  speed:500,
+  spaceBetween : 0,
+  loop:false,
+  pagination : '.swiper-pagination',
+  onSlideChangeEnd: function(swiper){
+    swiperIndex=swiper.activeIndex
+    var videolist = $(".swiper-container-article .swiper-slide").find("video");//video对象数组
+    var videoBglist = $(".swiper-container-article .swiper-slide").find("video_bg");//video对象数组
+    for(var k = 0 ;k<videolist.length;k++){
+      $(videoBglist[k]).show()
+      videolist[k].pause();
+      $(videolist[k]).hide()
+    }
+  }
+});
   //  let specailStart = '{$goods_profiles[0].special_offer_start}'
   //  let specailEnd = '{$goods_profiles[0].special_offer_end}'
   let specailStart = $('.specailStart').val()
@@ -78,7 +99,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
        if (hour <= 9) hour = '0' + hour;
        if (minute <= 9) minute = '0' + minute;
        if (second <= 9) second = '0' + second;
-       $('.specail-time').html(day+"DAY | "+hour+":"+minute+":"+second)
+       $('.specail-time').html(day+"days "+hour+":"+minute+":"+second)
        times--;
      },1000);
      if(times<=0){
@@ -197,24 +218,72 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   }
   var goSettle = false
   // 如果有视频就放在封面图位置
+  //初始化图片
+  $('.video_bg').css('opacity',1);
+  $('.video_bg_one').css('opacity',1);
   var video_status = 0;
   if($('.video_bg').length > 0){
     $('.video_bg').click(function(){
       if(video_status == 0){
         video_status = 1;
-        $('.video_el')[0].play();
+        // $('.video_el')[0].play();
+        var videolist = $(".swiper-container-article .swiper-slide").find("video");//video对象数组
+        var videoBglist = $(".swiper-container-article .swiper-slide").find("video_bg");//video对象数组
+        for(let k = 0 ;k<videolist.length;k++){
+          $(videoBglist[k]).hide()
+           
+              $(videolist[k]).show()
+              // setTimeout(()=>{
+                videolist[k].play();
+              // },50)
+            
+        }
+
+        $('.video_el')[0].addEventListener('playing',function(){
+          $('.video_loading').css('display','none');
+          $('.video_bg').css('opacity',0);
+        })
+        $('.video_el')[0].addEventListener('pause',function(){
+          video_status = 0;
+          $('.video_bg').css('opacity',1);
+        })
+        $('.video_el')[0].addEventListener('ended',function(){
+          video_status = 0;
+          $($('.video_el')[0]).hide()
+          $('.video_bg').css('opacity',1);
+        })
         $('.video_loading').css('display','block');
         $('.video_bg').css('opacity',0);
       }
     })
-    $('.video_el')[0].addEventListener('playing',function(){
+   
+  }
+  var video_status_1 = 0
+  if($('.video_one').length > 0){
+    $('.video_bg_one').click(function(){
+      if(video_status_1 == 0){
+        video_status_1 = 1;
+        $($('.video_one')[0]).show()
+        $('.video_one')[0].play()
+        $('.video_loading').css('display','block');
+        $('.video_bg_one').css('opacity',0);
+      }
+    })
+    $('.video_one')[0].addEventListener('playing',function(){
       $('.video_loading').css('display','none');
     })
-    $('.video_el')[0].addEventListener('pause',function(){
-      video_status = 0;
+    $('.video_one')[0].addEventListener('pause',function(){
+      video_status_1 = 0;
+      $('.video_bg_one').css('opacity',1);
+    })
+    $('.video_one')[0].addEventListener('ended',function(){
+      video_status_1 = 0;
+      $($('.video_one')[0]).hide()
       $('.video_bg').css('opacity',1);
     })
   }
+
+
 
   // 初始输入框
   $('.dialog_comment').css('display', 'none');
@@ -222,6 +291,11 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   // 初始化
   var type_items_span = $('.type_item').find('span');
   var single = type_items_span.eq(0);
+  if(single.data('postage')!=0){
+    $('.aboutPrice').find('.about_postage').html('运费: '+single.data("postage")+'元')
+  }else{
+    $('.aboutPrice').find('.about_postage').html('包邮')
+  }
   if(type_items_span.length == 1){
     $('.select').remove();
 
@@ -239,7 +313,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         $('.delivery_time_wrap').hide();
     }
     console.log(delivery_cycle)
-    update_status(single.data('price'), single.data('postage'), single.data('remain'), single.data('presell'), single.data('special'), single.data('special_price'));
+    update_status(single.data('price'), single.data('id'), single.data('remain'), single.data('presell'), single.data('special'), single.data('special_price'));
     if(single.hasClass('no_repertory')){
       $('.footer_nav').find(".buy_btn").attr("data-remain",single.data('remain')).addClass('no_repertory');
       $('.footer_nav').find(".add_chart").attr("data-remain",single.data('remain')).addClass('no_repertory');
@@ -272,9 +346,10 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   }
   page.on("click",".select_type",function(){
     goSettle =false
+    hideAllVideo()
     $('.buy').css('display', 'block');
     $('.buy').find('.countNum').attr('data-num',1).text(1);
-    $('.content').css('overflow-y', 'hidden');
+    // $('.content').css('overflow-y', 'hidden');
   })
   page.on("click",".buy",function(e){
     var el = $(e.target).hasClass('buy');
@@ -293,6 +368,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   })
 
   $('.footer_nav').on("click",".buy_btn",function() {
+    hideAllVideo()
     var url = $(this).attr('data-url');
     //九折购买
     if(fromNineDiscount){
@@ -312,7 +388,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       location.href = url;
     }else{
       $('.buy').css('display', 'block');
-      $('.content').css('overflow-y', 'hidden');
+      // $('.content').css('overflow-y', 'hidden');
       $('.buy').find('.countNum').attr('data-num',1).text(1);
       $('.buy').find('.confirm').addClass('buy_btn');
     }
@@ -324,6 +400,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       goSettle = false
     }
      
+    hideAllVideo()
       if(!loginStatus){
           init.toLogin();
           return false;
@@ -341,7 +418,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       }
     }else{
       $('.buy').css('display', 'block');
-      $('.content').css('overflow-y', 'hidden');
+      // $('.content').css('overflow-y', 'hidden');
       $('.buy').find('.countNum').attr('data-num',1).text(1);
       $('.buy').find('.confirm').addClass('add_chart');
     }
@@ -385,9 +462,14 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     var special_end = $(this).attr('data-special_end')
     $('.quanyi_price_value').val($(this).attr('data-quanyi_price'))
     if($(this).attr('data-quanyi_price')>0){
-      $('.is_quanyi').show()
+      $('.is_quanyi').hide()
     }else{
       $('.is_quanyi').hide()
+    }
+    if($(this).data('postage')!=0){
+      $('.aboutPrice').find('.about_postage').html('运费: '+$(this).data("postage")+'元')
+    }else{
+      $('.aboutPrice').find('.about_postage').html('包邮')
     }
     //判断特卖时间
     // let _startTime =  new Date(special_start).getTime()
@@ -398,6 +480,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     // }
 
     var type_desc = $(this).text();
+    console.log(type_desc)
     $('.select').find('.select_type').text(type_desc);
     $('.buy').find('.add').attr('data-remain', remain);
     update_status(price, item_id, remain, presell, special,special_price);
@@ -1208,15 +1291,16 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
 
     //显示领券按钮及弹窗
     function showCouponGet(data){
+         hideAllVideo()
         var $jsCouponGet= $('.js_coupon_get');
         var $couponGetRight = $jsCouponGet.find('.select_r');
-        var html = '';
-        for(var i=0;i<data.length && i<2;i++){
-            html += '<div class="coupon_tag coupon_get">'+ data[i].desc +'</div>'
-        }
-        $couponGetRight.html(html);
+        // var html = '';
+        // for(var i=0;i<data.length && i<2;i++){
+        //     html += '<div class="coupon_tag coupon_get">'+ data[i].desc +'</div>'
+        // }
+        // $couponGetRight.html(html);
         $jsCouponGet.show();
-
+        
         var $getCouponMask = $('.get_coupon_mask');
         var $getCouponUl = $getCouponMask.find('.get_coupon_ul');
         var liHtml = '';
@@ -1422,6 +1506,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
             $auth.find('.auth_txt').html(data.message);
         }
     }
+    
     //评分部分
     function initHofm(data) {
         if(data){
@@ -1461,7 +1546,8 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         if(data && data.length>0){
             var $faq_wrap = $('.faq_wrap');
             var html = '';
-            var length = data.length>2 ? 2 : data.length;
+            // var length = data.length>2 ? 2 : data.length;
+            var length = data.length;
             for(var i=0;i<length;i++){
                 html += '<li class="faq">'
                 html += '<div class="title">'+ data[i].title +'</div>'
@@ -1472,9 +1558,234 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
             if(length < 2){
                 $faq_wrap.find('.faq_more').hide();
             }
-            $faq_wrap.show();
+            // $faq_wrap.show();
         }
     }
+
+    //买家秀
+    getBuyerShow()
+    function getBuyerShow(){
+      var url = ApiBaseUrl + '/appv6_5/getRecommendPostShowList/'+ goodsId;
+      $.ajax({
+        type: "GET",
+        url: url,
+        dataType: 'json',
+        data: {},
+
+        success: function(data){
+          if(data.status==1){
+            if(data.data.show_list){
+              initRecommend1(data.data.show_list) 
+            }
+            if(data.data.image_list){
+              initRecommend2(data.data.image_list)
+            }
+            if(data.data.goods_feature){
+              initFeatureList(data.data.goods_feature)
+            }
+          }
+        },
+        error: function(e){
+            console.log('getAssessment err: ',e);
+        }
+      });
+    }
+
+    function initRecommend1(data){
+      let str = `<div class="tit">
+        <span class="float_left">买家秀</span>
+        <span class="float_right jump_buy_show">查看全部<i></i></span>
+      </div>`
+      data.forEach((v,idx)=>{
+        str+= `<div class="${idx===0?'res_item':''}">
+        <div class="user_info">
+          <a class="float_left" href="/User/index/index/id/${v.user_id}.html">
+            <img class="float_left avatar" src="${v.user_img}">
+          </a>
+          <div class="float_left name_time">
+            <p class="name">${v.user_nickname}</p>
+            <p class="time">${v.created_at}</p>
+          </div>
+          <div class="float_right">
+          手一哆嗦抢购了${fixNumber(v.order_goods_count)}件
+          </div>
+        </div>
+        <div class="msg">${v.show_text}</div>
+        <div class="res_raise">
+          
+          <span class="res"><i class="jump_buy_show"></i>${fixNumber(v.count_reply)}</span>
+          <span class="raise"><i class="jump_buy_show ${v.is_zan?'has_raise':'no_raise'}"></i>${fixNumber(v.count_zan)}</span>
+        </div>
+        </div>`
+      })
+      $('.show_txt').html(str)
+    }
+    
+    function initRecommend2(data){
+      let str = ''
+      let num = 0
+      data.forEach((v,idx)=>{
+        if(v){
+          num++
+          str+= `<div><img src='${v.cover}' /><span class="jump_buy_show ${num==3?'last_one':''}">查看更多</span></div>`
+        }
+      })
+      $('.show_image').html(str)
+    }
+    function initFeatureList(data){
+      $('.feature_list').show()
+      let str= ``;
+      let themeList = [
+        {
+          bg: '#621546',
+          txt: '#9FBBC9'
+        },{
+          bg: '#6ACBB7',
+          txt: '#621546'
+        },{
+          bg: '#57656E',
+          txt: '#6ACBB7'
+        },{
+          bg: '#F4B835',
+          txt: '#836F92'
+        },{
+          bg: '#EDE2E0',
+          txt: '#9FBBC9'
+        },{
+          bg: '#9FBBC9',
+          txt: '#621546'
+        },{
+          bg: '#283079',
+          txt: '#6ACBB7'
+        },{
+          bg: '#DF4D36',
+          txt: '#F7E45E'
+        },{
+          bg: '#57656E',
+          txt: '#9FBBC9'
+        },{
+          bg: '#57656E',
+          txt: '#DF4D36'
+        },{
+          bg: '#57656E',
+          txt: '#6ACBB7'
+        },{
+          bg: '#57656E',
+          txt: '#EBE7E2'
+        },{
+          bg: '#6ACBB7',
+          txt: '#232323'
+        },{
+          bg: '#6ACBB7',
+          txt: '#F7E45E'
+        },{
+          bg: '#6ACBB7',
+          txt: '#836F92'
+        },{
+          bg: '#EBE7E2',
+          txt: '#F4B835'
+        },{
+          bg: '#EBE7E2',
+          txt: '#621546'
+        },{
+          bg: '#EBE7E2',
+          txt: '#621546'
+        },{
+          bg: '#EBE7E2',
+          txt: '#836F92'
+        },{
+          bg: '#DF4D36',
+          txt: '#9FBBC9'
+        },{
+          bg: '#DF4D36',
+          txt: '#621546'
+        },{
+          bg: '#DF4D36',
+          txt: '#6ACBB7'
+        },{
+          bg: '#DF4D36',
+          txt: '#F7E45E'
+        },{
+          bg: '#F4B835',
+          txt: '#57656E'
+        },{
+          bg: '#F4B835',
+          txt: '#DF4D36'
+        },{
+          bg: '#F4B835',
+          txt: '#621546'
+        },{
+          bg: '#F4B835',
+          txt: '#283079'
+        }
+      ]
+      let _themeList = getArrayItems(themeList,data.length)
+      
+      data.forEach((v,idx)=>{
+        str+= `<span style="background:${_themeList[idx].bg};color:${_themeList[idx].txt};" data-id="${v.id}">${v.title}</span>`
+      })
+      console.log(str)
+      $('.feature_list').html(str)
+
+    }
+    //获取随机
+    function getArrayItems(arr, num) {
+      //新建一个数组,将传入的数组复制过来,用于运算,而不要直接操作传入的数组;
+      var temp_array = new Array();
+      for (var index in arr) {
+          temp_array.push(arr[index]);
+      }
+      //取出的数值项,保存在此数组
+      var return_array = new Array();
+      for (var i = 0; i<num; i++) {
+          //判断如果数组还有可以取出的元素,以防下标越界
+          if (temp_array.length>0) {
+              //在数组中产生一个随机索引
+              var arrIndex = Math.floor(Math.random()*temp_array.length);
+              //将此随机索引的对应的数组元素值复制出来
+              return_array[i] = temp_array[arrIndex];
+              //然后删掉此索引的数组元素,这时候temp_array变为新的数组
+              temp_array.splice(arrIndex, 1);
+          } else {
+              //数组中数据项取完后,退出循环,比如数组本来只有10项,但要求取出20项.
+              break;
+          }
+      }
+      return return_array;
+  }
+    //数据整理
+    function fixNumber(n){
+      let _n = ''
+      switch (true) {
+        case n>10000:
+          _n = Math.round(n/10000)+'w+'
+          break;
+        case n>1000:
+          _n = Math.round(n/1000)+'w+'
+          break;
+        default:
+          _n = n      
+      }
+      return _n
+
+    }
+    //跳转去专辑列表
+    $('.feature_list').on('click','span',function(){
+      let fid = $(this).attr('data-id')
+      if(ApiBaseUrl.indexOf('api.')>0){
+        location.href=`https://h5.ontheroadstore.com/column/${fid}`
+      }else{
+        location.href=`https://h5test.ontheroadstore.com/column/${fid}`
+      }
+    })
+    //跳转去买家秀
+    $('.buyer_show').on('click','.jump_buy_show',function(){
+      if(ApiBaseUrl.indexOf('api.')>0){
+        location.href=`https://h5.ontheroadstore.com/buyShow/${goodsId}`
+      }else{
+        location.href=`https://h5test.ontheroadstore.com/buyShow/${goodsId}`
+      }
+    })
     //跳转去满减活动
     $('.has_full_reduce').click(function(){
       let fid = $(this).attr('data-id')
@@ -1533,8 +1844,9 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
               html += '</li>'
             }
 
-            $(page).find('.lottery_evaluation_ul').html(html);
-            $(page).find('.lottery_evaluation').show();
+            $(page).find('.lottery_evaluation_ul').html(html)
+            //测评先删除掉  不知道以后还要不要
+            // $(page).find('.lottery_evaluation').show();
         }
 
 
@@ -1577,12 +1889,43 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     //禁止页面滚动
     function forbidPageScroll(forbid){
         if(forbid){
-            $('.hs-page.content').css('overflow-y','hidden');
+            // $('.hs-page.content').css('overflow-y','hidden');
         }else{
             $('.hs-page.content').css('overflow-y','auto');
         }
     }
 
+    
+    //19-09大改版新增点击事件
+    $('.goods_tab').on('click','.tab',function(){
+      let _idx = $(this).index()
+      $(this).find('span').addClass('active')
+      $(this).siblings().find('span').removeClass('active')
+      if(_idx==1){
+        $('.content_details').hide()
+        $('.faq_wrap').show()
+      }else{
+        $('.content_details').show()
+        $('.faq_wrap').hide()
+      }
+    })
+    $(page).find('.select_specs').on('click',function(){
+      $('.specs').show()
+      hideAllVideo()
+    })
+    $(page).find('.specs').on('click',function(){
+      $('.specs').hide()
+    })
+
+    function hideAllVideo(){
+      var videolist = $("body").find("video");//video对象数组
+      var videoBglist = $("body").find("video_bg");//video对象数组
+      for(var k = 0 ;k<videolist.length;k++){
+        $(videoBglist[k]).show()
+        videolist[k].pause();
+        $(videolist[k]).hide();
+      }
+    }
 
     //  神策埋点事件
     sensorsEvent();
