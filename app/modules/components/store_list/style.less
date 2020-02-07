@@ -1071,3 +1071,400 @@
     }
 }
 
+.index_list_new{
+    background: #F0F0F0;
+    .center_title{
+        color: #151515;
+        .font-dpr(17px);
+        text-align: center;
+        font-weight: 600;
+        line-height: 2.04rem;
+        margin-top: .4rem;
+    }
+    .swiper-container-home{
+        height: 15.306rem;
+        overflow: hidden;
+        position: relative;
+        .swiper-slide a{
+            width: 10rem;
+            height: 15.306rem;
+        }
+        img{
+            width: inherit;
+            height: inherit;
+            object-fit: cover;
+        }
+        .swiper-pagination {
+            bottom: 0.1rem;
+            .swiper-pagination-bullet {
+                background-color: #E9E9E9;
+                width: 0.266rem;
+                height: 0.266rem;
+                border-radius: 0.136rem;
+                transition: all 0.3s;
+                margin: .12rem
+            }
+            .swiper-pagination-bullet-active {
+                background-color: #ED4A42;
+            }
+        }
+    }
+    .seller_recommend{
+        .seller_list{
+            width: 8.93rem;
+            height: 2.28rem;
+            margin: 0 auto;
+            margin-bottom: .69rem;
+            .seller_item{
+                &:last-child{
+                    margin: 0;
+                }
+                float: left;
+                width: 1.733rem;
+                height: 2.38rem;
+                margin-right: .66rem;
+                position: relative;
+                img{
+                    width: 1.733rem;
+                    height: 1.733rem;
+                    border-radius: 100%;
+                    &.active{
+                        border: 1px solid #ACD120;
+                    }
+                }
+                p{
+                    text-align: center;
+                    .font-dpr(12px);
+                    color: #979797;
+                    margin-top: .18rem;
+                    height: .42rem;
+                    overflow: hidden;
+                    &.active{
+                        color: #151515;
+                    }
+                }
+                span{
+                    display: none;
+                    width: .5rem;
+                    height: .5rem;
+                    background: url(https://img8.ontheroadstore.com/H5_Icon/recomend_seller_arrow.png) no-repeat center center;
+                    background-size: 100% 100%;
+                    position: absolute;
+                    bottom: -.8rem;
+                    left: .7rem;
+                    &.active{
+                        display: block;
+                    }
+                }
+            }
+        }
+        .into_shop{
+            width: 1.067rem;
+            height: 5.97rem;
+            float: left;
+            background: url(https://img8.ontheroadstore.com/H5_Icon/newgood_look_more.png) no-repeat center center;
+            background-size: 100% 100%;
+        }
+        .seller_goods_list{
+            width: 8.433rem;
+            height: 5.97rem;
+            background: #E5E6F8;
+            white-space: nowrap;
+            overflow-x: scroll;
+            margin-left: 1.067rem;
+            padding-left: .5rem;
+            .seller_good{
+                display: inline-block;
+                width: 3.2rem;
+                margin: 0 0.16rem 0 0;
+                .font-dpr(12px);
+                transform: translateY(-50%);
+                position: relative;
+                color: #151515;
+                top: 50%;
+                img{
+                    width: 3.2rem;
+                    height: 3.2rem;
+                    object-fit: cover;
+                }
+                p{
+                    width: 2.53rem;  
+                    word-wrap: break-word;
+                    word-break: break-all;
+                    white-space: pre-line;
+                    overflow:hidden; 
+                    height: .75rem;
+                    padding: .05rem 0;
+                    margin: 0 auto;
+                    line-height: .425rem;
+                    text-align: center;
+                }
+                span{
+                    display: block;
+                    text-align: center;
+                }
+            }
+        }
+    }
+    .new_goods{
+        color: #151515;
+       
+      
+        .new_goods_list{
+            width: 10rem;
+            height: 5.54rem;
+            white-space: nowrap;
+            overflow-x: scroll;
+            // padding: .3rem 0;
+            .jump_new_more{
+                width: 3.84rem;
+                height: 4.94rem;
+                margin-left: .4rem;
+                margin-top: .3rem;
+                box-shadow:0px 0px .3rem 0px rgba(0,0,0,0.5);
+            }
+            .swiper-slide{
+                height: 5.54rem;
+            }
+            .new_good{
+                width: 3.84rem;
+                height: 4.94rem;
+                display: inline-block;
+                margin-left: .4rem;
+                margin-top: .3rem;
+                box-shadow:0px 0px .3rem 0px rgba(0,0,0,0.5);               
+                img{
+                    width: 3.84rem;
+                    height: 3.84rem;
+                }
+                p{
+                    color: #151515;
+                    .font-dpr(12px);
+                    text-align: center;
+                    padding: .133rem;
+                    word-wrap: break-word;
+                    word-break: break-all;
+                    white-space: pre-line;
+                    overflow: hidden;
+                    height: .75rem;
+                    padding: .05rem;
+                    line-height: .4rem;
+                }
+            }
+           
+        }
+    }
+    .topic_selected{
+        .through_topic{
+            .topic{
+                width: 10rem;
+                height: 5.067rem;
+                position: relative;
+                margin-bottom: .4rem;
+                img{
+                    width: inherit;
+                    height: inherit;
+                    object-fit: cover;
+                }
+                .shadow{
+                    width: 10rem;
+                    padding: .4rem;
+                    position: absolute;
+                    height: 1.8rem;
+                    color: #FFFFFF;
+                    bottom: 0;
+                    left: 0;
+                    margin-bottom: 0rem;
+                    background: url(https://img8.ontheroadstore.com/H5_Icon/topic_shadow_chang.png) no-repeat center center;
+                    background-size: 100% 100%;;
+                    .tit{
+                        .font-dpr(11px);
+                        line-height: 1.2em;
+                        margin-bottom: .2rem;
+                    }
+                    .sub_tit{
+                        .font-dpr(15px);
+                        line-height: 1.4em;
+                        height: 1.067rem;
+                        overflow: hidden;
+                    }
+                    
+                }
+            }
+        }
+        .vertical_topic{
+           .topic{
+            width: 4.8rem;
+            height:6.93rem;
+            position: relative;
+            display: inline-block;
+            margin-bottom: .4rem;
+            &:nth-of-type(2n+2){
+                margin-left: .4rem;
+            }
+            img{
+                width: inherit;
+                height: inherit;
+                object-fit: cover;
+            }
+            .shadow{
+                width: 4rem;
+                padding: .4rem;
+                position: absolute;
+                height: 2rem;
+                color: #FFFFFF;
+                bottom: 0;
+                left: 0;
+                margin-bottom: 0rem;
+                background: url(https://img8.ontheroadstore.com/H5_Icon/topic_shadow_fang.png) no-repeat center center;
+                background-size: 100% 100%;;
+                .tit{
+                    .font-dpr(11px);
+                    line-height: 1.2em;
+                    margin-bottom: .2rem;
+                }
+                .sub_tit{
+                    .font-dpr(15px);
+                    line-height: .5333rem;
+                    height: 1.6rem;
+                    overflow: hidden;
+                }
+                
+            }
+           }
+            
+        }
+    }
+    .tab_recommend_only{
+        width: 9.36rem;
+        display: flex;
+        margin: 0 auto;
+        margin-top: 1rem;
+        border: 1px solid #151515;
+        height: 0.69rem;
+        border-radius: .113rem;
+        overflow: hidden;
+        span{
+            color: #151515;
+            text-align: center;
+            display: block;
+            line-height: .69rem;
+            border-right: 1px solid #151515;
+            flex: 1;
+            .font-dpr(15px);
+            &:last-child{
+                border: 0;
+            }
+            &.active{
+                background: #151515;
+                color: #FFFFFF;
+            }
+
+        }
+    }
+    .segment_list{
+        .list{
+            width: 10rem;
+            display: flex;
+            flex-flow: space-between;
+            flex-wrap: wrap;
+           
+            .font-dpr(14px);
+            .ad{
+                width: 10rem;
+                height: 3.306rem;
+                margin-top: .6rem;
+                img{
+                    width: inherit;
+                    height: inherit;
+                    object-fit: cover;
+                }
+            }
+            .segment_good{
+                color: #151515;
+                display: block;
+                width: 4.99rem;
+                height: 7.23rem;
+                margin-top: .6rem;
+                a{
+                    display: block;
+                    color: #151515;
+                }
+                .cover{
+                    width: 4.99rem;
+                    height: 4.99rem;
+                    object-fit: cover;
+                }
+                .txt{
+                    width: 4.453rem;
+                    margin: 0 auto;
+                    .txt_top{
+                        height: 1.44rem;
+                        overflow: hidden;
+                    }
+                    .tit{
+                        height: .48rem;
+                        overflow: hidden;
+                        line-height: .48rem;
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 2;
+                        overflow: hidden;
+                    }
+                    .sub_tit{
+                        height: .96rem;
+                        overflow: hidden;
+                        line-height: .48rem;
+                        color: #979797;
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 2;
+                        overflow: hidden;
+                    }
+
+                    .tag{
+                        float: right;
+                        color: #979797;
+                        .font-dpr(10px);
+                        margin-top: .1rem;
+                        display: flex;
+                        align-items: center;
+                        line-height: .346rem;
+                        .time{
+                            color: #114FFF;
+                            .font-dpr(18px);
+                            margin-right: .2rem;
+                            font-weight: bold;
+                        }
+                        .tag_icon{
+                            width: .65rem;
+                            height: .65rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .end_line{
+        position: relative;
+        width: 8.88rem;
+        height: 1.3rem;
+        margin: 0 auto;
+        line-height: 2.25rem!important;
+        text-align: center;
+        .font-dpr(14px);
+        color: #979797;
+        &::before{
+            content: '';
+            display: block;
+            width: 8.88rem;
+            height: 1.3rem;
+            background: url('https://img8.ontheroadstore.com/H5_Icon/end_line_hand.png') no-repeat center center;
+            background-size: cover;
+            position: absolute;
+            left: 0px;
+            top: 10px;
+        }
+    }
+    
+}
