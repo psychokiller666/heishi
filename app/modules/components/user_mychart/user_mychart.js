@@ -570,7 +570,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
       let msg = ''
       for (let i = 0; i < v.sp_level.length; i++) {
           if(v.sp_level[i].isFull){
-            msg+= `已${v.sp_level[i].title}<span style="color:#AE2121;">(已减￥${v.sp_level[i].coupon_price})</span>`
+            msg+= `已${v.sp_level[i].title}<span style="color:#ED4A42;">(已减￥${v.sp_level[i].coupon_price})</span>`
             if(i!=0){
             let willFull =  v.sp_level[i-1].min_price-v.selectPrice
             msg+= `,再买${willFull},减${ v.sp_level[i-1].coupon_price}`

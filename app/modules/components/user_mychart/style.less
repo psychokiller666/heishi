@@ -4,17 +4,19 @@
 		display: block;
 		height: 1rem;
 		line-height: 1rem;
-		.font-dpr(12px);
-		background:rgba(174,33,33,0.03);
+		.font-dpr(11px);
+		background:rgba(236,251,235,1);
+		padding-bottom: .2rem;
+		border-radius: .2rem .2rem 0 0;
 		.left{
-			margin-left: .4rem;
+			margin-left: .9rem;
 			float: left;
-			background: #AE2121;
+			background: #ED4A42;
 			color: #fff;
 			max-width: 2rem;
 			height: .5rem;
 			line-height: .5rem;
-			border-radius: .2rem;
+			border-radius: .25rem;
 			padding: 0 .25rem;
 			margin-top: .25rem;
 		}
@@ -23,14 +25,15 @@
 			margin-left: .4rem;
 			height: 1rem;
 			overflow: hidden;
-			width: 5rem;
+			width: 4.5rem;
 			color: #000;
+			.font-dpr(10px);
 			white-space: nowrap;text-overflow: ellipsis;
 		}
 		.right{
 			float: right;
-			margin-right: .4rem;
-			color: #AE2121;
+			margin-right: .2rem;
+			color: #ED4A42;
 			img{
 				width: .25rem;
 				height: .25rem;
@@ -42,7 +45,7 @@
 		position: absolute;
 		right: .4rem;
 		top: .7rem;
-		color: #AE2121;
+		color: #151515;
 		float: right;
 		.font-dpr(12px);
 		line-height: 1em;
@@ -156,7 +159,7 @@
 			float: right;
 		}
 		.operation_btn{
-			margin-right: 0.213rem;
+			// margin-right: 0.213rem;
 			a{
 				color: white;
 				border-radius: 0.1rem;
@@ -164,7 +167,8 @@
 				width: 2.3rem;
 				line-height: 0.96rem;
 				height: 0.96rem;
-				background-color: #AE2121;
+				background: url(//img8.ontheroadstore.com/H5_Icon/good_buy_btn.png);
+				background-size: 100% 100%;;
 				margin-top: 0.16rem;
 				text-align: center;
 				&.deleteAll{
@@ -183,7 +187,7 @@
 		.price{
 			font-weight: 700;
 			.font-dpr(14px);
-			color: #AE2121;
+			color: #151515;
 		}
 		.all_price{
 			margin-right: 0.2rem;
@@ -200,7 +204,7 @@
 		height: 100%;
 		position: absolute;
 		top: 0;
-		left: 0.4rem;
+		left: 0.1rem;
 		.checkbox{
 			width: 0.43rem;
 			height: 0.43rem;
@@ -213,26 +217,29 @@
 			background-position: center;
 		}
 		.affirm{
-			background-image: url(//img8.ontheroadstore.com/upload/180424/d1ac26b48e521572b13042cabe0bf49d.png);
+			// background-image: url(//img8.ontheroadstore.com/upload/180424/d1ac26b48e521572b13042cabe0bf49d.png);
+			background: #ACD120;
+			border-radius: 100%;
+			border: .013rem solid #151515;
 		}
 		.noInventory{
 			display: none;
 		}
 		.selling{
-			width: 0.83rem;
-			height: 0.44rem;
+			width: 0.50rem;
+			height: 1.1rem;
 			position: relative;
 			z-index: 1;
-			margin-left: -0.2rem;
+			// margin-left: -0.2rem;
 		    top: 50%;
 		    transform: translateY(-50%);
-			background-image: url(//img8.ontheroadstore.com/upload/180131/032878cb697bca87db1ca7cb57d18dda.png);
+			background-image: url(//img8.ontheroadstore.com/H5_Icon/chart_no_sell.png);
 			background-size: 100% 100%;
 
 			&.limit_buy_tag{
 				display: none;
 				z-index: 2;
-				background-image:url('https://img8.ontheroadstore.com/static/image/limit_buy_tag_2x.png');
+				background-image:url('https://img8.ontheroadstore.com/H5_Icon/chart_no_remain.png');
 				background-size: 100% 100%;
 			}
 		}
@@ -316,9 +323,14 @@
 .user_mychart_index{
 	.context{
 		.font-dpr(14px);
+		.details{
+			overflow: hidden;
+		}
 		li{
 			position: relative;
-			margin-bottom: 0.2rem;
+			// margin-bottom: 0.2rem;
+			border-bottom: .533rem solid #EFEFEF;
+			padding: .2666rem;
 			&:after{
 				content: "";
 				position: absolute;
@@ -329,8 +341,8 @@
 				left: 0;
 			}
 			.item{
-				padding-top: 0.453rem;
-				padding-right: 0.4rem;
+				padding-bottom: 0.53rem;
+				padding-right: 0.2rem;
 				position: relative;
 				.hr{
 					height: 0.4rem;
@@ -353,11 +365,11 @@
 					}
 				}
 				.image{
-					width: 3.81rem;
-					height: 1.92rem;
+					width: 2.85rem;
+					height: 2.85rem;
 					overflow: hidden;
-					border-radius: 0.16rem;
-					margin-left: 1.227rem;
+					// border-radius: 0.16rem;
+					margin-left: .9rem;
 					a{
 						display: block;
 						width: 100%;
@@ -367,6 +379,7 @@
 					img{
 						width: 100%;
 						height: 100%;
+						object-fit: cover;
 					}
 					.remain_status{
 						bottom: 0;
@@ -384,38 +397,43 @@
 				.message{
 					float: left;
 					margin-left: 0.4rem;
-					width: 4.16rem;
-					height: 1.92rem;
+					width: 5rem;
+					height: 2.85rem;
 					position: relative;
 					h2{
-						.font-dpr(13px);
+						.font-dpr(12px);
 						overflow:hidden;
+						color: #151515;
 						width: 100%;
-						white-space: nowrap;
-					    text-overflow: ellipsis;
-					    line-height: 1.2em;
-					    height: 1.2em;
+						height: .85rem;
+						line-height: .425rem;
+						display: -webkit-box;
+						-webkit-box-orient: vertical;
+						-webkit-line-clamp: 2;
+						overflow: hidden;
 						a{
 							color: #000;
 						}
 					}
 					.styles{
 						float: left;
-						height: 0.96rem;
-						line-height: 0.96rem;
+						height: 0.56rem;
+						line-height: 0.56rem;
 						.font-dpr(12px);
-						max-width: 3rem;
+						width: 5rem;
+						display: block;
 						white-space:nowrap;
 						text-overflow:ellipsis;
 						overflow:hidden;
 						color: #8E8E8E;
 					}
 					.money{
-						float: right;
-						height: 1.46rem;
-						line-height: 0.96rem;
+						float: left;
+						height: .46rem;
+						line-height: 0.46rem;
+						padding-top: 1rem;
 						.font-dpr(13px);
-						color: #AE2121;
+						color: #151515;
 						.prePrice {
 							display: inline-block;
 						}
@@ -424,10 +442,11 @@
 							height: .5rem;
 						}
 						.originPrice {
-							display: block;
+							// display: block;
 							line-height: .5rem;
 							color: #8E8E8E;
 							text-decoration: line-through;
+							margin-right: .1rem;
 						}
 						i{
 							font-style: normal;
@@ -438,28 +457,29 @@
 					}
 					.count{
 						position: absolute;
-						left: 0;
+						right: 0;
 						bottom: 0;
 						span{
 							width: 1.12rem;
-							height: 0.4rem;
-							line-height: 0.4rem;
+							height: 0.74rem;
+							line-height: 0.74rem;
 							text-align: center;
 							.font-dpr(14px);
 							float: left;
+							color: #979797	;
 						}
 						button{
 							float: left;
-							width: 0.4rem;
-							height: 0.4rem;
+							width: 0.74rem;
+							height: 0.74rem;
 							border: none;
 							background-size: 100% 100%;
 						}
 						.minus{
-							background-image: url(//img8.ontheroadstore.com/upload/180411/c8efa2d9c021f33c01172b860e6b2a7c.png);
+							background-image: url(//img8.ontheroadstore.com/H5_Icon/good_num_reduce.png);
 						}
 						.add{
-							background-image: url(//img8.ontheroadstore.com/upload/180411/920ed1f36bd27733c53d554ea76d39de.png);
+							background-image: url(//img8.ontheroadstore.com/H5_Icon/good_num_add.png);
 						}
 						.remain{
 						    margin-right: 0.05rem;
@@ -472,18 +492,18 @@
 						}
 					}
 					.recommend{
-						color: #AE2121;
+						color: #ED4A42;
 						.font-dpr(12px);
 						position: absolute;
 						z-index: 1;
 						right: 0;
 						bottom: 0;
-						line-height: 0.65rem;
-						height: 0.65rem;
-						border: 0.026rem solid #AE2121;
-						border-radius: 0.1rem;
+						line-height: 0.75rem;
+						height: 0.75rem;
+						border: 0.026rem solid #ED4A42;
+						// border-radius: 0.1rem;
 						background: #FFF;
-						width: 1.77rem;
+						width: 2.72rem;
 						text-align: center;
 					}
 					.goods_selling,
@@ -526,13 +546,13 @@
 				.delItem{
 					position: absolute;
 					right: 0;
-					height: 2.54rem;
+					height: 2.85rem;
 					width: 0;
 					.font-dpr(14px);
 					text-align: center;
-					line-height: 2.54rem;
+					line-height: 2.85rem;
 					overflow: hidden;
-					background-color: #AE2121;
+					background-color: #ED4A42;
 					color: white;
 					top: 0;
 					transition: all 0.3s;
@@ -545,23 +565,26 @@
 				}
 			}
 			.fitem{
-				background:rgba(174,33,33,0.03);
+				background:rgba(236,251,235,1);
+			}
+			.fitem_end{
+				border-radius: 0 0 .2rem .2rem;
 			}
 		}
 		.title{
 			position: relative;
 			height: 1.1rem;
 			line-height: 1.1rem;
-			border-bottom: 0.0133rem solid #E8E8E8;
-			padding: 0 0.4rem;
-			border-top: .2rem solid #F5F5F5;
+			// border-bottom: 0.0133rem solid #E8E8E8;
+			padding: 0;
+			// border-top: .2rem solid #F5F5F5;
 			.sellerName{
 				float: left;
 				margin-left: 0.827rem;
 				color: #000;
 			}
 			.selectBox{
-				left: .4rem;
+				left: .1rem;
 			}
 
 			//优惠券
@@ -589,36 +612,38 @@
 		}
 		.title{
 			padding: 0.46rem 0;
-			margin: 0 0.95rem;
+			margin: 0 0.53rem;
 			line-height: 1em;
 			position: relative;
-			.font-dpr(14px);
-			text-align: center;
+			.font-dpr(17px);
+			text-align: left;
+			color: #151515;
+			font-weight:600;
 			span{
-				padding: 0 0.4rem;
+				// padding: 0 0.4rem;
 				background: #FFF;
 			    position: relative;
 			    z-index: 1;
 			}
-			&:after{
-				content: "";
-				position: absolute;
-				width: 100%;
-				height: 0.013rem;
-				background: #999;
-				top: 50%;
-				left: 0;
-			}
+			// &:after{
+			// 	content: "";
+			// 	position: absolute;
+			// 	width: 100%;
+			// 	height: 0.013rem;
+			// 	background: #999;
+			// 	top: 50%;
+			// 	left: 0;
+			// }
 		}
 		.goods_content{
-            width: 9.2rem;
-			margin: 0 auto;
+        width: 8.94rem;
+				margin: 0 auto;
 			.goods_list{
                 padding-bottom: 0.533rem;
                 .hs-cf;
                 .filepath{
-                    width: 4.48rem;
-                    height: 2.293rem;
+                    width: 2.85rem;
+                    height: 2.85rem;
                     float: left;
                     margin-right: 0.4rem;
                     .image {
@@ -628,19 +653,19 @@
                         background-size: 100%;
                         width: 100%;
                         height: 100%;
-                        border-radius: 0.16rem;
+                        // border-radius: 0.16rem;
                     }
                 }
                 .post_title{
-                    color: #000000;
-                    width: 4.29rem;
+                    color: #151515;
+                    width: 5.65rem;
                     height: 2.4em;
                     line-height: 1.2em;
                     font-size: 0.373rem;
                     overflow: hidden;
                     float: left;
                     font-weight: 500;
-                    .font-dpr(14px);
+                    .font-dpr(12px);
                     letter-spacing: 0.01rem;
                 }
                 .keywords{
@@ -657,10 +682,11 @@
                 }
                 .user_info{
                     float: left;
-                    width: 4.29rem;
+										width: 5.5rem;
+										margin-top: 1.2rem;
                     img{
-                        width: 0.43rem;
-                        height: 0.43rem;
+                        width: 0.8rem;
+                        height: 0.8rem;
                         float: left;
                         border-radius: 50%;
                     }
@@ -669,7 +695,8 @@
                         float: left;
                         padding-left: 0.213rem;
                         color: #8E8E8E;
-                        width: 3.4rem;
+												width: 4.4rem;
+												line-height: .8rem;
                         overflow: hidden;
                         white-space: nowrap;
                         text-overflow: ellipsis;
