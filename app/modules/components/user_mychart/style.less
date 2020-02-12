@@ -272,7 +272,8 @@
 	    .payment{
 			width: 2.293rem;
 			height: 0.96rem;
-			background: #AE2121;
+			background: url(http://img8.ontheroadstore.com/H5_Icon/good_buy_btn.png) no-repeat center center;
+			background-size: cover;
 			border-radius: 0.1rem;
 	    	.font-dpr(13px);
 			margin: 0.175rem 0.4rem 0 0.4rem;
@@ -285,14 +286,14 @@
 	    	height: 1.31rem;
 	    	line-height: 1.31rem;
 	    	.font-dpr(12px);
-			color: #8E8E8E;
+			color: #979797;
 	    }
 	    .all_price{
 	    	margin-right: 0.213rem;
 	    	.font-dpr(14px);
-	    	color: #000;
+	    	color: #979797;
 	    	span{
-	    		color: #AE2121;
+	    		color: #151515;
 	    	}
 	    }
 	}
@@ -514,7 +515,7 @@
 					    bottom: 0;
 					    line-height: 0.7rem;
 					    height: 0.7rem;
-					    background: #FFF;
+					    // background: #FFF;
 					}
 				}
 				.app_special_offer{
@@ -789,7 +790,7 @@
 		/*地址选择器*/
 		.addr_sel_wrap{
 			//padding: 0.196667rem 0 0.386667rem;
-			border-bottom: 0.0133rem solid #E8E8E8;
+			border-bottom: 0.533rem solid #f0eeef;
 			background: #fff;
 			.font-dpr(15px);
 			line-height: 0.5rem;
@@ -843,11 +844,11 @@
 		.lists{
 			padding: 0 0.4rem;
 			background: #FFF;
-			border-bottom: 0.213rem solid #F5F5F5;
+			border-bottom: 0.533rem solid #f0eeef;
 			.user_info{
 				padding: 0.347rem 0;
 				line-height: 0.533rem;
-				border-bottom: 0.0133rem solid #E8E8E8;
+				// border-bottom: 0.0133rem solid #E8E8E8;
 				.hs-cf;
 				img{
 					width: 0.533rem;
@@ -861,7 +862,7 @@
 				}
 			}
 			.good_info{
-				.font-dpr(13px);
+				.font-dpr(12px);
 				padding: 0.4rem 0;
 				position: relative;
 				border-bottom: 0.0133rem solid #E8E8E8;
@@ -879,16 +880,16 @@
 				.image{
                     background-position: 50% 50%;
                     background-repeat: no-repeat;
-                    background-size: 100%;
-                    width: 3.81rem;
-    				height: 1.92rem;
-                    border-radius: 0.16rem;
+                    background-size: cover;
+                    width: 2.85rem;
+    								height: 2.85rem;
+                    // border-radius: 0.16rem;
                     margin-right: 0.4rem;
 				}
 				.good_name{
-					font-size: 0.3467rem;
+					.font-dpr(12px);
 					overflow:hidden;
-					width: 4.99rem;
+					width: 5.89rem;
 				    line-height: 1.2em;
 				    height: 2.4em;
 				}
@@ -901,12 +902,14 @@
 				}
 				.good_price{
 					width: 4.99rem;
-					color: #AE2121;
+					.font-dpr(12px);
+					color: #151515;
 					line-height: 1em;
+					margin-top: 1rem;
 				}
 				.good_num{
 					position: absolute;
-					top: 1.8rem;
+					bottom: .4rem;
 					right: 0;
 					color: #8E8E8E;
 				}
