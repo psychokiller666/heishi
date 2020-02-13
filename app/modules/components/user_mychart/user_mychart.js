@@ -75,6 +75,13 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
         })
       })
     }
+    $('.item').each(function () {
+      var status = $(this).find('.checkbox').hasClass('affirm');
+      var noInventory = $(this).find('.checkbox').hasClass('noInventory');
+      if(noInventory){
+        $(this).css({opacity:.5})
+      }
+    })
   }
   initsaleDate()
     init.sensorsFun.bottomNav();
@@ -163,6 +170,12 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
       var data = {
             cid: $(this).data('cid')
           }
+      showConfirm()
+      $('.cancel_btn').click(function(){
+        closeConfirm()
+      })
+    $('.ok_btn').click(function(){
+      closeConfirm()
       clearShopping(data, "GET", function (data){
         if(data.status == 1){
           var list = $(that).parents('.list');
@@ -184,6 +197,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
           $.toast(data.info,800);
         }
       })
+    })
   })
   // 编辑
   page.on('click', '.edit_shopping_cart', function(){
@@ -244,7 +258,12 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
     var data = {
       cids: arr
     }
-    $.confirm('确定要删除？', function () {
+    showConfirm()
+    $('.cancel_btn').click(function(){
+      closeConfirm()
+    })
+    $('.ok_btn').click(function(){
+      closeConfirm()
       clearShopping(data, "POST", function (data){
         if(data.status == 1){
           $('.affirm').each(function(){
@@ -611,19 +630,29 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
 
     }
   }
+  //关闭删除confirm
+  function closeConfirm(){
+    $('.confirm_del_mask').hide()
+    $('.confirm_del').hide()
+  }
+  function showConfirm(){
+    $('.confirm_del_mask').show()
+    $('.confirm_del').show()
+  }
   //删除购物车商品接口
   function clearShopping (data, type, callBack){
-    $.ajax({
-      type: type,
-      url: '/index.php?g=restful&m=HsShoppingCart&a=delete',
-      data: data,
-      dataType: 'json',
-      timeout: 4000,
-      success: callBack,
-      error: function(xhr, type){
-        $.toast('网络错误 code:'+xhr);
-      }
-    })
+    
+      $.ajax({
+        type: type,
+        url: '/index.php?g=restful&m=HsShoppingCart&a=delete',
+        data: data,
+        dataType: 'json',
+        timeout: 4000,
+        success: callBack,
+        error: function(xhr, type){
+          $.toast('网络错误 code:'+xhr);
+        }
+      }) 
   }
   //全选优化判断
   function allOption (that){

@@ -40,6 +40,67 @@
 			}
 		}
 	}
+	//删除框
+	.confirm_del_mask{
+		display: none;
+		width: 100vw;
+		height: 100vh;
+		background: rgba(0,0,0,0.5);
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 100;
+	}
+	.confirm_del{
+		display: none;
+		width: 7.2rem;
+		height: 3.52rem;
+		border-radius: .32rem;
+		box-sizing: border-box;
+		background: #c1c1c1;
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		margin: auto;
+		z-index: 101;
+		overflow: hidden;
+		.c_tit{
+			text-align: center;
+			.font-dpr(16px);
+			color: #151515;
+			margin-top: .5rem;
+		}
+		.c_desc{
+			text-align: center;
+			.font-dpr(13px);
+			color: #515151;
+			line-height: 1.4em;
+		}
+		.confirm_btn{
+			height: 1.12rem;
+			background: #979797;
+			width: 7.2rem;
+			box-sizing: border-box;
+			color: #fff;
+			.font-dpr(15px);
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			border-top: 1px solid #474747;
+			div{
+				width: 3.5rem;
+				display: inline-block;
+				text-align: center;
+				line-height: 1.12rem;
+			}
+			.cancel_btn{
+				border-right: 1px solid #474747;
+			}
+		}
+
+	}
 	//满减价格显示
 	.reduce_price{
 		position: absolute;
@@ -781,18 +842,19 @@
 }
 .user_mychart_order{
 	.hs-page{
-		background: #F5F5F5;
+		background: #f0eeef;
 	}
 	.listOrder{
 		border-top: 0.0133rem solid #E8E8E8;
-		padding-bottom: 1.31rem;
+		padding-bottom: 2.31rem;
 
 		/*地址选择器*/
 		.addr_sel_wrap{
 			//padding: 0.196667rem 0 0.386667rem;
 			border-bottom: 0.533rem solid #f0eeef;
 			background: #fff;
-			.font-dpr(15px);
+			position: relative;
+			.font-dpr(13px);
 			line-height: 0.5rem;
 
 			.addr_sel{
@@ -800,30 +862,65 @@
 			}
 
 			.left{
-				padding-top: 0.28rem;
-				max-width: 29%;
+				// padding-top: 0.18rem;
+				width: 5%;
+				vertical-align: middle;
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				margin: auto;
+				height: .53rem;
+				i{
+					display: block;
+					width: .53rem;
+					height: .53rem;
+					background: url(//img8.ontheroadstore.com/H5_Icon/order_form_address_icon.png) no-repeat center center;
+					background-size: cover;
+				}
 			}
 			.title{
 				float: right;
-				.font-dpr(12px);
-				height: 0.5rem;
-				color: #999;
-				padding-top: 0.28rem;
-				width: 70%;
+				.font-dpr(13px);
+				min-height: 0.5rem;
+				color: #151515;
+				// padding-top: 0.18rem;
+				width: 90%;
+				padding-right: .2rem;
+				.name_phone{
+					line-height: .6rem;
+					height: .6rem;
+					width: 100%;
+					.name{
+						float: left;
+					}
+					.phone{
+						float: right;
+						color: #979797;
+					}
+				}
+				.add_desc{
+					color: #979797;
+				}
 			}
 
 			.right{
 				max-width: 70%;
 				padding-top: 0.28rem;
 				line-height: 0.5rem;
-
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				margin: auto;
+				height: .53rem;
+				right: .28rem;
 				i{
 					word-wrap: break-word;
 					word-break: break-all;
 					font-style: normal;
-					line-height: 0.5rem;
+					line-height: 0.2rem;
 					display: block;
-
+					transform: scaleY(1.7);
+					color: #979797;
 				}
 			}
 
@@ -909,7 +1006,7 @@
 				}
 				.good_num{
 					position: absolute;
-					bottom: .4rem;
+					top: 2.8rem;
 					right: 0;
 					color: #8E8E8E;
 				}
