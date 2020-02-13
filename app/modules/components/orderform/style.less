@@ -7,57 +7,92 @@
     background: #FFF;
     padding-bottom: 1.6rem;
     /*地址选择器*/
-    .addr_sel_wrap{
-      //padding: 0.196667rem 0 0.386667rem;
-      border-bottom: 0.533rem solid #f0eeef;
-      background: #fff;
-      .font-dpr(13px);
-      line-height: 0.5rem;
+		.addr_sel_wrap{
+			//padding: 0.196667rem 0 0.386667rem;
+			border-bottom: 0.533rem solid #f0eeef;
+			background: #fff;
+			position: relative;
+			.font-dpr(13px);
+			line-height: 0.5rem;
+			.addr_sel{
+				padding: 0.4rem;
+			}
 
-      .addr_sel{
-        padding: 0.4rem;
-      }
+			.left{
+				// padding-top: 0.18rem;
+				width: 5%;
+				vertical-align: middle;
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				margin: auto;
+				height: .53rem;
+				i{
+					display: block;
+					width: .53rem;
+					height: .53rem;
+					background: url(//img8.ontheroadstore.com/H5_Icon/order_form_address_icon.png) no-repeat center center;
+					background-size: cover;
+				}
+			}
+			.title{
+				float: right;
+				.font-dpr(13px);
+				min-height: 0.5rem;
+				color: #151515;
+				// padding-top: 0.18rem;
+				width: 90%;
+				padding-right: .2rem;
+				.name_phone{
+					line-height: .6rem;
+					height: .6rem;
+					width: 100%;
+					.name{
+						float: left;
+					}
+					.phone{
+						float: right;
+						color: #979797;
+					}
+				}
+				.add_desc{
+					color: #979797;
+				}
+			}
 
-      .left{
-        padding-top: 0.28rem;
-        max-width: 29%;
-      }
-      .title{
-        float: right;
-        .font-dpr(12px);
-        height: 0.5rem;
-        color: #999;
-        padding-top: 0.28rem;
-        width: 70%;
-      }
+			.right{
+				max-width: 70%;
+				padding-top: 0.28rem;
+				line-height: 0.5rem;
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				margin: auto;
+				height: .53rem;
+				right: .28rem;
+				i{
+					word-wrap: break-word;
+					word-break: break-all;
+					font-style: normal;
+					line-height: 0.2rem;
+					display: block;
+					transform: scaleY(1.7);
+					color: #979797;
+				}
+			}
 
-      .right{
-        max-width: 70%;
-        padding-top: 0.28rem;
-        line-height: 0.5rem;
-
-        i{
-          word-wrap: break-word;
-          word-break: break-all;
-          font-style: normal;
-          line-height: 0.5rem;
-          display: block;
-
-        }
-      }
-
-      .left{
-        float: left;
-      }
-      .right{
-        float: right;
-      }
-      .clear:after{
-        content: "";
-        display: block;
-        clear: both;
-      }
-    }
+			.left{
+				float: left;
+			}
+			.right{
+				float: right;
+			}
+			.clear:after{
+				content: "";
+				display: block;
+				clear: both;
+			}
+		}
     .post_card{
       width: 9.2rem;
       height: 1.2rem;
@@ -175,7 +210,7 @@
         }
         .good_num{
           position: absolute;
-          bottom: .4rem;
+          top: 2.8rem;
           right: 0;
           color: #8E8E8E;
         }
