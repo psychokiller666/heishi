@@ -147,6 +147,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
   //新品
   function initNewGoodsList(data){
     if(!data||data.length==0){
+      $('.new_goods').hide()
       return
     }
     let str = ``

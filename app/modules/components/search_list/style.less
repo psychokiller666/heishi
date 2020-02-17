@@ -5,7 +5,7 @@
   position: relative;
   background: #FFF;
   width: 9.2rem;
-  height: 1rem;
+  height: .69rem;
   left: 0;
   right: 0;
   margin: auto;
@@ -14,15 +14,27 @@
   display: none;
   justify-content: center;
   align-items: center;
-  border-bottom:  0.0183rem solid #E8E8E8;
+  margin-top: .2rem;
+  // border-bottom:  0.0183rem solid #E8E8E8;
+  border-radius: .1rem;
+  overflow: hidden;
+  border: 1px solid #151515;
+  margin-bottom: .2rem;
+  box-sizing: border-box;
+
   span{
     width: 2.3rem;
     font-size: .36rem;
     text-align: center;
-    color: #8E8E8E;
+    height: .69rem;
+    line-height: .69rem;
+    color: #151515;
     position: relative;
+    border-right: 1px solid #151515;
+    background: #fff;
     &.active{
-      color: #202123;
+      color: #fff;
+      background: #151515;
     }
   }
   .price{
@@ -30,41 +42,46 @@
       content: '';
       display: block;
       position: absolute;
-      border-top: .15rem solid #8E8E8E;
-      border-left: .15rem solid transparent;
-      border-right: .15rem solid transparent;
+      background: url(http://img8.ontheroadstore.com/H5_Icon/price_up.png) no-repeat center center;
+      background-size: 100% 100%;
+      width: .25rem;
+      height: .36rem;
+      top: .16rem;
       right: .5rem;
-      top: .2rem;
 
     }
    
   }
   .price-active-1{
-    color: #202123;
+    color: #ffffff;
+    background: #151515;
     &::after{
       content: '';
       display: block;
       position: absolute;
-      border-bottom: .15rem solid #202123;
-      border-left: .15rem solid transparent;
-      border-right: .15rem solid transparent;
+      background: url(http://img8.ontheroadstore.com/H5_Icon/price_up_s.png) no-repeat center center;
+      background-size: 100% 100%;
+      width: .25rem;
+      height: .36rem;
+      top: .16rem;
       right: .5rem;
-      top: .2rem;
-
+      z-index: 99999;
     }
   }
   .price-active-2{
-    color: #202123;
+    color: #ffffff;
+    background: #151515;
     &::after{
       content: '';
       display: block;
       position: absolute;
-      border-top: .15rem solid #202123;
-      border-left: .15rem solid transparent;
-      border-right: .15rem solid transparent;
+      background: url(http://img8.ontheroadstore.com/H5_Icon/price_down_s.png) no-repeat center center;
+      background-size: 100% 100%;
+      width: .25rem;
+      height: .36rem;
+      top: .16rem;
       right: .5rem;
-      top: .2rem;
-
+      z-index: 99999;
     }
   }
   
@@ -275,12 +292,19 @@
   }
   .search_goods_list{
     .search_goods_content{
-      padding-bottom: 1.2rem;
+      padding-bottom: 3.2rem;
      
     }
     display: none;
     ul{
       padding-top: 0;
+      &::after{/*伪元素是行内元素 正常浏览器清除浮动方法*/
+        content: "";
+        display: block;
+        height: 0;
+        clear:both;
+        visibility: hidden;
+     }
       .jump_cate_box{
         height: 1.5rem;
         padding: .4rem 0;
@@ -326,9 +350,23 @@
 
         }
       }
+      ul{
+        width: 10rem;
+        // display: flex;
+        //   flex-flow: space-between;
+        //   flex-wrap: wrap;
+      
+      }
       li {
-          border-bottom: 0.0183rem solid #E8E8E8;
-          margin: 0 0.4rem 0.533rem;
+          // border-bottom: 0.0183rem solid #E8E8E8;
+          // margin: 0 0.4rem 0.533rem;
+          color: #151515;
+        display: inline-block;
+          width: 4.97rem;
+          height: 7.23rem;
+          margin-bottom: .6rem;
+          overflow: hidden;
+          float: left;
           .hs-cf;
           &:last-child {
               border: none;
@@ -337,24 +375,43 @@
           .articles{
               display: block;
               color: #212121;
+              .font-dpr(14px);
               .image {
-                  width: 100%;
-                  height: 4.693rem;
+                  width: 4.97rem;
+                  height: 4.97rem;
                   background-color: #F5F5F5;
                   background-position: 50% 50%;
                   background-repeat: no-repeat;
-                  background-size: 100%;
-                  border-radius: 0.16rem;
+                  background-size: cover;
+                  // border-radius: 0.16rem;
               }
-              .title {
-                  .font-dpr(14px);
-                  line-height: 1em;
-                  font-weight: bold;
-                  padding: 0.267rem 0;
-                  overflow: hidden;
-                  white-space: nowrap;
-                  text-overflow: ellipsis;
-              }
+              .title{
+                height: .48rem;
+                overflow: hidden;
+                line-height: .48rem;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+                overflow: hidden;
+                padding: 0 .2rem;
+                margin-top: .1rem;
+
+            }
+            .sub_title{
+                height: .96rem;
+                overflow: hidden;
+                line-height: .48rem;
+                color: #979797;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+                overflow: hidden;
+                padding: 0 .2rem;
+            }
+            .price{
+              padding-left: .2rem;
+            }
+
           }
           .user {
               padding-bottom: 0.533rem;
