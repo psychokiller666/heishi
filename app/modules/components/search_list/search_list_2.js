@@ -337,8 +337,9 @@ $('.tabs').on('click','span',function(){
                     goods_author_nickname: v.user_name,
                     goods_author_avatar: v.user_avatar,
                     goods_id: v.id,
-                    goods_title: v.title,
-                    goods_cover_img: v.cover,
+										goods_title: v.title,
+										goods_sub_title: v.post_subtitle,
+                    goods_cover_img: v.cover_fang,
 										goods_keywords: [(v.traits && v.traits[0]) ? v.traits[0].name : ''],
 										goods_price: v.min_price,
                     goods_comments: "",
@@ -387,7 +388,7 @@ $('.tabs').on('click','span',function(){
                         $('.search_null').show();
                         // $('.conjecture_like').show();
 												$('.search_goods_list').show();
-												$('.tabs-box').show()
+												$('.tabs-box').hide()
                         $('.search_correlation').hide();
                         var items = transData(data.data.items);
                         output(items);
@@ -455,19 +456,17 @@ $('.tabs').on('click','span',function(){
 		    	loading = false;
 		    	function output(items){
 		    		$.each(items, function(index, item){
-			    		var str = '<li>\
-							        <a class="articles external" href="/Portal/HsArticle/index/id/'+item.goods_id+'.html">\
-							          <div class="image" style="background-image: url('+item.goods_cover_img+'@640w_1l);"></div>\
-							          <h2 class="title">'+item.goods_title+'</h2>\
-							        </a>\
-							        <div class="user">\
-							          <div class="user_info">\
-							            <a href="/User/index/index/id/'+item.goods_author_uid+'.html" class="external">\
-							              <img src="'+item.goods_author_avatar+'" />\
-							              <span>'+item.goods_author_nickname+'</span>\
-							            </a>\
-							          </div>\
-							          <span class="price">￥'+item.goods_price+'</span>';
+			    		var str = `<li>
+							        <a class="articles external" href="/Portal/HsArticle/index/id/${item.goods_id}.html">
+							          <div class="image" style="background-image: url('${item.goods_cover_img}@640w_1l);"></div>
+												<div class="title">${item.goods_title}</div>
+												<div class="sub_title">${item.goods_sub_title}</div>
+												<span class="price">￥${item.goods_price}</span>
+											</a>
+											</li>
+											`
+							     
+							         
 						// if(item.goods_keywords[0]){ <div class="classify">
 						// 	str += '<a href="/HsCategories/tag_index/tag/'+item.goods_keywords[0]+'.html" class="external classify_keyword">'+item.goods_keywords[0]+'</a></div></div></li>';
 						// }else{
@@ -528,7 +527,8 @@ $('.tabs').on('click','span',function(){
                 if(searchStatus==2){
                     search_nodata_status = true;
                     setSearchNullMsg(searchMsg);
-                    $('.search_null').show();
+										$('.search_null').show();
+										$('.tabs-box').hide()
                     // $('.conjecture_like').show();
                 }
 								$('.search_goods_list').show();

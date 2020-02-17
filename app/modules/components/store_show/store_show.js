@@ -909,6 +909,9 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   $('.user_signature').click(function(){
     location.href= '/User/index/index/id/'+$(this).attr('data-id')+'.html';
   })
+  $('.go_seller_btn').click(function(){
+    location.href= '/User/index/index/id/'+$(this).attr('data-id')+'.html';
+  })
 
   // 是否关注当前卖家
 /*  var attention = $('.attention');
@@ -1565,6 +1568,8 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
           if(data.status==1){
             if(data.data.show_list){
               initRecommend1(data.data.show_list) 
+            }else{
+              initRecommendNone()
             }
             if(data.data.image_list){
               initRecommend2(data.data.image_list)
@@ -1579,7 +1584,14 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         }
       });
     }
-
+    function initRecommendNone(){
+      let str = `<div class="tit_1">
+        <span class="float_left">买家秀</span>
+      </div>
+      <img class="no_res" src="http://img8.ontheroadstore.com/H5_Icon/article_no_show.png" />
+      `
+      $('.show_txt').html(str)
+    }
     function initRecommend1(data){
       let str = `<div class="tit">
         <span class="float_left">买家秀</span>

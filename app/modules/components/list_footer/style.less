@@ -5,7 +5,7 @@ footer {
         z-index: 100;
         bottom: 0;
         background-color: #FFF;
-        color: #AE2121;
+        // color: #AE2121;
         height: 1.306rem;
         border-top: 0.0133rem solid #e8e8e8;
         ul {
@@ -16,7 +16,8 @@ footer {
                 float: left;
                 width: 20%;
                 text-align: center;
-                padding: .136rem 0;
+                // padding: .136rem 0;
+                height: 1.306rem;
                 overflow: hidden;
                 &.notice_btn.active {
                     color: #AE2121;
@@ -24,7 +25,20 @@ footer {
                 }
                 a {
                     display: block;
+                    height: 1.306rem;
                     position: relative;
+                    width: 100%;
+                    .icon{
+                        width: 1rem;
+                        height: 1rem;
+                        display: block;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        bottom: 0;
+                        right: 0;
+                        margin: auto;
+                    }
                     &:hover {
                         text-decoration:none;
                     }
@@ -32,61 +46,61 @@ footer {
                         color: #AE2121;
                         opacity: 1;
                     }
-                    span {
-                        display: block;
-                        color: #C6C6C6;
-                        text-align: center;
-                        &.text {
-                            font-size: 0.32rem;
-                            line-height: 1em;
-                            transform: scale(0.9);
-                            line-height: 10px;
-                            margin-top: 0.2rem;
-                        }
-                        &.hs-icon {
-                            font-size: 0.533rem;
-                            &.home:before {
-                                content: "\e666";
-                            }
-                            &.culture:before {
-                                content: "\e664";
-                            }
-                            &.me:before {
-                                content: "\e66a";
-                            }
-                            &.explore:before {
-                                content: "\e669";
-                            }
-                            &.shopping:before {
-                                content: "\e668";
-                            }
-                            &.new:after {
-                                content: "";
-                                width: .2rem;
-                                height: .2rem;
-                                border-radius: .3rem;
-                                background-color: #AE2121;
-                                position: absolute;
-                                top: -0.04rem;
-                                right: .6rem;
-                            }
-                        }
-                    }
-                    &.active span.home:before{
-                        content: "\e66d";
-                    }
-                    &.active span.culture:before{
-                        content: "\e66c";
-                    }
-                    &.active span.me:before{
-                        content: "\e670";
-                    }
-                    &.active span.explore:before{
-                        content: "\e66e";
-                    }
-                    &.active span.shopping:before{
-                        content: "\e66f";
-                    }
+                    // span {
+                    //     display: block;
+                    //     color: #C6C6C6;
+                    //     text-align: center;
+                    //     &.text {
+                    //         font-size: 0.32rem;
+                    //         line-height: 1em;
+                    //         transform: scale(0.9);
+                    //         line-height: 10px;
+                    //         margin-top: 0.2rem;
+                    //     }
+                    //     &.hs-icon {
+                    //         font-size: 0.533rem;
+                    //         &.home:before {
+                    //             content: "\e666";
+                    //         }
+                    //         &.culture:before {
+                    //             content: "\e664";
+                    //         }
+                    //         &.me:before {
+                    //             content: "\e66a";
+                    //         }
+                    //         &.explore:before {
+                    //             content: "\e669";
+                    //         }
+                    //         &.shopping:before {
+                    //             content: "\e668";
+                    //         }
+                    //         &.new:after {
+                    //             content: "";
+                    //             width: .2rem;
+                    //             height: .2rem;
+                    //             border-radius: .3rem;
+                    //             background-color: #AE2121;
+                    //             position: absolute;
+                    //             top: -0.04rem;
+                    //             right: .6rem;
+                    //         }
+                    //     }
+                    // }
+                    // &.active span.home:before{
+                    //     content: "\e66d";
+                    // }
+                    // &.active span.culture:before{
+                    //     content: "\e66c";
+                    // }
+                    // &.active span.me:before{
+                    //     content: "\e670";
+                    // }
+                    // &.active span.explore:before{
+                    //     content: "\e66e";
+                    // }
+                    // &.active span.shopping:before{
+                    //     content: "\e66f";
+                    // }
                     .shopping-num{
                         position: absolute;
                         content: "";
@@ -108,6 +122,56 @@ footer {
                         right: 28%;
                         background-color: #AE2121;
                         display: none;
+                    }
+                }
+                .home{
+                    .icon{
+                        background: url(http://img8.ontheroadstore.com/H5_Icon/nav/tab_1.png) no-repeat center center;
+                        background-size: cover;
+                    }
+                    &.active .icon{
+                        background: url(http://img8.ontheroadstore.com/H5_Icon/nav/tab_1_active.png) no-repeat center center;
+                        background-size: cover;
+                    }
+                }
+                .cate{
+                    .icon{
+                        background: url(http://img8.ontheroadstore.com/H5_Icon/nav/tab_2.png) no-repeat center center;
+                        background-size: cover;
+                    }
+                    &.active .icon{
+                        background: url(http://img8.ontheroadstore.com/H5_Icon/nav/tab_2_active.png) no-repeat center center;
+                        background-size: cover;
+                    }
+                }
+                .cart{
+                    .icon{
+                        background: url(http://img8.ontheroadstore.com/H5_Icon/nav/tab_3.png) no-repeat center center;
+                        background-size: cover;
+                    }
+                    &.active .icon{
+                        background: url(http://img8.ontheroadstore.com/H5_Icon/nav/tab_3_active.png) no-repeat center center;
+                        background-size: cover;
+                    }
+                }
+                .msg{
+                    .icon{
+                        background: url(http://img8.ontheroadstore.com/H5_Icon/nav/tab_4.png) no-repeat center center;
+                        background-size: cover;
+                    }
+                    &.active .icon{
+                        background: url(http://img8.ontheroadstore.com/H5_Icon/nav/tab_4_active.png) no-repeat center center;
+                        background-size: cover;
+                    }
+                }
+                .mine{
+                    .icon{
+                        background: url(http://img8.ontheroadstore.com/H5_Icon/nav/tab_5.png) no-repeat center center;
+                        background-size: cover;
+                    }
+                    &.active .icon{
+                        background: url(http://img8.ontheroadstore.com/H5_Icon/nav/tab_5_active.png) no-repeat center center;
+                        background-size: cover;
                     }
                 }
             }
