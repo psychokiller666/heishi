@@ -734,6 +734,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
  * warning: 下面是初始化订单页的相关功能  /User/MyChart/index.html
  * */
   //buy页面 初始化
+  let source = 0
   if(sessionStorage.cid || init.getCookie('suohalist')){
     var selectItems;
     //优先选择sessionStorage 
@@ -756,6 +757,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
       
     }else{
      let _selectItems = JSON.parse(init.getCookie('suohalist'));
+     source = 1
       $(".good_info").each(function(){
         var that = this;
         //标记 判断是否选中
@@ -842,6 +844,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
 
     var orderData = {
         "address_id":addressid,
+        "source": source,
         "orders":[
             /*{
                 "attach":'',//备注
