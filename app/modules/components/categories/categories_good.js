@@ -129,7 +129,7 @@ $(document).on('pageInit','.categories_good', function(e, id, page){
   // 第一次以当前页id查询
   add_goods(categoryID, tagName, curPage,order_types[0]);
   function add_goods(category_id, tag, cur_page,order_type){
-    let url =   ApiBaseUrl + '/appv6_4/category/posts';
+    let url =   ApiBaseUrl + '/appv6_4/getCategoryGoodsList';
     $.ajax({
       type: 'GET',
       // url: '/index.php?g=restful&m=HsCategories&a=ajax_posts',
@@ -137,9 +137,9 @@ $(document).on('pageInit','.categories_good', function(e, id, page){
       data: {
         category_id: category_id,
         // tag: tag,
-        page_size:10,
-        cur_page: cur_page,
-        order: order_type 
+        size:10,
+        page: cur_page,
+        sort: order_type 
       },
       success: function(data){
         if(data.status == 1){ 
@@ -156,22 +156,22 @@ $(document).on('pageInit','.categories_good', function(e, id, page){
             // $('.goods_filter').css('top','1.6rem')
             $('.goods_content').css('margin-top',$('.fixed_content').height()+'px')
           }
-          if(data.data.ad[cur_page-1]){
-            $('.goods_content').append(
-              `
-              <div class="ad" 
-              data-type='${data.data.ad[cur_page-1].url_type}'
-              data-url='${data.data.ad[cur_page-1].url}'
-              style="background:url(${data.data.ad[cur_page-1].img}) no-repeat center center;
-              background-size:100% 100%;
-              height: 2.9rem;
-              width:9.2rem;
-              margin:0.7rem auto 0.18rem;
-              border-radius:0.16rem;
-              ">
-              `
-            )
-          }
+          // if(data.data.ad[cur_page-1]){
+          //   $('.goods_content').append(
+          //     `
+          //     <div class="ad" 
+          //     data-type='${data.data.ad[cur_page-1].url_type}'
+          //     data-url='${data.data.ad[cur_page-1].url}'
+          //     style="background:url(${data.data.ad[cur_page-1].img}) no-repeat center center;
+          //     background-size:100% 100%;
+          //     height: 2.9rem;
+          //     width:9.2rem;
+          //     margin:0.7rem auto 0.18rem;
+          //     border-radius:0.16rem;
+          //     ">
+          //     `
+          //   )
+          // }
           if(nowCategoryID && !tag){
             if(data.data.my_tag && data.data.my_tag.length > 0){
               $('.tag_list').css('height', '1.36rem');
@@ -183,7 +183,7 @@ $(document).on('pageInit','.categories_good', function(e, id, page){
             }
           }
           $('.infinite-scroll-preloader').css('display', 'block');
-          if(data.data.item_list.result.length < 5){
+          if(data.data.goodslist.length < 5){
             $('.infinite-scroll-preloader').css('display', 'none');
           }
         } else {

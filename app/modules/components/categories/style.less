@@ -239,42 +239,83 @@
         }
     }
 }
-.goods_filter{
-    display: flex;
-    height: 1.2rem;
+.filter_box{
     width: 10rem;
-    background: #fff;
     position: relative;
     top:0;
     left: 0;
     right: 0;
     z-index: 5;
     margin: 0 auto;
-    border-bottom: 1px solid #8E8E8E;
+    height: 1rem;
+    background: #fff;
+  
+}
+.goods_filter{
+    display: flex;
+    width: 9.2rem;
+    height: .69rem;
+    background: #fff;
+    margin: 0 auto;
+    border: 1px solid #151515;
+    margin-top: .3rem;
+    box-sizing: border-box;
+    overflow: hidden;
+    border-radius: .1rem;
     div{
         flex: 1;
         color: #8E8E8E;
         .font-dpr(16px);
         text-align: center;
-        line-height: 1.2rem;
+        line-height: .69rem;
         position: relative;
-        font-weight: bolder;
+        // font-weight: bolder;
+        font-size: .36rem;
+        color: #151515;
+        background: #ffffff;
+        border-right: 1px solid #151515;
+
+        
     }
     .price{
+        position: relative;
+        &::after{
+            content: '';
+            display: block;
+            position: absolute;
+            background: url(http://img8.ontheroadstore.com/H5_Icon/price_up.png) no-repeat center center;
+            background-size: 100% 100%;
+            width: .25rem;
+            height: .36rem;
+            top: .16rem;
+            right: .5rem;
+      
+        }
         span{
             display: inline-block;
             width: 0.34rem;
             height: 0.4rem;
-            background-image: url(//img8.ontheroadstore.com/H5_Icon/price_arrow_up.png);
-            background-size: cover;
+            background-image: url(//img8.ontheroadstore.com/H5_Icon/price_up_s.png);
+            background-size: 100%;
+            position: absolute;
+            width: .22rem;
+            height: .36rem;
+            top: .16rem;
+            right: .5rem;
             &.active{
-                background-image: url(//img8.ontheroadstore.com/H5_Icon/price_arrow.png);
-                background-size: cover;
+                background-image: url(//img8.ontheroadstore.com/H5_Icon/price_down_s.png);
+                background-size: 100%;
             }
         }
     }
     .active{
-        color: #202123;
+        color: #fff;
+        background: #151515;
+        &::after{
+            content: '';
+            display: none;
+           
+        }
     }
 }
 .tag_index,
@@ -491,49 +532,68 @@
     
     .goods_content{
         margin-top: 1.2rem;
+        width: 10rem;
+        &::after{/*伪元素是行内元素 正常浏览器清除浮动方法*/
+            content: "";
+            display: block;
+            height: 0;
+            clear:both;
+            visibility: hidden;
+         }
         .goods_list{
-            padding-top: 0.533rem;
-            margin: 0 0.4rem;
-            width: 9.2rem;
-            position: relative;
-            // margin-top: 1.2rem;
-            .hs-cf;
+            color: #151515;
+            display: inline-block;
+              width: 4.97rem;
+              height: 7.23rem;
+              margin-bottom: .6rem;
+              overflow: hidden;
+              float: left;
+              .hs-cf;
             &:last-child{
                 border: none;
             }
             .filepath{
-                width: 4.4rem;
-                height: 2.24rem;
-                float: left;
-                margin-right: 0.4rem;
+                width: 4.97rem;
+                height: 4.97rem;
                 .image{
-                    width: 100%;
-                    height: 100%;
-                    overflow: hidden;
+                    width: 4.97rem;
+                    height: 4.97rem;
                     background-color: #F5F5F5;
                     background-position: 50% 50%;
                     background-repeat: no-repeat;
                     background-size: cover;
-                    border-radius: 0.16rem;
                 }
             }
             .post_title{
-                color: #000000;
-                width: 4.4rem;
-                height: 2.4em;
-                line-height: 1.2em;
-                .font-dpr(14px);
+                height: .48rem;
                 overflow: hidden;
-                float: left;
-                font-weight: 500;
-                letter-spacing: 0.01rem;
+                line-height: .48rem;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+                overflow: hidden;
+                padding: 0 .2rem;
+                display: block;
+                .font-dpr(14px);
+                margin-top: .1rem;
+                color: #151515;
+            }
+            .sub_title{
+                height: .96rem;
+                overflow: hidden;
+                line-height: .48rem;
+                color: #979797;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+                overflow: hidden;
+                padding: 0 .2rem;
+                .font-dpr(14px);
             }
             .good_price{
-                .font-dpr(20px);
-                position: absolute;
-                left: 4.8rem;
-                line-height: 1em;
-                bottom: 0;
+                color: #151515;
+                .font-dpr(14px);
+                margin-left: .2rem;
             }
             .user_info{
                 width: 4.4rem;
