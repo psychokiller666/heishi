@@ -383,8 +383,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
         },
         success: function(data){
           // $.toast('保存成功')
-          
-          if(data.data.status){
+          if(data.data){
             isOverSeas= true
             $('.post_card').show()
             if(data.data.shenfenzheng!=""&&data.data.realname!=""){
@@ -427,7 +426,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
     var n = $(that).parents('.message').find('.countNum').text();
     n--;
     if(n < 1) return;
-    var minNum = -1;//默认设置减1
+    // var minNum = -1;//默认设置减1
     //限购判断 减的时候不做判断
     // var limitNum = fixLimitNum(n, $item);
     // if(n > limitNum){
@@ -438,10 +437,10 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
     // $(that).parents('.message').find('.number').text(n);//需要注释掉，跟下面调用接口重复
     // $(that).parents('.message').find('.countNum').text(n);
     $item.attr('num_editing','1');
-    editShoppingNum({
+    reduceShoppingNum({
       object_id: $(that).attr('data-id'),
       mid: $(that).attr('data-mid'),
-      nums: minNum,//接口要传入加多少或减多少
+      nums: n,//接口要传入加多少或减多少
     },function(data){
       $(that).parents('.message').find('.number').text(data.data);
       $(that).parents('.message').find('.countNum').text(data.data);
@@ -714,6 +713,22 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
       }
     })
   }
+  function reduceShoppingNum(data, callBack,complete){
+    $.ajax({
+      type: 'POST',
+      url: '/index.php?g=restful&m=HsShoppingCart&a=set',
+      data: data,
+      success: callBack,
+      error: function(xhr, type){
+        console.log(type);
+      },
+      complete: function(){
+        if(typeof complete === "function"){
+          complete();
+        }
+      }
+    })
+  }
 
 /**
  * warning: 下面是初始化订单页的相关功能  /User/MyChart/index.html
@@ -760,10 +775,8 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
           $(this).remove();
         }
       })
-      if(!status){
-        $(this).remove();
-      }
-    })
+
+    }
     
     $(".lists").each(function(){
       if(!$(this).find('.good_info').length){
@@ -800,7 +813,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
     let reducePrice = parseInt(sessionStorage.getItem("reduceMoney"));
     if(reducePrice){
       $('.full_reduce').show()
-      $('.full_reduce').find('.price').html('￥'+reducePrice)
+      $('.full_reduce').find('.price').html('-￥'+reducePrice)
       $('.all_price_num').text(all_price-reducePrice);
     }else{
       $('.all_price_num').text(all_price);
