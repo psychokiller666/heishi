@@ -113,7 +113,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     let str = ``
     data.forEach((v,i)=>{
       str+=`<div class="seller_item" data-author="${v.userinfo.author}">
-          <img class="un_active ${i==0?'active':''}" src="${v.userinfo.user_avatar}@160w_1l" />
+          <img class="un_active ${i==0?'active':''}" src="${v.userinfo.user_avatar}" />
           <p class="un_active ${i==0?'active':''}">${v.userinfo.user_name}</p>
           <span class="un_active ${i==0?'active':''}"></span>
       </div>`
