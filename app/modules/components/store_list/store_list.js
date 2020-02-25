@@ -135,7 +135,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     let str = ``
     data.forEach(v=>{
       str+=`<a  href="/Portal/HsArticle/index/id/${v.id}.html" class="seller_good seller_good_${index} external">
-          <img src="${v.cover}" />
+          <img src="${v.cover}?x-oss-process=image/resize,m_lfit,w_320/quality,q_70" />
           <p>${v.title}</p>
           <span>¥${v.price[0]}</span>
       </a>`
