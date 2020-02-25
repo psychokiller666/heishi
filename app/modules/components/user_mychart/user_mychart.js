@@ -186,9 +186,11 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
           let saleItem = list.find('.checkboxSale').length
           if(normalItem == 1){
            $(list.find('.checkboxNormal')[0]).parents('.title').remove()
+           list.remove()
           }
           if(saleItem==1){
             $(list.find('.checkboxSale')[0]).parents('.title').remove()
+            list.remove()
           }
           $.toast(data.info,800);
           count();
@@ -620,7 +622,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
 
   }
   //当商品被清空
-  function clear() {
+  function clear(status) {
     var lis = $(".list").length;
     if(lis == 0){
       $('.allPrice').css('display','none');
@@ -628,7 +630,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
       $('.edit_shopping_cart').css('display', 'block');
       $('.edit_finish').css('display', 'none');
 
-    }
+    } 
   }
   //关闭删除confirm
   function closeConfirm(){
