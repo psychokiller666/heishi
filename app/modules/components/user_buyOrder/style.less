@@ -12,7 +12,7 @@
         min-width: 1.2rem;
         .font-dpr(14px);
         display: block;
-        color: #000;
+        color: #979797;
         text-align: center;
         &.active:after{
           content: '';
@@ -20,13 +20,13 @@
           bottom: 0.12rem;
           width: 0.54rem;
           height: 0.06rem;
-          background: #AE2121;
+          background: #151515;
           left: 50%;
           border-radius: 0.06rem;
           transform: translateX(-50%);
         }
         &.active{
-          color: #AE2121;
+          color: #151515;
           position: relative;
         }
       }
@@ -40,29 +40,29 @@
         border-top: none;
       }
       .user_info{
-        padding: 0.4rem 0.334rem 0.33rem;
-        line-height: 0.56rem;
-        height: 0.56rem;
-        .font-dpr(14px);
-        border-bottom: 0.0133rem solid #E8E8E8;
+        padding: 0.4rem 0.34rem 0.05rem;
+        line-height: 0.8rem;
+        height: 0.8rem;
+        .font-dpr(12px);
+        // border-bottom: 0.0133rem solid #E8E8E8;
         .user_img{
           float: left;
-          width: 0.56rem;
-          height: 0.56rem;
+          width: 0.8rem;
+          height: 0.8rem;
           border-radius: 50%;
         }
         .user_name{
           float: left;
           margin-left: 0.27rem;
-          color: #000;
+          color: #979797;
           max-width: 5rem;
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
           position: relative;
-          padding-right: 0.6rem;
+          padding-right: 0.4rem;
           &:after{
-            .font-dpr(15px);
+            .font-dpr(12px);
             position: absolute;
             right: 0;
             height: 100%;
@@ -71,7 +71,7 @@
           }
         }
         .order_status{
-          color: #AE2121;
+          color: #ed4a42;
           float: right;
         }
       }
@@ -89,39 +89,46 @@
           }
           .image{
             float: left;
-            width: 3.45rem;
-            height: 1.76rem;
+            width: 2.853rem;
+            height: 2.853rem;
             display: block;
             background-color: #F5F5F5;
             background-position: 50% 50%;
             background-repeat: no-repeat;
-            background-size: 100%;
-            border-radius: 0.16rem;
+            background-size: cover;
+            // border-radius: 0.16rem;
           }
           .goods_introduce{
-            width: 5.23rem;
+            width: 6.23rem;
             float: right;
             position: relative;
-            height: 1.76rem;
+            height: 2.853rem;
             .title{
               width: 100%;
-              overflow: hidden;
-              white-space: nowrap;
               text-overflow: ellipsis;
-              .font-dpr(13px);
+              .font-dpr(12px);
+              display: -webkit-box;
+              -webkit-line-clamp: 2;
+              overflow: hidden;
+              color: #151515
             }
             .goods_intro{
-              position: absolute;
-              bottom: 0;
-              left: 0;
+              // position: absolute;
+              // bottom: 0;
+              // left: 0;
               .font-dpr(12px);
               line-height: 0.56rem;
+              color: #979797;
               span{
                 float: left;
               }
               .refund_status{
-                color: #AE2121;
-                margin-right: 0.4rem;
+                color: #ed4a42;
+                // margin-right: 0.4rem;
+                position: absolute;
+                right: 0;
+                bottom: .56rem;
+
               }
               .presell{
                 background-image: url(//img8.ontheroadstore.com/upload/180111/2c51dc047f9645d4bc879be24ddcd1d4.png);
@@ -129,10 +136,13 @@
                 width: 1.28rem;
                 height: 0.56rem;
                 text-align: center;
-                margin-right: 0.4rem;
+                // margin-right: 0.4rem;
+                position: absolute;
+                right: 0;
+                bottom: .56rem;
               }
               .type{
-                color: #7c7c7c;
+                color: #979797;
                 max-width: 2.5rem;
                 overflow: hidden;
                 white-space: nowrap;
@@ -322,28 +332,28 @@
   }
   .user_info{
     padding: 0.4rem;
-    line-height: 0.56rem;
-    .font-dpr(14px);
-    height: 0.56rem;
-    border-bottom: 0.0133rem solid #E8E8E8;
+    line-height: 0.8rem;
+    .font-dpr(12px);
+    height: 0.8rem;
+    // border-bottom: 0.0133rem solid #E8E8E8;
     .user_img{
       float: left;
-      width: 0.56rem;
-      height: 0.56rem;
+      width: 0.8rem;
+      height: 0.8rem;
       border-radius: 50%;
     }
     .user_name{
       float: left;
       margin-left: 0.27rem;
-      color: #000;
+      color: #979797;
       max-width: 5rem;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
       position: relative;
-      padding-right: 0.6rem;
+      padding-right: 0.4rem;
       &:after{
-        .font-dpr(15px);
+        .font-dpr(12px);
         position: absolute;
         right: 0;
         height: 100%;
@@ -386,37 +396,38 @@
     }
     .cover{
       float: left;
-      width: 3.47rem;
-      height: 1.76rem;
+      width: 2.853rem;
+      height: 2.853rem;
       display: block;
       margin-right: 0.4rem;
-      border-radius: 0.16rem;
+      // border-radius: 0.16rem;
     }
     .goods_introduce{
-      width: 5.32rem;
+      width: 5.9rem;
       float: left;
       position: relative;
-      height: 1.76rem;
+      height: 2.853rem;
       .title{
         width: 100%;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        .font-dpr(13px);
-        line-height: 1em;
+          text-overflow: ellipsis;
+          .font-dpr(12px);
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          overflow: hidden;
+          color: #151515
       }
       .goods_intro{
-        color: #7c7c7c;
-        position: absolute;
-        bottom: 0;
-        left: 0;
+        color: #979797;
+        // position: absolute;
+        // bottom: 0;
+        // left: 0;
         width: 100%;
         .font-dpr(12px);
         line-height: 0.56rem;
-        span{
-          display: block;
-          height: 0.56rem;
-        }
+        // span{
+        //   display: block;
+        //   height: 0.56rem;
+        // }
         .type{
           float: left;
           max-width: 2.5rem;
@@ -430,11 +441,17 @@
           width: 1.28rem;
           height: 0.56rem;
           text-align: center;
-          margin-right: 0.4rem;
-          float: left;
+          position: absolute;
+          right: 0;
+          bottom: .56rem;
         }
         .price{
-          float: right;
+          line-height: 0.56rem;
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          .font-dpr(12px);
+          color: #979797;
         }
       }
       .refund_underway{
@@ -464,7 +481,7 @@
     .price_details{
       margin-top: 0.267rem;
       span{
-        color: #AE2121;
+        color: #ed4a42;
       }
     }
   }
