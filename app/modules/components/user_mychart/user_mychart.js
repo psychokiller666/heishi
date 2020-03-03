@@ -79,7 +79,9 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
       var status = $(this).find('.checkbox').hasClass('affirm');
       var noInventory = $(this).find('.checkbox').hasClass('noInventory');
       if(noInventory){
-        $(this).css({opacity:.5})
+        $(this).find('img').css({opacity:.5})
+        $(this).find('.goods_sell_out').css({opacity:.5})
+        $(this).find('.goods_selling').css({opacity:.5})
       }
     })
   }
