@@ -135,7 +135,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     let str = ``
     data.forEach(v=>{
       str+=`<a  href="/Portal/HsArticle/index/id/${v.id}.html" class="seller_good seller_good_${index} external">
-          <img src="${v.cover}@320w_1l" />
+          <img src="${v.cover}?x-oss-process=image/resize,m_lfit,w_320/quality,q_70" />
           <p>${v.title}</p>
           <span>¥${v.price[0]}</span>
       </a>`
@@ -218,7 +218,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
         if(t.type==1){
           list+=`<div  class="segment_good">
             <a href="/Portal/HsArticle/index/id/${t.id}.html"  class="external">
-              <img class="cover" src="${t.cover}@320w_1l" />
+              <img class="cover" src="${t.cover}" />
             </a>
           <div class="txt">
             <div class="txt_top">
@@ -243,7 +243,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
         }
         if(t.type==2){
           list+=`
-            <a class="ad external" href='${genrateUrl(t.object_id,t.ad_type)}'>
+            <a class="ad external" href='${genrateUrl(t.url,t.url_type)}'>
               <img  src="${t.image}"/>
             </a>
           `
@@ -356,6 +356,9 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
         second = Math.floor(times) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
       }
       if (day <= 9) day = '0' + day;
+      if(day>0){
+        hour+=day*24
+      }
       if (hour <= 9) hour = '0' + hour;
       if (minute <= 9) minute = '0' + minute;
       if (second <= 9) second = '0' + second;
