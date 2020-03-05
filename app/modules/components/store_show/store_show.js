@@ -1271,8 +1271,11 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     function setGoodsCoupon(data){
         var couponGet = data.coupon;
         var couponBack = data.returnCoupon;
-
-
+        if(couponGet||couponBack){//兼容老版本返券和领券非一个popup 
+          hideAllVideo()
+          var $jsCouponGet= $('.js_coupon_get');
+          $jsCouponGet.show();
+        }
         if(couponGet && couponGet.length>0){
             showCouponGet(couponGet);
         }
@@ -1280,8 +1283,17 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
             showCouponBack(couponBack);
         }
     }
-
     //显示领券按钮及弹窗
+    $('.coupon_tabs').on('click','span',function(){
+      $(this).addClass('active').siblings().removeClass('active')
+      if($(this).index()==1){
+        $('.back_coupon_ul').show()
+        $('.get_coupon_ul').hide()
+      }else{
+        $('.back_coupon_ul').hide()
+        $('.get_coupon_ul').show()
+      }
+    })
     function showCouponGet(data){
          hideAllVideo()
         var $jsCouponGet= $('.js_coupon_get');
@@ -1297,24 +1309,52 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         var $getCouponUl = $getCouponMask.find('.get_coupon_ul');
         var liHtml = '';
         for (var j=0;j<data.length;j++){
-            liHtml += '<li>'
-            liHtml += '<div class="left">'
-            liHtml += '<div class="coupon_price">¥<b>'+ data[j].coupon_price +'</b></div>'
-            liHtml += '<div class="coupon_desc">'+ (data[j].min_price > 0 ? '满'+data[j].min_price+'可用':'消费任意金额可用') +'</div>'
-            liHtml += '</div>'
-            liHtml += '<div class="center">'
-            liHtml += '<div class="title">'+ data[j].title +'</div>'
+            // liHtml += '<li>'
+            // liHtml += '<div class="left">'
+            // liHtml += '<div class="coupon_price">¥<b>'+ data[j].coupon_price +'</b></div>'
+            // liHtml += '<div class="coupon_desc">'+ (data[j].min_price > 0 ? '满'+data[j].min_price+'可用':'消费任意金额可用') +'</div>'
+            // liHtml += '</div>'
+            // liHtml += '<div class="center">'
+            // liHtml += '<div class="title">'+ data[j].title +'</div>'
 
+            // if (data[j].apply_time_type==2){
+            //     liHtml += '<div class="time">'+ init.couponFmtTime(init.getTimestamp()) + ' - ' + init.couponFmtTime(init.getTimestamp(data[j].apply_time_length)) +'</div>'
+            // }else{
+            //     liHtml += '<div class="time">'+ init.couponFmtTime(data[j].apply_time_start) + ' - ' + init.couponFmtTime(data[j].apply_time_end) +'</div>'
+            // }
+            // liHtml += '</div>'
+            // liHtml += '<div class="right">'
+            // liHtml += '<div class="btn" coupon_id="'+ data[j].coupon_id +'" get_status="'+ data[j].receiveStatus +'"></div>'
+            // liHtml += '</div>'
+            // liHtml += '</li>'
+            liHtml+=`
+            <li>
+              <img class="c_cover" src="${data[j].coupon_img?data[j].coupon_img+'@640w_1l':data[j].img+'@640w_1l'}">
+            `
             if (data[j].apply_time_type==2){
-                liHtml += '<div class="time">'+ init.couponFmtTime(init.getTimestamp()) + ' - ' + init.couponFmtTime(init.getTimestamp(data[j].apply_time_length)) +'</div>'
+                liHtml += '<div class="c_time tc">'+ init.couponFmtTime(init.getTimestamp()) + ' - ' + init.couponFmtTime(init.getTimestamp(data[j].apply_time_length)) +'</div>'
             }else{
-                liHtml += '<div class="time">'+ init.couponFmtTime(data[j].apply_time_start) + ' - ' + init.couponFmtTime(data[j].apply_time_end) +'</div>'
+                liHtml += '<div class="c_time tc">'+ init.couponFmtTime(data[j].apply_time_start) + ' - ' + init.couponFmtTime(data[j].apply_time_end) +'</div>'
             }
-            liHtml += '</div>'
-            liHtml += '<div class="right">'
-            liHtml += '<div class="btn" coupon_id="'+ data[j].coupon_id +'" get_status="'+ data[j].receiveStatus +'"></div>'
-            liHtml += '</div>'
-            liHtml += '</li>'
+            liHtml+=`
+              <div class="c_reduce_price tc">
+                <span class="small">¥</span>${data[j].coupon_price}
+              </div>
+              <div class="c_info tc">
+                ${data[j].title}
+              </div>
+              <div class="c_desc tc">
+                ${data[j].desc}
+              </div>
+              <div class="c_msg">
+                ${data[j].coupon_note}
+              </div>
+              <div class="btn" coupon_id="${data[j].coupon_id}" get_status="${data[j].receiveStatus}"></div>
+            `
+            
+
+            liHtml+`</li>`
+
         }
         $getCouponUl.html(liHtml);
 
@@ -1388,28 +1428,55 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         }
         $jsCouponBack.find('.select_r').html(html);
         $jsCouponBack.show();
-        var $backCouponMask = $('.back_coupon_mask');
-        var $getCouponUl = $backCouponMask.find('.get_coupon_ul');
+        var $backCouponMask = $('.get_coupon_mask');
+        var $getCouponUl = $backCouponMask.find('.back_coupon_ul');
         var liHtml = '';
         for (var j=0;j<data.length;j++){
-            liHtml += '<li>'
-            liHtml += '<div class="left">'
-            liHtml += '<div class="coupon_price">¥<b>'+ data[j].coupon_price +'</b></div>'
-            liHtml += '<div class="coupon_desc">'+ (data[j].min_price > 0 ? '满'+data[j].min_price+'可用':'消费任意金额可用') +'</div>'
-            liHtml += '</div>'
-            liHtml += '<div class="center">'
-            liHtml += '<div class="title">'+ data[j].title +'</div>'
+            // liHtml += '<li>'
+            // liHtml += '<div class="left">'
+            // liHtml += '<div class="coupon_price">¥<b>'+ data[j].coupon_price +'</b></div>'
+            // liHtml += '<div class="coupon_desc">'+ (data[j].min_price > 0 ? '满'+data[j].min_price+'可用':'消费任意金额可用') +'</div>'
+            // liHtml += '</div>'
+            // liHtml += '<div class="center">'
+            // liHtml += '<div class="title">'+ data[j].title +'</div>'
 
-            if(data[j].apply_time_type==2){
-                liHtml += '<div class="time">'+ init.couponFmtTime(init.getTimestamp()) + ' -- ' + init.couponFmtTime(init.getTimestamp(data[j].apply_time_length)) +'</div>'
+            // if(data[j].apply_time_type==2){
+            //     liHtml += '<div class="time">'+ init.couponFmtTime(init.getTimestamp()) + ' -- ' + init.couponFmtTime(init.getTimestamp(data[j].apply_time_length)) +'</div>'
+            // }else{
+            //     liHtml += '<div class="time">'+ init.couponFmtTime(data[j].apply_time_start) + ' -- ' + init.couponFmtTime(data[j].apply_time_end) +'</div>'
+            // }
+            // liHtml += '</div>'
+            // liHtml += '<div class="right">'
+            // liHtml += '<div class="btn" coupon_id="'+ data[j].coupon_id +'" get_status="2" issue_by="'+ data[j].issue_by +'"></div>'
+            // liHtml += '</div>'
+            // liHtml += '</li>'
+            liHtml+=`
+            <li>
+              <img class="c_cover" src="${data[j].coupon_img?data[j].coupon_img+'@640w_1l':data[j].img+'@640w_1l'}">
+            `
+            if (data[j].apply_time_type==2){
+                liHtml += '<div class="c_time tc">'+ init.couponFmtTime(init.getTimestamp()) + ' - ' + init.couponFmtTime(init.getTimestamp(data[j].apply_time_length)) +'</div>'
             }else{
-                liHtml += '<div class="time">'+ init.couponFmtTime(data[j].apply_time_start) + ' -- ' + init.couponFmtTime(data[j].apply_time_end) +'</div>'
+                liHtml += '<div class="c_time tc">'+ init.couponFmtTime(data[j].apply_time_start) + ' - ' + init.couponFmtTime(data[j].apply_time_end) +'</div>'
             }
-            liHtml += '</div>'
-            liHtml += '<div class="right">'
-            liHtml += '<div class="btn" coupon_id="'+ data[j].coupon_id +'" get_status="2" issue_by="'+ data[j].issue_by +'"></div>'
-            liHtml += '</div>'
-            liHtml += '</li>'
+            liHtml+=`
+              <div class="c_reduce_price tc">
+                <span class="small">¥</span>${data[j].coupon_price}
+              </div>
+              <div class="c_info tc">
+                ${data[j].title}
+              </div>
+              <div class="c_desc tc">
+                ${data[j].desc}
+              </div>
+              <div class="c_msg">
+                ${data[j].coupon_note}
+              </div>
+              <div class="btn" coupon_id="${data[j].coupon_id}" get_status="2"  issue_by="${data[j].issue_by}"></div>
+            `
+            
+
+            liHtml+`</li>`
         }
         $getCouponUl.html(liHtml);
 
@@ -1445,6 +1512,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
             }
 
         });
+        $getCouponUl.hide()
 
 
 
