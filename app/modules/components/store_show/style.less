@@ -2083,10 +2083,10 @@
     z-index: 99999;
     .get_coupon_wrap{
         width: 100%;
-        height: 11.09333rem;
+        height: 13.09333rem;
         position: absolute;
         bottom: 0;
-        background: #F5F5F5;
+        background: #EFEFEF;
         border-top-right-radius: 0.16rem;
         border-top-left-radius: 0.16rem;
         box-sizing: border-box;
@@ -2097,14 +2097,14 @@
             line-height: 1;
             font-family:PingFangSC-Semibold;
             font-weight: bold;
-            padding: 0.53333rem 0 0.48rem;
+            padding: 0.34rem 0 0.34rem;
         }
         .get_coupon_tip_wrap{
             height: 0.53333rem;
             text-align: center;
             color: #ED4A42;
             font-size: 0;
-            margin-bottom: 0.4rem;
+           
             .vertical_middle{
                 display: inline-block;
                 vertical-align: middle;
@@ -2121,7 +2121,7 @@
                 height:0.53333rem;
                 line-height:0.42667rem;
                 border-radius:0.10667rem;
-                border:0.05333rem solid rgba(174,33,33,1);
+                border:0.05333rem solid #ed4a42;
                 a{
                     padding: 0 0.24rem;
                     display: block;
@@ -2129,106 +2129,170 @@
                     color: inherit;
                 }
             }
+            
         }
-        .get_coupon_ul{
-            height: 6.69334rem;
+        .coupon_tabs{
+            width: 10rem;
+            height: 1rem;
+            // margin-bottom: 0.4rem;
+            span{
+                display: inline-block;
+                height: 1rem;
+                width: 4.98rem;
+                line-height: 1rem;
+                text-align: center;
+                color: #979797;
+                .font-dpr(14px);
+                font-weight: bold;
+                float: left;
+                &.active{
+                    color: #151515;
+                }
+            }
+        }
+        .get_coupon_ul,.back_coupon_ul{
+            height: 8.49334rem;
             overflow-x: hidden;
             overflow-y: auto;
             width: 100%;
             box-sizing: border-box;
-            padding: 0 0.4rem;
+            // padding: 0 0.4rem;
             -webkit-overflow-scrolling:touch;
+            .no_coupon{
+                width: 4.67rem;
+                height: 3.92rem;
+                margin: 0 auto;
+                display: block;
+                margin-top: 1rem;
+            }
             li{
-                margin-bottom: 0.4rem;
+                margin: 0 auto;
+                // margin-bottom: 0.4rem;
+                margin-top: 0.8rem;
                 box-sizing: border-box;
-                padding: 0.26667rem 0;
+                // padding: 0.26667rem 0;
                 background: #fff;
-                border-radius: 0.16000rem;
-                height: 2.45333rem;
-                width: 100%;
-                .left{
-                    float: left;
-                    width: 2.96rem;
-                    height: 100%;
+                // border-radius: 0.16000rem;
+                height: 5.435rem;
+                width: 9.467rem;
+                position: relative;
+                overflow: hidden;
+                .font-dpr(12px);
+                &::after{
+                    content: '';
+                    display: block;
+                    width: .72rem;
+                    height: 5.5rem;
+                    position: absolute;
+                    background: url(http://img8.ontheroadstore.com/H5_Icon/coupon/coupon_shadow_2.png) no-repeat center center;
+                    background-size: 100% 100%;
+                    left: 0;
+                    top: -.04rem;
+                    z-index: 1
+                }
+                &::before{
+                    content: '';
+                    display: block;
+                    width: .72rem;
+                    height: 5.5rem;
+                    position: absolute;
+                    background: url(http://img8.ontheroadstore.com/H5_Icon/coupon/coupon_shadow_2.png) no-repeat center center;
+                    background-size: 100% 100%;
+                    transform: rotate(180deg);
+                    top: -.04rem;
+                    right: 0;
+                    z-index: 1;
+                }
+                .tc{
                     text-align: center;
-                    border-right: 0.02667rem dashed #979797;
-                    .coupon_price{
-                        height:0.69333rem;
-                        font-size:0.69333rem;
-                        font-family:'din';
-                        color:#ED4A42;
-                        line-height:1;
-                        padding: 0.34667rem 0 0.29333rem;
-                    }
-                    .coupon_desc{
-                        font-size:0.26667rem;
-                        font-family:PingFangSC-Light;
-                        color:#202123;
-                        line-height: 1;
+                }
+                .c_cover{
+                    width: 10rem;
+                    height: 5.44rem;
+                    margin-left: -.266rem;
+                    text-align: center;
+                    object-fit: cover;
+                }
+                .c_time{
+                    position: absolute;
+                    width: 9.467rem;
+                    top: .6667rem;
+                }
+                .c_reduce_price{
+                    .font-dpr(54px);
+                    position: absolute;
+                    top: 1rem;
+                    width: 9.467rem;
+                    font-weight: 500;
+                    .small{
+                        .font-dpr(20px);
                     }
                 }
-                .center{
-                    float: left;
-                    width: 3.57333rem;
-                    box-sizing: border-box;
-                    padding: 0.34667rem 0 0 0.50667rem;
-                    .title{
-                        font-size:0.37333rem;
-                        font-family:PingFangSC-Semibold;
-                        color:#202123;
-                        line-height:1;
-                        height: 0.98667rem;
-
-                        white-space: nowrap;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                    }
-                    .time{
-                        font-size:0.26667rem;
-                        font-family:PingFangSC-Regular;
-                        color:#8E8E8E;
-                        line-height:1;
-                        white-space: nowrap;
-                    }
+                .c_info{
+                    .font-dpr(11px);
+                    position: absolute;
+                    top: 2.45rem;
+                    width: 9.467rem;
+                    font-weight: 500;
                 }
-                .right{
-                    float: left;
-
-                    .btn{
-                        width: 1.81333rem;
-                        height: 0.56rem;
-                        background:#ED4A42;
-                        border-radius:0.29333rem;
-                        margin: 0.69333rem 0 0 0.4rem;
-                        font-size:0.34667rem;
-                        font-family:PingFangSC-Medium;
-                        color: #fff;
-                        line-height:0.56rem;
-                        text-align: center;
-
-                        &[get_status='1']{
-                            background: #D8D8D8;
-                        }
-                        &[get_status='0']:after{
-                            content: '立即领取';
-                        }
-                        &[get_status='1']:after{
-                            content: '已领取';
-                        }
-                        &[get_status='2']:after{
-                            content: '查看商品';
-                        }
-                    }
-
-
+                
+              .c_desc{
+                .font-dpr(11px);
+                position: absolute;
+                top: 3.01rem;
+                width: 9.467rem;
+                font-weight: 300;
+              }
+               
+              .c_msg{
+                width: 5rem;
+                height: .586rem;
+                line-height: .293rem;
+                .font-dpr(10px);
+                position: absolute;
+                top: 3.973rem;
+                left: 1rem;
+                overflow: hidden;
+              }
+            .btn{
+                position: absolute;
+                width: 2.21rem;
+                height: 1rem;
+                left: 6.293rem;
+                top: 3.893rem;
+                z-index: 1;
+                &[get_status='0']{
+                    background: url(http://img8.ontheroadstore.com/H5_Icon/coupon/btn_receive.png) no-repeat center center;
+                    background-size: 100% 100%;
                 }
+                &[get_status='1']{
+                    background: url(http://img8.ontheroadstore.com/H5_Icon/coupon/btn_received.png) no-repeat center center;
+                    background-size: 100% 100%;
+                }
+                &[get_status='2']{
+                    background: url(http://img8.ontheroadstore.com/H5_Icon/coupon/btn_activity.png) no-repeat center center;
+                    background-size: 100% 100%;
+                }
+                // &[get_status='0']:after{
+                //     content: '立即领取';
+                // }
+                // &[get_status='1']:after{
+                //     content: '已领取';
+                // }
+                // &[get_status='2']:after{
+                //     content: '查看商品';
+                // }
+            }
+            
+                   
+                    
             }
         }
 
         .ok{
             width: 9.04000rem;
             height: 1.06667rem;
-            background: #ED4A42;
+            background: #151515;
             color: #fff;
             border-radius: 0.16rem;
             font-family:PingFangSC-Semibold;
