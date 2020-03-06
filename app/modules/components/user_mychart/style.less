@@ -307,7 +307,12 @@
 			&.limit_buy_tag{
 				display: none;
 				z-index: 2;
-				background-image:url('https://img8.ontheroadstore.com/H5_Icon/chart_no_remain.png');
+				background-image:url('https://img8.ontheroadstore.com/H5_Icon/chart_limit_icon.png');
+				background-size: 100% 100%;
+			}
+			&.sell_out_tag{
+				z-index: 2;
+				background-image:url('//img8.ontheroadstore.com/H5_Icon/chart_no_remain.png');
 				background-size: 100% 100%;
 			}
 		}
@@ -950,19 +955,20 @@
 			background: #FFF;
 			border-bottom: 0.533rem solid #f0eeef;
 			.user_info{
-				padding: 0.347rem 0;
-				line-height: 0.533rem;
+				padding: 0.347rem 0 0 0;
+				line-height: 0.8rem;
 				// border-bottom: 0.0133rem solid #E8E8E8;
 				.hs-cf;
 				img{
-					width: 0.533rem;
-					height: 0.533rem;
+					width: 0.8rem;
+					height: 0.8rem;
 					float: left;
 					border-radius: 50%;
 				}
 				.user_name{
 					.font-dpr(12px);
 					margin-left: 0.267rem;
+					color: #979797;
 				}
 			}
 			.good_info{
@@ -1004,18 +1010,24 @@
 					height: 0.68rem;
 					line-height: 0.68rem;
 				}
+				.num_and_price{
+          margin-top: 1rem;
+          text-align: right;
+          float: right;
+        }
 				.good_price{
-					width: 4.99rem;
-					.font-dpr(12px);
+					// width: 4.99rem;
+					// .font-dpr(12px);
 					color: #151515;
-					line-height: 1em;
-					margin-top: 1rem;
+					// line-height: 1em;
+					// margin-top: 1rem;
 				}
 				.good_num{
-					position: absolute;
-					top: 2.8rem;
-					right: 0;
+					// position: absolute;
+					// top: 2.8rem;
+					// right: 0;
 					color: #8E8E8E;
+					margin-left: .17rem;
 				}
 			}
 			.quanyi_price{
@@ -1075,14 +1087,14 @@
        
       }
 			.express{
-				.font-dpr(12px);
-				padding: 0.47rem 0;
+				.font-dpr(15px);
+				padding: 0.4rem 0;
 				border-bottom: 0.013rem solid rgba(153,153,153,0.3);
 				.hs-cf;
 			}
 			.comment{
-				.font-dpr(12px);
-				padding: 0.47rem 0;
+				.font-dpr(15px);
+				padding: 0.4rem 0;
 				.hs-cf;
 				.right{
 					width: 8rem;
