@@ -313,9 +313,11 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     }
     if (url_type === 1 || url_type === '1') {
       return `/Portal/HsArticle/index/id/${url}.html`
+      // return url
     }
     if (url_type === 2 || url_type === '2') {
-      return `/Portal/HsArticle/culture/id/${url}.html`
+      // return `/Portal/HsArticle/culture/id/${url}.html`
+      return url
     }
     if (url_type === 3 || url_type === '3') {
       return `/HsProject/index/pid/${url}.html`
