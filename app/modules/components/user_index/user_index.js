@@ -33,8 +33,13 @@ $(document).on('pageInit','.center', function(e, id, page){
   }
 
     init.sensorsFun.bottomNav();
-
-
+    var ApiBaseUrl = init.getApiBaseUrl();
+    var H5BaseUrl = ''
+    if(ApiBaseUrl.indexOf('api.')>0){
+      H5BaseUrl=`https://h5.ontheroadstore.com/`
+    }else{
+      H5BaseUrl=`https://h5test.ontheroadstore.com/`
+    }
 
   // 高度补丁
   $('.hs-main').css('top','0');
@@ -712,6 +717,9 @@ $(document).on('pageInit','.center', function(e, id, page){
           $('.binding').css('display', 'none');
         }
       }
+    })
+    $('.jumpCouponList').click(function(){
+      location.href= `${H5BaseUrl}couponList`;
     })
     $('.close').click(function(){
       $('.login').animate({'top': '100%'}, 400);
