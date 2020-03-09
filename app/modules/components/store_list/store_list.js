@@ -90,7 +90,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     data.forEach(v=>{
       str+=`<div class="swiper-slide">
         <a class="external" href='${genrateUrl(v.url,v.url_type)}'>
-          <img src="${v.image}" />
+          <img src="${v.image}?x-oss-process=image/resize,m_lfit,w_880/quality,q_80" />
         </a>
       </div>`
     })
@@ -165,16 +165,16 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
       </div>
     `
     $('.new_goods_list').find('.swiper-wrapper').html(str)
-    var mySwiper = new Swiper('.swiper-container-new',{ 
-      slidesPerView: 2.3,
-      // lazyLoading: true,
-      // loop: true,
-      autoplay: 3000,
-      speed:300,
-      watchSlidesVisibility : true,
-      autoplayDisableOnInteraction : false,
-      autoplayStopOnLast: true
-    })
+    // var mySwiper = new Swiper('.swiper-container-new',{ 
+    //   slidesPerView: 2.3,
+    //   // lazyLoading: true,
+    //   // loop: true,
+    //   autoplay: 3000,
+    //   speed:300,
+    //   watchSlidesVisibility : true,
+    //   autoplayDisableOnInteraction : false,
+    //   autoplayStopOnLast: true
+    // })
 
     $('.new_goods_list').on('click','.jump_new_more',function(){
       location.href= `${H5BaseUrl}home/new`;
@@ -218,7 +218,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
         if(t.type==1){
           list+=`<div  class="segment_good">
             <a href="/Portal/HsArticle/index/id/${t.id}.html"  class="external">
-              <img class="cover" src="${t.cover}" />
+              <img class="cover" src="${t.cover}@320w_1l" />
             </a>
           <div class="txt">
             <div class="txt_top">
