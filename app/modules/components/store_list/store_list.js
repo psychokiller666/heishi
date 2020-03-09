@@ -165,16 +165,16 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
       </div>
     `
     $('.new_goods_list').find('.swiper-wrapper').html(str)
-    // var mySwiper = new Swiper('.swiper-container-new',{ 
-    //   slidesPerView: 2.3,
-    //   // lazyLoading: true,
-    //   // loop: true,
-    //   autoplay: 3000,
-    //   speed:300,
-    //   watchSlidesVisibility : true,
-    //   autoplayDisableOnInteraction : false,
-    //   autoplayStopOnLast: true
-    // })
+    var mySwiper = new Swiper('.swiper-container-new',{ 
+      slidesPerView: 2.3,
+      // lazyLoading: true,
+      // loop: true,
+      // autoplay: 3000,
+      // speed:300,
+      watchSlidesVisibility : true,
+      autoplayDisableOnInteraction : false,
+      autoplayStopOnLast: true
+    })
 
     $('.new_goods_list').on('click','.jump_new_more',function(){
       location.href= `${H5BaseUrl}home/new`;
