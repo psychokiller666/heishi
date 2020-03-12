@@ -585,7 +585,7 @@ $(document).on('pageInit','.lottery', function(e, id1, page) {
                 for(var i=0;i<goods.length;i++){
                     html += '<li>'
                     html += '<a external href="/Portal/HsArticle/index/id/'+goods[i].id+'.html">'
-                    html += '<div class="img" style="background-image: url('+ goods[i].cover +'@640w_1l);"></div>'
+                    html += '<div class="img" style="background-image: url('+ goods[i].cover_fang +'@640w_1l);"></div>'
                     html += '<div class="title">'+ goods[i].title +'</div>'
                     html += '</a>'
                     html += '</li>'

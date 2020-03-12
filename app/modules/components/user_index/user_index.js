@@ -721,6 +721,12 @@ $(document).on('pageInit','.center', function(e, id, page){
     $('.jumpCouponList').click(function(){
       location.href= `${H5BaseUrl}couponList`;
     })
+    $('.jumpFollow').click(function(){
+      location.href= `${H5BaseUrl}user/follow`;
+    })
+    $('.jumpTrack').click(function(){
+      location.href= `${H5BaseUrl}user/track`;
+    })
     $('.close').click(function(){
       $('.login').animate({'top': '100%'}, 400);
     })

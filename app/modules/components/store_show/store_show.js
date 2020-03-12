@@ -1253,7 +1253,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     //优惠券部分
     var ApiBaseUrl = init.getApiBaseUrl();
     var PHPSESSID = init.getCookie('PHPSESSID');
-
+    var VueBaseUrl = init.getVueBaseUrl()
 
     getGoodsCoupon()
     function getGoodsCoupon(){
@@ -1508,7 +1508,8 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
             // 5=去商品列表页; 6=去分类页; 7=去店铺首页
             switch(issueBy){
                 case '5' :
-                    location.href='/Portal/Coupon/couponGoods?couponid='+coupon_id;
+                    // location.href='/Portal/Coupon/couponGoods?couponid='+coupon_id;
+                    location.href= VueBaseUrl+"couponGood/"+coupon_id
                     break;
                 case '6' :
                     location.href='/Portal/HsCategories/index.html';
