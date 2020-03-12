@@ -410,22 +410,22 @@ $('.tabs').on('click','span',function(){
                         $('.search_correlation').hide();
 												var items = transData(data.data.items);
 												//如果是0  添加分类按钮
-												if(start==0&&data.data.catelist.length){
-													let cateList = data.data.catelist[0]
-													let jumpCateHtml = `
-													<a class="articles external" href="/HsCategories/category_index/id/${cateList.category_id}.html">
-														<div class="jump_cate_box">
-															<img class="cate_left" src="${cateList.category_icon}">
-															<div class="cate_right">
-																<p class="name">${cateList.category_name}</p>
-																<p class="desc">${cateList.category_desc}</p>
-															</div>
-															<div class="btn">去分类逛逛</div>
-														</div>
-													</a>
-													`
-													$('.search_goods_list ul').append(jumpCateHtml);
-												}
+												// if(start==0&&data.data.catelist.length){
+												// 	let cateList = data.data.catelist[0]
+												// 	let jumpCateHtml = `
+												// 	<a class="articles external" href="/HsCategories/category_index/id/${cateList.category_id}.html">
+												// 		<div class="jump_cate_box">
+												// 			<img class="cate_left" src="${cateList.category_icon}">
+												// 			<div class="cate_right">
+												// 				<p class="name">${cateList.category_name}</p>
+												// 				<p class="desc">${cateList.category_desc}</p>
+												// 			</div>
+												// 			<div class="btn">去分类逛逛</div>
+												// 		</div>
+												// 	</a>
+												// 	`
+												// 	$('.search_goods_list ul').append(jumpCateHtml);
+												// }
                         output(items);
 					}
 

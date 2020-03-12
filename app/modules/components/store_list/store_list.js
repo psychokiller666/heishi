@@ -52,6 +52,8 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
   //   loop: true,
   //   loopAdditionalSlides: 1
   // })
+  var segmentId = ''
+  var segmentIndex = 0
   initNewHomePage()
   function initNewHomePage(){
     $.ajax({
@@ -74,6 +76,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
         initNewTopicList(data.data.HomepageAppFeatureList.model_data.fang_list,1)
         initNewTopicList(data.data.HomepageAppFeatureList.model_data.chang_list,2)
         initRecomendAndOnly(data.data.HomepageAppSegmentGoodsList.model_data)
+        segmentId = data.data.HomepageAppSegmentGoodsList.model_data[0].id
       },
       error: function(xhr, type){
         console.log(xhr);
@@ -212,7 +215,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     let tab = ``
     $('.segment_list').html('')
     data.forEach((v,i)=>{
-      tab+=`<span class="${i==0?'active':''}">${v.title}</span>`
+      tab+=`<span data-sid="${v.id}" class="${i==0?'active':''}">${v.title}</span>`
       let list = `<div class="list_${i}" style="display:${i===0?'block':'none'}"><div class="list">`
       v.goodslist.forEach(t=>{
         if(t.type==1){
@@ -268,8 +271,15 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
   //专栏点击事件
   $('.tab_recommend_only').on('click','span',function(){
     let idx = $(this).index()
+    segmentId = $(this).attr('data-sid')
+    segmentIndex = idx
+    pageSegment = 1
+    $('.end_line').hide()
+    loading = false
     $(this).addClass('active').siblings().removeClass('active')
     $('.segment_list').find(`.list_${idx}`).show().siblings().hide()
+    $('.segment_list').find(`.list_${idx}`).html('')
+    addSegment();
   })
   //推荐卖家切换
   $('.seller_list').on('click','.seller_item',function(){
@@ -396,6 +406,85 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
   //     }
   //   })
   // }
+
+  var add_goods_status = false
+  var loading = false
+  var pageSegment = 1
+  page.on('infinite', function() {
+    // 如果正在加载，则退出
+    if (add_goods_status) {
+      $.detachInfiniteScroll($('.infinite-scroll'));
+    }
+    if (loading) {
+      return false;
+    } else {
+      // 设置flag
+      loading = true;
+      pageSegment = pageSegment + 1;
+      addSegment();
+      $.refreshScroller();
+    }
+  });
+
+  function addSegment(){
+    $.ajax({
+      type: 'GET',
+      url: ApiBaseUrl+'/appv6_6/getAppLanmuGoodsList/'+segmentId,
+      data: { 
+         page: pageSegment
+      },
+      success: function(data){
+        loading = false
+        if(data.data.length<20){
+          loading = true
+          $('.end_line').show()
+        }
+        let list = `<div class="list">`
+        data.data.forEach(t=>{
+          if(t.type==1){
+            list+=`<div  class="segment_good">
+              <a href="/Portal/HsArticle/index/id/${t.id}.html"  class="external">
+                <img class="cover" src="${t.cover}@320w_1l" />
+              </a>
+            <div class="txt">
+              <div class="txt_top">
+              <a href="/Portal/HsArticle/index/id/${t.id}.html"  class="external">
+                <p class="tit">${t.title} </p>
+              </a>
+                <p class="sub_tit">${t.post_subtitle}</p>
+              </div>
+              <p class="txt_end" style="padding-top:.1rem;">
+                <span>¥ ${t.price[0]}</span>`
+                if(t.tag_list){
+                  if(t.tag_list.id==1){
+                    list+=`<span class="tag" data-jump="1" data-id="${t.tag_list.id}"><span class="time" data-time="${t.tag_list.count_down}">${countDown(t.tag_list.count_down)}</span>${t.tag_list.title}</span>`
+                  }else{
+                    list+=`<span class="tag" data-jump="2" data-id="${t.tag_list.id}" style="margin-top: -.1rem;"><img class="tag_icon" src="${t.tag_list.icon}" />${t.tag_list.title}</span>`
+                  }
+                }
+              list+= `</p>
+            </div>
+            
+          </div>`
+          }
+          if(t.type==2){
+            list+=`
+              <a class="ad external" href='${genrateUrl(t.url,t.url_type)}'>
+                <img  src="${t.image}"/>
+              </a>
+            `
+          }
+  
+        })
+        list+=`</div>`
+        $(`.list_${segmentIndex}`).append(list)
+        
+      },
+      error: function(xhr, type){
+        console.log(xhr);
+      }
+    })
+  }
   $('.attentionUser').click(function(){
     var that = this;
     var isAtten = $(this).data('isatten');

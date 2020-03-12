@@ -262,6 +262,14 @@ function getApiBaseUrl(){
     return ApiBaseUrl;
 };
 
+common.prototype.getVueBaseUrl = getVueBaseUrl;
+function getVueBaseUrl(){
+    var HostName = location.hostname;
+    var ApiBaseUrl = 'https://h5est.ontheroadstore.com/';
+    if (HostName === "hs.ontheroadstore.com") {
+        ApiBaseUrl = 'https://h5.ontheroadstore.com/';
+    }
+}
 //判断是否登录，如果参数toLogin==true，未登录则跳往登录页 注：需要在html中添加隐藏的input.current_user_id
 common.prototype.ifLogin = function(toLogin){
     var $current_user_id = $('.current_user_id');
@@ -521,7 +529,7 @@ function setSensorsHeader(){
         var obj = sensors.getPresetProperties();
         obj.platformType = 'H5';
         xhr.setRequestHeader('SCProperties',encodeURI(JSON.stringify(obj)));
-        xhr.setRequestHeader('version','4.5'); 
+        xhr.setRequestHeader('version','4.7.4'); 
     }
 };
 
