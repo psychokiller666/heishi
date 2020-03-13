@@ -265,10 +265,11 @@ function getApiBaseUrl(){
 common.prototype.getVueBaseUrl = getVueBaseUrl;
 function getVueBaseUrl(){
     var HostName = location.hostname;
-    var ApiBaseUrl = 'https://h5est.ontheroadstore.com/';
+    var ApiBaseUrl = 'https://h5test.ontheroadstore.com/';
     if (HostName === "hs.ontheroadstore.com") {
         ApiBaseUrl = 'https://h5.ontheroadstore.com/';
     }
+    return ApiBaseUrl;
 }
 //判断是否登录，如果参数toLogin==true，未登录则跳往登录页 注：需要在html中添加隐藏的input.current_user_id
 common.prototype.ifLogin = function(toLogin){
