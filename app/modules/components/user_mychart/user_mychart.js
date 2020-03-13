@@ -16,7 +16,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
   init.checkfollow();
 
   var ApiBaseUrl = init.getApiBaseUrl();
-
+  var VueBaseUrl = init.getVueBaseUrl()
   var PHPSESSID = init.getCookie('PHPSESSID');
   var ajaxHeaders = {
       'phpsessionid': PHPSESSID
@@ -26,6 +26,11 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
   	document.body.scrollTop = 0;
 	  document.documentElement.scrollTop = 0;
   });
+  // 相似商品跳转
+  $('.jumpAlike').click(function(){
+    let id = $(this).parents().find('.item').attr('data-postid')
+    location.href= VueBaseUrl+"alikeGood/"+id
+  })
   $(page).find('.addr_sel_wrap').on("click",function(){
         // openaddress();
         goToAddressShow();
