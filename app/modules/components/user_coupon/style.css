@@ -1,0 +1,587 @@
+.user_coupon .hs-page .classify_wrap {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  padding-top: 1.17333rem;
+  padding-bottom: 1.92rem;
+  background: #fff;
+  box-sizing: border-box;
+}
+.user_coupon .hs-page .classify_wrap .classify_tab_wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  background: #fff;
+  font-size: 0;
+  width: 100%;
+  height: 1.17333rem;
+  padding: 0;
+  overflow-y: hidden;
+  overflow-x: auto;
+  white-space: nowrap;
+  border-bottom: 1px solid #E8E8E8;
+  box-sizing: border-box;
+  visibility: hidden;
+  display: flex;
+}
+.user_coupon .hs-page .classify_wrap .classify_tab_wrap .classify_tab {
+  font-size: 0.34666rem;
+  line-height: 1.17333rem;
+  color: #000;
+  display: inline-block;
+  margin: 0 0.4rem;
+  position: relative;
+  flex: 1;
+  text-align: center;
+}
+.user_coupon .hs-page .classify_wrap .classify_tab_wrap .classify_tab_act {
+  font-weight: bold;
+  color: #AE2121;
+}
+.user_coupon .hs-page .classify_wrap .classify_tab_wrap .classify_tab_act:after {
+  content: '';
+  display: block;
+  width: 0.53333rem;
+  height: 0.10666rem;
+  position: absolute;
+  left: 50%;
+  bottom: 0.1rem;
+  transform: translateX(-50%);
+  background: #AE2121;
+  border-radius: 0.05333rem;
+}
+.user_coupon .hs-page .classify_wrap .classify_tab_wrap .classify_more {
+  display: block;
+  position: absolute;
+  right: 0.4rem;
+  top: 0.29333rem;
+  width: 0.58666rem;
+  height: 0.58666rem;
+}
+.user_coupon .hs-page .classify_wrap .classify_tab_wrap .classify_more .classify_more_ico {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.user_coupon .hs-page .classify_wrap .classify_tab_wrap::-webkit-scrollbar {
+  display: none;
+}
+.user_coupon .hs-page .classify_wrap .exchange_coupon {
+  background: #f5f5f5;
+  height: 1.8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.43rem;
+}
+.user_coupon .hs-page .classify_wrap .exchange_coupon input {
+  height: 0.4rem;
+  border: none;
+  width: 6.8rem;
+  padding: 0.3rem 0.4rem;
+}
+.user_coupon .hs-page .classify_wrap .exchange_coupon span {
+  display: block;
+  width: 1.6rem;
+  height: 1rem;
+  line-height: 1rem;
+  text-align: center;
+  background: #AE2121;
+  color: #fff;
+  border-radius: 0 0.08rem 0.08rem 0;
+}
+.user_coupon .hs-page .classify_wrap .classify_page_wrap {
+  background: #F5F5F5;
+  height: 100%;
+  box-sizing: border-box;
+}
+.user_coupon .hs-page .classify_wrap .classify_page_wrap .classify_page {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: none;
+  position: relative;
+}
+.user_coupon .hs-page .classify_wrap .classify_page_wrap .classify_page_act {
+  display: block;
+}
+.user_coupon .hs-page .classify_wrap .classify_page_wrap .coupon_wrap {
+  /*
+          height: 7.46667rem;
+          overflow-x: hidden;
+          overflow-y: auto;
+          width: 100%;
+          box-sizing: border-box;
+          padding: 0 0.4rem;
+          -webkit-overflow-scrolling:touch;
+          */
+  padding: 0.4rem;
+}
+.user_coupon .hs-page .classify_wrap .classify_page_wrap .coupon_li {
+  position: relative;
+  margin-bottom: 0.4rem;
+  list-style: none;
+  background: #fff;
+  border-radius: 0.16rem;
+}
+.user_coupon .hs-page .classify_wrap .classify_page_wrap .coupon_li .coupon_top {
+  box-sizing: border-box;
+  padding: 0.26667rem 0;
+  border-radius: 0.16rem;
+  height: 2.45333rem;
+  width: 100%;
+  box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.04);
+  position: relative;
+  z-index: 10;
+}
+.user_coupon .hs-page .classify_wrap .classify_page_wrap .coupon_li .left {
+  float: left;
+  width: 2.96rem;
+  height: 100%;
+  text-align: center;
+  border-right: 0.02667rem dashed #979797;
+}
+.user_coupon .hs-page .classify_wrap .classify_page_wrap .coupon_li .left .coupon_price {
+  height: 0.69333rem;
+  font-size: 0.69333rem;
+  font-family: 'din';
+  color: #AE2121;
+  line-height: 1;
+  padding: 0.34667rem 0 0.29333rem;
+}
+.user_coupon .hs-page .classify_wrap .classify_page_wrap .coupon_li .left .coupon_desc {
+  font-size: 0.26667rem;
+  font-family: PingFangSC-Light;
+  color: #202123;
+  line-height: 1;
+}
+.user_coupon .hs-page .classify_wrap .classify_page_wrap .coupon_li .right_top {
+  float: left;
+}
+.user_coupon .hs-page .classify_wrap .classify_page_wrap .coupon_li .right_top .center {
+  float: left;
+  width: 3.57333rem;
+  box-sizing: border-box;
+  padding: 0.13333rem 0 0 0.50667rem;
+}
+.user_coupon .hs-page .classify_wrap .classify_page_wrap .coupon_li .right_top .center .title {
+  font-size: 0.37333rem;
+  font-family: PingFangSC-Semibold;
+  color: #202123;
+  line-height: 1;
+  height: 0.88rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.user_coupon .hs-page .classify_wrap .classify_page_wrap .coupon_li .right_top .center .time {
+  height: 0.26667rem;
+  font-size: 0.26667rem;
+  font-family: PingFangSC-Regular;
+  color: #8E8E8E;
+  line-height: 1;
+  white-space: nowrap;
+}
+.user_coupon .hs-page .classify_wrap .classify_page_wrap .coupon_li .right_top .right {
+  float: left;
+}
+.user_coupon .hs-page .classify_wrap .classify_page_wrap .coupon_li .right_top .right .btn {
+  width: 1.81333rem;
+  height: 0.56rem;
+  background: #AE2121;
+  border-radius: 0.29333rem;
+  margin: 0.69333rem 0 0 0.4rem;
+  font-size: 0.34667rem;
+  font-family: PingFangSC-Medium;
+  color: #fff;
+  line-height: 0.56rem;
+  text-align: center;
+}
+.user_coupon .hs-page .classify_wrap .classify_page_wrap .coupon_li .right_top .right .btn[get_status='1'] {
+  background: #D8D8D8;
+}
+.user_coupon .hs-page .classify_wrap .classify_page_wrap .coupon_li .right_top .right .btn[get_status='0']:after {
+  content: '立即领取';
+}
+.user_coupon .hs-page .classify_wrap .classify_page_wrap .coupon_li .right_top .right .btn[get_status='1']:after {
+  content: '已领取';
+}
+.user_coupon .hs-page .classify_wrap .classify_page_wrap .coupon_li .right_top .right .btn[get_status='2']:after {
+  content: '查看商品';
+}
+.user_coupon .hs-page .classify_wrap .classify_page_wrap .coupon_li .right_top .right .btn a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: inherit;
+}
+.user_coupon .hs-page .classify_wrap .classify_page_wrap .coupon_li .right_btm {
+  float: left;
+  position: relative;
+  width: 5.28rem;
+}
+.user_coupon .hs-page .classify_wrap .classify_page_wrap .coupon_li .right_btm .open_wrap {
+  position: absolute;
+  left: 0.50667rem;
+  top: 0.16rem;
+  width: 5.28rem;
+  height: 0.69333rem;
+  border-top: 0.02667rem dashed #979797;
+  line-height: 0.69333rem;
+  font-size: 0;
+  white-space: nowrap;
+}
+.user_coupon .hs-page .classify_wrap .classify_page_wrap .coupon_li .right_btm .open_wrap .title {
+  font-size: 0.26667rem;
+  display: inline-block;
+  vertical-align: middle;
+  width: 4.90667rem;
+  box-sizing: border-box;
+  padding-right: 0.4rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #8E8E8E;
+}
+.user_coupon .hs-page .classify_wrap .classify_page_wrap .coupon_li .right_btm .open_wrap .open_ico {
+  width: 0.37333rem;
+  height: 0.37333rem;
+  vertical-align: middle;
+}
+.user_coupon .hs-page .classify_wrap .classify_page_wrap .coupon_li .coupon_btm {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.10667rem 0.4rem;
+  background: #fff;
+  border-radius: 0.16rem;
+  line-height: 0.48rem;
+  color: #8E8E8E;
+  font-size: 0.26667rem;
+  display: none;
+}
+.user_coupon .hs-page .classify_wrap .classify_page_wrap .coupon_li[status='0'] .coupon_price {
+  color: #8E8E8E;
+}
+.user_coupon .hs-page .classify_wrap .classify_page_wrap .coupon_li[status='0'] .btn {
+  display: none;
+}
+.user_coupon .hs-page .classify_wrap .classify_page_wrap .coupon_li[status='0'] .coupon_desc {
+  color: #8E8E8E;
+}
+.user_coupon .hs-page .classify_wrap .classify_page_wrap .coupon_li[open='1'] .open_ico {
+  transform: rotateZ(180deg);
+}
+.user_coupon .hs-page .classify_wrap .classify_page_wrap .coupon_li[open='1'] .coupon_btm {
+  display: block;
+}
+.user_coupon .hs-page .classify_wrap .classify_page_wrap .no_coupon_tip {
+  display: none;
+  position: absolute;
+  top: 40%;
+  font-size: 0.34667rem;
+  line-height: 1;
+  text-align: center;
+  width: 100%;
+}
+.user_coupon .hs-page .classify_wrap .coupon_go_get {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1.92rem;
+  background: #fff;
+  box-sizing: border-box;
+  padding: 0.32rem 0.48rem 0.53333rem;
+}
+.user_coupon .hs-page .classify_wrap .coupon_go_get .btn {
+  width: 100%;
+  height: 100%;
+  background: #AE2121;
+  border-radius: 0.16rem;
+}
+.user_coupon .hs-page .classify_wrap .coupon_go_get .btn a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  font-size: 0.42667rem;
+  font-family: PingFangSC-Semibold;
+  text-align: center;
+  line-height: 1.06667rem;
+}
+.back_coupon_popup_mask {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 99999;
+  background: rgba(0, 0, 0, 0.3);
+}
+.back_coupon_popup_mask .red_packet_mask {
+  width: 9.63rem;
+  height: 8rem;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 999999;
+  margin: auto;
+}
+.back_coupon_popup_mask .red_packet_mask .red_popup {
+  width: inherit;
+  height: inherit;
+}
+.back_coupon_popup_mask .red_packet_mask .red_top {
+  width: 9.63rem;
+  height: 8rem;
+  background: url("https://img8.ontheroadstore.com/H5_Icon/coupon/red_packet_bg.png") no-repeat;
+  background-size: cover;
+}
+.back_coupon_popup_mask .red_packet_mask .red_bot {
+  width: 9.63rem;
+  height: 3.65rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: url("https://img8.ontheroadstore.com/H5_Icon/coupon/red_packet_bot.png") no-repeat;
+  background-size: cover;
+  z-index: 999999;
+}
+.back_coupon_popup_mask .red_packet_mask .jump_conpon_list {
+  width: 8.4rem;
+  height: 1.13rem;
+  background: url("https://img8.ontheroadstore.com/H5_Icon/coupon/red_packet_btn.png") no-repeat;
+  background-size: cover;
+  margin: 0 auto;
+  margin-top: 2.3rem;
+}
+.back_coupon_popup_mask .red_packet_mask .coupon_multi {
+  width: 6.64rem;
+  height: 0.64rem;
+  position: absolute;
+  left: 1.5rem;
+  bottom: 6.44rem;
+  background: url("https://img8.ontheroadstore.com/H5_Icon/coupon/red_packet_more.png") no-repeat;
+  background-size: cover;
+}
+.back_coupon_popup_mask .red_packet_mask .red_tip {
+  color: #ffffff;
+  font-size: 0.5rem;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  width: inherit;
+  line-height: 1rem;
+}
+.back_coupon_popup_mask .red_packet_mask .red_coupon {
+  width: 9.63rem;
+  height: 5.44rem;
+  position: absolute;
+  left: 0;
+  bottom: 1rem;
+  overflow: hidden;
+}
+.back_coupon_popup_mask .red_packet_mask .red_coupon img {
+  width: inherit;
+  height: inherit;
+  position: relative;
+}
+.back_coupon_popup_mask .red_packet_mask .red_coupon::after {
+  content: '';
+  display: block;
+  width: 1.72rem;
+  height: 5.5rem;
+  position: absolute;
+  background: url(http://img8.ontheroadstore.com/H5_Icon/coupon/coupon_shadow_3.png) no-repeat center center;
+  background-size: 100% 100%;
+  left: -0.5rem;
+  top: -0.04rem;
+  z-index: 1;
+}
+.back_coupon_popup_mask .red_packet_mask .red_coupon::before {
+  content: '';
+  display: block;
+  width: 1.72rem;
+  height: 5.5rem;
+  position: absolute;
+  background: url(http://img8.ontheroadstore.com/H5_Icon/coupon/coupon_shadow_3.png) no-repeat center center;
+  background-size: 100% 100%;
+  transform: rotate(180deg);
+  top: -0.04rem;
+  right: -0.5rem;
+  z-index: 1;
+}
+.back_coupon_popup_mask .back_coupon_popup_wrap {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 8.50667rem;
+  height: 6.64rem;
+  border-radius: 0.32rem;
+  overflow: hidden;
+}
+.back_coupon_popup_mask .back_coupon_popup_wrap[multi='0'] {
+  background: url("https://img8.ontheroadstore.com/static/image/coupon_icon/bg_single_coupon_2x.png") no-repeat;
+  background-size: cover;
+}
+.back_coupon_popup_mask .back_coupon_popup_wrap[multi='0'] .coupon_wrap {
+  top: 2.24rem;
+  left: 0.58667rem;
+  width: 7.33333rem;
+  height: 2.05333rem;
+  background: url("https://img8.ontheroadstore.com/static/image/coupon_icon/single_coupon_2x.png");
+  background-size: cover;
+}
+.back_coupon_popup_mask .back_coupon_popup_wrap[multi='1'] {
+  background: url("https://img8.ontheroadstore.com/static/image/coupon_icon/bg_multi_coupon_2x.png") no-repeat;
+  background-size: cover;
+}
+.back_coupon_popup_mask .back_coupon_popup_wrap[multi='1'] .coupon_wrap {
+  top: 1.89333rem;
+  left: 0.58667rem;
+  width: 7.33333rem;
+  height: 2.42667rem;
+  background: url("https://img8.ontheroadstore.com/static/image/coupon_icon/multi_coupon_2x.png");
+  background-size: cover;
+  padding-top: 0.64rem;
+}
+.back_coupon_popup_mask .back_coupon_popup_wrap[multi='1'] .tip {
+  display: block;
+}
+.back_coupon_popup_mask .back_coupon_popup_wrap .tip {
+  display: none;
+  position: absolute;
+  top: 1.25333rem;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  line-height: 1;
+  font-size: 0.37333rem;
+  color: #fff;
+}
+.back_coupon_popup_mask .back_coupon_popup_wrap .coupon_wrap {
+  position: absolute;
+  box-sizing: border-box;
+  padding: 0.26667rem 0;
+}
+.back_coupon_popup_mask .back_coupon_popup_wrap .coupon_wrap .left {
+  float: left;
+  width: 2.96rem;
+  height: 100%;
+  text-align: center;
+  border-right: 0.02667rem dashed #979797;
+}
+.back_coupon_popup_mask .back_coupon_popup_wrap .coupon_wrap .left .coupon_price {
+  height: 0.69333rem;
+  font-size: 0.69333rem;
+  font-family: 'din';
+  color: #AE2121;
+  line-height: 1;
+  padding: 0.13333rem 0 0.29333rem;
+}
+.back_coupon_popup_mask .back_coupon_popup_wrap .coupon_wrap .left .coupon_desc {
+  font-size: 0.26667rem;
+  font-family: PingFangSC-Light;
+  color: #202123;
+  line-height: 1;
+}
+.back_coupon_popup_mask .back_coupon_popup_wrap .coupon_wrap .center {
+  float: left;
+  width: 3.92rem;
+  box-sizing: border-box;
+  padding: 0.13333rem 0 0 0.50667rem;
+}
+.back_coupon_popup_mask .back_coupon_popup_wrap .coupon_wrap .center .title {
+  font-size: 0.37333rem;
+  font-family: PingFangSC-Semibold;
+  color: #202123;
+  line-height: 1;
+  height: 0.98667rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.back_coupon_popup_mask .back_coupon_popup_wrap .coupon_wrap .center .time {
+  font-size: 0.26667rem;
+  font-family: PingFangSC-Regular;
+  color: #8E8E8E;
+  line-height: 1;
+  white-space: nowrap;
+}
+.back_coupon_popup_mask .back_coupon_popup_wrap .bottom {
+  position: absolute;
+  top: 3.2rem;
+  left: 0;
+  width: 8.50667rem;
+}
+.back_coupon_popup_mask .back_coupon_popup_wrap .bottom .top_img {
+  width: 100%;
+  height: 1.12rem;
+  background: url("https://img8.ontheroadstore.com/static/image/coupon_icon/front_coupon_2x.png") no-repeat;
+  background-size: cover;
+}
+.back_coupon_popup_mask .back_coupon_popup_wrap .bottom .btn_wrap {
+  width: 100%;
+  height: 2.32rem;
+  background: #AE2121;
+  padding: 0.72rem 0.58667rem 0.53333rem;
+  box-sizing: border-box;
+}
+.back_coupon_popup_mask .back_coupon_popup_wrap .bottom .btn_wrap .btn {
+  width: 100%;
+  height: 100%;
+  background: #E4A821;
+  color: #FEFEFE;
+  text-align: center;
+  font-size: 0.37333rem;
+  line-height: 1.06667rem;
+  font-family: PingFangSC-Semibold;
+  border-radius: 0.16rem;
+}
+.back_coupon_popup_mask .back_coupon_popup_wrap .bottom .btn_wrap .btn a {
+  display: block;
+  color: inherit;
+  width: 100%;
+  height: 100%;
+}
+.use_coupon .hs-main {
+  top: 0;
+  bottom: 0;
+}
+.use_coupon .hs-main .hs-page .wrap {
+  position: relative;
+  height: 100%;
+  background: url("https://img8.ontheroadstore.com/static/image/coupon_icon/bg_to_app_2x.png") no-repeat;
+  background-size: cover;
+}
+.use_coupon .hs-main .hs-page .wrap .title {
+  position: absolute;
+  top: 3.33333rem;
+  text-align: center;
+  width: 100% ;
+  font-size: 0.45333rem;
+  font-family: PingFangSC-Semibold;
+  line-height: 1;
+}
+.use_coupon .hs-main .hs-page .wrap .go_to_app {
+  position: absolute;
+  top: 4.50667rem;
+  width: 100%;
+  text-align: center;
+}
+.use_coupon .hs-main .hs-page .wrap .go_to_app a {
+  display: inline-block;
+  width: 4.05333rem;
+  height: 1.04rem;
+  line-height: 1.04rem;
+  color: #000;
+  font-size: 0.4rem;
+  text-align: center;
+  border: 0.08rem solid #000;
+  border-radius: 0.10667rem;
+}

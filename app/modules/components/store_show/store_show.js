@@ -1276,11 +1276,15 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
           var $jsCouponGet= $('.js_coupon_get');
           $jsCouponGet.show();
         }
+        $('.back_coupon_ul').hide()
+        $('.get_coupon_ul').show()
+        $('.coupon_tabs').find('span').hide()
         if(couponGet && couponGet.length>0){
             showCouponGet(couponGet);
         }
         if(couponBack && couponBack.length>0){
             showCouponBack(couponBack);
+            $('.coupon_tabs').find('span').show()
         }
     }
     //显示领券按钮及弹窗
