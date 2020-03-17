@@ -8,6 +8,7 @@ $(document).on('pageInit','.jump', function(e, id, page){
   }
   var init = new common(page);
   var status_pay = $('.status_pay').val();
+  var VueBaseUrl = init.getVueBaseUrl()
   //支付成功
   // if($('.success').length && status_pay == 0){
   if($('.success').length){
@@ -35,9 +36,9 @@ $(document).on('pageInit','.jump', function(e, id, page){
     //商家返券
     var PHPSESSID = init.getCookie('PHPSESSID');
     var ApiBaseUrl = init.getApiBaseUrl();
-
+    // $('.back_coupon_popup_mask').show()
     var orderId = $('[data-ordernumber]').attr('data-ordernumber');
-    // orderId = 'VR20180817154816FZ5CNN'
+    // orderId = 'VR20200313181525ZUIMAI'
 
     if(orderId){
       getOrderReturnCoupon(orderId);
@@ -73,30 +74,71 @@ $(document).on('pageInit','.jump', function(e, id, page){
 
         var html = '';
 
-        html += '<div class="back_coupon_popup_wrap" multi="'+ (data.length>1 ? 1 : 0) +'">'
-        html += '<div class="tip">'+ (data.length>1 ? data.length+'张优惠券' : '') +'</div>'
-        html += '<div class="coupon_wrap">'
-        html += '<div class="left">'
-        html += '<div class="coupon_price">¥<b>'+ data[0].coupon_price +'</b></div>'
-        html += '<div class="coupon_desc">'+ (data[0].min_price > 0 ? '满'+data[0].min_price+'可用':'消费任意金额可用') +'</div>'
-        html += '</div>'
-        html += '<div class="center">'
-        html += '<div class="title">'+ data[0].title +'</div>'
+        // html += '<div class="back_coupon_popup_wrap" multi="'+ (data.length>1 ? 1 : 0) +'">'
+        // html += '<div class="tip">'+ (data.length>1 ? data.length+'张优惠券' : '') +'</div>'
+        // html += '<div class="coupon_wrap">'
+        // html += '<div class="left">'
+        // html += '<div class="coupon_price">¥<b>'+ data[0].coupon_price +'</b></div>'
+        // html += '<div class="coupon_desc">'+ (data[0].min_price > 0 ? '满'+data[0].min_price+'可用':'消费任意金额可用') +'</div>'
+        // html += '</div>'
+        // html += '<div class="center">'
+        // html += '<div class="title">'+ data[0].title +'</div>'
 
-        if (data[0].apply_time_type==2){
-            html += '<div class="time">'+ init.couponFmtTime(init.getTimestamp()) + ' - ' + init.couponFmtTime(init.getTimestamp(data[0].apply_time_length)) +'</div>'
-        }else{
-            html += '<div class="time">'+ init.couponFmtTime(data[0].apply_time_start) + ' - ' + init.couponFmtTime(data[0].apply_time_end) +'</div>'
-        }
-        html += '</div>'
-        html += '</div>'
-        html += '<div class="bottom">'
-        html += '<div class="top_img"></div>'
-        html += '<div class="btn_wrap">'
-        html += '<div class="btn"><a external href="/Portal/Coupon/userCoupon.html">查看优惠券</a></div>'
-        html += '</div>'
-        html += '</div>'
-        html += '</div>'
+        // if (data[0].apply_time_type==2){
+        //     html += '<div class="time">'+ init.couponFmtTime(init.getTimestamp()) + ' - ' + init.couponFmtTime(init.getTimestamp(data[0].apply_time_length)) +'</div>'
+        // }else{
+        //     html += '<div class="time">'+ init.couponFmtTime(data[0].apply_time_start) + ' - ' + init.couponFmtTime(data[0].apply_time_end) +'</div>'
+        // }
+        // html += '</div>'
+        // html += '</div>'
+        // html += '<div class="bottom">'
+        // html += '<div class="top_img"></div>'
+        // html += '<div class="btn_wrap">'
+        // html += '<div class="btn"><a external href="/Portal/Coupon/userCoupon.html">查看优惠券</a></div>'
+        // html += '</div>'
+        // html += '</div>'
+        // html += '</div>'
+        html+=`
+          <div class="red_packet_mask">
+            <div class="red_popup">
+              <p class="red_tip">恭喜你获得了${data.length>1 ? data.length+'张优惠券' : ''}</p>
+              <div class="red_top"></div>
+              `
+          if(data.length>1){
+            html+=  `
+            <div class="coupon_multi"></div>
+            <div class="red_coupon">
+              <img src="${data[0].coupon_img}" />
+              <div class="coupon_price"><span>￥</span><b>${data[0].coupon_price}</b></div>
+              `
+          }
+            if(data[0].apply_time_type==2){
+              html+=`
+              <div class="time"> ${init.couponFmtTime(init.getTimestamp())}  -  ${init.couponFmtTime(init.getTimestamp(data[0].apply_time_length)) }</div>
+              `
+            }else{
+             html+= `
+              <div class="time"> ${ init.couponFmtTime(data[0].apply_time_start)}  -  ${init.couponFmtTime(data[0].apply_time_end)}</div>
+              `
+            }
+            html+=`   
+                <div class="c_info tc">
+                ${data[0].title}
+                </div>
+                <div class="c_desc tc">
+                  ${data[0].desc}
+                </div>
+                <div class="c_msg">
+                  ${data[0].coupon_note}
+                </div>
+       
+              </div>
+              <div class="red_bot">
+                <div class="jump_conpon_list"></div>
+              </div>
+            </div>
+          </div>
+        `
 
         $('.back_coupon_popup_mask').html(html)
             .show()
@@ -105,6 +147,10 @@ $(document).on('pageInit','.jump', function(e, id, page){
                     $(this).hide();
                 }
             });
+
+      $('.jump_conpon_list').click(function(){
+        location.href= VueBaseUrl+"couponList"
+      })
 
     }
 

@@ -357,7 +357,144 @@
   right: 0;
   z-index: 99999;
   background: rgba(0,0,0,.3);
-
+  .red_packet_mask{
+    width: 9.63rem;
+    height: 8rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 999999;
+    margin: auto;
+    .red_popup{
+      width: inherit;
+      height: inherit;
+    }
+    .red_top{
+      width: 9.63rem;
+      height: 8rem;
+      background: url("https://img8.ontheroadstore.com/H5_Icon/coupon/red_packet_bg.png") no-repeat;
+      background-size: cover;
+    }
+    .red_bot{
+      width: 9.63rem;
+      height: 3.65rem;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background: url("https://img8.ontheroadstore.com/H5_Icon/coupon/red_packet_bot.png") no-repeat;
+      background-size: cover;
+      z-index: 999999;
+    }
+    .jump_conpon_list{
+      width: 8.4rem;
+      height: 1.13rem;
+      background: url("https://img8.ontheroadstore.com/H5_Icon/coupon/red_packet_btn.png") no-repeat;
+      background-size: cover;
+      margin: 0 auto;
+      margin-top: 2.3rem;
+    }
+    .coupon_multi{
+      width: 6.64rem;
+      height: .64rem;
+      position: absolute;
+      left: 1.5rem;
+      bottom: 6.44rem;
+      background: url("https://img8.ontheroadstore.com/H5_Icon/coupon/red_packet_more.png") no-repeat;
+      background-size: cover;
+    }
+    .red_tip{
+      color: #ffffff;
+      font-size: .5rem;
+      text-align: center;
+      position: absolute;
+      top: 0;
+      width: inherit;
+      line-height: 1rem;
+    }
+    .red_coupon{
+      width: 9.63rem;
+      height: 5.44rem;
+      position: absolute;
+      left: 0;
+      bottom: 1rem;
+      overflow: hidden;
+      img{
+        width: inherit;
+        height: inherit;
+        position: relative;
+      }
+      &::after{
+          content: '';
+          display: block;
+          width: 1.72rem;
+          height: 5.5rem;
+          position: absolute;
+          background: url(http://img8.ontheroadstore.com/H5_Icon/coupon/coupon_shadow_3.png) no-repeat center center;
+          background-size: 100% 100%;
+          left: -.5rem;
+          top: -.04rem;
+          z-index: 1
+      }
+      &::before{
+          content: '';
+          display: block;
+          width: 1.72rem;
+          height: 5.5rem;
+          position: absolute;
+          background: url(http://img8.ontheroadstore.com/H5_Icon/coupon/coupon_shadow_3.png) no-repeat center center;
+          background-size: 100% 100%;
+          transform: rotate(180deg);
+          top: -.04rem;
+          right: -.5rem;
+          z-index: 1;
+      }
+      .time{
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        top: .6rem;
+        color: #151515;
+        .font-dpr(12px);
+      }
+      .coupon_price{
+        position: absolute;
+        top: 1.17rem;
+        width: 100%;
+        text-align: center;
+        vertical-align: bottom;
+        span{
+          .font-dpr(14px)
+        }
+        .font-dpr(42px)
+      }
+      .c_info{
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        top: 2.45rem;
+        .font-dpr(11px);
+      }
+      .c_desc{
+        position: absolute;
+        .font-dpr(11px);
+        width: 100%;
+        text-align: center;
+        top: 3.013rem;
+      }
+      .c_msg{
+        width: 5rem;
+        height: .586rem;
+        line-height: .293rem;
+        .font-dpr(10px);
+        position: absolute;
+        top: 3.973rem;
+        left: 1rem;
+        overflow: hidden;
+      }
+    }
+  }
   .back_coupon_popup_wrap{
     position: absolute;
     left: 50%;
