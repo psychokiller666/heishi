@@ -1385,6 +1385,8 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
             $getCouponMask.hide();
         });
         $getCouponUl.on('click','.btn',function(ev){
+            ev.stopPropagation();
+            ev.preventDefault();
             if(!loginStatus){
                 init.toLogin();
                 return false;
@@ -1400,12 +1402,13 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
             }
             var id = $this.attr('coupon_id');
             getACoupon($this,id);
-            ev.stopPropagation();
+            
         });
 
 
         function getACoupon($btn,id){
             var url = ApiBaseUrl + '/appv6/coupon/'+ id +'/receive';
+            //  var url = ApiBaseUrl + '/appv6_5/homepage';
             $.ajax({
                 type: "POST",
                 url: url,
@@ -1487,7 +1490,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
               <div class="c_msg">
                 ${data[j].coupon_note}
               </div>
-              <div class="btn" coupon_id="${data[j].coupon_id}" get_status="2"  issue_by="${data[j].issue_by}"></div>
+              <div class="btn coupon_btn" coupon_id="${data[j].coupon_id}" get_status="2"  issue_by="${data[j].issue_by}"></div>
             `
             
 
@@ -1506,7 +1509,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         $backCouponMask.find('.ok').on('click',function(){
             $backCouponMask.hide();
         });
-        $backCouponMask.find('.btn').on('click',function(){
+        $backCouponMask.find('.coupon_btn').on('click',function(){
             var issueBy = $(this).attr('issue_by');
             var coupon_id = $(this).attr('coupon_id');
             // 5=去商品列表页; 6=去分类页; 7=去店铺首页
