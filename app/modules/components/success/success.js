@@ -107,11 +107,14 @@ $(document).on('pageInit','.jump', function(e, id, page){
           if(data.length>1){
             html+=  `
             <div class="coupon_multi"></div>
-            <div class="red_coupon">
-              <img src="${data[0].coupon_img}" />
-              <div class="coupon_price"><span>￥</span><b>${data[0].coupon_price}</b></div>
+           
               `
           }
+          html+=`
+          <div class="red_coupon">
+          <img src="${data[0].coupon_img?data[0].coupon_img:'http://img8.ontheroadstore.com/H5_Icon/coupon/coupon_default_bg.png'}" />
+          <div class="coupon_price"><span>￥</span><b>${data[0].coupon_price}</b></div>
+          `
             if(data[0].apply_time_type==2){
               html+=`
               <div class="time"> ${init.couponFmtTime(init.getTimestamp())}  -  ${init.couponFmtTime(init.getTimestamp(data[0].apply_time_length)) }</div>
@@ -140,8 +143,8 @@ $(document).on('pageInit','.jump', function(e, id, page){
           </div>
         `
 
-        $('.back_coupon_popup_mask').html(html)
-            .show()
+        $('.back_coupon_popup_mask').show().html(html)
+           
             .on('click',function(ev){
                 if(this === ev.target){
                     $(this).hide();
