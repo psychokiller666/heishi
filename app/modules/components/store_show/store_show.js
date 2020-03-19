@@ -1254,7 +1254,6 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     var ApiBaseUrl = init.getApiBaseUrl();
     var PHPSESSID = init.getCookie('PHPSESSID');
     var VueBaseUrl = init.getVueBaseUrl()
-
     getGoodsCoupon()
     function getGoodsCoupon(){
         var url = ApiBaseUrl + '/appv6/coupon/getPostsCouponList';
@@ -1268,6 +1267,9 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
                 if(data.status==1){
                     // console.log(data.data)
                     setGoodsCoupon(data.data)
+                    if(data.data.coupon.length==0){
+                      $('.js_coupon_get').hide()
+                    }
                 }
             },
             error: function(e){
