@@ -28,7 +28,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
   });
   // 相似商品跳转
   $('.jumpAlike').click(function(){
-    let id = $(this).parents().find('.item').attr('data-postid')
+    let id = $(this).parents('.item').attr('data-postid')
     location.href= VueBaseUrl+"alikeGood/"+id
   })
   $(page).find('.addr_sel_wrap').on("click",function(){
