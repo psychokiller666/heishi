@@ -20,7 +20,11 @@
 			padding: 0 .25rem;
 			margin-top: .25rem;
 			overflow: hidden;
+			white-space:nowrap;/*强制文本在一行内显示*/
+			text-overflow:ellipsis; /*溢出省略号，支持ie、safari（webkit）*/
+			overflow:hidden;/*溢出隐藏*/
 		}
+		
 		.msgs{
 			float: left;
 			margin-left: .4rem;
