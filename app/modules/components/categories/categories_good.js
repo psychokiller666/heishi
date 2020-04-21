@@ -80,6 +80,7 @@ $(document).on('pageInit','.categories_good', function(e, id, page){
   $('.goods_content').html('');
 
   $('.goods_filter').on('click', 'div',function(){
+    $('.end_line').hide()
     if(flagClick){
       return
     }
@@ -142,6 +143,7 @@ $(document).on('pageInit','.categories_good', function(e, id, page){
         sort: order_type 
       },
       success: function(data){
+        $('.end_line').hide()
         if(data.status == 1){ 
           $('.goods_content').append(categories_index_tpl(data.data));
           if(data.data.children_categories.length){
@@ -154,7 +156,7 @@ $(document).on('pageInit','.categories_good', function(e, id, page){
             console.log(tagsDom)
             $('.tags_list_new').html(tagsDom)
             // $('.goods_filter').css('top','1.6rem')
-            $('.goods_content').css('margin-top',$('.fixed_content').height()+'px')
+           
           }
           // if(data.data.ad[cur_page-1]){
           //   $('.goods_content').append(
@@ -182,9 +184,15 @@ $(document).on('pageInit','.categories_good', function(e, id, page){
               $('.tag_list').css('height', '0');
             }
           }
+          $('.goods_content').css('margin-top',$('.fixed_content').height()+'px')
           $('.infinite-scroll-preloader').css('display', 'block');
-          if(data.data.goodslist.length < 5){
+          if(data.data.goodslist&&data.data.goodslist.length < 5){
             $('.infinite-scroll-preloader').css('display', 'none');
+          }
+          //当没有商品的时候
+          if(!data.data.goodslist){
+            $('.infinite-scroll-preloader').css('display', 'none');
+            $('.end_line').show()
           }
         } else {
           $('.infinite-scroll-preloader').css('display', 'none');
