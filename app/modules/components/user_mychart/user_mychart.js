@@ -392,7 +392,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
         },
         success: function(data){
           // $.toast('保存成功')
-          if(data.data.status){
+          if(data.data&&data.data.status){
             
             isOverSeas= true
             $('.post_card').show()
@@ -976,6 +976,50 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
           }
       });
 
+  }
+  //猜你喜欢随便看看更改为api接口
+  function getJustLookList(){
+    $.ajax({
+      type: "GET",
+      url: ApiBaseUrl + '/appv4/getcart',
+      dataType: 'json',
+      headers: ajaxHeaders,
+      success: function(data){
+        initJustLook(data.data.recommended)
+
+      },
+      error: function(e){
+        
+      }
+    });
+  } 
+
+  getJustLookList()
+  function initJustLook(data){
+    if(!data.length){
+      return
+    }
+    let list = ``
+    data.forEach(v=>{
+      list+=` <div class="goods_list">
+      <a href="/Portal/HsArticle/index/id/${v.id}.html" class="filepath external">`
+      if(v.cover_fang){
+        list+=` <div class="image" data-layzr="${v.cover_fang}@640w_1l" data-layzr-bg></div>`
+      }else{
+        list+=` <div class="image" data-layzr="${v.cover}@640w_1l" data-layzr-bg></div>`
+      }
+        
+     list+=` </a>
+      <a href="/Portal/HsArticle/index/id/${v.id}.html" class="post_title external">${v.title}</a>
+      <div class="user_info">
+        <a href="/User/index/index/id/${v.author}.html" class="external">
+          <img src="${v.user_avatar}">
+          <span>${v.user_name}</span>
+        </a>
+      </div>
+    </div>`
+    })
+    $('.goods_content').html(list)
   }
   // 设置每个卖家商品的最高邮费
   function postage(){
