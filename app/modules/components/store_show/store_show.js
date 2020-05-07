@@ -131,7 +131,6 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   });
   // 检查是否关注
   init.checkfollow();
-
   //判断是否是从九折购买点击进来
   var fromNineDiscount = null;
   if(getQueryString("fromxsxw")=="nineDiscount"){
@@ -1803,7 +1802,6 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       data.forEach((v,idx)=>{
         str+= `<span style="background:${_themeList[idx].bg};color:${_themeList[idx].txt};" data-id="${v.id}">${v.title}</span>`
       })
-      console.log(str)
       $('.feature_list').html(str)
 
     }
@@ -1931,7 +1929,87 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
 
         return html;
     }
+    //使用接口获取猜你喜欢的数据
+    //获取商品评测列表
+    function getGoodsAlike(){
 
+      var url = ApiBaseUrl + '/appv6_5/getCommodityDetail/'+goodsId;
+      $.ajax({
+          type: "GET",
+          url: url,
+          dataType: 'json',
+          success: function(data){
+              console.log(data)
+              initAlikeContent(data.data.related_goods)
+          },
+          error: function(e){
+              console.log('getLotteryUser err: ',e);
+          }
+      });
+  }
+  getGoodsAlike()
+  function initAlikeContent(data){
+    
+      let list = `<div class="list_1"><div class="list">`
+      data.forEach(t=>{
+        if(t.type==1){
+          list+=`<div  class="segment_good">
+            <a href="/Portal/HsArticle/index/id/${t.id}.html"  class="external">
+              <img class="cover" src="${t.cover_fang}@320w_1l" />
+            </a>
+          <div class="txt">
+            <div class="txt_top">
+            <a href="/Portal/HsArticle/index/id/${t.id}.html"  class="external">
+              <p class="tit">${t.title} </p>
+            </a>
+              <p class="sub_tit">${t.post_subtitle}</p>
+            </div>
+            <p class="txt_end" style="padding-top:.1rem;">
+              <span>¥ ${t.price[0]}</span>`
+            list+= `</p>
+          </div>
+        
+        </div>`
+        }
+        if(t.type==2){
+          list+=`
+            <a class="ad external" href='${genrateUrl(t.url,t.url_type)}'>
+              <img  src="${t.image}"/>
+            </a>
+          `
+        }
+
+      })
+      list+=`</div></div>`
+      $('.alike_content').append(list)
+   
+  }
+
+  //广告跳转
+  function genrateUrl(url, url_type) {
+    if (url_type === 0 || url_type === '0') {
+      return 'javascript:;';
+    }
+    if (url_type === 1 || url_type === '1') {
+      return `/Portal/HsArticle/index/id/${url}.html`
+      // return url
+    }
+    if (url_type === 2 || url_type === '2') {
+      // return `/Portal/HsArticle/culture/id/${url}.html`
+      return url
+    }
+    if (url_type === 3 || url_type === '3') {
+      return `/HsProject/index/pid/${url}.html`
+    }
+    if (url_type === 5 || url_type === '5') {
+      return url;
+    }
+    if (url_type === 6 || url_type === '6') {
+      return `/HsCategories/category_index/id/${url}.html`
+    }
+
+
+  }
     //商品特征标签说明弹窗
     function initGoodsNounPopup(data) {
         if(data && data.length>0) {

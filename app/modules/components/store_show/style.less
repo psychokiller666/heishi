@@ -2417,7 +2417,111 @@
 
     }
 }
+.alike_content{
+    min-height: 15rem;
+    .list{
+        width: 10rem;
+        display: flex;
+        flex-flow: space-between;
+        flex-wrap: wrap;
+       
+        .font-dpr(14px);
+        .ad{
+            width: 10rem;
+            height: 3.306rem;
+            margin-top: .6rem;
+            img{
+                width: inherit;
+                height: inherit;
+                object-fit: cover;
+            }
+        }
+        .segment_good{
+            color: #151515;
+            display: block;
+            width: 4.99rem;
+            height: 7.23rem;
+            margin-top: .6rem;
+            a{
+                display: block;
+                color: #151515;
+            }
+            .cover{
+                width: 4.99rem;
+                height: 4.99rem;
+                object-fit: cover;
+            }
+            .txt{
+                width: 4.453rem;
+                margin: 0 auto;
+                .txt_top{
+                    height: 1.44rem;
+                    overflow: hidden;
+                }
+                .tit{
+                    height: .48rem;
+                    overflow: hidden;
+                    line-height: .48rem;
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 2;
+                    overflow: hidden;
+                }
+                .sub_tit{
+                    height: .96rem;
+                    overflow: hidden;
+                    line-height: .48rem;
+                    color: #979797;
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 2;
+                    overflow: hidden;
+                }
 
+                .tag{
+                    float: right;
+                    color: #979797;
+                    .font-dpr(10px);
+                    margin-top: .1rem;
+                    display: flex;
+                    align-items: center;
+                    line-height: .346rem;
+                    .time{
+                        color: #114FFF;
+                        .font-dpr(18px);
+                        margin-right: .2rem;
+                        font-weight: bold;
+                    }
+                    .tag_icon{
+                        width: .65rem;
+                        height: .65rem;
+                    }
+                }
+            }
+        }
+    }
+}
+.end_line{
+    position: relative;
+    width: 8.88rem;
+    height: 1.3rem;
+    margin: 0 auto;
+    line-height: 2.25rem!important;
+    text-align: center;
+    .font-dpr(14px);
+    color: #979797;
+    &::before{
+        content: '';
+        display: block;
+        width: 8.88rem;
+        height: 1.3rem;
+        background: url('https://img8.ontheroadstore.com/H5_Icon/end_line_hand.png') no-repeat center center;
+        background-size: cover;
+        position: absolute;
+        left: 0px;
+        top: 10px;
+    }
+}
 .special_offer_1{
     // width: 2.853rem; 
     display: none;
