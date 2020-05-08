@@ -1960,7 +1960,10 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   }
   getGoodsAlike()
   function initAlikeContent(data){
-    
+      if(data.length==0){
+        $('.end_line').hide()
+        return
+      }
       let list = `<div class="list_1"><div class="list">`
       data.forEach(t=>{
         if(t.type==1){
