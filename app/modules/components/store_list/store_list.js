@@ -67,15 +67,17 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
         "HomepageAppNewGoodsList": [1],
         "HomepageAppLottery": [1],
         "HomepageAdvertisement": [1],
+        "HomepageAppLanmuList": [1],
         "cid":7
       },
       success: function(data){
         initNewBanner(data.data.HomepageAppBanner.model_data)
+        initAdBanner(data.data.HomepageAdvertisement.model_data[0])
         initSellerRecommend(data.data.HomepageAppSellerRecommend.model_data)
         initNewGoodsList(data.data.HomepageAppNewGoodsList.model_data)
         initNewTopicList(data.data.HomepageAppFeatureList.model_data.fang_list,1)
         initNewTopicList(data.data.HomepageAppFeatureList.model_data.chang_list,2)
-        initRecomendAndOnly(data.data.HomepageAppSegmentGoodsList.model_data)
+        initRecomendAndOnly(data.data.HomepageAppLanmuList.model_data)
         segmentId = data.data.HomepageAppSegmentGoodsList.model_data[0].id
       },
       error: function(xhr, type){
@@ -107,6 +109,19 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
       watchSlidesVisibility : true,
       autoplayDisableOnInteraction : false,
     })
+  }
+  //广告位
+  function initAdBanner(data){
+    if(!data||data.length==0){
+      $('.ad_banner').hide()
+      return
+    }
+    let str = `
+    <a class="external" href='${genrateUrl(data.url,data.url_type)}'>
+      <img src="${data.image}?x-oss-process=image/resize,m_lfit,w_880/quality,q_80" />
+    </a>
+    `
+    $('.ad_banner').html(str)
   }
  //卖家推荐
   function initSellerRecommend(data){
@@ -217,44 +232,47 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     data.forEach((v,i)=>{
       tab+=`<span data-sid="${v.id}" class="${i==0?'active':''}">${v.title}</span>`
       let list = `<div class="list_${i}" style="display:${i===0?'block':'none'}"><div class="list">`
-      v.goodslist.forEach(t=>{
-        if(t.type==1){
-          list+=`<div  class="segment_good">
-            <a href="/Portal/HsArticle/index/id/${t.id}.html"  class="external">
-              <img class="cover" src="${t.cover}@320w_1l" />
-            </a>
-          <div class="txt">
-            <div class="txt_top">
-            <a href="/Portal/HsArticle/index/id/${t.id}.html"  class="external">
-              <p class="tit">${t.title} </p>
-            </a>
-              <p class="sub_tit">${t.post_subtitle}</p>
-            </div>
-            <p class="txt_end" style="padding-top:.1rem;">
-              <span>¥ ${t.price[0]}</span>`
-              if(t.tag_list){
-                if(t.tag_list.id==1){
-                  list+=`<span class="tag" data-jump="1" data-id="${t.tag_list.id}"><span class="time" data-time="${t.tag_list.count_down}">${countDown(t.tag_list.count_down)}</span>${t.tag_list.title}</span>`
-                }else{
-                  list+=`<span class="tag" data-jump="2" data-id="${t.tag_list.id}" style="margin-top: -.1rem;"><img class="tag_icon" src="${t.tag_list.icon}" />${t.tag_list.title}</span>`
+      if(v.goodslist){
+        v.goodslist.forEach(t=>{
+          if(t.type==1){
+            list+=`<div  class="segment_good">
+              <a href="/Portal/HsArticle/index/id/${t.id}.html"  class="external">
+                <img class="cover" src="${t.cover}@320w_1l" />
+              </a>
+            <div class="txt">
+              <div class="txt_top">
+              <a href="/Portal/HsArticle/index/id/${t.id}.html"  class="external">
+                <p class="tit">${t.title} </p>
+              </a>
+                <p class="sub_tit">${t.post_subtitle}</p>
+              </div>
+              <p class="txt_end" style="padding-top:.1rem;">
+                <span>¥ ${t.price[0]}</span>`
+                if(t.tag_list){
+                  if(t.tag_list.id==1){
+                    list+=`<span class="tag" data-jump="1" data-id="${t.tag_list.id}"><span class="time" data-time="${t.tag_list.count_down}">${countDown(t.tag_list.count_down)}</span>${t.tag_list.title}</span>`
+                  }else{
+                    list+=`<span class="tag" data-jump="2" data-id="${t.tag_list.id}" style="margin-top: -.1rem;"><img class="tag_icon" src="${t.tag_list.icon}" />${t.tag_list.title}</span>`
+                  }
                 }
-              }
-            list+= `</p>
-          </div>
-          
-        </div>`
-        }
-        if(t.type==2){
-          list+=`
-            <a class="ad external" href='${genrateUrl(t.url,t.url_type)}'>
-              <img  src="${t.image}"/>
-            </a>
-          `
-        }
+              list+= `</p>
+            </div>
+            
+          </div>`
+          }
+          if(t.type==2){
+            list+=`
+              <a class="ad external" href='${genrateUrl(t.url,t.url_type)}'>
+                <img  src="${t.image}"/>
+              </a>
+            `
+          }
 
-      })
+        })
+      }
       list+=`</div></div>`
       $('.segment_list').append(list)
+      
       //时间倒计时
       let listDom =  $('.segment_list').find('.time')
       listDom.forEach(v=>{
@@ -270,12 +288,14 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
   }
   //专栏点击事件
   $('.tab_recommend_only').on('click','span',function(){
+    loading = true
     let idx = $(this).index()
     segmentId = $(this).attr('data-sid')
     segmentIndex = idx
     pageSegment = 1
     $('.end_line').hide()
-    loading = false
+    $('.infinite-scroll-preloader').show()
+    // loading = false
     $(this).addClass('active').siblings().removeClass('active')
     $('.segment_list').find(`.list_${idx}`).show().siblings().hide()
     $('.segment_list').find(`.list_${idx}`).html('')
@@ -333,6 +353,9 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
       return `/HsProject/index/pid/${url}.html`
     }
     if (url_type === 5 || url_type === '5') {
+      if(!url){
+        url = 'javascript:;'
+      }
       return url;
     }
     if (url_type === 6 || url_type === '6') {
@@ -344,9 +367,9 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
   $('.segment_list').on('click','.tag',function(){
     let jumpStatus = $(this).attr('data-jump')
     let id = $(this).attr('data-id')
-    if(jumpStatus==1){
-      return
-    }
+    // if(jumpStatus==1){
+    //   return
+    // }
     location.href= `${H5BaseUrl}segment/${id}`;
   })
   function countDown(endTime){
@@ -429,18 +452,21 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
   function addSegment(){
     $.ajax({
       type: 'GET',
-      url: ApiBaseUrl+'/appv6_6/getAppLanmuGoodsList/'+segmentId,
-      data: { 
-         page: pageSegment
+      url: ApiBaseUrl+'/appv6_6/getLanmuGoods/1',
+      data: {
+        lanmu_id: segmentId,
+        page: pageSegment,
+        size: 20
       },
       success: function(data){
         loading = false
-        if(data.data.length<20){
+        if(data.data.goodslist.length<20){
           loading = true
           $('.end_line').show()
+          $('.infinite-scroll-preloader').hide()
         }
         let list = `<div class="list">`
-        data.data.forEach(t=>{
+        data.data.goodslist.forEach(t=>{
           if(t.type==1){
             list+=`<div  class="segment_good">
               <a href="/Portal/HsArticle/index/id/${t.id}.html"  class="external">
