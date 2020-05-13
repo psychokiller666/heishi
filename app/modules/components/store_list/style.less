@@ -1135,6 +1135,21 @@
             }
         }
     }
+    .ad_banner{
+        width: 9.2rem;
+        height: 2.42rem;
+        margin: .4rem;
+        display: block;
+        a{
+            display: block;
+            width: inherit;
+            height: inherit;
+        }
+        img{
+            width: 9.2rem;
+            height: 2.42rem;
+        }
+    }
     .seller_recommend{
         .seller_list{
             width: 8.93rem;
@@ -1362,28 +1377,23 @@
         }
     }
     .tab_recommend_only{
-        width: 9.36rem;
-        display: flex;
+        width: 10rem;
+        // display: flex;
         margin: 0 auto;
         margin-top: 1rem;
-        border: 1px solid #151515;
-        height: 0.69rem;
-        border-radius: .113rem;
-        overflow: hidden;
+        height: 1.25rem;
+        overflow-y: scroll;
+        background: #d8d8d8;
+        white-space: nowrap;
         span{
-            color: #151515;
+            color: #979797;
             text-align: center;
-            display: block;
-            line-height: .69rem;
-            border-right: 1px solid #151515;
-            flex: 1;
-            .font-dpr(15px);
-            &:last-child{
-                border: 0;
-            }
+            display: inline-block;
+            line-height: 1.25rem;
+            margin: 0 .3rem;
+            .font-dpr(17px);
             &.active{
-                background: #151515;
-                color: #FFFFFF;
+                color: #151515;
             }
 
         }
@@ -1412,7 +1422,7 @@
                 display: block;
                 width: 4.99rem;
                 height: 7.23rem;
-                margin-top: .6rem;
+                margin-top: .3rem;
                 a{
                     display: block;
                     color: #151515;
