@@ -72,7 +72,9 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
       },
       success: function(data){
         initNewBanner(data.data.HomepageAppBanner.model_data)
-        initAdBanner(data.data.HomepageAdvertisement.model_data[0])
+        if(data.data.HomepageAdvertisement&&data.data.HomepageAdvertisement.model_data){
+          initAdBanner(data.data.HomepageAdvertisement.model_data[0])
+        }
         initSellerRecommend(data.data.HomepageAppSellerRecommend.model_data)
         initNewGoodsList(data.data.HomepageAppNewGoodsList.model_data)
         initNewTopicList(data.data.HomepageAppFeatureList.model_data.fang_list,1)
@@ -116,6 +118,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
       $('.ad_banner').hide()
       return
     }
+    $('.ad_banner').show()
     let str = `
     <a class="external" href='${genrateUrl(data.url,data.url_type)}'>
       <img src="${data.image}?x-oss-process=image/resize,m_lfit,w_880/quality,q_80" />
