@@ -2016,12 +2016,22 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       return `/HsProject/index/pid/${url}.html`
     }
     if (url_type === 5 || url_type === '5') {
+      if(!url){
+        url = 'javascript:;'
+      }
       return url;
     }
     if (url_type === 6 || url_type === '6') {
       return `/HsCategories/category_index/id/${url}.html`
     }
-
+    //书专题
+    if (url_type === 17 || url_type === '17') {
+      return `${H5BaseUrl}bookListDetail/${url}`
+    }
+    //诗人角
+    if (url_type === 16 || url_type === '16') {
+      return `${H5BaseUrl}authorBook/${url}`
+    }
 
   }
     //商品特征标签说明弹窗

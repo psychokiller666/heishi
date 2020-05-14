@@ -95,6 +95,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     }
     let str = ``
     data.forEach(v=>{
+      if(!(v.url_type==7||v.url_type==8))
       str+=`<div class="swiper-slide">
         <a class="external" href='${genrateUrl(v.url,v.url_type)}'>
           <img src="${v.image}?x-oss-process=image/resize,m_lfit,w_880/quality,q_80" />
@@ -116,6 +117,9 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
   function initAdBanner(data){
     if(!data||data.length==0){
       $('.ad_banner').hide()
+      return
+    }
+    if(data.url_type==7||data.url_type==8){
       return
     }
     $('.ad_banner').show()
@@ -253,7 +257,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
                 <span>¥ ${t.price[0]}</span>`
                 if(t.tag_list){
                   if(t.tag_list.id==1){
-                    list+=`<span class="tag" data-jump="1" data-id="${t.tag_list.id}"><span class="time" data-time="${t.tag_list.count_down}">${countDown(t.tag_list.count_down)}</span>${t.tag_list.title}</span>`
+                    list+=`<span class="tag" data-jump="1" data-id="${t.tag_list.id}"><span class="time" data-time="${t.tag_list.count_down}">${countDown(t.tag_list.count_down)}111</span>${t.tag_list.title}</span>`
                   }else{
                     list+=`<span class="tag" data-jump="2" data-id="${t.tag_list.id}" style="margin-top: -.1rem;"><img class="tag_icon" src="${t.tag_list.icon}" />${t.tag_list.title}</span>`
                   }
@@ -263,7 +267,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
             
           </div>`
           }
-          if(t.type==2){
+          if(t.type==2&&(!(t.url_type==7||t.url_type==8))){
             list+=`
               <a class="ad external" href='${genrateUrl(t.url,t.url_type)}'>
                 <img  src="${t.image}"/>
@@ -364,8 +368,14 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     if (url_type === 6 || url_type === '6') {
       return `/HsCategories/category_index/id/${url}.html`
     }
-
-
+    //书专题
+    if (url_type === 17 || url_type === '17') {
+      return `${H5BaseUrl}bookListDetail/${url}`
+    }
+    //诗人角
+    if (url_type === 16 || url_type === '16') {
+      return `${H5BaseUrl}authorBook/${url}`
+    }
   }
   $('.segment_list').on('click','.tag',function(){
     let jumpStatus = $(this).attr('data-jump')
@@ -496,7 +506,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
             
           </div>`
           }
-          if(t.type==2){
+          if(t.type==2&&(!(t.url_type==7||t.url_type==8))){
             list+=`
               <a class="ad external" href='${genrateUrl(t.url,t.url_type)}'>
                 <img  src="${t.image}"/>
