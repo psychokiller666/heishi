@@ -119,7 +119,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
       $('.ad_banner').hide()
       return
     }
-    if(data.url_type==7||data.url_type==8){
+    if(data.url_type==16||data.url_type==17||data.url_type==18||data.url_type==19){
       return
     }
     $('.ad_banner').show()
@@ -176,19 +176,25 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
       return
     }
     let str = ``
-    data.forEach(v=>{
-      str+=`<div class="swiper-slide">
-        <a  href="/Portal/HsArticle/index/id/${v.id}.html" class="new_good external">
-          <img src="${v.cover}@320w_1l" />
-          <p>${v.title}</p>
-          
-      </a></div>`
+    data.forEach((v,idx)=>{
+      if(idx<15){
+        str+=`<div class="swiper-slide">
+          <a  href="/Portal/HsArticle/index/id/${v.id}.html" class="new_good external">
+            <img src="${v.cover}@320w_1l" />
+            <p>${v.title}</p>
+            
+        </a></div>`
+      }
+      
     })
-    str+=`
-      <div class='swiper-slide'>
-        <img class="jump_new_more" src="https://img8.ontheroadstore.com/H5_Icon/home_new_more.png" />
-      </div>
-    `
+    if(data.length>15){
+      str+=`
+        <div class='swiper-slide'>
+          <img class="jump_new_more" src="https://img8.ontheroadstore.com/H5_Icon/home_new_more.png" />
+        </div>
+      `
+    }
+    
     $('.new_goods_list').find('.swiper-wrapper').html(str)
     var mySwiper = new Swiper('.swiper-container-new',{ 
       slidesPerView: 2.3,
@@ -237,7 +243,12 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     let tab = ``
     $('.segment_list').html('')
     data.forEach((v,i)=>{
-      tab+=`<span data-sid="${v.id}" class="${i==0?'active':''}">${v.title}</span>`
+      tab+=`<span data-sid="${v.id}" class="${i==0?'active':''}">${v.title}`
+      if(v.icon){
+        tab+=`<img class="tab_icon" src="${v.icon}"/></span>`
+      }else{
+        tab+=`</span>`
+      }
       let list = `<div class="list_${i}" style="display:${i===0?'block':'none'}"><div class="list">`
       if(v.goodslist){
         v.goodslist.forEach(t=>{
@@ -368,14 +379,14 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     if (url_type === 6 || url_type === '6') {
       return `/HsCategories/category_index/id/${url}.html`
     }
-    //书专题
-    if (url_type === 17 || url_type === '17') {
-      return `${H5BaseUrl}bookListDetail/${url}`
-    }
-    //诗人角
-    if (url_type === 16 || url_type === '16') {
-      return `${H5BaseUrl}authorBook/${url}`
-    }
+    // //书专题
+    // if (url_type === 17 || url_type === '17') {
+    //   return `${H5BaseUrl}bookListDetail/${url}`
+    // }
+    // //诗人角
+    // if (url_type === 16 || url_type === '16') {
+    //   return `${H5BaseUrl}authorBook/${url}`
+    // }
   }
   $('.segment_list').on('click','.tag',function(){
     let jumpStatus = $(this).attr('data-jump')
@@ -473,11 +484,23 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
       },
       success: function(data){
         loading = false
-        if(data.data.goodslist.length<20){
+        if(data.data.goodslis&&data.data.goodslist.length<20){
           loading = true
           $('.end_line').show()
           $('.infinite-scroll-preloader').hide()
         }
+        if(!data.data.goodslist){
+          $('.end_line').show()
+          $('.infinite-scroll-preloader').hide()
+          if(pageSegment==1){
+            $(`.list_${segmentIndex}`).html(`
+            <p style="text-align:center;line-height:4rem;font-size:.4rem;color:#979797;">暂无数据</p>
+            `)
+          } 
+         
+          return
+        }
+        
         let list = `<div class="list">`
         data.data.goodslist.forEach(t=>{
           if(t.type==1){
