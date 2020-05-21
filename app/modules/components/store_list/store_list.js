@@ -95,7 +95,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     }
     let str = ``
     data.forEach(v=>{
-      if(!(v.url_type==7||v.url_type==8))
+      if(!(v.url_type==15||v.url_type==16||v.url_type==17||v.url_type==18))
       str+=`<div class="swiper-slide">
         <a class="external" href='${genrateUrl(v.url,v.url_type)}'>
           <img src="${v.image}?x-oss-process=image/resize,m_lfit,w_880/quality,q_80" />
