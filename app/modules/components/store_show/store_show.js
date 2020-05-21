@@ -1985,7 +1985,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         
         </div>`
         }
-        if(t.type==2&&!(t.url_type==15||t.url_type==16||t.url_type==17||t.url_type==18)){
+        if(t.type==2&&!(t.url_type==19||t.url_type==16||t.url_type==17||t.url_type==18)){
           list+=`
             <a class="ad external" href='${genrateUrl(t.url,t.url_type)}'>
               <img  src="${t.image}"/>

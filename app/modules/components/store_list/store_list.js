@@ -95,7 +95,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     }
     let str = ``
     data.forEach(v=>{
-      if(!(v.url_type==15||v.url_type==16||v.url_type==17||v.url_type==18))
+      if(!(v.url_type==16||v.url_type==17||v.url_type==18||v.url_type==19))
       str+=`<div class="swiper-slide">
         <a class="external" href='${genrateUrl(v.url,v.url_type)}'>
           <img src="${v.image}?x-oss-process=image/resize,m_lfit,w_880/quality,q_80" />
@@ -187,7 +187,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
       }
       
     })
-    if(data.length>15){
+    if(data.length>14){
       str+=`
         <div class='swiper-slide'>
           <img class="jump_new_more" src="https://img8.ontheroadstore.com/H5_Icon/home_new_more.png" />
@@ -306,6 +306,9 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
   }
   //专栏点击事件
   $('.tab_recommend_only').on('click','span',function(){
+    if(loading){
+      return
+    }
     loading = true
     let idx = $(this).index()
     segmentId = $(this).attr('data-sid')
