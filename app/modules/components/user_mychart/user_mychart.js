@@ -51,7 +51,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
   var chartData = null;
   var limitBuyData = null;
   if($cartData.length>0){
-      chartData = JSON.parse($cartData.attr('value'));
+      chartData = JSON.parse($cartData.html());
       initLimitBuy(chartData);
   }
 
@@ -435,7 +435,10 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
     //数量
     var n = $(that).parents('.message').find('.countNum').text();
     n--;
-    if(n < 1) return;
+    if(n < 1){
+      $.toast('最小购买数量是一件')
+      return;
+    }
     // var minNum = -1;//默认设置减1
     //限购判断 减的时候不做判断
     // var limitNum = fixLimitNum(n, $item);
