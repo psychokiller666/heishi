@@ -215,9 +215,6 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   }else if(goodsLimit.data.goodsInfo && Object.keys(goodsLimit.data.goodsInfo).length>0){
     goodsLimit.type = 2;//款式限购
   }
-
-
-
   var goSettle = false
   // 如果有视频就放在封面图位置
   //初始化图片
@@ -347,6 +344,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     $('.price').find('.font_din').text(minPrice);
   }
   page.on("click",".select_type",function(){
+    goSettle =false
     hideAllVideo()
     $('.buy').css('display', 'block');
     $('.buy').find('.countNum').attr('data-num',1).text(1);
@@ -395,6 +393,12 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
   })
   $('.footer_nav').on("click",".add_chart",function() {
+    if($(this).hasClass('full_buy')){
+      goSettle = true
+    }else{
+      goSettle = false
+    }
+     
     hideAllVideo()
       if(!loginStatus){
           init.toLogin();
@@ -408,6 +412,9 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       var styles_id = $(this).data("id");
       var article_id = $(this).data("articleid");
       shopping(article_id, styles_id, 1);
+      if(goSettle){
+        location.href = `${location.origin}/User/MyChart/index`
+      }
     }else{
       $('.buy').css('display', 'block');
       // $('.content').css('overflow-y', 'hidden');
@@ -421,6 +428,10 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
           return false;
       }
     operation(this, 0);
+    
+    if(goSettle){
+      location.href = `${location.origin}/User/MyChart/index`
+    }
   })
   $('.buy').on("click",".buy_btn",function() {
    
@@ -448,17 +459,16 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     var special_price = $(this).attr('data-special_price')
     var special_start = $(this).attr('data-special_start')
     var special_end = $(this).attr('data-special_end')
-   
-    if($(this).data('postage')!=0){
-      $('.aboutPrice').find('.about_postage').html('运费: '+$(this).data("postage")+'元')
-    }else{
-      $('.aboutPrice').find('.about_postage').html('包邮')
-    }
     $('.quanyi_price_value').val($(this).attr('data-quanyi_price'))
     if($(this).attr('data-quanyi_price')>0){
       $('.is_quanyi').hide()
     }else{
       $('.is_quanyi').hide()
+    }
+    if($(this).data('postage')!=0){
+      $('.aboutPrice').find('.about_postage').html('运费: '+$(this).data("postage")+'元')
+    }else{
+      $('.aboutPrice').find('.about_postage').html('包邮')
     }
     //判断特卖时间
     // let _startTime =  new Date(special_start).getTime()
@@ -559,6 +569,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
     $('.buy').css('display', 'none');
     $('.content').css('overflow-y', 'auto');
+   
     if(type == 0){
       shopping(article_id, styles_id, num);
     }else if(type == 1){
