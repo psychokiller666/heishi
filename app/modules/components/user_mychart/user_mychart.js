@@ -146,6 +146,9 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
           return;
         }
         if(n > 1){
+          $('.delItem').css('width',"0");
+          $('.itemMain').css('transform',"translateX(0)");
+          $('.itemMain').css('webkitTransform',"translateX(0)");
           $(this).find('.delItem').css('width',"2.19rem");
           $(this).find('.itemMain').css('transform',"translateX(-2.5rem)");
           $(this).find('.itemMain').css('webkitTransform',"translateX(-2.5rem)");
@@ -597,7 +600,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
       $('.fix_price').removeClass('active')
     }
     //修改满减的msg
-    console.log(chartData)
+    // console.log(chartData)
     _saleData.forEach(v=>{
       let msg = ''
       for (let i = 0; i < v.sp_level.length; i++) {
@@ -671,14 +674,14 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
     var state = true;
     let normalStatus = true;
     let saleStatus =true;
-    $(that).parents('.list').find(".details .checkboxNormal").each(function(){
+    $(that).parents('.list').find(".details .itemMain .checkboxNormal").each(function(){
       if(!$(this).hasClass('affirm')){
         state = false;
         normalStatus =false
         return;
       }
     })
-    $(that).parents('.list').find(".details .checkboxSale").each(function(){
+    $(that).parents('.list').find(".details .itemMain .checkboxSale").each(function(){
       if(!$(this).hasClass('affirm')){
         state = false;
         saleStatus = false
