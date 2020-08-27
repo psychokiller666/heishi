@@ -2128,6 +2128,21 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
                 pageType : '商品详情页',
                 buttonName : '私信',
             })
+            let obj = {
+              id: goodsId,
+              title: $('h1.title').html(),
+              price: $('.font_din').html(),
+              cover: $($('.frontcover').find('.image')[0]).attr('data-layzr')
+
+            }
+            
+            let _host  = ''
+            if(ApiBaseUrl.indexOf('api.')>0){
+              _host=`https://h5.ontheroadstore.com/custServe`
+            }else{
+              _host=`https://h5test.ontheroadstore.com/custServe`
+            }
+            window.location.href = `${_host}?id=${obj.id}&price=${obj.price}&tit=${obj.title}&cover=${obj.cover}`
         });
         $(page).find('.shopping_btn').on('click',function(){
             init.sensors.track('buttonClick', {
