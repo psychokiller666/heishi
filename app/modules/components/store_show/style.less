@@ -150,19 +150,20 @@
         }
         .buy_btn,
         .add_chart{
-            width: 3.146rem;
+            width: 2.88rem;
             .font-dpr(15px);
             float: right;
-            height: 1.33rem;
+            height: 1.23rem;
             text-align: center;
-            line-height: 1.306rem;
+            line-height: 1.23rem;
         }
         .buy_btn{
-            background: url(//img8.ontheroadstore.com/H5_Icon/good_buy_btn.png);
-            background-repeat: no-repeat;
+           // background: url(//img8.ontheroadstore.com/H5_Icon/good_buy_btn.png);
+           background: #7264F9; 
+           background-repeat: no-repeat;
             background-size: 100% 100%;
-            color: #FFF;
-            border-radius: 0 .1rem .1rem 0;
+            color: #fff;
+            border-radius: 0 1.23rem 1.23rem 0;
             &.disable{
                 background: #8E8E8E;
             }
@@ -170,9 +171,12 @@
         .add_chart{
             border-left: 0.0133rem solid #E8E8E8;
             box-sizing: border-box;
-            color: #000;
-            box-shadow:0px 0px 8px 0px rgba(0,0,0,0.27);
-            border-radius:8px 0px 0px 8px;
+            background: #3C3C3C;
+            color: #fff;
+            border-radius: 1.23rem 0 0 1.23rem;
+            // color: #000;
+            // box-shadow:0px 0px 8px 0px rgba(0,0,0,0.27);
+            // border-radius:8px 0px 0px 8px;
         }
         .only_chart{
             width: 3.14rem;
@@ -185,7 +189,9 @@
             float: right;
             height: 100%;
             text-align: center;
-            line-height: 1.306rem;
+            line-height: 1.23rem;
+            height: 1.23rem;
+            border-radius: 0 1.23rem 1.23rem 0;
             a{
                 display: block;
                 width: 100%;
@@ -1942,7 +1948,7 @@
     }
     .buy_btn,
     .add_chart{
-        width: 5rem;
+        width: 4rem;
         .font-dpr(15px);
         height: 1.306rem;
         text-align: center;
@@ -1954,34 +1960,43 @@
         }
     }
     .add_chart{
-        background: url(//img8.ontheroadstore.com/H5_Icon/good_chart_btn_1.png) no-repeat center center;
+       // background: url(//img8.ontheroadstore.com/H5_Icon/good_chart_btn_1.png) no-repeat center center;
         background-size: 100% 100%;
-        color: #151515;
-        left: 0;
+        color: #fff;
+        background: #3C3C3C;
+        left: 1rem;
+        bottom: 10px;
+        border-radius:.7rem 0 0 .7rem;
     }
     .only_chart{ 
         width: 10rem; 
         background: #ED4A42; 
         color: #fff; 
+        left: 0;
+        border-radius: .7rem;
     } 
     .buy_btn{
-        background: url(//img8.ontheroadstore.com/H5_Icon/good_buy_btn_1.png?1);
+        //background: url(//img8.ontheroadstore.com/H5_Icon/good_buy_btn_1.png?1);
         background-repeat: no-repeat;
         background-size: 100% 100%;
+        background: #7264F9;
         color: #FFF;
-        right: 0;
+        right: 1rem;
+        border-radius: 0 .7rem .7rem 0;
+        bottom: 10px;
         &.disable{
             background: #8E8E8E;
         }
     }
     .confirm{
-        background: #ED4A42;
+        background: #7264F9;
         color: #FFF;
-        width: 10rem;
+        width: 8rem;
+        border-radius: 7rem;
         .font-dpr(15px);
         position: absolute;
-        bottom: 0;
-        left: 0;
+        bottom: 10px;
+        left: 1rem;
         display: none;
         height: 1.306rem;
         text-align: center;
