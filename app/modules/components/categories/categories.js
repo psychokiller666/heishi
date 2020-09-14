@@ -230,10 +230,12 @@ $(document).on('pageInit', '.categories', function (e, id, page) {
     }
     if (url_type === 1 || url_type === '1') {
       return `/Portal/HsArticle/index/id/${url}.html`
+      // return url
     }
-    if (url_type === 2 || url_type === '2') {
-      return `/Portal/HsArticle/culture/id/${url}.html`
-    }
+    // if (url_type === 2 || url_type === '2') {
+    //   // return `/Portal/HsArticle/culture/id/${url}.html`
+    //   return url
+    // }
     if (url_type === 3 || url_type === '3') {
       return `/HsProject/index/pid/${url}.html`
     }
@@ -246,16 +248,14 @@ $(document).on('pageInit', '.categories', function (e, id, page) {
     if (url_type === 6 || url_type === '6') {
       return `/HsCategories/category_index/id/${url}.html`
     }
-     //书专题
-     if (url_type === 17 || url_type === '17') {
-      return `${H5BaseUrl}bookListDetail/${url}`
+    //店铺
+    if (url_type === 7 || url_type === '7') {
+      return `${H5BaseUrl}seller/${url}`
     }
-    //诗人角
-    if (url_type === 16 || url_type === '16') {
-      return `${H5BaseUrl}authorBook/${url}`
+    //专题
+    if (url_type === 73 || url_type === '73') {
+      return `${H5BaseUrl}feature/${url}/0`
     }
-
-
   }
 
   //  神策埋点事件

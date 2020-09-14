@@ -1985,7 +1985,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         
         </div>`
         }
-        if(t.type==2&&!(t.url_type==19||t.url_type==16||t.url_type==17||t.url_type==18)){
+        if(!(t.url_type==19||t.url_type==16||t.url_type==17||t.url_type==18||t.url_type==2||t.url_type==3||t.url_type==74)){
           list+=`
             <a class="ad external" href='${genrateUrl(t.url,t.url_type)}'>
               <img  src="${t.image}"/>
@@ -2008,10 +2008,10 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       return `/Portal/HsArticle/index/id/${url}.html`
       // return url
     }
-    if (url_type === 2 || url_type === '2') {
-      // return `/Portal/HsArticle/culture/id/${url}.html`
-      return url
-    }
+    // if (url_type === 2 || url_type === '2') {
+    //   // return `/Portal/HsArticle/culture/id/${url}.html`
+    //   return url
+    // }
     if (url_type === 3 || url_type === '3') {
       return `/HsProject/index/pid/${url}.html`
     }
@@ -2024,15 +2024,14 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     if (url_type === 6 || url_type === '6') {
       return `/HsCategories/category_index/id/${url}.html`
     }
-    // //书专题
-    // if (url_type === 17 || url_type === '17') {
-    //   return `${H5BaseUrl}bookListDetail/${url}`
-    // }
-    // //诗人角
-    // if (url_type === 16 || url_type === '16') {
-    //   return `${H5BaseUrl}authorBook/${url}`
-    // }
-
+    //店铺
+    if (url_type === 7 || url_type === '7') {
+      return `${H5BaseUrl}seller/${url}`
+    }
+    //专题
+    if (url_type === 73 || url_type === '73') {
+      return `${H5BaseUrl}feature/${url}/0`
+    }
   }
     //商品特征标签说明弹窗
     function initGoodsNounPopup(data) {
@@ -2128,6 +2127,21 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
                 pageType : '商品详情页',
                 buttonName : '私信',
             })
+            let obj = {
+              id: goodsId,
+              title: $('h1.title').html(),
+              price: $('.font_din').html(),
+              cover: $($('.frontcover').find('.image')[0]).attr('data-layzr')
+
+            }
+            
+            let _host  = ''
+            if(ApiBaseUrl.indexOf('api.')>0){
+              _host=`https://h5.ontheroadstore.com/custServe`
+            }else{
+              _host=`https://h5test.ontheroadstore.com/custServe`
+            }
+            window.location.href = `${_host}?id=${obj.id}&price=${obj.price}&tit=${obj.title}&cover=${obj.cover}`
         });
         $(page).find('.shopping_btn').on('click',function(){
             init.sensors.track('buttonClick', {

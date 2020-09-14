@@ -13,5 +13,15 @@ $(document).on('pageInit','.user_message', function (e, id, page) {
   var init = new common(page);
   init.checkfollow();
   init.sensorsFun.bottomNav();
+  var ApiBaseUrl = init.getApiBaseUrl();
+  let H5BaseUrl = ''
+  if(ApiBaseUrl.indexOf('api.')>0){
+    H5BaseUrl=`https://h5.ontheroadstore.com/`
+  }else{
+    H5BaseUrl=`https://h5test.ontheroadstore.com/`
+  }
+  $('.jump_contact').click(function(){
+    location.href=`${H5BaseUrl}custServe`
+  })
 
 })

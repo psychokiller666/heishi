@@ -95,7 +95,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     }
     let str = ``
     data.forEach(v=>{
-      if(!(v.url_type==16||v.url_type==17||v.url_type==18||v.url_type==19))
+      if(!(v.url_type==2||v.url_type==3||v.url_type==16||v.url_type==17||v.url_type==18||v.url_type==19||v.url_type==74))
       str+=`<div class="swiper-slide">
         <a class="external" href='${genrateUrl(v.url,v.url_type)}'>
           <img src="${v.image}?x-oss-process=image/resize,m_lfit,w_880/quality,q_80" />
@@ -278,7 +278,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
             
           </div>`
           }
-          if(t.type==2&&(!(t.url_type==7||t.url_type==8))){
+          if((!(t.url_type==7||t.url_type==8||t.type==2))){
             list+=`
               <a class="ad external" href='${genrateUrl(t.url,t.url_type)}'>
                 <img  src="${t.image}"/>
@@ -366,10 +366,10 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
       return `/Portal/HsArticle/index/id/${url}.html`
       // return url
     }
-    if (url_type === 2 || url_type === '2') {
-      // return `/Portal/HsArticle/culture/id/${url}.html`
-      return url
-    }
+    // if (url_type === 2 || url_type === '2') {
+    //   // return `/Portal/HsArticle/culture/id/${url}.html`
+    //   return url
+    // }
     if (url_type === 3 || url_type === '3') {
       return `/HsProject/index/pid/${url}.html`
     }
@@ -382,14 +382,14 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     if (url_type === 6 || url_type === '6') {
       return `/HsCategories/category_index/id/${url}.html`
     }
-    // //书专题
-    // if (url_type === 17 || url_type === '17') {
-    //   return `${H5BaseUrl}bookListDetail/${url}`
-    // }
-    // //诗人角
-    // if (url_type === 16 || url_type === '16') {
-    //   return `${H5BaseUrl}authorBook/${url}`
-    // }
+    //店铺
+    if (url_type === 7 || url_type === '7') {
+      return `${H5BaseUrl}seller/${url}`
+    }
+    //专题
+    if (url_type === 73 || url_type === '73') {
+      return `${H5BaseUrl}feature/${url}/0`
+    }
   }
   $('.segment_list').on('click','.tag',function(){
     let jumpStatus = $(this).attr('data-jump')
@@ -532,7 +532,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
             
           </div>`
           }
-          if(t.type==2&&(!(t.url_type==7||t.url_type==8))){
+          if((!(t.url_type==7||t.url_type==8&&t.type==2))){
             list+=`
               <a class="ad external" href='${genrateUrl(t.url,t.url_type)}'>
                 <img  src="${t.image}"/>
