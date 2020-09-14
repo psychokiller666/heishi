@@ -278,7 +278,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
             
           </div>`
           }
-          if((!(t.url_type==7||t.url_type==8||t.type==2))){
+          if((t.type==2&&!(t.url_type==7||t.url_type==8))){
             list+=`
               <a class="ad external" href='${genrateUrl(t.url,t.url_type)}'>
                 <img  src="${t.image}"/>
@@ -532,7 +532,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
             
           </div>`
           }
-          if((!(t.url_type==7||t.url_type==8&&t.type==2))){
+          if((t.type==2&&!(t.url_type==7||t.url_type==8))){
             list+=`
               <a class="ad external" href='${genrateUrl(t.url,t.url_type)}'>
                 <img  src="${t.image}"/>
