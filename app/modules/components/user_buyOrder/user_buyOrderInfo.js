@@ -8,6 +8,14 @@ $(document).on('pageInit','.order_info', function(e, id, page){
   var init = new common(page);
   init.checkfollow();
 
+  var H5BaseUrl = ''
+  var ApiBaseUrl = init.getApiBaseUrl();
+  if(ApiBaseUrl.indexOf('api.')>0){
+    H5BaseUrl=`https://h5.ontheroadstore.com/`
+  }else{
+    H5BaseUrl=`https://h5test.ontheroadstore.com/`
+  }
+
   // 立即购买
   $('.payment_order').click(function(){
     location.href = '/user/HsBuyorder/pay_order.html?order_number=' + $(this).attr('data-order_number');
@@ -88,48 +96,58 @@ $(document).on('pageInit','.order_info', function(e, id, page){
   })
 
   // 退款 售后 预售 跳转到下载app
-  $('.order_info').on('click', '.refund_underway', function(){
+  $('.order_info').find('.refund_underway').on('click', function(e){
+    var ev = e || window.event;
+    ev.stopPropagation();
+    ev.preventDefault();
     $.confirm('申请退款请移步App', function () {
        location.href = GV.app_url;
     });
   })
-  $('.order_info').on('click', '.presell', function(){
+  $('.order_info').on('click', '.presell', function(e){
+    var ev = e || window.event;
+    ev.stopPropagation();
+    ev.preventDefault();
     $.confirm('申请退款请移步App', function () {
        location.href = GV.app_url;
     });
   })
-  $('.order_info').on('click', '.batch_refund', function(){
+  $('.order_info').on('click', '.batch_refund', function(e){
+    var ev = e || window.event;
+    ev.stopPropagation();
+    ev.preventDefault();
     $.confirm('申请退款请移步App', function () {
        location.href = GV.app_url;
     });
   })
   // 联系卖家
   $('.relation_seller').click(function(){
-  	var tel = $(this).attr('data-tel');
-  	var user_id = $(this).attr('data-uid');
-  	var buttons2 = [{
-  		text: '取消',
-  		bg: 'danger'
-    }];
-  	var buttons1 = [{
-  		text: '请选择',
-  		label: true
-  	},{
-  		text: '私信卖家',
-  		bold: true,
-  		color: 'danger',
-  		onClick: function() {
-  			location.href = '/User/HsMessage/detail/from_uid/'+user_id+'.html';
-  		}
-  	}];
-  	if(tel){
-  		buttons1.push({
-  			text: '卖家电话',
-  			onClick: function() {
-  				window.open('tel:' + tel);
-  			}
-  		})
-  	}
-    $.actions([buttons1,buttons2]);
+    location.href=`${H5BaseUrl}custServe`
+  	// var tel = $(this).attr('data-tel');
+  	// var user_id = $(this).attr('data-uid');
+  	// var buttons2 = [{
+  	// 	text: '取消',
+  	// 	bg: 'danger'
+    // }];
+  	// var buttons1 = [{
+  	// 	text: '请选择',
+  	// 	label: true
+  	// },{
+  	// 	text: '私信卖家',
+  	// 	bold: true,
+  	// 	color: 'danger',
+  	// 	onClick: function() {
+  	// 		location.href = '/User/HsMessage/detail/from_uid/'+user_id+'.html';
+  	// 	}
+  	// }];
+  	// if(tel){
+  	// 	buttons1.push({
+  	// 		text: '卖家电话',
+  	// 		onClick: function() {
+  	// 			window.open('tel:' + tel);
+  	// 		}
+  	// 	})
+  	// }
+    // $.actions([buttons1,buttons2]);
   })
 });

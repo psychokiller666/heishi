@@ -95,7 +95,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     }
     let str = ``
     data.forEach(v=>{
-      if(!(v.url_type==2||v.url_type==3||v.url_type==16||v.url_type==17||v.url_type==18||v.url_type==19||v.url_type==74))
+      if(!(v.url_type==2||v.url_type==16||v.url_type==17||v.url_type==18||v.url_type==19||v.url_type==74))
       str+=`<div class="swiper-slide">
         <a class="external" href='${genrateUrl(v.url,v.url_type)}'>
           <img src="${v.image}?x-oss-process=image/resize,m_lfit,w_880/quality,q_80" />
@@ -244,11 +244,11 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     $('.segment_list').html('')
     data.forEach((v,i)=>{
       tab+=`<span data-sid="${v.id}" class="${i==0?'active':''}">${v.title}`
-      if(v.icon){
-        tab+=`<img class="tab_icon" src="${v.icon}"/></span>`
-      }else{
+      // if(v.icon){
+      //   tab+=`<img class="tab_icon" src="${v.icon}"/></span>`
+      // }else{
         tab+=`</span>`
-      }
+      // }
       let list = `<div class="list_${i}" style="display:${i===0?'block':'none'}"><div class="list">`
       if(v.goodslist){
         v.goodslist.forEach(t=>{
@@ -349,7 +349,11 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
         location.href= `${H5BaseUrl}miniFeature/${id}`;
         break;
       case '4':
-        location.href= `/Portal/HsArticle/culture/id/${id}.html`;
+        location.href= `${H5BaseUrl}extinct`;
+        // location.href= `/Portal/HsArticle/culture/id/${id}.html`;
+        break;
+      case '5':
+          location.href= `${H5BaseUrl}feature/${id}/0`;
         break;
       default :
         console.log('没有找到这个类型，小老弟，看看是哪里的bug')
