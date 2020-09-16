@@ -97,8 +97,16 @@ $(document).on('pageInit','.culture_details', function (e, id, page) {
      if(($(v).attr('href').indexOf('book://')!=-1)){
       $(v).attr('href',`${vueBaseUrl}extinct`)
      }
+     if(($(v).attr('href').indexOf('user-info://')!=-1)){
+       let _url = $(v).attr('href')
+       let shopId = _url.split('//')[1]
+      $(v).attr('href',`${vueBaseUrl}seller/${shopId}`)
+     }
    });
   }
+  setTimeout(()=>{
+    $(page).find('.content_bd a').addClass('external');
+  },1000)
   function IsPC() {
     var userAgentInfo = navigator.userAgent;
     var Agents = ["Android", "iPhone",

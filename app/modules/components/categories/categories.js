@@ -15,7 +15,7 @@ $(document).on('pageInit', '.categories', function (e, id, page) {
   // 搜索初始
   // SearchInit();
   $.ajax({
-    url: ApiBaseUrl+'/appv3/categories?level=1&depth=1',
+    url: ApiBaseUrl+'/appv3/categories?level=1&depth=2',
     type: 'get',
     success: function (res) {
       if (res.code) {
@@ -189,12 +189,22 @@ $(document).on('pageInit', '.categories', function (e, id, page) {
       content = content + '</ul>';
     }
     if (typeof firstCategory.children === 'object' && firstCategory.children.length > 0) {
-      content += '<div class="tit tit2">精选分类</div>'
-      content = content + '<ul class="classify_two_list classify_two_list">';
+      
       for (let kidCategoryNum in firstCategory.children) {
-        content = content + freashKidLi(firstCategory.children[kidCategoryNum]);
+        content = content + '<ul class="classify_two_list classify_two_list">';
+        content += `<div class="tit tit2" style="background:${firstCategory.mini_color};color:#fff;">${firstCategory.children[kidCategoryNum].name}</div>`
+        if(typeof firstCategory.children[kidCategoryNum].children ==='object' && firstCategory.children[kidCategoryNum].children.length > 0){
+          let list = firstCategory.children[kidCategoryNum].children
+          list.forEach(v => {
+            content = content + freashKidLi(v);
+          });
+        }else{
+          console.log(1111)
+          content = content + freashKidLi(firstCategory.children[kidCategoryNum]);
+        }
+        content = content + '</ul>';
       }
-      content = content + '</ul>';
+   
     }
 
     if (content === '') {
