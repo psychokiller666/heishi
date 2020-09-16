@@ -580,8 +580,12 @@
       line-height: 1;
       text-align: left;
       color: #fff;
-      height: 3em;
+      height: 2em;
       overflow: hidden;
+      text-overflow: ellipsis;
+      display:-webkit-box; //作为弹性伸缩盒子模型显示。
+      -webkit-box-orient:vertical; //设置伸缩盒子的子元素排列方式--从上到下垂直排列
+      -webkit-line-clamp:2; //显示的行
     }
   }
   .ctx_wrap{

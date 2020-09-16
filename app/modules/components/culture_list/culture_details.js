@@ -63,7 +63,7 @@ $(document).on('pageInit','.culture_details', function (e, id, page) {
     }, opts.delay);
     return _this;
   }
-
+  
   // 监听滚动增加返回顶部按钮
   $(".content").on('scroll',function(){
     if($('.content').scrollTop() > 1000){
@@ -85,6 +85,19 @@ $(document).on('pageInit','.culture_details', function (e, id, page) {
     //     $(this).css('height','10px');
     //   }
     // })
+  }
+  let vueBaseUrl = init.getVueBaseUrl()
+  if($(page).find('.content_bd')){
+   let list =  $(page).find('.content_bd').find('a')
+   list.forEach(v => {
+     console.log($(v).attr('href'))
+     if(($(v).attr('href').indexOf('wine://')!=-1)){
+      $(v).attr('href',`${vueBaseUrl}extinct`)
+     }
+     if(($(v).attr('href').indexOf('book://')!=-1)){
+      $(v).attr('href',`${vueBaseUrl}extinct`)
+     }
+   });
   }
   function IsPC() {
     var userAgentInfo = navigator.userAgent;
