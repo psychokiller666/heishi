@@ -154,6 +154,9 @@ $(document).on('pageInit', '.categories', function (e, id, page) {
     if(!firstCategory.banner_image){
       return ''
     }
+    if(url==undefined){
+      return ''
+    }
     return basicTitle =
       `<a href="${url}"><div class="categories_title categories_title${firstCategory.id}" data-id="${ firstCategory.id}"> 
       <div class="categories_bg" data-layzr="${firstCategory.banner_image}" data-layzrstatus="1" style="background-image: url(${firstCategory.banner_image});"></div> 
@@ -199,7 +202,6 @@ $(document).on('pageInit', '.categories', function (e, id, page) {
             content = content + freashKidLi(v);
           });
         }else{
-          console.log(1111)
           content = content + freashKidLi(firstCategory.children[kidCategoryNum]);
         }
         content = content + '</ul>';
@@ -226,6 +228,9 @@ $(document).on('pageInit', '.categories', function (e, id, page) {
 
   function freashAdLi(adListElement) {
     let url = genrateUrl(adListElement.url, adListElement.url_type);
+    if(url==undefined){
+      return ''
+    }
     return '<li>' +
       '       <a href="' + url + '" class="external">' +
       '          <div class="image" data-layzr="' + adListElement.img + '" data-layzrstatus="1" style="background-image: url(' + adListElement.img + ');"></div>' +
