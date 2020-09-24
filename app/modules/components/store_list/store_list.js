@@ -80,7 +80,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
         initNewTopicList(data.data.HomepageAppFeatureList.model_data.fang_list,1)
         initNewTopicList(data.data.HomepageAppFeatureList.model_data.chang_list,2)
         initRecomendAndOnly(data.data.HomepageAppLanmuList.model_data)
-        segmentId = data.data.HomepageAppSegmentGoodsList.model_data[0].id
+        segmentId = data.data.HomepageAppLanmuList.model_data[0].id
       },
       error: function(xhr, type){
         console.log(xhr);
@@ -340,10 +340,10 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     let type = $(this).attr('data-type')
     switch(type){
       case  '1':
-        location.href= `${H5BaseUrl}bookListDetail/${id}`;
+        location.href=  `${H5BaseUrl}feature/${id}/0`;
         break;
       case '2':
-        location.href= `${H5BaseUrl}wineFeature/${id}`;
+        location.href=  `${H5BaseUrl}feature/${id}/0`;
         break;
       case '3':
         location.href= `${H5BaseUrl}miniFeature/${id}`;
@@ -356,7 +356,8 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
           location.href= `${H5BaseUrl}feature/${id}/0`;
         break;
       default :
-        console.log('没有找到这个类型，小老弟，看看是哪里的bug')
+        location.href= `${H5BaseUrl}extinct`;
+        //console.log('没有找到这个类型，小老弟，看看是哪里的bug')
         break;
     }
   })

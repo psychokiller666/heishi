@@ -15,6 +15,30 @@ $(document).on('pageInit','.order_info', function(e, id, page){
   }else{
     H5BaseUrl=`https://h5test.ontheroadstore.com/`
   }
+  var PHPSESSID = init.getCookie('PHPSESSID');
+  var ajaxHeaders = {
+      'phpsessionid': PHPSESSID
+  };
+  let is_proprietary = 1
+  let _orderid = $('.order_view_status').val()
+  var infourl = ApiBaseUrl + '/appv5/orders/'+_orderid;
+  $.ajax({
+      type: "get",
+      url: infourl,
+      dataType: 'json',
+      data: {},
+      headers: ajaxHeaders,
+      success: function (data) {
+        is_proprietary = data.data.is_proprietary
+        // console.log(data.data.is_proprietary)
+        if(is_proprietary==1){
+          $('.huanxin').show()
+        }else{
+          $('.yunxin').show()
+        }
+      }
+
+  });
 
   // 立即购买
   $('.payment_order').click(function(){
@@ -59,17 +83,38 @@ $(document).on('pageInit','.order_info', function(e, id, page){
     var that = this;
     var order_id = $(this).attr('data-order_id');
     $.confirm('你确定收货吗', function () {
-      $.post("/index.php?g=user&m=HsBuyorder&a=order_receipt", {
-        id: order_id
-      }, function (data) {
-        if (data.status == 1) {
-          $.toast('收货成功');
-          $(that).siblings('.delete_order').show();
-          $(that).remove();
-        } else {
-          $.toast(data.info);
-        }
-      });
+      // $.post("/index.php?g=user&m=HsBuyorder&a=order_receipt", {
+      //   id: order_id
+      // }, function (data) {
+      //   if (data.status == 1) {
+      //     $.toast('收货成功');
+      //     $(that).siblings('.delete_order').show();
+      //     $(that).remove();
+      //   } else {
+      //     $.toast(data.info);
+      //   }
+      // });
+      var url = ApiBaseUrl + '/appv2_1/orders/'+order_id+'/received ';
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: 'json',
+            data: {},
+            headers: ajaxHeaders,
+            success: function (data) {
+              if (data.status == 1) {
+                $.toast('收货成功');
+                $(that).siblings('.delete_order').show();
+                $(that).remove();
+              } else {
+                $.toast(data.info);
+              }
+            },
+            error: function (e) {
+              $.toast(data.info);
+            }
+
+        });
     });
   })
   // 删除订单
@@ -77,21 +122,41 @@ $(document).on('pageInit','.order_info', function(e, id, page){
     var that = this;
   	var order_id = $(this).attr('data-order_id');
     $.confirm('确定删除订单吗', function () {
+      // $.ajax({
+      //   type: 'GET',
+      //   url: '/index.php?g=user&m=HsBuyorder&a=order_delete',
+      //   data: {
+      //     id: order_id
+      //   },
+      //   success: function(data){
+      //     if(data.status == 1){
+      //       setTimeout(function(){
+      //         history.go(-1);
+      //       },1000)
+      //     }
+      //     $.toast(data.info);
+      // 	}
+      // })
+      var url = ApiBaseUrl + '/appv2_1/orders/'+order_id+'/received ';
       $.ajax({
-        type: 'GET',
-        url: '/index.php?g=user&m=HsBuyorder&a=order_delete',
-        data: {
-          id: order_id
+        type: "POST",
+        url: url,
+        dataType: 'json',
+        data: {},
+        headers: ajaxHeaders,
+        success: function (data) {
+            if (data.status == 1) {
+              setTimeout(function(){
+                  history.go(-1);
+                },1000)
+            }
+            $.toast(data.info);
         },
-        success: function(data){
-          if(data.status == 1){
-            setTimeout(function(){
-              history.go(-1);
-            },1000)
-          }
+        error: function (e) {
           $.toast(data.info);
-      	}
-      })
+        }
+
+      });
     });
   })
 
@@ -122,7 +187,13 @@ $(document).on('pageInit','.order_info', function(e, id, page){
   })
   // 联系卖家
   $('.relation_seller').click(function(){
-    location.href=`${H5BaseUrl}custServe`
+    	var user_id = $(this).attr('data-uid');
+    if(is_proprietary==1){
+      location.href=`${H5BaseUrl}custServe`
+    }else{
+      location.href = '/User/HsMessage/detail/from_uid/'+user_id+'.html';
+    }
+    
   	// var tel = $(this).attr('data-tel');
   	// var user_id = $(this).attr('data-uid');
   	// var buttons2 = [{
