@@ -32,8 +32,10 @@ $(document).on('pageInit','.order_info', function(e, id, page){
         is_proprietary = data.data.is_proprietary
         // console.log(data.data.is_proprietary)
         if(is_proprietary==1){
+           $('.relation_seller').find('span').text('联系客服')
           $('.huanxin').show()
         }else{
+          $('.relation_seller').find('span').text('私信')
           $('.yunxin').show()
         }
       }
@@ -137,9 +139,9 @@ $(document).on('pageInit','.order_info', function(e, id, page){
       //     $.toast(data.info);
       // 	}
       // })
-      var url = ApiBaseUrl + '/appv2_1/orders/'+order_id+'/received ';
+      var url = ApiBaseUrl + '/appv5/orders/'+order_id;
       $.ajax({
-        type: "POST",
+        type: "delete",
         url: url,
         dataType: 'json',
         data: {},
