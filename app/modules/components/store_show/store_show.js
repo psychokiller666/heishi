@@ -1950,7 +1950,13 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
           url: url,
           dataType: 'json',
           success: function(data){
-              console.log(data)
+              $('.chat_btn').find('.hs-icon').removeClass('chat')
+              if(data.data.post.is_proprietary==1){
+                $('.chat_btn').find('.hs-icon').addClass('chat2')
+              }else{
+                console.log(111)
+                $('.chat_btn').find('.hs-icon').addClass('chat')
+              }
               initAlikeContent(data.data.related_goods)
           },
           error: function(e){
@@ -2141,7 +2147,12 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
             }else{
               _host=`https://h5test.ontheroadstore.com/custServe`
             }
-            window.location.href = `${_host}?id=${obj.id}&price=${obj.price}&tit=${obj.title}&cover=${obj.cover}`
+            if($('.chat_btn').find('.chat2').length){
+              window.location.href = `${_host}?id=${obj.id}&price=${obj.price}&tit=${obj.title}&cover=${obj.cover}`
+            }else{
+              window.location.href=`/User/HsMessage/detail/from_uid/${sellerId}`
+            }
+            
         });
         $(page).find('.shopping_btn').on('click',function(){
             init.sensors.track('buttonClick', {
