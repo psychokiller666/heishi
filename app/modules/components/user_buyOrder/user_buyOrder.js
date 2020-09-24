@@ -106,9 +106,9 @@ $(document).on('pageInit','.buyOrder', function(e, id, page){
       //     $.toast(data.info);
       // 	}
       // })
-      var url = ApiBaseUrl + '/appv2_1/orders/'+order_id+'/received ';
+      var url = ApiBaseUrl + '/appv5/orders/'+order_id;
       $.ajax({
-        type: "POST",
+        type: "delete",
         url: url,
         dataType: 'json',
         data: {},
@@ -205,6 +205,10 @@ $(document).on('pageInit','.buyOrder', function(e, id, page){
             $('.infinite-scroll-preloader').remove();
             $.detachInfiniteScroll($('.infinite-scroll'));
             $('.no_order_tip').show()
+          }
+          if(data.data.orders.length<10){
+            $('.infinite-scroll-preloader').remove();
+            $.detachInfiniteScroll($('.infinite-scroll'));
           }
           init.loadimg();
           loading = false;
