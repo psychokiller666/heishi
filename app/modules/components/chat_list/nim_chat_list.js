@@ -26,7 +26,17 @@ $(document).on('pageInit','.detail', function (e, id, page) {
           sellerID : $(page).find('#user_id').val(),
       })
   }
-
+  var H5BaseUrl = ''
+  var ApiBaseUrl = init.getApiBaseUrl();
+  if(ApiBaseUrl.indexOf('api.')>0){
+    H5BaseUrl=`https://h5.ontheroadstore.com/`
+  }else{
+    H5BaseUrl=`https://h5test.ontheroadstore.com/`
+  }
+  var PHPSESSID = init.getCookie('PHPSESSID');
+  var ajaxHeaders = {
+      'phpsessionid': PHPSESSID
+  };
   var uploadingStatus = false;
   $('.uploading').click(function(){
     if(uploadingStatus){
@@ -43,7 +53,8 @@ $(document).on('pageInit','.detail', function (e, id, page) {
     location.href = '/user/HsBuyorder/order_all.html';
   })
   $('.more').on('click', '.history', function(){
-    location.href = '/user/History/index.html';
+    // location.href = '/user/History/index.html';
+    location.href = H5BaseUrl+'user/track'
   })
   $('.more').on('click', '.complain', function(){
     $('.report_form').show();
@@ -61,13 +72,17 @@ $(document).on('pageInit','.detail', function (e, id, page) {
     if(!content){
       return $.toast('请填写举报原因');
     }
+    let url = ApiBaseUrl + '/appv6_6/addComplain'
     $.ajax({
       type: 'POST',
-      url: '/index.php?g=restful&m=HsUserReporting&a=reporting',
+      url: url,
       data: {
-        be_reported_uid: uid,
-        content: content
+        device_type: 1,
+        type: 2,
+        seller_uid: uid,
+        complain_desc: content
       },
+      headers: ajaxHeaders,
       success: function(data){
         if(data.status == 1){
           $.toast('举报成功');
