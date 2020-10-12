@@ -200,6 +200,9 @@ $(document).on('pageInit','.buyOrder', function(e, id, page){
               c.id = v.id
             })
           })
+          if(pageSize==1){
+            $('.order_list').find('.order_item').remove()
+          }
           $('.order_list').append(orders_tpl(data.data));
           if(pageSize==1&&data.data.orders.length==0){
             $('.infinite-scroll-preloader').remove();
