@@ -31,6 +31,8 @@ $(document).on('pageInit','.order_info', function(e, id, page){
       success: function (data) {
         is_proprietary = data.data.is_proprietary
         // console.log(data.data.is_proprietary)
+        $('.huanxin').hide()
+        $('.yunxin').hide()
         if(is_proprietary==1){
            $('.relation_seller').find('span').text('联系客服')
           $('.huanxin').show()
