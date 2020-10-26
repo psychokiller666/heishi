@@ -1,3 +1,23 @@
+ 
+ .tab_search{
+   display: none;
+   .item_search{
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     border-bottom: 1px solid #E9E9E9;
+     span{
+       width: 2.5rem;
+       line-height: 3em;
+       text-align: center;
+       color: #979797;
+       &.active{
+        border-bottom: 1px solid #151515;
+        color: #151515;
+       }
+     }
+   }
+ }
 .tabs-box{
   display: none;
 }
@@ -143,21 +163,36 @@
     }
   }
   .search_null{
-    padding: 1.33333rem 0 1.6rem;
+    // padding: 1.33333rem 0 1.6rem;
     text-align: center;
-    border-bottom: 0.2rem solid #F5F5F5;
+    // border-bottom: 0.2rem solid #F5F5F5;
     width: 100%;
     .font-dpr(14px);
     color: #8E8E8E;
     display: none;
+    .search_null_msg{
+      text-align: left;
+      text-indent: .5rem;
+      color: #151515;
+    }
     .search_null_bold{
       font-weight: bold;
       color: #202123;
-      .font-dpr(16px);
+      .font-dpr(14px);
       line-height: 1;
       margin-bottom: 0.21333rem;
+      .no_data_icon{
+        background: url(http://img8.ontheroadstore.com/H5_Icon/search_no_data_icon.png) no-repeat center center;
+        background-size: 100% 100%;
+        display: inline-block;
+        width: .6rem;
+        height: .6rem;
+        position: relative;
+        top: .2rem;
+      }
     }
   }
+  
   .conjecture_like{
     padding: 0 0.334rem;
     margin-top: 0.334rem;
@@ -357,7 +392,7 @@
         //   flex-wrap: wrap;
       
       }
-      li {
+      .good_item {
           // border-bottom: 0.0183rem solid #E8E8E8;
           // margin: 0 0.4rem 0.533rem;
           color: #151515;
@@ -462,6 +497,121 @@
                   }
               }
           }
+      }
+      .no_data{
+        text-align: center;
+        line-height: 5rem;
+        .font-dpr(14px);
+      }
+      .user_item{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: .53rem;
+        border-bottom: 1px solid #979797;
+        // background: #F3F3F3;
+        img{
+          width: 1.493rem;
+          height: 1.493rem;
+          border-radius: 100%;
+        }
+        .name_sign{
+          width: 5.8rem;
+          overflow-x: hidden;
+          margin-left: .5rem;
+          span{
+            display: block;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            .font-dpr(13px);
+            font-weight: bold;
+            line-height: 1.5em;
+          }
+          .sign{
+            color: #979797;
+            .font-dpr(13px);
+            font-weight: normal;
+          }
+        }
+        .follow_btn{
+          width: 2rem;
+          height: .6rem;
+          line-height: .6rem;
+          text-align: center;
+          background: linear-gradient(217deg, #A3F8FF 0%, #9B7BFF 100%);
+          border-radius: 0.1333rem;
+          color: #ffffff;
+        }
+      }
+      .topic_item{
+        padding: .53rem;
+        img{
+          width: 2.8rem;
+          height: 2.8rem;
+          border-radius: .1rem;
+        }
+        .topic_cont{
+          width: 6rem;
+          margin-left: .1rem;
+          float: right;
+          height: 2.8rem;
+          position: relative;
+          .title{
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            .font-dpr(18px);
+            font-weight: bold;
+          }
+          .sub_tit{
+            .font-dpr(12px);
+            color: #8E8E8E;
+          }
+          .segment{
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            padding: .05rem .15rem;
+            border: 1px solid #7264F9;
+            border-radius: .1rem;
+            color: #7264F9;
+          }
+        }
+      }
+      .article_item{
+        position: relative;
+        width: 10rem;
+        height: 4.267rem;
+        img{
+          width: 10rem;
+          height: 4.267rem;
+          object-fit: cover;
+        }
+        span,p{
+          position: absolute;
+        }
+        span{
+          color: #ffffff;
+          .font-dpr(8px);
+          font-style:italic
+        }
+        .article_number{
+          left: .5rem;
+          top: .9rem;
+        }
+        .article_date{
+          top: 2rem;
+          left: .5rem;
+        }
+        .tit{
+          left: .5rem;
+          top: 2.5rem;
+          width: 9rem;
+          .font-dpr(14px);
+          font-weight: bold;
+
+        }
       }
     }
   }
