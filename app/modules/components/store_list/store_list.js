@@ -95,7 +95,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     }
     let str = ``
     data.forEach(v=>{
-      if(!(v.url_type==2||v.url_type==16||v.url_type==17||v.url_type==18||v.url_type==19||v.url_type==74))
+      if(!(v.url_type==16||v.url_type==17||v.url_type==18||v.url_type==19||v.url_type==74))
       str+=`<div class="swiper-slide">
         <a class="external" href='${genrateUrl(v.url,v.url_type)}'>
           <img src="${v.image}?x-oss-process=image/resize,m_lfit,w_880/quality,q_80" />
@@ -371,10 +371,11 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
       return `/Portal/HsArticle/index/id/${url}.html`
       // return url
     }
-    // if (url_type === 2 || url_type === '2') {
-    //   // return `/Portal/HsArticle/culture/id/${url}.html`
-    //   return url
-    // }
+    if (url_type === 2 || url_type === '2') {
+      let id = url.split('=')[1]
+      // return `/Portal/HsArticle/culture/id/${url}.html`
+      return `${H5BaseUrl}article/${id}`
+    }
     if (url_type === 3 || url_type === '3') {
       return `/HsProject/index/pid/${url}.html`
     }

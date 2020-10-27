@@ -224,9 +224,9 @@ var SearchInit = function () {
 	function createDomUserList(data){
 		let str = ''
 		data.forEach(v=>{
-			str+=`<li class='user_item' data-id="${v.id}">
-			<img src='${v.avatar}'>
-			<div class="name_sign">
+			str+=`<li class='user_item' >
+			<img class="to_user" data-id="${v.id}" src='${v.avatar}'>
+			<div  data-id="${v.id}"  class="name_sign to_user">
 				<span>${v.name}</span>
 				<span class="sign">${v.signature}</span>
 			</div>
@@ -244,9 +244,10 @@ var SearchInit = function () {
 				<div class="topic_cont">
 					<p class="title">${v.title}</p>
 					<p class="sub_tit">${v.sub_title}</p>
-					<span class="segment">${v.group[0].name}</span>
+					
 				</div>
 			</li>`
+			// <span class="segment">${v.group[0].name}</span>
 		}))
 		return str
 	}
@@ -265,6 +266,7 @@ var SearchInit = function () {
 	}
 	//关注按钮
 	$('.search_goods_list').on('click','.follow_btn',function(){
+
 		let loginStatus = common.prototype.ifLogin();
 		let uid = $(this).attr('data-uid')
 		let that = this
@@ -289,7 +291,8 @@ var SearchInit = function () {
 	})
 	let preBaseUrl = common.prototype.getVueBaseUrl()
 	//跳转用户个人中心
-	$('.search_goods_list').on('click','.user_item',function(){
+	$('.search_goods_list').on('click','.to_user',function(){
+		
 	 let uid =	$(this).attr('data-id')
 	 location.href = `${preBaseUrl}seller/${uid}`
 	})
@@ -699,22 +702,34 @@ var SearchInit = function () {
             $('.search_correlation').hide();
             var items = transData(data.data.items);
             //如果是0  添加分类按钮
-            // if(start==0&&data.data.catelist.length){
-            // 	let cateList = data.data.catelist[0]
-            // 	let jumpCateHtml = `
-            // 	<a class="articles external" href="/HsCategories/category_index/id/${cateList.category_id}.html">
-            // 		<div class="jump_cate_box">
-            // 			<img class="cate_left" src="${cateList.category_icon}">
-            // 			<div class="cate_right">
-            // 				<p class="name">${cateList.category_name}</p>
-            // 				<p class="desc">${cateList.category_desc}</p>
-            // 			</div>
-            // 			<div class="btn">去分类逛逛</div>
-            // 		</div>
-            // 	</a>
-            // 	`
-            // 	$('.search_goods_list ul').append(jumpCateHtml);
-            // }
+            if(start==0&&data.data.catelist.length){
+            	let cateList = data.data.catelist
+            	// let jumpCateHtml = `
+            	// <a class="articles external" href="/HsCategories/category_index/id/${cateList.category_id}.html">
+            	// 	<div class="jump_cate_box">
+            	// 		<img class="cate_left" src="${cateList.category_icon}">
+            	// 		<div class="cate_right">
+            	// 			<p class="name">${cateList.category_name}</p>
+            	// 			<p class="desc">${cateList.category_desc}</p>
+            	// 		</div>
+            	// 		<div class="btn">去分类逛逛</div>
+            	// 	</div>
+            	// </a>
+            	// `
+							// $('.search_goods_list ul').append(jumpCateHtml);
+							let sHtml = `<li class="cate_list">`
+							cateList.forEach(v=>{
+								sHtml+=`
+								<a class="articles external" href="/HsCategories/category_index/id/${v.category_id}.html">
+									<div class="jump_cate_box">
+										<img class="cate_left" src="${v.category_icon}">
+									</div>
+								</a>
+								`
+							})
+							sHtml+= `</li>`
+							$('.search_goods_list ul').append(sHtml);
+            }
             output(items);
           }
 

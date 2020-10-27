@@ -2,6 +2,7 @@
  .tab_search{
    display: none;
    .item_search{
+    .font-dpr(14px);
      display: flex;
      justify-content: center;
      align-items: center;
@@ -11,6 +12,7 @@
        line-height: 3em;
        text-align: center;
        color: #979797;
+       .font-dpr(14px);
        &.active{
         border-bottom: 1px solid #151515;
         color: #151515;
@@ -392,6 +394,16 @@
         //   flex-wrap: wrap;
       
       }
+      .cate_list{
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        width: 100%;
+        overflow-x: scroll;
+        a{
+          display: inline-block;
+        }
+      }
       .good_item {
           // border-bottom: 0.0183rem solid #E8E8E8;
           // margin: 0 0.4rem 0.533rem;
@@ -535,6 +547,7 @@
           }
         }
         .follow_btn{
+          .font-dpr(13px);
           width: 2rem;
           height: .6rem;
           line-height: .6rem;
