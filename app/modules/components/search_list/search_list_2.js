@@ -156,6 +156,8 @@ var SearchInit = function () {
 					}
 					if (data.data.total_pages == 1) {
 						$('.infinite-scroll-preloader').hide();
+					}
+					if(start==0){
 						$('.search_goods_list ul').append(`<p class="top_tit">相关专题</p>`);
 					}
 					last_page = data.data.total_pages;
@@ -702,7 +704,7 @@ var SearchInit = function () {
             $('.search_correlation').hide();
             var items = transData(data.data.items);
             //如果是0  添加分类按钮
-            if(start==0&&data.data.catelist.length){
+            if(start==0&&data.data.catelist&&data.data.catelist.length){
             	let cateList = data.data.catelist
             	// let jumpCateHtml = `
             	// <a class="articles external" href="/HsCategories/category_index/id/${cateList.category_id}.html">
@@ -723,6 +725,7 @@ var SearchInit = function () {
 								<a class="articles external" href="/HsCategories/category_index/id/${v.category_id}.html">
 									<div class="jump_cate_box">
 										<img class="cate_left" src="${v.category_icon}">
+										<p class="name">${v.category_name}</p>
 									</div>
 								</a>
 								`

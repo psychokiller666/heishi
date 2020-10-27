@@ -344,15 +344,15 @@
      }
       .jump_cate_box{
         height: 1.5rem;
-        padding: .4rem 0;
-        margin: 0 .4rem .4rem;
-        border-bottom:  0.0183rem solid #E8E8E8;
-      
+        padding: .5rem 0;
+        margin: 0 .3rem .3rem;
+        // border-bottom:  0.0183rem solid #E8E8E8;
+        overflow: hidden;
         .cate_left{
           float: left;
           width: 1.5rem;
           height: 1.5rem;
-          margin-right: .4rem;
+          margin-right:0  .2rem;
           border-radius: .2rem;
         }
         .cate_right{
@@ -363,6 +363,7 @@
             width: 4rem;
             height: .75rem;
             overflow: hidden;
+            
           }
           .name{
             font-weight: bold;
@@ -402,7 +403,21 @@
         overflow-x: scroll;
         a{
           display: inline-block;
+          .name{
+            text-align: center;
+            // font-weight: bold;
+            color: #151515;
+            .font-dpr(12px);
+            
+            // overflow: hidden;
+          }
         }
+      }
+      .top_tit{
+        line-height: 1rem;
+        text-indent: .4rem;
+        .font-dpr(16px);
+        font-weight: bold;
       }
       .good_item {
           // border-bottom: 0.0183rem solid #E8E8E8;
