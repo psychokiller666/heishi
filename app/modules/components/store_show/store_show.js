@@ -19,7 +19,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   if (page.selector == '.page'){
     return false;
   }
-  $('title').text('公路商店Store');
+  $('title').text('公路商店');
 
   // 设置分享url 
   var share_url = window.location.href;
@@ -117,7 +117,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
 
     var share_data = {
     title: page.find('.frontcover .title').text(),
-    desc: page.find('.content_details').find('div').text(),
+    desc: page.find('.sub_title').text()?page.find('.sub_title').text():page.find('.content_details').find('div').text(),
     link: share_url,
     img: page.find('.frontcover .image').data('share')
   };
