@@ -135,6 +135,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     if(!data||data.length==0){
       return
     }
+    $('.seller_recommend').find('.seller_goods_list').html('')
     let str = ``
     data.forEach((v,i)=>{
       str+=`<div class="seller_item" data-author="${v.userinfo.author}">
