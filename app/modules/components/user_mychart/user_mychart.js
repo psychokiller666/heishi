@@ -208,7 +208,9 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
     })
   })
   // 编辑
+  let isEdit = false
   page.on('click', '.edit_shopping_cart', function(){
+    isEdit = true
     $(this).css('display', 'none');
     $('.edit_finish').css('display', 'block');
     $('.purchase').css('display', 'none');
@@ -232,6 +234,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
   })
   // 完成
   page.on('click', '.edit_finish', function(){
+    isEdit = false
     $(this).css('display', 'none');
     $('.edit_shopping_cart').css('display', 'block');
     $('.purchase').css('display', 'block');
@@ -421,12 +424,6 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
     var that = this;
     var $item = $(that).parents('.item');
     var noInventory = $item.find('.checkbox').hasClass('noInventory');
-    if($item.attr('num_editing')==='1'){
-      $(that).addClass('minus_1')
-      return;//接口正在发送信息不允许点击
-    }else{
-      $(that).removeClass('minus_1')
-    }
     if(noInventory){
       return;
     }
@@ -437,12 +434,17 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
     //数量
     var n = $(that).parents('.message').find('.countNum').text();
     n--;
+    if(n=='1'){
+      $(that).addClass('minus_1')
+    }else{
+      $(that).removeClass('minus_1')
+    }
     if(n < 1){
       $(that).addClass('minus_1')
       $.toast('最小购买数量是一件')
       return;
     }else{
-      $(that).removeClass('minus_1')
+      // $(that).removeClass('minus_1')
     }
     // var minNum = -1;//默认设置减1
     //限购判断 减的时候不做判断
@@ -1492,14 +1494,24 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
             };
         }
         //单选控制
-        if(baoguanType){
+       if(!isEdit){
+        if(baoguanType!=''){
           if($(that).parents('.item').attr('data-isbaoguan')!=baoguanType){
-           $.toast('海外直邮/保税仓商品需单独结算')
+          let thisType = $(that).parents('.item').attr('data-isbaoguan')
+           let msg;
+           if(baoguanType==0){
+             let baoguan = thisType==1?'保税仓':'海外直邮'
+              msg = '当前所选商品不可以与'+baoguan+'商品同时结算，请分别结算。'
+           }else{
+              msg = baoguanType==1?'保税仓商品需单独结算':'海外直邮商品需单独结算';
+           }
+           $.toast(`${msg}`)
             return
           }
         }
-        if(!baoguanType){
+        if(baoguanType==''){
           baoguanType = $(that).parents('.item').attr('data-isbaoguan')
+        }
         }
         //商品选择
         if(status){
@@ -1524,9 +1536,9 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
                 $(that).parents('.list').find('.checkboxNormal').each(function(){ 
                     if(n == 1){
                         $(this).addClass("affirm");
-                        if(baoguanType){
+                        if(baoguanType&&!isEdit){
                           if($(this).parents('.item').attr('data-isbaoguan')!=baoguanType){
-                            $.toast('海外直邮/保税仓商品需单独结算')
+                            $.toast('购物车内含多种发货类型商品（海外直邮/保税仓发货），请分别结算')
                             select(0)
                              return false
                            }
@@ -1542,9 +1554,9 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
               $(that).parents('.list').find('.checkboxSale').each(function(){
                 if(n == 1){
                     $(this).addClass("affirm");
-                    if(baoguanType){
+                    if(baoguanType&&!isEdit){
                       if($(this).parents('.item').attr('data-isbaoguan')!=baoguanType){
-                        $.toast('海外直邮/保税仓商品需单独结算')
+                        $.toast('购物车内含多种发货类型商品（海外直邮/保税仓发货），请分别结算')
                         select(0)
                          return false
                        }
@@ -1560,7 +1572,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
                 $('.checkbox').each(function(){
                     if(n == 1){
                         $(this).addClass("affirm");
-                        if(baoguanType){
+                        if(baoguanType&&!isEdit){
                           if($(this).parents('.item').attr('data-isbaoguan')!=baoguanType){
                             $.toast('购物车内含多种发货类型商品（海外直邮/保税仓发货），请分别结算')
                             select(0)
