@@ -54,7 +54,6 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
       chartData = JSON.parse($cartData.html());
       initLimitBuy(chartData);
   }
-
   //满减json
   var $saleInfo = $('.saleInfo');
   var saleData = null;
@@ -423,7 +422,10 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
     var $item = $(that).parents('.item');
     var noInventory = $item.find('.checkbox').hasClass('noInventory');
     if($item.attr('num_editing')==='1'){
+      $(that).addClass('minus_1')
       return;//接口正在发送信息不允许点击
+    }else{
+      $(that).removeClass('minus_1')
     }
     if(noInventory){
       return;
@@ -436,8 +438,11 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
     var n = $(that).parents('.message').find('.countNum').text();
     n--;
     if(n < 1){
+      $(that).addClass('minus_1')
       $.toast('最小购买数量是一件')
       return;
+    }else{
+      $(that).removeClass('minus_1')
     }
     // var minNum = -1;//默认设置减1
     //限购判断 减的时候不做判断
@@ -472,7 +477,10 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
         return;//接口正在发送信息不允许点击
     }
     if(noInventory){
+      $(that).addClass('add_1')
       return;
+    }else{
+      $(that).removeClass('add_1')
     }
     //限购显示遮罩不可点击
     if($item.attr('data-limit_mask')==='1'){
@@ -482,16 +490,22 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
     var n = $(that).parents('.message').find('.countNum').text();
     var m = $(that).parents('.message').find('.remain span').text();
     n++;
-
+    $(that).parent('.count').find('.minus').removeClass('minus_1')
     //限购判断，在限购中同时对库存进行判断
     var limitNum = fixLimitNum(n, $item);
     if(n > limitNum){
+      $(that).addClass('add_1')
         return ;
+    }else{
+      $(that).removeClass('add_1')
     }
 
     if(n > m ) {
+      $(that).addClass('add_1')
       $.toast('当前库存数量'+m);
       return;
+    }else{
+      $(that).removeClass('add_1')
     }
 
     // $(that).parents('.message').find('.number').text(n);
@@ -566,6 +580,9 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
       }
     })
     $('.price').find('span').text(num);
+    if(num==0){
+      baoguanType = ''
+    }
     countFull()
   }
   //计算满减的价格
@@ -597,7 +614,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
       $('.fix_price').removeClass('active')
     }
     //修改满减的msg
-    console.log(chartData)
+    // console.log(chartData)
     _saleData.forEach(v=>{
       let msg = ''
       for (let i = 0; i < v.sp_level.length; i++) {
@@ -1433,8 +1450,8 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
             setGoodsNum(targetNum, $item);
         });
     }
-
-    //selectBox的click函数
+    let baoguanType = ''
+    //selectBox的click函数 单选 选择框
     function selectBoxClick(that) {
         // var that = this;
         var status = $(that).find('.checkbox').hasClass('affirm');
@@ -1444,9 +1461,12 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
         var inventory_status = $(that).find('.checkbox').attr('data-noInventory');
         if(inventory_status == 1 || inventory_status == 0){
             if(status){
+                //取消店铺全选
+                
                 el.removeClass("affirm");
                 select(0);
             }else{
+                //设置店铺全选
                 el.addClass("affirm");
                 select(1);
             }
@@ -1471,7 +1491,16 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
                 return;
             };
         }
-
+        //单选控制
+        if(baoguanType){
+          if($(that).parents('.item').attr('data-isbaoguan')!=baoguanType){
+           $.toast('海外直邮/保税仓商品需单独结算')
+            return
+          }
+        }
+        if(!baoguanType){
+          baoguanType = $(that).parents('.item').attr('data-isbaoguan')
+        }
         //商品选择
         if(status){
             el.removeClass("affirm");
@@ -1495,6 +1524,15 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
                 $(that).parents('.list').find('.checkboxNormal').each(function(){ 
                     if(n == 1){
                         $(this).addClass("affirm");
+                        if(baoguanType){
+                          if($(this).parents('.item').attr('data-isbaoguan')!=baoguanType){
+                            $.toast('海外直邮/保税仓商品需单独结算')
+                            select(0)
+                             return false
+                           }
+                        }else{
+                          baoguanType = $(this).parents('.item').attr('data-isbaoguan')
+                        }
                     }else{
                         $(this).removeClass("affirm");
                     }
@@ -1504,6 +1542,15 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
               $(that).parents('.list').find('.checkboxSale').each(function(){
                 if(n == 1){
                     $(this).addClass("affirm");
+                    if(baoguanType){
+                      if($(this).parents('.item').attr('data-isbaoguan')!=baoguanType){
+                        $.toast('海外直邮/保税仓商品需单独结算')
+                        select(0)
+                         return false
+                       }
+                    }else{
+                      baoguanType = $(this).parents('.item').attr('data-isbaoguan')
+                    }
                 }else{
                     $(this).removeClass("affirm");
                 }
@@ -1513,7 +1560,17 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
                 $('.checkbox').each(function(){
                     if(n == 1){
                         $(this).addClass("affirm");
+                        if(baoguanType){
+                          if($(this).parents('.item').attr('data-isbaoguan')!=baoguanType){
+                            $.toast('购物车内含多种发货类型商品（海外直邮/保税仓发货），请分别结算')
+                            select(0)
+                             return false
+                           }
+                        }else{
+                          baoguanType = $(this).parents('.item').attr('data-isbaoguan')
+                        }
                     }else{
+                        baoguanType = ''
                         $(this).removeClass("affirm");
                     }
                 })
