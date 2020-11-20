@@ -442,6 +442,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
     }else{
       $(that).removeClass('minus_1')
     }
+    $(that).parent('.count').find('.add').removeClass('add_1')
     if(n < 1){
       $(that).addClass('minus_1')
       $.toast('最小购买数量是一件')
@@ -504,7 +505,6 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
     }else{
       $(that).removeClass('add_1')
     }
-
     if(n > m ) {
       $(that).addClass('add_1')
       $.toast('当前库存数量'+m);
@@ -512,7 +512,9 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
     }else{
       $(that).removeClass('add_1')
     }
-
+    if(n==m){
+      $(that).addClass('add_1')
+    }
     // $(that).parents('.message').find('.number').text(n);
     // $(that).parents('.message').find('.countNum').text(n);
     $item.attr('num_editing','1');
