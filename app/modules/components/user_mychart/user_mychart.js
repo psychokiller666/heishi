@@ -238,6 +238,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
   // 完成
   page.on('click', '.edit_finish', function(){
     isEdit = false
+    baoguanType = ''
     $(this).css('display', 'none');
     $('.edit_shopping_cart').css('display', 'block');
     $('.purchase').css('display', 'block');
@@ -1500,7 +1501,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
         }
         //单选控制
        if(!isEdit){
-        if(baoguanType!=''){
+        if(baoguanType!=''&& $(that).parents('.item').attr('data-isbaoguan')!=undefined){
           if($(that).parents('.item').attr('data-isbaoguan')!=baoguanType){
           let thisType = $(that).parents('.item').attr('data-isbaoguan')
            let msg;
@@ -1542,7 +1543,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
                     if(n == 1){
                         $(this).addClass("affirm");
                         if(baoguanType&&!isEdit){
-                          if($(this).parents('.item').attr('data-isbaoguan')!=baoguanType){
+                          if($(this).parents('.item').attr('data-isbaoguan')!=undefined&&$(this).parents('.item').attr('data-isbaoguan')!=baoguanType){
                             $.toast('购物车内含多种发货类型商品（海外直邮/保税仓发货），请分别结算')
                             select(0)
                              return false
@@ -1560,7 +1561,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
                 if(n == 1){
                     $(this).addClass("affirm");
                     if(baoguanType&&!isEdit){
-                      if($(this).parents('.item').attr('data-isbaoguan')!=baoguanType){
+                      if($(this).parents('.item').attr('data-isbaoguan')!=undefined&&$(this).parents('.item').attr('data-isbaoguan')!=baoguanType){
                         $.toast('购物车内含多种发货类型商品（海外直邮/保税仓发货），请分别结算')
                         select(0)
                          return false
@@ -1578,7 +1579,7 @@ $(document).on('pageInit','.user-mychart', function(e, id, page){
                     if(n == 1){
                         $(this).addClass("affirm");
                         if(baoguanType&&!isEdit){
-                          if($(this).parents('.item').attr('data-isbaoguan')!=baoguanType){
+                          if($(this).parents('.item').attr('data-isbaoguan')!=undefined&&$(this).parents('.item').attr('data-isbaoguan')!=baoguanType){
                             $.toast('购物车内含多种发货类型商品（海外直邮/保税仓发货），请分别结算')
                             select(0)
                              return false
