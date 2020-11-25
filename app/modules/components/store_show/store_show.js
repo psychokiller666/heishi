@@ -528,19 +528,25 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
 
 
   // 加减
+  $('.buy').find('.min').addClass('min_1')
   $('.buy').find('.min').click(function() {
     if($('.buy .type_item').find('.active').length == 0){
       return $.toast('请选择款式');
     }
     var num = parseInt($('.buy').find('.countNum').attr('data-num'));
     if(num <= 1){
+      $('.buy').find('.min').addClass('min_1')
       return;
       // return $.toast('最少选择1个');
     }
     num = num - 1;
+    if(num<=1){
+      $('.buy').find('.min').addClass('min_1')
+    }
     num = limitTypeNum(num);
     $('.buy').find('.countNum').attr('data-num', num);
     $('.buy').find('.countNum').text(num);
+    $('.buy').find('.add').removeClass('add_1')
   })
   $('.buy').find('.add').click(function() {
     if($('.buy .type_item').find('.active').length == 0){
@@ -549,12 +555,14 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     var num = parseInt($('.buy').find('.countNum').attr('data-num'));
     var remain = $(this).attr('data-remain');
     if(num >= remain){
+      $('.buy').find('.add').addClass('add_1')
       return $.toast('当前库存为' + remain + '件');
     }
     num = num + 1;
     num = limitTypeNum(num);
     $('.buy').find('.countNum').attr('data-num', num);
     $('.buy').find('.countNum').text(num);
+    $('.buy').find('.min').removeClass('min_1')
   })
 
   function operation(that, type) {

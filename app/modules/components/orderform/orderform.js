@@ -147,18 +147,27 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
         }
         location.href = '/user/HsAddress/show.html?object_id='+object_id+'&mid='+mid+'&number='+number;
       }
+  if(parseInt($('.countNum').attr('data-num'))<=1){
+    $('.min').addClass('min_1')
+  }
   $('.min').click(function(){
     var num = parseInt($('.countNum').attr('data-num'));
     if(num <= 1){
+      $('.min').addClass('min_1')
       return $.toast('最少选择1个');
     }
     num = num - 1;
+    if(num<=1){
+      $('.min').addClass('min_1')
+    }
     num = limitGoodsNum(num);
     $('.countNum').attr('data-num', num);
     $('.countNum').text(num);
     $('.good_num').attr('data-num', num);
     $('.good_num').find('span').text(num);
     $('.quanyi').find('.num').text('x'+num);
+    // $('.min').addClass('min_1')
+    $('.add').removeClass('add_1')
     all_price();
   })
   //输入框失去焦点时
@@ -273,6 +282,7 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
     var num = parseInt($('.countNum').attr('data-num'));
     var remain = $(this).attr('data-remain');
     if(num >= remain){
+      $('.add').addClass('add_1')
       return $.toast('当前库存为' + remain + '件');
     }
     num = num + 1;
@@ -282,6 +292,7 @@ $(document).on('pageInit','.orderform', function (e, id, page) {
     $('.good_num').attr('data-num', num);
     $('.good_num').find('span').text(num);
     $('.quanyi').find('.num').text('x'+num);
+    $('.min').removeClass('min_1')
     all_price();
   })
   all_price();
