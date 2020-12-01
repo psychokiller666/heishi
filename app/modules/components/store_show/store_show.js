@@ -1024,10 +1024,10 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     if(GV.device == 'any@weixin') {
       var preview_list = [];
       $('.previewImage').forEach(v=>{
-        preview_lists.push($(v).attr('data-preview'))
+        preview_list.push('https:'+$(v).attr('data-preview'))
       })
       wx.previewImage({
-        current: $(this).data('data-preview'),
+        current: 'https:'+$(this).attr('data-preview'),
         urls: preview_list
       });
     } else {
