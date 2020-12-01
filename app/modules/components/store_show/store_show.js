@@ -1018,7 +1018,32 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         var id= $(this).attr('data-id');
         location.href = '/User/index/index/id/'+id+'.html';
     });
-
+  //顶部banner预览
+  var previewImages = $('.previewImage')
+  page.on('click','.previewImage',function(){
+    if(GV.device == 'any@weixin') {
+      var preview_list = [];
+      $('.previewImage').forEach(v=>{
+        preview_lists.push($(v).attr('data-preview'))
+      })
+      wx.previewImage({
+        current: $(this).data('data-preview'),
+        urls: preview_list
+      });
+    } else {
+      var preview_lists = [];
+      
+      $('.previewImage').forEach(v=>{
+        preview_lists.push($(v).attr('data-preview'))
+      })
+      var previewimage = $.photoBrowser({
+        photos : preview_lists,
+        container : '.container',
+        type: 'popup'
+      })
+      previewimage.open();
+    }
+  })
   // 微信预览图片
   var images = $('.images');
   page.on('click','.images ul li',function(){
