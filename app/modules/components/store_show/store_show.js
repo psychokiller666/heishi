@@ -1708,12 +1708,12 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         success: function(data){
           if(data.status==1){
             if(data.data.show_list){
-              initRecommend1(data.data.show_list) 
+              // initRecommend1(data.data.show_list) 
             }else{
-              initRecommendNone()
+              // initRecommendNone()
             }
             if(data.data.image_list){
-              initRecommend2(data.data.image_list)
+              // initRecommend2(data.data.image_list)
             }
             if(data.data.goods_feature){
               initFeatureList(data.data.goods_feature)
@@ -1727,17 +1727,21 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
     function initRecommendNone(){
       let str = `<div class="tit_1">
-        <span class="float_left">买家秀</span>
+        <span class="float_left">公共区</span>
       </div>
       <img class="no_res" src="http://img8.ontheroadstore.com/H5_Icon/article_no_show.png" />
       `
       $('.show_txt').html(str)
     }
     function initRecommend1(data){
+      // console.log(data)
       let str = `<div class="tit">
-        <span class="float_left">买家秀</span>
+        <span class="float_left">公共区</span>
         <span class="float_right jump_buy_show">查看全部<i></i></span>
       </div>`
+      // <div class="float_right">
+      //  手一哆嗦抢购了${fixNumber(v.order_goods_count)}件
+      // </div>
       data.forEach((v,idx)=>{
         str+= `<div class="${idx===0?'res_item':''}">
         <div class="user_info">
@@ -1748,11 +1752,12 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
             <p class="name">${v.user_nickname}</p>
             <p class="time">${v.created_at}</p>
           </div>
-          <div class="float_right">
-          手一哆嗦抢购了${fixNumber(v.order_goods_count)}件
-          </div>
+          
         </div>
-        <div class="msg">${v.show_text}</div>
+        <div class="msg">${formatTxt(v.show_text)}</div>
+        <div class="image_list">
+          ${initImageList(v.image_list)}
+        </div>
         <div class="res_raise">
           
           <span class="res"><i class="jump_buy_show"></i>${fixNumber(v.count_reply)}</span>
@@ -1760,9 +1765,40 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
         </div>
         </div>`
       })
+      //加上最后的进公共区看一眼
+      str+=`<div class="gg_bot jump_buy_show"></div>`
       $('.show_txt').html(str)
     }
-    
+    function formatTxt(val){
+      if(val){
+       val = val.replace(/#[\u4e00-\u9fa5_a-zA-Z0-9]+/gi,(v)=>{
+          let str = ''
+          str = `<a style="color:#114FFF;" herf="javascript:;">${v}</a>`
+          return str
+        })
+      }
+      
+      return val
+    }
+    function initImageList(data){
+      let str = ""
+      let len = 0
+      if(data.length>4){
+        len = 9
+      }else if(data.length>=4){
+        len = 4
+      }else if(data-length>=3){
+        len = 3
+      }else if(data-length>=2){
+        len = 4
+      }else{
+        len = 1
+      }
+      data.forEach(v=>{
+        str+=`<img class="img_${len}" src="${v}" />`
+      })
+      return str
+    }
     function initRecommend2(data){
       let str = ''
       let num = 0
@@ -1922,9 +1958,9 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     //跳转去买家秀
     $('.buyer_show').on('click','.jump_buy_show',function(){
       if(ApiBaseUrl.indexOf('api.')>0){
-        location.href=`https://h5.ontheroadstore.com/buyShow/${goodsId}`
+        location.href=`https://h5.ontheroadstore.com/publicArea/${goodsId}`
       }else{
-        location.href=`https://h5test.ontheroadstore.com/buyShow/${goodsId}`
+        location.href=`https://h5test.ontheroadstore.com/publicArea/${goodsId}`
       }
     })
     //跳转去满减活动
@@ -2007,10 +2043,26 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
               if(data.data.post.is_proprietary==1){
                 $('.chat_btn').find('.hs-icon').addClass('chat2')
               }else{
-                console.log(111)
+                // console.log(111)
                 $('.chat_btn').find('.hs-icon').addClass('chat')
               }
               initAlikeContent(data.data.related_goods)
+              if(data.data.show_list){
+                initRecommend1(data.data.show_list)
+              }
+              if(data.data.post.tax_desc){
+                $('.taxation').show()
+                $('.taxation').find('.dis_select_type').html(data.data.post.tax_desc.name)
+                $('.taxation').click(function(){
+                 $('.taxation_layer').show()
+                 $('.taxation_layer').find('.content_desc_txt').html(data.data.post.tax_desc.desc)
+                 $('.taxation_layer').click(function(){
+                  $('.taxation_layer').hide()
+                 })
+                })
+              }else{
+                $('.taxation').hide()
+              }
           },
           error: function(e){
               console.log('getLotteryUser err: ',e);

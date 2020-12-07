@@ -530,7 +530,7 @@ function setSensorsHeader(){
         var obj = sensors.getPresetProperties();
         obj.platformType = 'H5';
         xhr.setRequestHeader('SCProperties',encodeURI(JSON.stringify(obj)));
-        xhr.setRequestHeader('version','4.8.5'); 
+        xhr.setRequestHeader('version','4.9.0'); 
     }
 };
 
