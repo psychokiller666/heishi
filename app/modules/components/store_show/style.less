@@ -31,21 +31,22 @@
         }
         .label{
             width: 1.28rem;
-            color: #151515;
+            color: #888888;
             float: left;
             line-height: .82rem;
             .font-dpr(13px);
-            font-weight: 900;
+            font-weight: 400;
         }
         
         .center{
-            width: 4.2rem;
+            width: 8.2rem;
             margin-left: .2rem;
             line-height: .82rem;
             float: left;
-            color: #979797;
+            color: #ffffff;
+            text-align: right;
             .font-dpr(12px);
-            font-weight: 100;
+            font-weight: 500;
         }
         .to_list{
             color: #AFAFAF;
@@ -526,8 +527,7 @@
         }
         .select_wrap{
             position: fixed;
-            top: 0;
-            bottom: 0;
+            top: 4rem;
             margin: auto!important;
             right: 0;
             z-index: 100000;
@@ -805,6 +805,7 @@
             transform: translateY(-50%);
         }
     }
+   
     .select_wrap,.select_specs{
         height: 1.173rem;
         line-height: 1.173rem;
@@ -818,11 +819,11 @@
         }
         .hs-cf;
         .label{
-            color: #000000;
+            color: #888888;
             width: 1.28rem;
             float: left;
             .font-dpr(13px);
-            font-weight:600;
+            font-weight: 400;
         }
         .last{
             position: absolute;
@@ -839,9 +840,9 @@
             width: 7.78rem;
             height: 100%;
             z-index: 2;
-            color:#8F8F8F;
-            font-weight:300;
-            .font-dpr(12px);
+            columns: #151515;;
+            font-weight: 500;
+            .font-dpr(13px);
             &:after{
                 content: '\e512';
                 display: block;
@@ -914,7 +915,23 @@
         padding: 0 .4rem;
         background: #efefef;
     }
-   
+    .taxation{
+        padding: 0 .4rem;
+        background: #ffffff;
+        margin: 0;
+        .dis_select_type{
+            .font-dpr(13px);
+            vertical-align: middle;
+        }
+        i{
+            display: inline-block;
+            width: .4rem;
+            height: .4rem;
+            background: url(//img8.ontheroadstore.com/H5_Icon/good_detail_tax_icon.png) no-repeat center center;
+            background-size: cover;
+            vertical-align: middle;
+        }
+    }
     .delivery_time_wrap{
         display: none;
         height: 1.173rem;
@@ -926,16 +943,19 @@
         background: #979797;
         .hs-cf;
         .delivery_time_label{
-            color: #000;
+            color: #888888;
             width: 1.28rem;
             float: left;
+            font-weight: 400;
+            .font-dpr(13px);
         }
         .delivery_time_txt{
-            color: #FFFFFF;
+            color: #151515;
             position: relative;
             display: inline-block;
             width: 7.78rem;
             height: 100%;
+            font-weight: 500;
             .font-dpr(12px);
             &:after{
                 content: '\e512';
@@ -945,7 +965,7 @@
                 top: 50%;
                 right: 0;
                 transform: translateY(-50%);
-                color: #FFFFFF;
+                color: #979797;
             }
         }
 
@@ -1442,6 +1462,7 @@
                 border-radius: 50%;
                 float: left;
                 margin-right: 0.3rem;
+                object-fit: cover
             }
             .user_name{
                 .font-dpr(14px);
@@ -2057,7 +2078,7 @@
         }
     }
 }
-.specs{
+.taxation_layer,.specs{
     width: 100%;
     height: 100%;
     
@@ -2670,6 +2691,10 @@
     bottom: 0; 
     left: 0;
 }
+.duosuo_list{
+    width: 10rem;
+    .torem(height,86)
+}
 .buyer_show{
     .font-dpr(14px);
     .float_left{
@@ -2679,15 +2704,23 @@
         float: right;
     }
     .show_txt{
-        .torem(width,670);
+        .torem(width,700);
         margin: 0 auto;
         position: relative;
-       
+        .gg_bot{
+            .torem(width,750);
+            .torem(height,108); 
+            background: url(https://img8.ontheroadstore.com/H5_Icon/good_detail_gg_bottom.png);
+            background-size: 100% 100%;
+            position: relative;
+            .torem(left,-25)
+        }
         .res_item{
             
         }
         .tit{
             .torem(height,74);
+            .torem(line-height,74);
             color: #151515;
             position: relative;
             &::after{
@@ -2695,18 +2728,20 @@
                 display: block;
                 position: absolute;
                 .font-dpr(18px)!important;
-                top: 50%;
-                right: .1rem;
+                top: 0%;
+                // right: .1rem;
                 font-family: "iconfont"!important;
                 color: #8E8E8E;
-                -webkit-transform: translateY(-104%);
-                transform: translateY(-104%);
+                right: 0;
+            //     -webkit-transform: translateY(-104%);
+            //     transform: translateY(-104%);
             }
            .float_right{
-            .font-dpr(12px);
+            .font-dpr(13px);
             color: #8E8E8E;
             position: relative;
-            margin-right: .58rem;
+            margin-right: .4rem;
+            font-weight: bold;
            }
            .float_left{
             .font-dpr(17px);
@@ -2717,6 +2752,7 @@
         }
         .tit_1{
             .torem(height,74);
+            .torem(line-height,74);
             color: #151515;
             position: relative;
             .float_left{
@@ -2743,14 +2779,16 @@
                 margin-right: .3rem;
             }
             .avatar{
-                .torem(width,54);
-                .torem(height,54);
+                .torem(width,80);
+                .torem(height,80);
                 border-radius: 100%;
                 // margin-right: .3rem;
             }
+
             .name_time{
+                margin-left: .3rem;
                 p{
-                    line-height: .37rem;
+                    line-height: .52rem;
                     .font-dpr(13px);
                     color: #515151;
                 }
@@ -2769,42 +2807,104 @@
             color: #151515;
             line-height: .48rem;
             .font-dpr(13px);
-            margin-left: .8rem;
+            margin-top: .2rem;
+        }
+        .image_list{
+            width: 10rem;
+            position: relative;
+            left: -.333rem;
+            &:after {
+                content: " ";
+                display: table;
+            }
+            &:after {
+                clear: both;
+            }
+            img{
+                float: left;
+            }
+            .img_9{
+                .torem(width, 248);
+                .torem(height, 248);
+                .torem(margin-left, 2);
+                .torem(margin-bottom, 2);
+                &:nth-of-type(3n+3){
+                    margin-left: 0
+                }
+       
+            }
+            .img_4{
+                .torem(width, 373);
+                .torem(height, 373);
+                .torem(margin-left, 2);
+                .torem(margin-bottom, 2);
+                &:nth-of-type(2n+2){
+                    margin-right: 0;
+                }
+            }
+            .img_1{
+                .torem(width, 750);
+                .torem(height, 750);
+            }
+            .img_3{
+                &:nth-of-type(1){
+                    .torem(width, 500);
+                    .torem(height, 500);
+                }
+                &:nth-of-type(2){
+                    .torem(width, 248);
+                    .torem(height, 248);
+                    .torem(margin-left, 2);
+                    .torem(margin-bottom, 2); 
+                }
+                &:nth-of-type(3){
+                    .torem(width, 248);
+                    .torem(height, 248);
+                    .torem(margin-left, 2);
+                }
+                
+            }
         }
         .res_raise{
             .torem(height, 80);
-            margin-left: .8rem;
+            // margin-left: .8rem;
             display: flex;
             justify-content: center;
             align-items: center;
-            border-bottom: 0.0134rem solid #979797;
-            .font-dpr(9px);
+            // border-bottom: 0.0134rem solid #979797;
+            .font-dpr(11px);
             color: #979797;
             .raise{
+                .torem(line-height, 40);
                 i{
                     display: inline-block;
                     .torem(width, 40);
                     .torem(height, 40);
-                    background: url(https://img8.ontheroadstore.com/H5_Icon/replay_zan.png);
+                    background: url(https://img8.ontheroadstore.com/H5_Icon/good_detail_gg_raise.png);
                     background-size: 100% 100%;
-                    margin-right: .06rem;
+                    margin-right: .16rem;
+                    position: relative;
+                    top: -.1rem;
                 }
                 .no_raise{
                     display: inline-block;
                     .torem(width, 40);
                     .torem(height, 40);
-                    background: url(https://img8.ontheroadstore.com/H5_Icon/replay_unzan.png);
+                    background: url(https://img8.ontheroadstore.com/H5_Icon/good_detail_gg_raise.png);
                     background-size: 100% 100%;
                 }
             }
             .res{
+                .torem(line-height, 40);
                 i{
                     display: inline-block;
                     .torem(width, 40);
                     .torem(height, 40);
-                    background: url(https://img8.ontheroadstore.com/H5_Icon/buyer_show_reply.png);
+                    background: url(https://img8.ontheroadstore.com/H5_Icon/good_detail_gg_res.png);
                     background-size: cover;
-                    margin-right: .06rem;
+                    margin-right: .16rem;
+                    position: relative;
+                    top: -.1rem;
                 } 
             }
             span{
