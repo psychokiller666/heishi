@@ -918,7 +918,7 @@
     }
     .taxation{
         padding: 0 .4rem;
-        background: #ffffff;
+        background: #F0F0F0;
         margin: 0;
         .dis_select_type{
             .font-dpr(13px);
@@ -931,6 +931,45 @@
             background: url(//img8.ontheroadstore.com/H5_Icon/good_detail_tax_icon.png) no-repeat center center;
             background-size: cover;
             vertical-align: middle;
+        }
+    }
+    .have_good{
+        background: #fff;
+        height: 1.173rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #888888;
+        .font-dpr(13px);
+        .have_icon{
+            display: block;
+            width: .6rem;
+            height: .6rem;
+            background: url(//img8.ontheroadstore.com/H5_Icon/good_detail_gg_have.png) no-repeat center center;
+            background-size: cover;
+            margin-left: .4rem;
+            &.active{
+                background: url(//img8.ontheroadstore.com/H5_Icon/good_detail_gg_have_1.png) no-repeat center center;
+                background-size: cover;
+            }
+        }
+        .have_list{
+            width: 6.5rem;
+            img{
+                width: .7rem;
+                height: .7rem;
+                margin-right: .08rem;
+                object-fit: cover;
+                border-radius: 100%;
+            }
+        }
+        .omit{
+            display: block;
+            width: .6rem;
+            height: .6rem;
+            background: url(//img8.ontheroadstore.com/H5_Icon/good_detail_list_omit.png) no-repeat center center;
+            background-size: cover;
+            margin-right: .4rem;
         }
     }
     .delivery_time_wrap{
@@ -2723,6 +2762,7 @@
             .torem(line-height,74);
             color: #151515;
             position: relative;
+            margin-top: .3rem;
             &::after{
                 content: '\e512';
                 display: block;

@@ -800,12 +800,61 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
 
 
 
+//已拥有
+page.on('click','.have_icon',function(e){
+  if(init.ifLogin(true) == false){
+      return ;
+  }
+  if($(this).hasClass('active')){
+    cancelHaveIt()
+  }else{
+    toHaveIt()
+  }
 
-
-
-
-
-
+})
+$('.omit').click(function(){
+  if(ApiBaseUrl.indexOf('api.')>0){
+    location.href=`https://h5.ontheroadstore.com/haveList/${goodsId}`
+  }else{
+    location.href=`https://h5test.ontheroadstore.com/haveList/${goodsId}`
+  }
+})
+function cancelHaveIt(){
+  var url = ApiBaseUrl + '/appv6_5/deleteUserHavePost/'+goodsId;
+  $.ajax({
+      type: "post",
+      url: url,
+      headers: {
+        'phpsessionid': PHPSESSID
+      },
+      success: function(data){
+        $('.have_icon').removeClass('active')
+        if($('.have_num').html()=="1"){
+          $('.have_num').html('0人已拥有')
+        }else{
+          $('.have_num').html(parseInt($('.have_num').html())-1)
+        }
+      }
+  })
+}
+function toHaveIt(){
+  var url = ApiBaseUrl + '/appv6_5/saveUserHavePost/'+goodsId;
+  $.ajax({
+    type: "post",
+    url: url,
+    headers: {
+      'phpsessionid': PHPSESSID
+    },
+    success: function(data){
+      $('.have_icon').addClass('active')
+      if($('.have_num').html()=="0人已拥有"){
+        $('.have_num').html(1)
+      }else{
+        $('.have_num').html(parseInt($('.have_num').html())+1)
+      }
+    }
+  })
+}
 
   //收藏
   page.on('click','.collect',function(e){
@@ -2062,6 +2111,25 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
                 })
               }else{
                 $('.taxation').hide()
+              }
+              if(data.data.have_post){
+                let havePost = data.data.have_post 
+                if(havePost.is_have!=0){
+                  $('.have_icon').addClass('active')
+                }
+                if(havePost.have_count==0){
+                  $('.have_num').html('0人已拥有')
+                  $('.omit').hide()
+                }else{
+                  $('.have_num').html(havePost.have_count)
+                  let str = ''
+                  havePost.have_list.forEach((v,index)=>{
+                    if(index<8){
+                      str+=`<img src="${v.user_img}" />`
+                    }                    
+                  })
+                  $('.have_list').html(str)
+                }
               }
           },
           error: function(e){
