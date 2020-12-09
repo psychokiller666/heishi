@@ -810,7 +810,6 @@ page.on('click','.have_icon',function(e){
   }else{
     toHaveIt()
   }
-
 })
 $('.omit').click(function(){
   if(ApiBaseUrl.indexOf('api.')>0){
@@ -828,12 +827,13 @@ function cancelHaveIt(){
         'phpsessionid': PHPSESSID
       },
       success: function(data){
-        $('.have_icon').removeClass('active')
-        if($('.have_num').html()=="1"){
-          $('.have_num').html('0人已拥有')
+        if(data.code==1){
+          $('.have_icon').removeClass('active')
+          getGoodsAlike()
         }else{
-          $('.have_num').html(parseInt($('.have_num').html())-1)
+          $.toast(data.info)
         }
+        
       }
   })
 }
@@ -846,12 +846,14 @@ function toHaveIt(){
       'phpsessionid': PHPSESSID
     },
     success: function(data){
-      $('.have_icon').addClass('active')
-      if($('.have_num').html()=="0人已拥有"){
-        $('.have_num').html(1)
+      console.log(data)
+      if(data.code==1){
+        $('.have_icon').addClass('active')
+        getGoodsAlike()
       }else{
-        $('.have_num').html(parseInt($('.have_num').html())+1)
+        $.toast(data.info)
       }
+      
     }
   })
 }
@@ -2087,6 +2089,9 @@ function toHaveIt(){
           type: "GET",
           url: url,
           dataType: 'json',
+          headers: {
+            'phpsessionid': PHPSESSID
+          },
           success: function(data){
               $('.chat_btn').find('.hs-icon').removeClass('chat')
               if(data.data.post.is_proprietary==1){
@@ -2120,7 +2125,14 @@ function toHaveIt(){
                 if(havePost.have_count==0){
                   $('.have_num').html('0人已拥有')
                   $('.omit').hide()
+                  $('.have_list').html('')
                 }else{
+                  $('.omit').show()
+                  if(havePost.have_count<9){
+                    $('.omit').addClass('none')
+                  }else{
+                    $('.omit').removeClass('none')
+                  }
                   $('.have_num').html(havePost.have_count)
                   let str = ''
                   havePost.have_list.forEach((v,index)=>{

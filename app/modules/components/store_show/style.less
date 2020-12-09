@@ -166,7 +166,7 @@
        
         .buy_btn{
            // background: url(//img8.ontheroadstore.com/H5_Icon/good_buy_btn.png);
-           background: #7264F9; 
+           background: #D04D3F; 
            background-repeat: no-repeat;
             background-size: 100% 100%;
             color: #fff;
@@ -970,6 +970,9 @@
             background: url(//img8.ontheroadstore.com/H5_Icon/good_detail_list_omit.png) no-repeat center center;
             background-size: cover;
             margin-right: .4rem;
+            &.none{
+                opacity: 0;
+            }
         }
     }
     .delivery_time_wrap{
@@ -1894,7 +1897,7 @@
     }
     .status{
         padding: 0 0.4rem 1.2rem 0.4rem;
-        border-bottom: 0.23033rem solid #F2F2F2;
+        // border-bottom: 0.23033rem solid #F2F2F2;
         //margin-bottom: 0.4rem;
         // margin: 0 .533rem;
         .hs-cf;
@@ -1937,7 +1940,7 @@
             float: left;
             .font-dpr(14px);
             line-height: 1;
-            color: #8E8E8E;
+            color: #D04D3F;
         }
     }
     .style{
@@ -1953,12 +1956,14 @@
         .good_num,
         .types{
             position: relative;
+            padding-top: .15rem;
             .label{
                 position: absolute;
                 .font-dpr(14px);
                 top: 50%;
                 transform: translateY(-50%);
                 width: 1.146rem;
+                padding-top: .15rem;
             }
             .type_item{
                 padding-left: 1.146rem;
@@ -1967,20 +1972,36 @@
                     float: left;
                     margin-right: 0.2667rem;
                     display: block;
-                    padding: 0.133rem 0.4rem;
+                    padding: 0.133rem 0.25rem;
                     .font-dpr(13px);
                     // border-radius: 0.1rem;
-                    border: 0.0133rem solid #979797;
-                    color: #979797;
+                    border: 0.0133rem solid #151515;
+                    color: #151515;
                     line-height: 1em;
                     margin-bottom: 0.32rem;
+                    border-radius: 1em;
                     &.active{
                         border-color: #151515;
                         background: #151515;
                         color: #ffffff;
                     }
                     &.no_repertory{
-                        background: #F5F5F5;
+                        background: #D8D8D8;
+                        position: relative;
+                        &::after{
+                            content: '缺货';
+                            display: block;
+                            .font-dpr(10px);
+                            width: .6rem;
+                            height: .3rem;
+                            background: #979797;
+                            border-radius: 10px 0px 10px 0px;
+                            position: absolute;
+                            top: -.1rem;
+                            right: -.3rem;
+                            color: #fff;
+                            text-align: center;
+                        }
                     }
                 }
             }
@@ -2067,7 +2088,7 @@
         //background: url(//img8.ontheroadstore.com/H5_Icon/good_buy_btn_1.png?1);
         background-repeat: no-repeat;
         background-size: 100% 100%;
-        background: #7264F9;
+        background: #D04D3F;
         color: #FFF;
         right: 1rem;
         border-radius: 0 .7rem .7rem 0;
@@ -2077,7 +2098,7 @@
         }
     }
     .confirm{
-        background: #7264F9;
+        background: #D04D3F;
         color: #FFF;
         width: 8rem;
         border-radius: 7rem;
