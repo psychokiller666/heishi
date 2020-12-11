@@ -920,18 +920,34 @@
         padding: 0 .4rem;
         background: #F0F0F0;
         margin: 0;
+        position: relative;
+        font-family: "iconfont"!important;
+        font-style: normal;
+        -webkit-font-smoothing: antialiased;
+        &::after{
+            content: '\e512';
+            display: block;
+            position: absolute;
+            font-size: 48px!important;
+            top: 50%;
+            right: .58rem;
+            color: #979797;
+            -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+            .font-dpr(13px);
+        }
         .dis_select_type{
             .font-dpr(13px);
             vertical-align: middle;
         }
-        i{
-            display: inline-block;
-            width: .4rem;
-            height: .4rem;
-            background: url(//img8.ontheroadstore.com/H5_Icon/good_detail_tax_icon.png) no-repeat center center;
-            background-size: cover;
-            vertical-align: middle;
-        }
+        // i{
+        //     display: inline-block;
+        //     width: .4rem;
+        //     height: .4rem;
+        //     background: url(//img8.ontheroadstore.com/H5_Icon/good_detail_tax_icon.png) no-repeat center center;
+        //     background-size: cover;
+        //     vertical-align: middle;
+        // }
     }
     .have_good{
         background: #fff;
@@ -2201,6 +2217,8 @@
             padding-bottom: 0.4rem;
             height: 10rem;
             overflow: scroll;
+            white-space: pre-wrap;
+            
         }
     }
    }
@@ -2883,6 +2901,7 @@
             }
             img{
                 float: left;
+                object-fit: cover;
             }
             .img_9{
                 .torem(width, 248);

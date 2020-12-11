@@ -1807,7 +1807,7 @@ function toHaveIt(){
         </div>
         <div class="msg">${formatTxt(v.show_text)}</div>
         <div class="image_list">
-          ${initImageList(v.image_list)}
+          ${initImageList(v.image_list,v.video_list)}
         </div>
         <div class="res_raise">
           
@@ -1831,14 +1831,18 @@ function toHaveIt(){
       
       return val
     }
-    function initImageList(data){
+    function initImageList(data,data1){
+      console.log(data1)
       let str = ""
       let len = 0
+      if(data.length==0){
+        data= data1.length?[data1[0].cover]:[]
+      }
       if(data.length>4){
         len = 9
       }else if(data.length>=4){
         len = 4
-      }else if(data-length>=3){
+      }else if(data.length>=3){
         len = 3
       }else if(data-length>=2){
         len = 4
