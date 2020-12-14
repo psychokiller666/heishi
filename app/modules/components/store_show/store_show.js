@@ -1832,7 +1832,6 @@ function toHaveIt(){
       return val
     }
     function initImageList(data,data1){
-      console.log(data1)
       let str = ""
       let len = 0
       if(data.length==0){
@@ -1844,7 +1843,7 @@ function toHaveIt(){
         len = 4
       }else if(data.length>=3){
         len = 3
-      }else if(data-length>=2){
+      }else if(data.length>=2){
         len = 4
       }else{
         len = 1
