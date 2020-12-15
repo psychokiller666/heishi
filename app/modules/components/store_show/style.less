@@ -916,7 +916,8 @@
         padding: 0 .4rem;
         background: #efefef;
     }
-    .taxation{
+    
+    .taxation,.explanation{
         padding: 0 .4rem;
         background: #F0F0F0;
         margin: 0;
@@ -939,6 +940,7 @@
         .dis_select_type{
             .font-dpr(13px);
             vertical-align: middle;
+            font-weight: 500;
         }
         // i{
         //     display: inline-block;
@@ -948,6 +950,9 @@
         //     background-size: cover;
         //     vertical-align: middle;
         // }
+    }
+    .explanation{
+        background: #E3E3E3;
     }
     .have_good{
         background: #fff;
@@ -2155,10 +2160,10 @@
         }
     }
 }
-.taxation_layer,.specs{
+.explanation_layer,.taxation_layer,.specs{
     width: 100%;
     height: 100%;
-    
+    .font-dpr(13px);
     position: absolute;
     display: none;
     top: 0;
@@ -2220,9 +2225,28 @@
             overflow: scroll;
             white-space: pre-wrap;
             
+            
+        }
+        center{
+            .font-dpr(14px);
+            font-weight: 400;
+            line-height: 1.5em;  
+        }
+        p{
+            margin-block-start: 0;
+            margin-block-end: 0;
+            letter-spacing: 0rem;
+            .font-dpr(13px);
         }
     }
    }
+   .explanation_layer{
+       .content_desc{
+           .content_desc_txt{
+            white-space: normal
+           }
+       }
+   }  
 .modal.toast{
     z-index: 999999 !important;
 }
@@ -2888,6 +2912,7 @@
             line-height: .48rem;
             .font-dpr(13px);
             margin-top: .2rem;
+            white-space: pre-wrap;
         }
         .image_list{
             width: 10rem;
@@ -2961,7 +2986,7 @@
                     display: inline-block;
                     .torem(width, 40);
                     .torem(height, 40);
-                    background: url(https://img8.ontheroadstore.com/H5_Icon/good_detail_gg_has_raise.png);
+                    background: url(https://img8.ontheroadstore.com/H5_Icon/good_detail_gg_has_raise.png?111);
                     background-size: 100% 100%;
                     margin-right: .16rem;
                     position: relative;
