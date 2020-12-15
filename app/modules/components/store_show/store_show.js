@@ -2107,6 +2107,17 @@ function toHaveIt(){
               if(data.data.show_list){
                 initRecommend1(data.data.show_list)
               }
+              if(data.data.post.is_baoguan){
+                $('.explanation').show()
+                $('.explanation').click(function(){
+                  $('.explanation_layer').show()
+                  $('.explanation_layer').click(function(){
+                   $('.explanation_layer').hide()
+                  })
+                 })
+              }else{
+                $('.explanation').hide()
+              }
               if(data.data.post.tax_desc){
                 $('.taxation').show()
                 $('.taxation').find('.dis_select_type').html(data.data.post.tax_desc.name)
