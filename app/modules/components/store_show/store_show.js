@@ -126,6 +126,8 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
           shareType: '商品',
           shareMethod: type===1 ? '朋友圈':'微信',//1是朋友圈，2是好友
           commodityID: goodsId,
+          shareTitle: share_data.title,
+          shareUrl: share_data.link
           // sellerID:sellerId,
       });
   });

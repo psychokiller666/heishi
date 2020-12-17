@@ -625,7 +625,7 @@ function getPageType (){
         {name:'我的收藏页',path:'/user/HsLike/index.html'},
         {name:'确认订单页',path:'/User/HsOrder/add/object_id/'},
         {name:'确认订单页',path:'/User/MyChart/buy.html'},
-        {name:'私信页',path:'/User/HsMessage/detail/from_uid/'},
+        {name:'聊天窗口页',path:'/User/HsMessage/detail/from_uid/'},
         {name:'文章页',path:'/Portal/HsArticle/culture/id/'},
         {name:'常见问题页',path:'/Portal/PostDetails/faq.html'},
         {name:'评分详情页',path:'/Portal/PostDetails/scoreDetails.html'},
