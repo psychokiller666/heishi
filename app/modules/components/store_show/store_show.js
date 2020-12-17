@@ -1798,7 +1798,7 @@ function toHaveIt(){
       data.forEach((v,idx)=>{
         str+= `<div class="${idx===0?'res_item':''}">
         <div class="user_info">
-          <a class="float_left" href="/User/index/index/id/${v.user_id}.html">
+          <a class="float_left external"  href="/User/index/index/id/${v.user_id}.html">
             <img class="float_left avatar" src="${v.user_img}">
           </a>
           <div class="float_left name_time">
