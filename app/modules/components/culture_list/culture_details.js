@@ -25,6 +25,8 @@ $(document).on('pageInit','.culture_details', function (e, id, page) {
           shareMethod: type === 1 ? '朋友圈' : '微信',//1是朋友圈，2是好友
           commodityID: $(page).attr('data-id'),
           // sellerID: '',
+          shareTitle: share_data.title,
+          shareUrl: share_data.link
       })
     });
 
