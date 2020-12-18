@@ -4,6 +4,7 @@
         background-color: #efefef;
         .hs-cf;
     }
+   
     //满减商品
     .has_full_reduce{
         width: 9.2rem;
@@ -2010,6 +2011,7 @@
                     &.no_repertory{
                         background: #D8D8D8;
                         position: relative;
+                        
                         &::after{
                             content: '缺货';
                             display: block;
@@ -2023,6 +2025,13 @@
                             right: -.3rem;
                             color: #fff;
                             text-align: center;
+                        }
+                        &.active_no{
+                            color: #D04D3F;
+                            border-color: #D04D3F;
+                            &::after{
+                                background: #D04D3F;
+                            }
                         }
                     }
                 }
@@ -2076,6 +2085,24 @@
             margin-top: 0.213rem;
             margin-bottom: 1.5rem;
         }
+    }
+     //订阅通知
+     .subscript{
+        background: #D04D3F;
+        border-radius: 7rem;
+        font-size: 15px;
+        left: 1rem;
+        display: none;
+        line-height: 1.306rem;
+        z-index: 99;
+        width: 8rem;
+        bottom: 10px;
+        .font-dpr(15px);
+        text-align: center;
+        position: absolute;
+        bottom: 10px;
+        left: 1rem;
+        color: #fff;
     }
     .buy_btn,
     .add_chart{

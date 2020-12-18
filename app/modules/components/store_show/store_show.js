@@ -378,6 +378,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     }
 
     if($(this).hasClass('no_repertory')){
+
       return $.toast('当前商品没有库存');
     }
     //限购
@@ -447,9 +448,20 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
   // 选中款式
   $('.style .type_item').on("click","span",function(){
     if($(this).hasClass('no_repertory')){
+      // $('.type_item').find('span').removeClass('active');
+      // $('.type_item').find('span').removeClass('active_no');
+      // $(this).addClass('active_no');
+      // $('.add_chart').hide()
+      // $('.buy_btn').hide()
+      // $('.subscript').show()
       return $.toast('当前款式已没有库存');
+    // }else{
+    //   $('.add_chart').show()
+    //   $('.buy_btn').show()
+    //   $('.subscript').hide()
     }
     $('.type_item').find('span').removeClass('active');
+    // $('.type_item').find('span').removeClass('active_no');
     $(this).addClass('active');
     $('.origin_price').hide();
     var price = $(this).attr('data-price')*1;
@@ -2109,7 +2121,7 @@ function toHaveIt(){
               if(data.data.show_list){
                 initRecommend1(data.data.show_list)
               }
-              if(data.data.post.is_baoguan){
+              if(data.data.post.is_baoguan==2){
                 $('.explanation').show()
                 $('.explanation').click(function(){
                   $('.explanation_layer').show()
