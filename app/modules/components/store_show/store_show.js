@@ -774,7 +774,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
 
     if($imgWrap.length>0){
       var $descWrap = $imgWrap.parents('.js_desc_wrap2');
-      var descW = window.innerWidth
+      var descW = $descWrap.width()*100/92
       if(descW>0){
           $imgWrap.each(function(){
               var $this = $(this);
@@ -794,7 +794,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
 
     if($imgWrap.length>0){
       var $descWrap = $imgWrap.parents('.js_desc_wrap');
-      var descW = window.innerWidth
+      var descW = $descWrap.width()*100/92
       if(descW>0){
           $imgWrap.each(function(){
               var $this = $(this);
