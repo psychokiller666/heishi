@@ -195,15 +195,19 @@ $(document).on('pageInit','.buyOrder', function(e, id, page){
       headers: ajaxHeaders,
       success: function(data){
         if(data.status == 1){
+          let _arr = []
           data.data.orders.forEach(v=>{
             v.goods.forEach(c=>{
               c.id = v.id
             })
+            if(!(v.order_status==0&&v.process_status==0)){
+              _arr.push(v)
+            }
           })
           if(pageSize==1){
             $('.order_list').find('.order_item').remove()
           }
-          $('.order_list').append(orders_tpl(data.data));
+          $('.order_list').append(orders_tpl({orders:_arr}));
           if(pageSize==1&&data.data.orders.length==0){
             $('.infinite-scroll-preloader').remove();
             $.detachInfiniteScroll($('.infinite-scroll'));
