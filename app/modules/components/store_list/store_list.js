@@ -256,7 +256,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
           if(t.type==1){
             list+=`<div  class="segment_good">
               <a href="/Portal/HsArticle/index/id/${t.id}.html"  class="external">
-                <img class="cover" src="${t.cover}@320w_1l" />
+                <img class="cover" src="${t.cover}@640w_1l" />
               </a>
             <div class="txt">
               <div class="txt_top">
@@ -271,7 +271,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
                   if(t.tag_list.id==1){
                     list+=`<span class="tag" data-jump="1" data-id="${t.tag_list.id}"><span class="time" data-time="${t.tag_list.count_down}">${countDown(t.tag_list.count_down)}111</span>${t.tag_list.title}</span>`
                   }else{
-                    list+=`<span class="tag" data-jump="2" data-id="${t.tag_list.id}" style="margin-top: -.1rem;"><img class="tag_icon" src="${t.tag_list.icon}" />${t.tag_list.title}</span>`
+                    list+=`<span class="tag" data-jump="2" data-id="${t.tag_list.id}" style="margin-top: -.1rem;color:${getTagColor(t.tag_list.id)};"><img class="tag_icon" src="${t.tag_list.icon}" />${t.tag_list.title}</span>`
                   }
                 }
               list+= `</p>
@@ -304,6 +304,25 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
 
     })
     $('.tab_recommend_only').html(tab)
+  }
+  //标签颜色
+  function getTagColor(id){
+    let color = ''
+    switch(id){
+      case 2:
+        color = '#2FE4FF';
+        break;
+      case 3:
+        color = '#FF74F8';
+        break;
+      case 4:
+        color = '#53EB11';
+        break;
+      default :
+        color= '#979797'
+        break;
+    }
+    return color
   }
   //专栏点击事件
   $('.tab_recommend_only').on('click','span',function(){
@@ -494,7 +513,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
       },
       success: function(data){
         loading = false
-        if(data.data.goodslis&&data.data.goodslist.length<20){
+        if(data.data.goodslist&&data.data.goodslist.length<20){
           loading = true
           $('.end_line').show()
           $('.infinite-scroll-preloader').hide()
@@ -510,13 +529,13 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
          
           return
         }
-        
+        data.data.goodslist = checkGoodList(data.data.goodslist)
         let list = `<div class="list">`
         data.data.goodslist.forEach(t=>{
           if(t.type==1){
             list+=`<div  class="segment_good">
               <a href="/Portal/HsArticle/index/id/${t.id}.html"  class="external">
-                <img class="cover" src="${t.cover}@320w_1l" />
+                <img class="cover" src="${t.cover}@640w_1l" />
               </a>
             <div class="txt">
               <div class="txt_top">
@@ -531,7 +550,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
                   if(t.tag_list.id==1){
                     list+=`<span class="tag" data-jump="1" data-id="${t.tag_list.id}"><span class="time" data-time="${t.tag_list.count_down}">${countDown(t.tag_list.count_down)}</span>${t.tag_list.title}</span>`
                   }else{
-                    list+=`<span class="tag" data-jump="2" data-id="${t.tag_list.id}" style="margin-top: -.1rem;"><img class="tag_icon" src="${t.tag_list.icon}" />${t.tag_list.title}</span>`
+                    list+=`<span class="tag" data-jump="2" data-id="${t.tag_list.id}" style="margin-top: -.1rem;color:${getTagColor(t.tag_list.id)};"><img class="tag_icon" src="${t.tag_list.icon}" />${t.tag_list.title}</span>`
                   }
                 }
               list+= `</p>
@@ -556,6 +575,20 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
         console.log(xhr);
       }
     })
+  }
+  function checkGoodList(data){
+    let count = 0
+    let index = 0
+    data.forEach((v,idx)=>{
+      if(v.type==1){
+        count++
+        index=idx
+      }
+    })
+    if(count%2){
+      data.splice(index, 1);
+    }
+    return data
   }
   $('.attentionUser').click(function(){
     var that = this;

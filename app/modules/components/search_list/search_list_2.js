@@ -352,6 +352,7 @@ var SearchInit = function () {
     $('.delete_all').show()
     $('.finish').show()
     $('.delete_one').show()
+    $('.history_search_items').find('.word_item').css('background','#DEDEDE')
 
   })
   //点击完成
@@ -360,6 +361,7 @@ var SearchInit = function () {
     $('.delete_all').hide()
     $('.finish').hide()
     $('.delete_one').hide()
+    $('.history_search_items').find('.word_item').css('background','#ffffff')
   })
   //全部删除
   $('.delete_all').click(function () {
@@ -373,6 +375,7 @@ var SearchInit = function () {
         $('.delete_all').hide()
         $('.finish').hide()
         $('.delete_one').hide()
+        $('.history_search_items').find('.word_item').css('background','#ffffff')
       }
     });
     // });
@@ -393,12 +396,12 @@ var SearchInit = function () {
       type: 'GET',
       url: '/index.php?g=restful&m=HsSearch&a=ajax_del_searching_history',
       data: {
-        keyword: $(this).parent().attr('item')
+        keyword: $(this).parent('.word_item').attr('item')
       },
       success: function (data) {
         $('.search_list').find('.history_search_items').empty();
         $.each(data, function (index, item) {
-          var list = '<span class="word_item" item=' + item + '>' + item + '<span class="delete_one" style="display:block;"></span></span>';
+          var list = '<span class="word_item" style="background:#DEDEDE;" item=' + item + '>' + item + '<span class="delete_one" style="display:block;"></span></span>';
           $('.search_list').find('.history_search_items').append(list);
         })
       }
