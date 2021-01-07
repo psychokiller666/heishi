@@ -486,15 +486,15 @@
             height: 0.61rem;
             border-radius: 0.61rem;
             //background: #F5F5F5;
-            margin-right: 0.267rem;
+            // margin-right: 0.267rem;
             //padding: 0 0.32rem;
         }
         .origin_price{
-            display: block;
+            display: none;
             width: 1.5rem;
             height: 0.5rem;
             text-align: center;
-            line-height: 0.68rem;
+            line-height: 0.5rem;
             font-size: 0.3rem;
             color: #ccc;
             text-decoration: line-through;
@@ -1887,7 +1887,7 @@
     top: 0;
     left: 0;
     background: rgba(0, 0, 0, 0.7);
-    z-index: 99999;
+    z-index: 9999;
     .buy_content{
         width: 100%;
         height: 12.9rem;
@@ -1898,27 +1898,39 @@
         border-top-left-radius: 0.16rem;
     }
     .iamge{
-        width: 5.253rem;
-        height: 2.6933rem;
+        width: 2.267rem;
+        height: 2.267rem;
         position: absolute;
-        top: -1.173rem;
-        left: 0.4rem;
+        top: .426rem;
+        left: 0.32rem;
         border-radius: 0.16rem;
         background-position: 50% 50%;
         background-repeat: no-repeat;
         background-size: cover;
-        display: none;
+        object-fit: cover;
+        // display: none;
     }
     .title{
         letter-spacing: -0.026667rem;
         font-size: 0.42667rem;
-        max-height: 1.06667rem;
+        height: 1.06667rem;
         font-weight: bold;
-        padding: .453rem 0.4rem 0 0.4rem;
+        padding: .453rem 0.4rem 0 3rem;
         margin-bottom: 0.4rem;
     }
+    .line1{
+        display: table-cell;
+        vertical-align: bottom;
+    }
+    .line2{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display:-webkit-box;
+        -webkit-box-orient:vertical; 
+        -webkit-line-clamp:2; 
+    }
     .status{
-        padding: 0 0.4rem 1.2rem 0.4rem;
+        padding: 0 0.4rem .2rem 3rem;
         // border-bottom: 0.23033rem solid #F2F2F2;
         //margin-bottom: 0.4rem;
         // margin: 0 .533rem;
@@ -1942,12 +1954,20 @@
             height: 0.61rem;
             border-radius: 0.61rem;
             background: #F5F5F5;
-            margin-left: 0.267rem;
+            margin-left: 0.167rem;
             padding: 0 0.32rem;
         }
        
     }
-  
+    .select_sku_name{
+        padding-left: 3rem;
+        padding-bottom: 1rem;
+        color: #888888;
+        .font-dpr(13px);
+        overflow:hidden; //超出的文本隐藏
+        text-overflow:ellipsis; //溢出用省略号显示
+        white-space:nowrap; //溢出
+    }
     .delivery_cycle{
         display: none;
         position: relative;

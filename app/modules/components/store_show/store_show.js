@@ -343,7 +343,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       savePriceList.push(_price)
     })
     let minPrice = Math.min.apply(null, savePriceList);
-    $('.price').find('.font_din').text(minPrice);
+    // $('.price').find('.font_din').text(minPrice);
   }
   page.on("click",".select_type",function(){
     goSettle =false
@@ -351,6 +351,12 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     $('.buy').css('display', 'block');
     $('.buy').find('.countNum').attr('data-num',1).text(1);
     // $('.content').css('overflow-y', 'hidden');
+    let titLength = $('.buy').find('.title').html()
+    if(titLength.length>26){
+      $('.buy').find('.title').addClass('line2')
+    }else{
+      $('.buy').find('.title').addClass('line1')
+    }
   })
   page.on("click",".buy",function(e){
     var el = $(e.target).hasClass('buy');
@@ -393,6 +399,12 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       // $('.content').css('overflow-y', 'hidden');
       $('.buy').find('.countNum').attr('data-num',1).text(1);
       $('.buy').find('.confirm').addClass('buy_btn');
+      let titLength = $('.buy').find('.title').html()
+      if(titLength.length>26){
+        $('.buy').find('.title').addClass('line2')
+      }else{
+        $('.buy').find('.title').addClass('line1')
+      }
     }
   })
   $('.footer_nav').on("click",".add_chart",function() {
@@ -423,6 +435,12 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
       // $('.content').css('overflow-y', 'hidden');
       $('.buy').find('.countNum').attr('data-num',1).text(1);
       $('.buy').find('.confirm').addClass('add_chart');
+      let titLength = $('.buy').find('.title').html()
+      if(titLength.length>26){
+        $('.buy').find('.title').addClass('line2')
+      }else{
+        $('.buy').find('.title').addClass('line1')
+      }
     }
   })
   $('.buy').on("click",".add_chart",function() {
@@ -470,6 +488,7 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     var presell = $(this).attr('data-presell');
     var special = $(this).attr('data-special');
     var item_id = $(this).attr('data-id')
+    var style_image = $(this).attr('data-styleimage')
     var special_price = $(this).attr('data-special_price')
     var special_start = $(this).attr('data-special_start')
     var special_end = $(this).attr('data-special_end')
@@ -491,9 +510,17 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
     // if(!(_startEnd<_now<_startTime)){
     //   special=0
     // }
-
+    $('.select_sku_name').html('已选: '+$(this).html())
+    //设置款式图
+    if(!style_image){
+      $('.iamge').attr('src','//img8.ontheroadstore.com/H5_Icon/sku_image_no_data.png')
+      $('.iamge').attr('data-preview','//img8.ontheroadstore.com/H5_Icon/sku_image_no_data.png')
+    }else{
+      $('.iamge').attr('src','//img8.ontheroadstore.com/'+style_image)
+      $('.iamge').attr('data-preview','//img8.ontheroadstore.com/'+style_image)
+    }
+    
     var type_desc = $(this).text();
-    console.log(type_desc)
     $('.select').find('.select_type').text(type_desc);
     $('.buy').find('.add').attr('data-remain', remain);
     update_status(price, item_id, remain, presell, special,special_price);
@@ -1099,6 +1126,35 @@ function toHaveIt(){
       var preview_lists = [];
       
       $('.previewImage').forEach(v=>{
+        preview_lists.push($(v).attr('data-preview'))
+      })
+      var previewimage = $.photoBrowser({
+        photos : preview_lists,
+        container : '.container',
+        type: 'popup'
+      })
+      previewimage.open();
+    }
+  })
+
+  page.on('click','.iamge',function(){
+    let url = $(this).attr('data-preview')
+    if(url.indexOf('sku_image_no_data')>0){
+      return
+    }
+    if(GV.device == 'any@weixin') {
+      var preview_list = [];
+      $('.iamge').forEach(v=>{
+        preview_list.push('https:'+$(v).attr('data-preview'))
+      })
+      wx.previewImage({
+        current: 'https:'+$(this).attr('data-preview'),
+        urls: preview_list
+      });
+    } else {
+      var preview_lists = [];
+      
+      $('.iamge').forEach(v=>{
         preview_lists.push($(v).attr('data-preview'))
       })
       var previewimage = $.photoBrowser({
@@ -2110,6 +2166,20 @@ function toHaveIt(){
             'phpsessionid': PHPSESSID
           },
           success: function(data){
+            //设置banner宽高比例
+              // let wTop = data.data.post.top_image_width
+              // let hTop = data.data.post.top_image_height
+              // if(wTop&&hTop){
+              //   let whScale = wTop/hTop
+              //   if(whScale>1){
+              //     whScale = 1
+              //   }else if(whScale<0.75){
+              //     whScale = 0.75
+              //   }else{
+
+              //   }
+              //   //$('.frontcover').find('.previewImage').css('height',10/whScale+'rem')
+              // }
               $('.chat_btn').find('.hs-icon').removeClass('chat')
               if(data.data.post.is_proprietary==1){
                 $('.chat_btn').find('.hs-icon').addClass('chat2')

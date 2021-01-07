@@ -189,6 +189,15 @@ $(document).on('pageInit','.order_info', function(e, id, page){
        location.href = GV.app_url;
     });
   })
+  //查看海外仓物流 
+  $('.order_deliver').click(function(){
+    var order_id = $(this).attr('data-order_id');
+    var desc = $(this).attr('data-desc');
+    if(desc){
+      location.href = `/User/HsOrder/express_query/order_number/${order_id}.html?isbaoguan=${order_id}`
+    }
+  })
+
   // 联系卖家
   $('.relation_seller').click(function(){
     	var user_id = $(this).attr('data-uid');
