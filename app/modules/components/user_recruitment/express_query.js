@@ -37,6 +37,7 @@ $(document).on('pageInit', '.logistique', function (e, id, page) {
           let list  = data.data.data
           $('.receipt').hide()
           $('.goods').hide()
+          $('.no_express_info').hide()
           $('.baoguan').show()
           let str = ''
           list.forEach(v => {
