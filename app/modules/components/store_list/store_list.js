@@ -268,11 +268,11 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
               <p class="txt_end" style="padding-top:.1rem;">
                 <span>¥ ${t.price[0]}</span>`
                 if(t.tag_list){
-                  if(t.tag_list.id==1){
-                    list+=`<span class="tag" data-jump="1" data-id="${t.tag_list.id}"><span class="time" data-time="${t.tag_list.count_down}">${countDown(t.tag_list.count_down)}111</span>${t.tag_list.title}</span>`
-                  }else{
+                  // if(t.tag_list.id==1){
+                  //   list+=`<span class="tag" data-jump="1" data-id="${t.tag_list.id}"><span class="time" data-time="${t.tag_list.count_down}">${countDown(t.tag_list.count_down)}111</span>${t.tag_list.title}</span>`
+                  // }else{
                     list+=`<span class="tag" data-jump="2" data-id="${t.tag_list.id}" style="margin-top: -.1rem;color:${getTagColor(t.tag_list.id)};"><img class="tag_icon" src="${t.tag_list.icon}" />${t.tag_list.title}</span>`
-                  }
+                  // }
                 }
               list+= `</p>
             </div>
@@ -309,6 +309,9 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
   function getTagColor(id){
     let color = ''
     switch(id){
+      case 1:
+        color = '#21EA9B';
+        break;
       case 2:
         color = '#2FE4FF';
         break;
@@ -547,11 +550,11 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
               <p class="txt_end" style="padding-top:.1rem;">
                 <span>¥ ${t.price[0]}</span>`
                 if(t.tag_list){
-                  if(t.tag_list.id==1){
-                    list+=`<span class="tag" data-jump="1" data-id="${t.tag_list.id}"><span class="time" data-time="${t.tag_list.count_down}">${countDown(t.tag_list.count_down)}</span>${t.tag_list.title}</span>`
-                  }else{
+                  // if(t.tag_list.id==1){
+                  //   list+=`<span class="tag" data-jump="1" data-id="${t.tag_list.id}"><span class="time" data-time="${t.tag_list.count_down}">${countDown(t.tag_list.count_down)}</span>${t.tag_list.title}</span>`
+                  // }else{
                     list+=`<span class="tag" data-jump="2" data-id="${t.tag_list.id}" style="margin-top: -.1rem;color:${getTagColor(t.tag_list.id)};"><img class="tag_icon" src="${t.tag_list.icon}" />${t.tag_list.title}</span>`
-                  }
+                  // }
                 }
               list+= `</p>
             </div>
