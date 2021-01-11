@@ -33,9 +33,10 @@ $(document).on('pageInit', '.logistique', function (e, id, page) {
         data: {},
         headers: ajaxHeaders,
         success: function (data) {
-          console.log(data.data)
+          // console.log(data.data)
           let list  = data.data.data
           $('.receipt').hide()
+          $('.goods').hide()
           $('.baoguan').show()
           let str = ''
           list.forEach(v => {
@@ -47,6 +48,9 @@ $(document).on('pageInit', '.logistique', function (e, id, page) {
           });
           str+=`<div class="line"></div>`
           $('.baoguan').html(str)
+          if(list.length==1){
+            $('.line').hide()
+          }
 
         }
   
