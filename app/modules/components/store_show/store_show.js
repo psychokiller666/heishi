@@ -74,15 +74,15 @@ $(document).on('pageInit','.store-show', function (e, id, page) {
    let _endTime =  new Date(specailEnd.replace(/-/g, "/")).getTime()
    let _nowTime = new Date().getTime()
    //console.log(_nowTime>_startTime||_endTime>_nowTime)
-     if(_endTime>_nowTime>_startTime||_endTime>_nowTime){
-       //倒计时逻辑
-       $('.specail-time').css('display','block')
-       countDown((_endTime-new Date().getTime())/1000)
+  //    if(_endTime>_nowTime>_startTime||_endTime>_nowTime){
+  //      //倒计时逻辑
+  //      $('.specail-time').css('display','block')
+  //      countDown((_endTime-new Date().getTime())/1000)
 
-     }else{
-       $('.specail-time').css('display','none')
+  //    }else{
+  //      $('.specail-time').css('display','none')
 
-   }    
+  //  }    
    function countDown(times){
      timer=setInterval(function(){
        var day=0,
@@ -1867,10 +1867,10 @@ function toHaveIt(){
         str+= `<div class="${idx===0?'res_item':''}">
         <div class="user_info">
           <a class="float_left external"  href="/User/index/index/id/${v.user_id}.html">
-            <img class="float_left avatar" src="${v.user_img}">
+            <img class="float_left avatar" src="${v.is_anonymous==1?'https://img8.ontheroadstore.com/H5_Icon/anonymous_avatar.png': v.user_img}">
           </a>
           <div class="float_left name_time">
-            <p class="name">${v.user_nickname}</p>
+            <p class="name">${v.is_anonymous==1?'匿名':v.user_nickname}</p>
             <p class="time">${v.created_at}</p>
           </div>
           
@@ -1894,7 +1894,7 @@ function toHaveIt(){
       if(val){
        val = val.replace(/#[\u4e00-\u9fa5_a-zA-Z0-9]+/gi,(v)=>{
           let str = ''
-          str = `<a style="color:#114FFF;" herf="javascript:;">${v}</a>`
+          str = `<a style="color:#7264F9;" herf="javascript:;">${v}</a>`
           return str
         })
       }

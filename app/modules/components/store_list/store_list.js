@@ -62,7 +62,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
       data: { 
         "HomepageAppBanner": [1],
         "HomepageAppSellerRecommend": [1],
-        "HomepageAppSegmentGoodsList": [1],
+        // "HomepageAppSegmentGoodsList": [1],
         "HomepageAppFeatureList": [1],
         "HomepageAppNewGoodsList": [1],
         "HomepageAppLottery": [1],
@@ -244,7 +244,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     let tab = ``
     $('.segment_list').html('')
     data.forEach((v,i)=>{
-      tab+=`<span data-sid="${v.id}" class="${i==0?'active':''}">${v.title}`
+      tab+=`<span data-sid="${v.id}" class="${i==0?'active':''} ${v.title.indexOf('推荐')>=0?'active_rec':''}">${v.title}`
       // if(v.icon){
       //   tab+=`<img class="tab_icon" src="${v.icon}"/></span>`
       // }else{
@@ -266,7 +266,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
                 <p class="sub_tit">${t.post_subtitle}</p>
               </div>
               <p class="txt_end" style="padding-top:.1rem;">
-                <span>¥ ${t.price[0]}</span>`
+                <span class="price">¥ ${t.price[0]}</span>`
                 if(t.tag_list){
                   // if(t.tag_list.id==1){
                   //   list+=`<span class="tag" data-jump="1" data-id="${t.tag_list.id}"><span class="time" data-time="${t.tag_list.count_down}">${countDown(t.tag_list.count_down)}111</span>${t.tag_list.title}</span>`
@@ -310,7 +310,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     let color = ''
     switch(id){
       case 1:
-        color = '#21EA9B';
+        color = '#ED4B41';
         break;
       case 2:
         color = '#2FE4FF';
@@ -340,7 +340,10 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     $('.end_line').hide()
     $('.infinite-scroll-preloader').show()
     // loading = false
-    $(this).addClass('active').siblings().removeClass('active')
+    $(this).addClass('active').siblings().removeClass('active').removeClass('active_rec')
+    if($(this).html().indexOf('推荐')>=0){
+      $(this).addClass('active_rec')
+    }
     $('.segment_list').find(`.list_${idx}`).show().siblings().hide()
     $('.segment_list').find(`.list_${idx}`).html('')
     addSegment();
@@ -517,7 +520,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
       success: function(data){
         loading = false
         if(data.data.goodslist&&data.data.goodslist.length<20){
-          loading = true
+          // loading = true
           $('.end_line').show()
           $('.infinite-scroll-preloader').hide()
         }
@@ -548,7 +551,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
                 <p class="sub_tit">${t.post_subtitle}</p>
               </div>
               <p class="txt_end" style="padding-top:.1rem;">
-                <span>¥ ${t.price[0]}</span>`
+                <span class="price">¥ ${t.price[0]}</span>`
                 if(t.tag_list){
                   // if(t.tag_list.id==1){
                   //   list+=`<span class="tag" data-jump="1" data-id="${t.tag_list.id}"><span class="time" data-time="${t.tag_list.count_down}">${countDown(t.tag_list.count_down)}</span>${t.tag_list.title}</span>`

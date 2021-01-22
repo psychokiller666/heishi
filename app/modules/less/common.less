@@ -46,13 +46,13 @@
 }
 /* 字体 */
 .font-dpr(@font-size) {
-    font-size: @font-size;
-    [data-dpr="2"] & {
-        font-size: @font-size * 2;
-    }
-    [data-dpr="3"] & {
-        font-size: @font-size * 3;
-    }
+    font-size: unit(@font-size / 37.5, rem);
+    // [data-dpr="2"] & {
+    //     font-size: @font-size * 2;
+    // }
+    // [data-dpr="3"] & {
+    //     font-size: @font-size * 3;
+    // }
 }
 .font-line-height(@font-size) {
     line-height: @font-size;
