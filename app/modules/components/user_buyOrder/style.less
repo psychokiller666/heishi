@@ -7,6 +7,7 @@
       line-height: 1.18rem;
       display: flex;
       justify-content: space-between;
+      background: #E6E6E6;
       border-bottom: 0.0133rem solid #E8E8E8;
       a{
         min-width: 1.2rem;
@@ -17,8 +18,8 @@
         &.active:after{
           content: '';
           position: absolute;
-          bottom: 0.12rem;
-          width: 0.54rem;
+          bottom: 0rem;
+          width: 0.7rem;
           height: 0.06rem;
           background: #151515;
           left: 50%;
@@ -35,7 +36,7 @@
   .order_list{
     padding-bottom: 1.306rem;
     .order_item{
-      border-top: 0.213rem solid #F5F5F5;
+      border-bottom: 0.213rem solid #EFEFEF;
       &:first-child{
         border-top: none;
       }
@@ -43,7 +44,7 @@
         padding: 0.4rem 0.34rem 0.05rem;
         line-height: 0.8rem;
         height: 0.8rem;
-        .font-dpr(12px);
+        .font-dpr(13px);
         // border-bottom: 0.0133rem solid #E8E8E8;
         .user_img{
           float: left;
@@ -55,7 +56,7 @@
         .user_name{
           float: left;
           margin-left: 0.27rem;
-          color: #979797;
+          color: #151515;
           max-width: 5rem;
           overflow: hidden;
           white-space: nowrap;
@@ -63,7 +64,7 @@
           position: relative;
           padding-right: 0.4rem;
           &:after{
-            .font-dpr(12px);
+            .font-dpr(13px);
             position: absolute;
             right: 0;
             height: 100%;
@@ -72,14 +73,14 @@
           }
         }
         .order_status{
-          color: #ed4a42;
+          color: #151515;
           float: right;
         }
       }
       .goods_info{
-        margin: 0 0.334rem;
-        border-bottom: 0.0133rem solid #E8E8E8;
-        padding: 0.334rem 0;
+        // margin: 0 0.334rem;
+        border-bottom: 0.0133rem solid #EFEFEF;
+        padding: 0.334rem 0.334rem;
         a{
           display: block;
           color: #000;
@@ -107,7 +108,7 @@
             .title{
               width: 100%;
               text-overflow: ellipsis;
-              .font-dpr(12px);
+              .font-dpr(13px);
               display: -webkit-box;
               -webkit-line-clamp: 2;
               overflow: hidden;
@@ -157,13 +158,17 @@
               right: 0;
               .font-dpr(12px);
               color: #7c7c7c;
+              >span{
+                color: #151515;
+                .font-dpr(15px);
+              }
             }
           }
         }
       }
       .total_price{
-        margin: 0 0.334rem;
-        padding: 0.334rem 0;
+        // margin: 0 0.334rem;
+        padding: 0.334rem 0.334rem;
         border-bottom: 0.0133rem solid #E8E8E8;
         .font-dpr(13px);
         .hs-cf;
@@ -174,24 +179,29 @@
           float: right;
           span{
             padding-left: 0.4rem;
+            .font-dpr(15px);
+            span{
+              color: #AEAEAE;
+              .font-dpr(12px);
+            }
           }
         }
       }
       .btns{
-        height: 1.318rem;
-        line-height: 1.318rem;
+        height: 1.73rem;
+        line-height: 1.73rem;
         text-align: right;
         .btn{
           display: inline-block;
           margin-right: 0.334rem;
-          border-radius: 0.1rem;
+          border-radius: 0.18rem;
           color: #000;
-          border: 0.025rem solid #000;
-          width: 1.96rem;
-          height: 0.6rem;
-          line-height: 0.6rem;
+          border: 0.025rem solid #F0F0F0;
+          width: 2.93rem;
+          height: 1.067rem;
+          line-height: 1.067rem;
           text-align: center;
-          .font-dpr(13px);
+          .font-dpr(15px);
           background-color: #FFF;
           vertical-align: middle;
         }
@@ -244,7 +254,7 @@
   }
   .order_deliver,
   .order_complete{
-    margin: 0 0.4rem;
+    padding: 0 0.4rem;
     line-height: 2.32rem;
     padding-left: 0.3rem;
     .font-dpr(14px);
@@ -329,6 +339,7 @@
     .express_user_name,
     .express_user_address{
       line-height: 1.5em;
+      // color: #AEAEAE;
     }
   }
   .user_info{
@@ -347,7 +358,8 @@
     .user_name{
       float: left;
       margin-left: 0.27rem;
-      color: #979797;
+      .font-dpr(13px);
+      color: #151515;
       max-width: 5rem;
       overflow: hidden;
       white-space: nowrap;
@@ -365,15 +377,15 @@
     }
     .relation_seller{
       color: #000;
-      border: 0.025rem solid #000;
-      width: 2.16rem;
-      height: 0.5rem;
-      line-height: 0.5rem;
+      // border: 0.025rem solid #000;
+      width: 1.81rem;
+      height: 0.69rem;
+      line-height: 0.69rem;
       text-align: center;
       .font-dpr(12px);
-      background-color: #FFF;
+      background-color: #F0F0F0;
       float: right;
-      border-radius: 0.1rem;
+      border-radius: 0.17rem;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -385,8 +397,8 @@
     }
   }
   .goods_info{
-    margin: 0 0.4rem;
-    padding: 0.4rem 0;
+    // margin: 0 0.4rem;
+    padding: 0.4rem 0.4rem;
     border-bottom: 0.0133rem solid #E8E8E8;
     color: #000;
     &:after{
@@ -419,12 +431,12 @@
       height: 2.853rem;
       .title{
         width: 100%;
-          text-overflow: ellipsis;
-          .font-dpr(12px);
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          overflow: hidden;
-          color: #151515
+        text-overflow: ellipsis;
+        .font-dpr(13px);
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+        color: #151515
       }
       .goods_intro{
         color: #979797;
@@ -461,7 +473,10 @@
           bottom: 0;
           right: 0;
           .font-dpr(12px);
-          color: #979797;
+          color: #AEAEAE;
+          span{
+            .font-dpr(15px);
+          }
         }
       }
       .refund_underway{
@@ -473,8 +488,8 @@
     }
   }
   .total_price{
-    margin: 0 0.4rem;
-    padding: 0.4rem 0;
+    // margin: 0 0.4rem;
+    padding: 0.4rem 0.4rem;
     border-bottom: 0.0133rem solid #E8E8E8;
     .font-dpr(13px);
     .coupon,
@@ -483,6 +498,7 @@
       span{
         float: right;
         margin-right: 0.2rem;
+        .font-dpr(15px);
       }
     }
     .coupon{
@@ -492,6 +508,7 @@
       margin-top: 0.267rem;
       span{
         color: #ed4a42;
+        .font-dpr(15px);
       }
     }
   }
@@ -514,23 +531,23 @@
     left: 50%;
     transform: translateX(-50%);
     text-align: right;
-    background: #fff;
-    height: 1.318rem;
-    line-height: 1.318rem;
+    background: #F7F7F7;
+    height: 1.73rem;
+    line-height: 1.73rem;
     .btn{
       display: inline-block;
-      margin-right: 0.4rem;
-      border: none;
+      margin-right: 0.334rem;
+      border-radius: 0.18rem;
       color: #000;
-      border-radius: 0.1rem;
-      border: 0.025rem solid #000;
-      width: 1.96rem;
-      height: 0.6rem;
-      line-height: 0.6rem;
+      border: 0.025rem solid #F0F0F0;
+      width: 2.93rem;
+      height: 1.067rem;
+      line-height: 1.067rem;
       text-align: center;
-      .font-dpr(13px);
+      .font-dpr(15px);
       background-color: #FFF;
       vertical-align: middle;
+      box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2);
     }
   }
 }

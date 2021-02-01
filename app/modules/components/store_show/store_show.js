@@ -1894,7 +1894,7 @@ function toHaveIt(){
       if(val){
        val = val.replace(/#[\u4e00-\u9fa5_a-zA-Z0-9]+/gi,(v)=>{
           let str = ''
-          str = `<a style="color:#7264F9;" herf="javascript:;">${v}</a>`
+          str = `<a style="color:#2071D8;" herf="javascript:;">${v}</a>`
           return str
         })
       }

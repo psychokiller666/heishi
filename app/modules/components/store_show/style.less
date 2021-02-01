@@ -102,22 +102,22 @@
                                 margin: 0.1867rem 0 0 .25rem;
                                 position: relative;
                                 &.userhome {
-                                    background: url(//img8.ontheroadstore.com/H5_Icon/good_detail_seller.png);
+                                    background: url(//img8.ontheroadstore.com/H5_Icon/shop_210129.png);
                                     background-repeat: no-repeat;
                                     background-size: 100% 100%;
                                 }
                                 &.chat {
-                                    background: url(//img8.ontheroadstore.com/H5_Icon/good_detail_connect2.png);
+                                    background: url(//img8.ontheroadstore.com/H5_Icon/sx_210129.png);
                                     background-repeat: no-repeat;
                                     background-size: 100% 100%;
                                 }
                                 &.chat2 {
-                                    background: url(//img8.ontheroadstore.com/H5_Icon/good_detail_connect1.png);
+                                    background: url(//img8.ontheroadstore.com/H5_Icon/kefu_210129.png);
                                     background-repeat: no-repeat;
                                     background-size: 100% 100%;
                                 }
                                 &.shopping {
-                                    background: url(//img8.ontheroadstore.com/H5_Icon/good_detail_chart.png);
+                                    background: url(//img8.ontheroadstore.com/H5_Icon/cart_210129.png);
                                     background-repeat: no-repeat;
                                     background-size: 100% 100%;
                                 }
@@ -166,12 +166,14 @@
         }
         .buy_btn{
            // background: url(//img8.ontheroadstore.com/H5_Icon/good_buy_btn.png);
-           background: #7264F9; 
+           background: @BaseButtonColor; 
            background-repeat: no-repeat;
             background-size: 100% 100%;
             color: #fff;
             border-radius: 0 .16rem .16rem 0;
             margin-right: .25rem;
+            box-sizing: border-box;
+            box-shadow: #dbdbdb 0px 0px 10px;
             &.disable{
                 background: #8E8E8E;
             }
@@ -179,8 +181,11 @@
         .add_chart{
             border-left: 0.0133rem solid #E8E8E8;
             box-sizing: border-box;
-            background: #3C3C3C;
-            color: #fff;
+            background: @NextButtonColor;
+            color: @BaseFontColor;
+            box-sizing: border-box;
+            box-shadow: #dbdbdb 0px 0px 10px;
+            // border: 1px solid @BaseButtonColor;
             border-radius: .16rem 0 0 .16rem;
             // color: #000;
             // box-shadow:0px 0px 8px 0px rgba(0,0,0,0.27);
@@ -208,8 +213,10 @@
                 color: #fff;
             }
             width: 3.14rem;
-            background: #7264F9;
+            background: @BaseButtonColor;
             color: #fff;
+            box-sizing: border-box;
+            box-shadow: #dbdbdb 0px 0px 10px;
         }
         .deblocking,
         .download_app{
@@ -313,7 +320,7 @@
             background: rgba(255, 255, 255, 0.5);
             font-size: 0.35rem;
             text-align: center;
-            color: #7264F9;
+            color: @BaseButtonColor;
             border-radius: 0.13rem;
             position: absolute;
             .torem(left, 132);
@@ -346,20 +353,29 @@
             right: 0.4rem;
             width: 0.9067rem;
             height: 0.9067rem;
-            background: rgba(0, 0, 0, 0.5);
+            // background: rgba(0, 0, 0, 0.5);
             color: #FFF;
             z-index: 9999;
             border-radius: 50%;
             text-align: center;
             line-height: 0.9067rem;
             &.hs-icon:after{
-                content: '\e652';
-                font-size: 0.533rem;
+                content: ' ';
+                display: block;
+                width: inherit;
+                height: inherit;
+                background: url(//img8.ontheroadstore.com/H5_Icon/uncollect_210129.png) no-repeat;
+                background-size: cover;
             }
             &.active:after{
-                content: '\e651';
-                font-size: 0.533rem;
-                color: #FFF;
+                // content: '\e651';
+                // font-size: 0.533rem;
+                // color: #FFF;
+                display: block;
+                width: inherit;
+                height: inherit;
+                background: url(//img8.ontheroadstore.com/H5_Icon/collect_210129.png) no-repeat;
+                background-size: cover;
             }
         }
         .reward{
@@ -376,7 +392,7 @@
             white-space:normal;
             word-wrap:break-word;
             letter-spacing: -0.026667rem;
-            .font-dpr(17px);
+            .font-dpr(16px);
             font-weight: bold;
             padding: 0.34rem .26rem 0 .26rem;
             text-overflow: -o-ellipsis-lastline;
@@ -394,7 +410,7 @@
             white-space:normal;
             word-wrap:break-word;
             letter-spacing: -0.026667rem;
-            .font-dpr(17px);
+            .font-dpr(13px);
             font-weight: bold;
             padding: 0rem .26rem 0 .26rem;
             text-overflow: -o-ellipsis-lastline;
@@ -468,7 +484,7 @@
         position: relative;
         .hs-cf;
         .price{
-            .font-dpr(18px);
+            .font-dpr(17px);
             line-height: 0.61rem;
             float: left;
             margin-left: -0.1rem;
@@ -505,6 +521,7 @@
             color: #ccc;
             text-decoration: line-through;
             float: left;
+            .font-dpr(12px);
         }
         .aboutPrice{
             .torem(height,64);
@@ -538,15 +555,15 @@
             margin: auto!important;
             right: 0;
             z-index: 100000;
-            .torem(width,50);
-            .torem(height,150);
+            .torem(width,62);
+            .torem(height,157);
             // margin: 0!important;
             border: 0!important;
         }
         .select_wrap .select_r,.select_wrap .select_r_1{
             width: inherit;
             height: inherit;
-            background:  url(//img8.ontheroadstore.com/H5_Icon/article_get_coupon.png?v1) no-repeat;
+            background:  url(//img8.ontheroadstore.com/H5_Icon/coupon_210129.png?v1) no-repeat;
             background-size: 100%;
             &::after{
                 display: none;
@@ -2087,6 +2104,7 @@
                     height: 0.64rem;
                     background-size: 100%;
                     float: left;
+                    background-repeat: no-repeat;
                 }
                 .min{
                     background-image: url(//img8.ontheroadstore.com/H5_Icon/g_n_reduce_1.png);
@@ -2154,37 +2172,45 @@
     .add_chart{
        // background: url(//img8.ontheroadstore.com/H5_Icon/good_chart_btn_1.png) no-repeat center center;
         background-size: 100% 100%;
-        color: #fff;
-        background: #3C3C3C;
+        color: @BaseFontColor;
+        background: @NextButtonColor;
+        box-sizing: border-box;
+        box-shadow: #dbdbdb 0px 0px 10px;
+        // border: 1px solid @BaseButtonColor;
         left: .3rem;
         bottom: 10px;
+        box-shadow: #666666 0px 0px 10px;
         border-radius:.16rem 0 0 .16rem;
     }
     .only_chart{ 
         width: 9.4rem; 
-        background: #7264F9; 
+        background: @BaseButtonColor; 
         color: #fff; 
         left: .3rem;
         border-radius: .16rem;
+        box-sizing: border-box;
+        box-shadow: #dbdbdb 0px 0px 10px;
     } 
     .buy_btn{
         //background: url(//img8.ontheroadstore.com/H5_Icon/good_buy_btn_1.png?1);
         background-repeat: no-repeat;
         background-size: 100% 100%;
-        background: #7264F9;
+        background: @BaseButtonColor;
         color: #FFF;
         right: .3rem;
         border-radius: 0 .16rem .16rem 0;
         bottom: 10px;
+        box-sizing: border-box;
+        box-shadow: #dbdbdb 0px 0px 10px;
         &.disable{
             background: #8E8E8E;
         }
     }
     .confirm{
-        background: #7264F9;
+        background: @BaseButtonColor;
         color: #FFF;
         width: 9.4rem;
-        border-radius: .3rem;
+        border-radius: .16rem;
         .font-dpr(15px);
         position: absolute;
         bottom: 10px;
@@ -2194,6 +2220,8 @@
         text-align: center;
         line-height: 1.306rem;
         z-index: 99;
+        box-sizing: border-box;
+        box-shadow: #dbdbdb 0px 0px 10px;
     }
     .deblocking,
     .download_app{
@@ -2718,7 +2746,7 @@
                     align-items: center;
                     line-height: .346rem;
                     .time{
-                        color: #7264F9;
+                        color: @BaseButtonColor;
                         .font-dpr(18px);
                         margin-right: .2rem;
                         font-weight: bold;
@@ -2896,14 +2924,14 @@
                 top: 0%;
                 // right: .1rem;
                 font-family: "iconfont"!important;
-                color: #7264F9;
+                color: @BaseButtonColor;
                 right: 0;
             //     -webkit-transform: translateY(-104%);
             //     transform: translateY(-104%);
             }
            .float_right{
             .font-dpr(12px);
-            color: #7264F9;
+            color: @BaseButtonColor;
             position: relative;
             margin-right: .4rem;
             font-weight: normal;
