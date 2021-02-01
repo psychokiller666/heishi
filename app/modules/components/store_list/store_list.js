@@ -244,7 +244,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
     let tab = ``
     $('.segment_list').html('')
     data.forEach((v,i)=>{
-      tab+=`<span data-sid="${v.id}" class="${i==0?'active':''} ${v.title.indexOf('推荐')>=0?'active_rec':''}">${v.title}`
+      tab+=`<span data-sid="${v.id}" class="${i==0?'active':''} ${v.title.indexOf('推荐')>=0&&i==0?'active_rec':''}">${v.title}`
       // if(v.icon){
       //   tab+=`<img class="tab_icon" src="${v.icon}"/></span>`
       // }else{
@@ -271,7 +271,7 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
                   // if(t.tag_list.id==1){
                   //   list+=`<span class="tag" data-jump="1" data-id="${t.tag_list.id}"><span class="time" data-time="${t.tag_list.count_down}">${countDown(t.tag_list.count_down)}111</span>${t.tag_list.title}</span>`
                   // }else{
-                    list+=`<span class="tag" data-jump="2" data-id="${t.tag_list.id}" style="margin-top: -.1rem;color:${getTagColor(t.tag_list.id)};"><img class="tag_icon" src="${t.tag_list.icon}" />${t.tag_list.title}</span>`
+                    list+=`<span class="tag" data-jump="2" data-id="${t.tag_list.id}" style="margin-top: -.02rem;color:${getTagColor(t.tag_list.id)};"><img class="tag_icon" src="${t.tag_list.icon}" />${t.tag_list.title}</span>`
                   // }
                 }
               list+= `</p>

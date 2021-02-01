@@ -9,7 +9,7 @@
     /*地址选择器*/
 		.addr_sel_wrap{
 			//padding: 0.196667rem 0 0.386667rem;
-			border-bottom: 0.533rem solid #f0eeef;
+			border-bottom: 0.21rem solid #EFEFEF;
 			background: #fff;
 			position: relative;
 			.font-dpr(13px);
@@ -45,18 +45,24 @@
 				padding-right: .2rem;
 				.name_phone{
 					line-height: .6rem;
-					height: .6rem;
+          height: .6rem;
+          overflow-y: hidden;
 					width: 100%;
 					.name{
-						float: left;
+            float: left;
+            .font-dpr(13px);
 					}
 					.phone{
-						float: right;
-						color: #979797;
+						float: left;
+            color: #AEAEAE;
+            .font-dpr(11px);
+            margin-left: 8px;
+            line-height: .76rem;
 					}
 				}
 				.add_desc{
-					color: #979797;
+          color: #AEAEAE;
+          .font-dpr(12px);
 				}
 			}
 
@@ -107,6 +113,7 @@
         display: inline-block;
         line-height: .74rem;
         height: .74rem;
+        color: #AEAEAE;
       }
       .finish_id{
         display: none;
@@ -131,15 +138,15 @@
         border: 0;
       }
       p{
-        font-size: .24rem;
+        .font-dpr(10px);
         color: #8E8E8E;
         padding: .4rem;
         line-height: .38rem;
         width: 9.2rem;
         position: relative;
         left: -.4rem;
-        background: #FCD9D9;
-        color: #AE2221;
+        background: #F95653;
+        color: #ffffff;
         margin-bottom: .4rem;
       }
     }
@@ -212,6 +219,7 @@
         .good_price{
           // width: 4.99rem;
           color: #151515;
+          .font-dpr(15px);
           // line-height: 1em;
           // margin-top: 1rem;
         }
@@ -221,6 +229,7 @@
           // right: 0;
           color: #8E8E8E;
           margin-left: .17rem;
+          margin-top: .06rem;
         }
       }
       .quanyi{
@@ -276,7 +285,7 @@
        
       }
       .numbers{
-        .font-dpr(15px);
+        .font-dpr(13px);
         padding: 0.4rem 0;
         border-bottom: 0.013rem solid rgba(153,153,153,0.3);
         .hs-cf;
@@ -326,13 +335,13 @@
         }
       }
       .express{
-        .font-dpr(15px);
+        .font-dpr(13px);
         padding: 0.4rem 0;
         border-bottom: 0.013rem solid rgba(153,153,153,0.3);
         .hs-cf;
       }
       .comment{
-        .font-dpr(15px);
+        .font-dpr(13px);
         padding: 0.4rem 0;
         .hs-cf;
         .right{
@@ -368,7 +377,7 @@
     width: 2.293rem;
     height: 0.96rem;
     // background: url(http://img8.ontheroadstore.com/H5_Icon/good_buy_btn.png) no-repeat center center;
-    background: #7264F9;
+    background: @BaseButtonColor;
     background-size: cover;
     border-radius: 0.1rem;
       .font-dpr(13px);
