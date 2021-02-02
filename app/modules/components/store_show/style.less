@@ -391,9 +391,9 @@
         .title{
             white-space:normal;
             word-wrap:break-word;
-            letter-spacing: -0.026667rem;
+            letter-spacing: 0;
             .font-dpr(16px);
-            font-weight: bold;
+            font-weight: 500;
             padding: 0.34rem .26rem 0 .26rem;
             text-overflow: -o-ellipsis-lastline;
             overflow: hidden;
@@ -409,9 +409,9 @@
         .sub_title{
             white-space:normal;
             word-wrap:break-word;
-            letter-spacing: -0.026667rem;
-            .font-dpr(13px);
-            font-weight: bold;
+            letter-spacing: 0;
+            .font-dpr(16px);
+            font-weight: normal;
             padding: 0rem .26rem 0 .26rem;
             text-overflow: -o-ellipsis-lastline;
             overflow: hidden;
@@ -985,6 +985,7 @@
         align-items: center;
         color: #888888;
         .font-dpr(13px);
+        display: none;
         .have_icon{
             display: block;
             width: .6rem;
@@ -1552,7 +1553,7 @@
                 height: 1.12rem;
                 border-radius: 50%;
                 float: left;
-                margin-right: 0.3rem;
+                margin-right: 0.21rem;
                 object-fit: cover
             }
             .user_name{
@@ -1622,7 +1623,7 @@
                 // top: .4rem;
                 // left: 0;
                 a{
-                    margin-right: 0.267rem;
+                    margin-right: 0.21rem;
                     display: inline-block;
                     .torem(width,286);
                     .torem(height,410);
@@ -1640,14 +1641,14 @@
                         height: 1.5rem;
                     }
                     .post_title{
-                        .font-dpr(14px);
-                        padding-top: 0.27rem;
+                        .font-dpr(13px);
+                        padding-top: 0.21rem;
                         // overflow: hidden;
                         white-space: normal;
                         // text-overflow: ellipsis;
                         width: 100%;
-                        height: .43rem;
-                        line-height: 1.2em;
+                        height: .5rem;
+                        line-height: 1.5em;
                         color: #151515;
                         font-weight: normal;
                         overflow: hidden;
@@ -1657,14 +1658,14 @@
                         -webkit-box-orient: vertical;                       
                     }
                     .post_subtitle{
-                        .font-dpr(14px);
+                        .font-dpr(13px);
                         // overflow: hidden;
                         white-space: normal;
                         // text-overflow: ellipsis;
                         width: 100%;
-                        height: .43rem;
-                        line-height: 1.2em;
-                        color: #8F8F8F;
+                        height: .5rem;
+                        line-height: 1.5em;
+                        color: #AeAeAe;
                         font-weight: normal;
                         overflow: hidden;
                         text-overflow: ellipsis;
@@ -1673,7 +1674,8 @@
                         -webkit-box-orient: vertical;                       
                     }
                     .post_price{
-                        .font-dpr(17px);
+                        .font-dpr(15px);
+                        line-height: 1.8em;
                         color: #151515;
                     }
                 }
@@ -1697,11 +1699,12 @@
                 // margin-right: .4rem;
                 position: relative;
                 line-height: 1.84rem;
-                font-weight: 600;
+               
                 // margin: 0 1.6rem;
                 margin: 0  auto;
                 &.active{
                     color: #000;
+                    font-weight: 600;
                     &::after{
                         content: '';
                         position: absolute;
@@ -1725,7 +1728,7 @@
             font-size: 0.37333rem;
             font-weight: 700;
             padding: 0.4rem 0;
-            .font-dpr(20px);
+            .font-dpr(16px);
             text-indent: .45rem;
             border-top: 0.0133rem solid #e8e8e8;
         }
@@ -1941,7 +1944,7 @@
         letter-spacing: -0.026667rem;
         font-size: 0.42667rem;
         height: 1.06667rem;
-        font-weight: bold;
+        font-weight: 500;
         padding: .453rem 0.4rem 0 3rem;
         margin-bottom: 0rem;
         line-height: .53rem;
@@ -1964,10 +1967,10 @@
         // margin: 0 .533rem;
         .hs-cf;
         .price{
-            font-size: 0.53333rem;
+            .font-dpr(16px);
             line-height: 1;
             float: left;
-            color: #ae2121;
+            color: #151515;
         }
         .good_limit_num,
         .remain,
@@ -1977,7 +1980,7 @@
             display: none;
             float: right;
             .font-dpr(12px);
-            color: #D04D3F;
+            color: #AeAeAe;
             line-height: 0.61rem;
             height: 0.61rem;
             border-radius: 0.61rem;
@@ -2002,7 +2005,7 @@
         display: none;
         position: relative;
         height: 0.37333rem;
-        padding: 0.4rem 0rem 0.13333rem 0rem;
+        padding: 0.5333em 0rem 0.13333rem 0rem;
         margin-bottom: 1.5rem;
         .delivery_cycle_label{
             float: left;
