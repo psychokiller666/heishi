@@ -2181,13 +2181,15 @@ function toHaveIt(){
               //   //$('.frontcover').find('.previewImage').css('height',10/whScale+'rem')
               // }
               $('.chat_btn').find('.hs-icon').removeClass('chat')
-              if(data.data.post.is_proprietary==1){
+              if(data.data.post&&data.data.post.is_proprietary==1){
                 $('.chat_btn').find('.hs-icon').addClass('chat2')
               }else{
                 // console.log(111)
                 $('.chat_btn').find('.hs-icon').addClass('chat')
               }
-              initAlikeContent(data.data.related_goods)
+              if(data.data.related_goods){
+                initAlikeContent(data.data.related_goods)
+              } 
               if(data.data.show_list){
                 initRecommend1(data.data.show_list)
               }

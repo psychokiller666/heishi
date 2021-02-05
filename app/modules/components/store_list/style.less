@@ -1,5 +1,6 @@
 /*商品列表*/
 .store_list{
+    background: #f0f0f0;
     .banner {
       padding: 0.267rem 0.4rem 0 0.4rem;
       .swiper-container-home{
@@ -1074,10 +1075,10 @@
 .index_list_new{
     background: #F0F0F0;
     .go_to_search_new{
-        width: 9.2rem;
+        width: 9.36rem;
         height: 1.067rem;
-        border-radius: .133rem;
-        background: #f2f2f2;
+        border-radius: .32rem;
+        background: #FFFFFF;
         color: #888888;
         margin: 0 auto;
         position: relative;
@@ -1099,8 +1100,8 @@
         .font-dpr(17px);
         text-align: center;
         font-weight: 600;
-        line-height: 2.04rem;
-        margin-top: .4rem;
+        line-height: 2rem;
+        margin-top: .5rem;
     }
     .swiper-container-home{
         height: 15.306rem;
@@ -1109,11 +1110,13 @@
         .swiper-slide a{
             width: 10rem;
             height: 15.306rem;
+            background: #f0f0f0;
         }
         img{
             width: inherit;
             height: inherit;
             object-fit: cover;
+           
         }
         .swiper-pagination {
             bottom: 0.1rem;
@@ -1129,9 +1132,9 @@
                 opacity: 1;
             }
             .swiper-pagination-bullet-active {
-                .torem(width,10);
-                .torem(height,10);
-                background: #ED4A42;
+                // .torem(width,10);
+                // .torem(height,10);
+                background: #151515;
             }
         }
     }
@@ -1175,19 +1178,19 @@
                     -o-filter: grayscale(100%);
                     filter: grayscale(100%);
                     // filter: gray;
-                    &.active{
-                        border: 1px solid #ACD120;
-                        -webkit-filter: grayscale(0);
-                        -moz-filter: grayscale(0);
-                        -ms-filter: grayscale(0);
-                        -o-filter: grayscale(0);
-                        filter: grayscale(0);
-                    }
+                    // &.active{
+                    //     border: 1px solid #ACD120;
+                    //     -webkit-filter: grayscale(0);
+                    //     -moz-filter: grayscale(0);
+                    //     -ms-filter: grayscale(0);
+                    //     -o-filter: grayscale(0);
+                    //     filter: grayscale(0);
+                    // }
                 }
                 p{
                     text-align: center;
                     .font-dpr(12px);
-                    color: #979797;
+                    color: #AEAEAE;
                     margin-top: .18rem;
                     height: .42rem;
                     overflow: hidden;
@@ -1199,7 +1202,7 @@
                     display: none;
                     width: .5rem;
                     height: .5rem;
-                    background: url(https://img8.ontheroadstore.com/H5_Icon/recomend_seller_arrow.png) no-repeat center center;
+                    background: url(https://img8.ontheroadstore.com/H5_Icon/home/home_rec_sj.png) no-repeat center center;
                     background-size: 100% 100%;
                     position: absolute;
                     bottom: -.8rem;
@@ -1220,7 +1223,7 @@
         .seller_goods_list{
             width: 8.433rem;
             height: 5.97rem;
-            background: #E5E6F8;
+            background: #FFFFFF;
             white-space: nowrap;
             overflow-x: scroll;
             margin-left: 1.067rem;
@@ -1240,20 +1243,24 @@
                     object-fit: contain;
                 }
                 p{
-                    width: 2.53rem;  
+                    // width: 2.53rem;  
                     word-wrap: break-word;
                     word-break: break-all;
                     white-space: pre-line;
                     overflow:hidden; 
-                    height: .75rem;
+                    height: .85rem;
                     padding: .05rem 0;
                     margin: 0 auto;
-                    line-height: .425rem;
+                    line-height: .5rem;
                     text-align: center;
+                    .font-dpr(13px);
                 }
                 span{
                     display: block;
                     text-align: center;
+                    .font-dpr(15px);
+                    margin-top: .1rem;
+                    font-weight: 500;
                 }
             }
         }
@@ -1264,27 +1271,28 @@
       
         .new_goods_list{
             width: 10rem;
-            height: 5.54rem;
+            height: 5.56rem;
             white-space: nowrap;
             overflow-x: scroll;
             // padding: .3rem 0;
             .jump_new_more{
                 width: 3.84rem;
-                height: 4.94rem;
+                height: 4.98rem;
                 margin-left: .4rem;
                 margin-top: .3rem;
-                box-shadow:0px 0px .3rem 0px rgba(0,0,0,0.5);
+                box-shadow:0px 0px .3rem 0px rgba(0,0,0,0.15);
             }
             .swiper-slide{
                 height: 5.54rem;
             }
             .new_good{
                 width: 3.84rem;
-                height: 4.94rem;
+                height: 4.98rem;
                 display: inline-block;
-                margin-left: .4rem;
+                margin-left: .32rem;
                 margin-top: .3rem;
-                box-shadow:0px 0px .3rem 0px rgba(0,0,0,0.5);               
+                box-shadow:0px 0px .3rem 0px rgba(0,0,0,0.15);
+                background: #FFF;               
                 img{
                     width: 3.84rem;
                     height: 3.84rem;
@@ -1292,16 +1300,16 @@
                 }
                 p{
                     color: #151515;
-                    .font-dpr(12px);
+                    .font-dpr(13px);
                     text-align: center;
-                    padding: .133rem;
+                    padding: .233rem;
                     word-wrap: break-word;
                     word-break: break-all;
                     white-space: pre-line;
                     overflow: hidden;
-                    height: .75rem;
-                    padding: .05rem;
-                    line-height: .4rem;
+                    height: .78rem;
+                    padding: .1rem .26rem;
+                    line-height: .47rem;
                 }
             }
            
@@ -1321,7 +1329,7 @@
                 }
                 .shadow{
                     width: 10rem;
-                    padding: .4rem;
+                    padding: .32rem;
                     box-sizing: border-box;
                     position: absolute;
                     height: 5.067rem;
@@ -1369,7 +1377,7 @@
             }
             .shadow{
                 width: 4.8rem;
-                padding: .4rem;
+                padding: .32rem;
                 position: absolute;
                 box-sizing: border-box;
                 // height: 2rem;
@@ -1410,7 +1418,7 @@
         margin-top: 1rem;
         height: 1.25rem;
         overflow-y: scroll;
-        // background: #d8d8d8;
+        background: #F6F6F6;
         white-space: nowrap;
         span{
             // color: #979797;
@@ -1461,7 +1469,7 @@
             flex-flow: space-between;
             flex-wrap: wrap;
            
-            .font-dpr(14px);
+            .font-dpr(13px);
             .ad{
                 width: 10rem;
                 height: 3.306rem;
@@ -1477,7 +1485,7 @@
                 display: block;
                 width: 4.99rem;
                 height: 7.23rem;
-                margin-top: .426rem;
+                margin-bottom: .426rem;
                 a{
                     display: block;
                     color: #151515;
@@ -1488,7 +1496,7 @@
                     object-fit: cover;
                 }
                 .txt{
-                    width: 4.453rem;
+                    width: 4.36rem;
                     margin: 0 auto;
                     .txt_top{
                         height: 1.44rem;
@@ -1507,14 +1515,14 @@
                         height: .96rem;
                         overflow: hidden;
                         line-height: .48rem;
-                        color: #979797;
+                        color: #AEAEAE;
                         display: -webkit-box;
                         -webkit-box-orient: vertical;
                         -webkit-line-clamp: 2;
                         overflow: hidden;
                     }
                     .price{
-                        .font-dpr(16px);   
+                        .font-dpr(15px);   
                         font-weight: 500;  
                     }
                     .tag{
