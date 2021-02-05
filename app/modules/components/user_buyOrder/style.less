@@ -8,12 +8,12 @@
       display: flex;
       justify-content: space-between;
       background: #E6E6E6;
-      border-bottom: 0.0133rem solid #E8E8E8;
+      border-bottom: 0.0133rem solid #dbdbdb;
       a{
         min-width: 1.2rem;
-        .font-dpr(14px);
+        .font-dpr(13px);
         display: block;
-        color: #979797;
+        color: #AEAEAE;
         text-align: center;
         &.active:after{
           content: '';
@@ -29,6 +29,8 @@
         &.active{
           color: #151515;
           position: relative;
+          .font-dpr(16px);
+          font-weight: 500;
         }
       }
     }
@@ -36,12 +38,12 @@
   .order_list{
     padding-bottom: 1.306rem;
     .order_item{
-      border-bottom: 0.213rem solid #EFEFEF;
+      border-bottom: 0.213rem solid #efefef;
       &:first-child{
         border-top: none;
       }
       .user_info{
-        padding: 0.4rem 0.34rem 0.05rem;
+        padding: 0.4rem 0.32rem 0.05rem;
         line-height: 0.8rem;
         height: 0.8rem;
         .font-dpr(13px);
@@ -64,12 +66,12 @@
           position: relative;
           padding-right: 0.4rem;
           &:after{
-            .font-dpr(13px);
+            .font-dpr(15px);
             position: absolute;
             right: 0;
             height: 100%;
             content: "\e512";
-            color: #b5b5b5;
+            color: #AEAEAE;
           }
         }
         .order_status{
@@ -79,7 +81,7 @@
       }
       .goods_info{
         // margin: 0 0.334rem;
-        border-bottom: 0.0133rem solid #EFEFEF;
+        border-bottom: 0.0133rem solid #DBDBDB;
         padding: 0.334rem 0.334rem;
         a{
           display: block;
@@ -94,7 +96,7 @@
             width: 2.853rem;
             height: 2.853rem;
             display: block;
-            background-color: #F5F5F5;
+            background-color: #F0F0F0;
             background-position: 50% 50%;
             background-repeat: no-repeat;
             background-size: cover;
@@ -168,8 +170,8 @@
       }
       .total_price{
         // margin: 0 0.334rem;
-        padding: 0.334rem 0.334rem;
-        border-bottom: 0.0133rem solid #E8E8E8;
+        padding: 0.32rem 0.32rem;
+        border-bottom: 0.0133rem solid #dbdbdb;
         .font-dpr(13px);
         .hs-cf;
         .goods_num{
@@ -214,12 +216,12 @@
 .order_info{
   .order_receive,
   .order_payment{
-    margin: 0 0.4rem;
+    margin: 0 0.32rem;
     .font-dpr(14px);
     position: relative;
     padding-left: 0.3rem;
-    height: 2.32rem;
-    border-bottom: 0.0133rem solid #E8E8E8;
+    height: 1.96rem;
+    border-bottom: 0.0133rem solid #dbdbdb;
     overflow: hidden;
     font-weight: 500;
     span{
@@ -229,7 +231,7 @@
     .order_status{
       position: absolute;
       top: 50%;
-      left: 0;
+      left: .9rem;
       transform: translateY(-50%);
     }
     .title{
@@ -241,10 +243,11 @@
       color: #939393;
     }
     img{
-      width: 2.53rem;
+      width: .8rem;
+      height: .8rem;
       position: absolute;
-      top: 0;
-      right: 0;
+      top: .58rem;
+      left: 0rem;
     }
     &:after{
       content: "";
@@ -252,27 +255,32 @@
       clear: both;
     }
   }
+  .order_close{
+    background: #AEAEAE;
+  }
   .order_deliver,
   .order_complete{
-    padding: 0 0.4rem;
-    line-height: 2.32rem;
+    padding: 0 0.32rem;
+    line-height: 1.44rem;
     padding-left: 0.3rem;
     .font-dpr(14px);
-    border-bottom: 0.0133rem solid #E8E8E8;
+    border-bottom: 0.0133rem solid #dbdbdb;
     position: relative;
     font-weight: 500;
     span{
       width: 6rem;
       display: block;
+      margin-left: .9rem;
     }
     .title{
       color: #000;
     }
     img{
-      width: 2.53rem;
+      width: .8rem;
+      height: .8rem;
       position: absolute;
-      top: 0;
-      right: 0;
+      top: .32rem;
+      left: .32rem;
     }
     &:after{
       content: "";
@@ -285,7 +293,7 @@
     height: 2.627rem;
     .font-dpr(13px);
     margin: 0 0.4rem;
-    border-bottom: 0.0133rem solid #E8E8E8;
+    border-bottom: 0.0133rem solid #dbdbdb;
     &:before{
       .font-dpr(20px);
       content: "\e713";
@@ -326,15 +334,20 @@
     position: relative;
     .font-dpr(13px);
     color: #000;
-    padding: 0.48rem 0.4rem 0.48rem 1.3rem;
-    border-bottom: 0.213rem solid #f5f5f5;
+    padding: 0.48rem 0.4rem 0.48rem 1.1rem;
+    border-bottom: 0.213rem solid #F0F0F0;
     &:before{
       .font-dpr(24px);
-      content: "\e721";
+      content: "";
+      display: block;
+      width: .63rem;
+      height: .63rem;
+      background: url(//img8.ontheroadstore.com/H5_Icon/order_form_address_icon.png) no-repeat center center;
+      background-size: cover;
       position: absolute;
       top: 50%;
       transform: translateY(-50%); 
-      left: 0.44rem;
+      left: 0.3rem;
     }
     .express_user_name,
     .express_user_address{
@@ -343,7 +356,7 @@
     }
   }
   .user_info{
-    padding: 0.4rem;
+    padding: 0.32rem;
     line-height: 0.8rem;
     .font-dpr(12px);
     height: 0.8rem;
@@ -398,8 +411,8 @@
   }
   .goods_info{
     // margin: 0 0.4rem;
-    padding: 0.4rem 0.4rem;
-    border-bottom: 0.0133rem solid #E8E8E8;
+    padding: 0.4rem 0.32rem;
+    border-bottom: 0.0133rem solid #dbdbdb;
     color: #000;
     &:after{
       content: "";
@@ -489,8 +502,8 @@
   }
   .total_price{
     // margin: 0 0.4rem;
-    padding: 0.4rem 0.4rem;
-    border-bottom: 0.0133rem solid #E8E8E8;
+    padding: 0.32rem 0.32rem;
+    border-bottom: 0.0133rem solid #dbdbdb;
     .font-dpr(13px);
     .coupon,
     .postage,
@@ -507,13 +520,13 @@
     .price_details{
       margin-top: 0.267rem;
       span{
-        color: #ed4a42;
+        color: #151515;
         .font-dpr(15px);
       }
     }
   }
   .time_list{
-    margin: 0 0.4rem;
+    margin: 0 0.32rem;
     .font-dpr(12px);
     color: #7F7F7F;
     padding-top: 0.4rem;
@@ -523,7 +536,7 @@
     }
   }
   .btns{
-    border-top: 0.0133rem solid #E8E8E8;
+    border-top: 0.0133rem solid #dbdbdb;
     position: fixed;
     bottom: 0;
     z-index: 999;
@@ -532,8 +545,9 @@
     transform: translateX(-50%);
     text-align: right;
     background: #F7F7F7;
-    height: 1.73rem;
-    line-height: 1.73rem;
+    height: 1.86rem;
+    line-height: 1.86rem;
+    padding-bottom: .4rem;
     .btn{
       display: inline-block;
       margin-right: 0.334rem;
@@ -547,7 +561,7 @@
       .font-dpr(15px);
       background-color: #FFF;
       vertical-align: middle;
-      box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2);
+      box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.15);
     }
   }
 }
@@ -559,7 +573,7 @@
       padding: 0 0.4rem;
       .user_info{
         padding: 0.4rem 0;
-        border-bottom: 0.0133rem solid #E8E8E8;
+        border-bottom: 0.0133rem solid #dbdbdb;
         .hs-cf;
         img{
           width: 0.533rem;
@@ -577,7 +591,7 @@
       .good_item{
         padding: 0.4rem 0;
         position: relative;
-        border-bottom: 0.0133rem solid #E8E8E8;
+        border-bottom: 0.0133rem solid #dbdbdb;
         .hs-cf;
         img{
           float: left;
@@ -631,7 +645,7 @@
         }
       }
       .postage{
-        border-bottom: 0.0133rem solid #E8E8E8;
+        border-bottom: 0.0133rem solid #dbdbdb;
         .postage_price{
           float: right;
         }
@@ -651,7 +665,7 @@
     bottom: 0;
     left: 0;
     width: 10rem;
-    border-top: 0.0133rem solid #E8E8E8;
+    border-top: 0.0133rem solid #dbdbdb;
     height: 1.28rem;
     z-index: 999;
     .pay_btn{

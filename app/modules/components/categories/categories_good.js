@@ -101,6 +101,7 @@ $(document).on('pageInit','.categories_good', function(e, id, page){
     }else{
       orderTypeIndex=$(this).index()
       $('.goods_filter div').removeClass('active');
+      $('.goods_filter div span').removeClass('active');
       $(this).addClass('active');
     }
     curPage =1
