@@ -1,11 +1,11 @@
 .orderform{
   .hs-page{
-    background: #f0eeef;
+    background: #F0F0F0;
   }
   .listOrder{
     border-top: 0.0133rem solid #dbdbdb;
     background: #FFF;
-    padding-bottom: 1.6rem;
+    margin-bottom: 1.6rem;
     /*地址选择器*/
 		.addr_sel_wrap{
 			//padding: 0.196667rem 0 0.386667rem;
@@ -24,7 +24,7 @@
 				vertical-align: middle;
 				position: absolute;
 				top: 0;
-				bottom: 0;
+				bottom: .2rem;
 				margin: auto;
 				height: .53rem;
 				i{
@@ -152,7 +152,7 @@
     }
 
     .lists{
-      border-bottom: 0.213rem solid #F5F5F5;
+      border-bottom: 0.213rem solid #F0F0F0;
      
       .user_info{
         padding: 0.347rem 0 0 0;
@@ -174,7 +174,7 @@
       }
       .good_info{
         .font-dpr(13px);
-        padding: 0.4rem 0;
+        padding: 0.32rem 0;
         position: relative;
         border-bottom: 0.013rem solid #DBDBDB;
         .hs-cf;
@@ -186,7 +186,7 @@
           height: 100%;
           color: inherit;
           font-size: inherit;
-          line-height: inherit;
+          line-height: 1.4em;
         }
         .image{
           background-position: 50% 50%;
@@ -195,14 +195,14 @@
           width: 2.85rem;
           height: 2.85rem;
           // border-radius: 0.16rem;
-          margin-right: 0.4rem;
+          margin-right: 0.28rem;
         }
         .good_name{
           .font-dpr(12px);
           overflow:hidden;
           width: 5.89rem;
             line-height: 1.2em;
-            height: 2.4em;
+            height: 2.8em;
         }
         .good_style{
           width: 5.89rem;
@@ -222,6 +222,7 @@
           .font-dpr(15px);
           // line-height: 1em;
           // margin-top: 1rem;
+          font-weight: 500;
         }
         .good_num{
           // position: absolute;
@@ -286,11 +287,11 @@
       }
       .numbers{
         .font-dpr(13px);
-        padding: 0.4rem 0;
+        padding: 0.29rem 0;
         border-bottom: 0.013rem solid #DBDBDB;
         .hs-cf;
         .left{
-          line-height: .58rem;
+          line-height: .74rem;
         }
         .right{
           .min,
@@ -383,7 +384,7 @@
     // background: url(http://img8.ontheroadstore.com/H5_Icon/good_buy_btn.png) no-repeat center center;
     background: @BaseButtonColor;
     background-size: cover;
-    border-radius: 0.1rem;
+    border-radius: 0.16rem;
       .font-dpr(14px);
     margin: 0.175rem 0.4rem 0 0.4rem;
     line-height: 0.96rem;
@@ -403,6 +404,8 @@
       color: #979797;
       span{
         color: #151515;
+        font-weight: 500;
+        .font-dpr(15px);
       }
     }
   }
