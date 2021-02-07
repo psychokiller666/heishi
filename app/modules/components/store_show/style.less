@@ -187,7 +187,7 @@
             border-radius: 0 .16rem .16rem 0;
             margin-right: .25rem;
             box-sizing: border-box;
-            box-shadow: 4px 0px 3px rgba(0,0,0,0.15),0px 4px 3px rgba(0,0,0,0.15),0px -4px 3px rgba(0,0,0,0.15);
+            box-shadow: 8px 0px 6px rgba(0,0,0,0.05),0px 8px 6px rgba(0,0,0,0.05),0px -8px 6px rgba(0,0,0,0.05);
             &.disable{
                 background: #8E8E8E;
             }
@@ -198,7 +198,7 @@
             background: @NextButtonColor;
             color: @BaseFontColor;
             box-sizing: border-box;
-            box-shadow: 0px 4px 3px rgba(0,0,0,0.15), -4px 0 3px rgba(0,0,0,0.15),0px -3px 3px rgba(0,0,0,0.15);
+            box-shadow: 0px 8px 6px rgba(0,0,0,0.05), -8px 0 6px rgba(0,0,0,0.05),0px -6px 6px rgba(0,0,0,0.05);
             // border: 1px solid @BaseButtonColor;
             border-radius: .16rem 0 0 .16rem;
         }
@@ -227,8 +227,8 @@
             background: @BaseButtonColor;
             color: #fff;
             box-sizing: border-box;
-            box-shadow: #dbdbdb 0px 0px 10px;
-            box-shadow: 4px 0px 3px rgba(0,0,0,0.15),0px 4px 3px rgba(0,0,0,0.15),0px -4px 3px rgba(0,0,0,0.15);
+            box-shadow: rgba(0,0,0,0.05) 0px 0px 10px;
+            box-shadow: 8px 0px 6px rgba(0,0,0,0.05),0px 8px 6px rgba(0,0,0,0.05),0px -8px 6px rgba(0,0,0,0.05);
         }
         .deblocking,
         .download_app{
@@ -269,9 +269,9 @@
            opacity: 1;
         }
         .swiper-pagination-bullet-active{
-            background: #ED4A42;
-            .torem(width,10);
-            .torem(height,10);
+            background: #151515;
+            // .torem(width,10);
+            // .torem(height,10);
         }
         .image{
             height: 10rem;
@@ -549,6 +549,7 @@
                     font-weight: 400;
                     font-family: 'mont-b'!important;
                 }
+                .font-dpr(18px);
             }
             .about_postage{
                 display: inline-block;
@@ -556,6 +557,8 @@
                 float: right;
                 .font-dpr(11px);
                 color: #aeaeae;
+                font-weight: 400;
+                font-family: 'Ping Fang'!important;
             }
            
         }
@@ -570,7 +573,7 @@
             position: fixed;
             top: 4rem;
             margin: auto!important;
-            right: 0;
+            right: -.02667rem;
             z-index: 100000;
             .torem(width,62);
             .torem(height,157);
@@ -972,7 +975,7 @@
             
             top: 50%;
             right: .38rem;
-            color: #AeAeAe;
+            color: #E3E4E5;
             -webkit-transform: translateY(-50%);
             transform: translateY(-50%);
             .font-dpr(16px);
@@ -1063,16 +1066,16 @@
             height: 100%;
             font-weight: 500;
             .font-dpr(12px);
-            &:after{
-                content: '\e512';
-                display: block;
-                position: absolute;
-                .font-dpr(16px);
-                top: 50%;
-                right: 0;
-                transform: translateY(-50%);
-                color: #979797;
-            }
+            // &:after{
+            //     content: '\e512';
+            //     display: block;
+            //     position: absolute;
+            //     .font-dpr(16px);
+            //     top: 50%;
+            //     right: 0;
+            //     transform: translateY(-50%);
+            //     color: #979797;
+            // }
         }
 
     }
@@ -1129,7 +1132,7 @@
             // overflow: hidden;
             text-align: justify;
             word-break: break-all;
-            font-weight: 300;
+            font-weight: normal;
             line-height: 1.4em;
             letter-spacing: 0.02rem;
         }
@@ -1711,6 +1714,7 @@
                         .font-dpr(15px);
                         line-height: 1.8em;
                         color: #151515;
+                        font-weight: 500;
                     }
                 }
             }
@@ -1719,7 +1723,7 @@
 
     //商品详情和购物须知
     .goods_tab{
-        .torem(height,118);
+        .torem(height,116);
         .torem(width,750);
         .font-dpr(14px);
         color: #151515; 
@@ -1968,7 +1972,7 @@
         position: absolute;
         top: .426rem;
         left: 0.32rem;
-        border-radius: 0.12rem;
+        border-radius: 0.16rem;
         background-position: 50% 50%;
         background-repeat: no-repeat;
         background-size: cover;
@@ -2060,7 +2064,7 @@
         }
     }
     .style{
-        margin-top: 0.4rem;
+        margin-top: 0.1rem;
         max-height: 6.28rem;
         overflow-y: auto;
         box-sizing: border-box;
@@ -2072,7 +2076,7 @@
         .good_num,
         .types{
             position: relative;
-            padding-top: .15rem;
+            padding-top: .33rem;
             .label{
                 position: absolute;
                 .font-dpr(14px);
@@ -2080,7 +2084,7 @@
                 top: 50%;
                 transform: translateY(-50%);
                 width: 1.146rem;
-                padding-top: .15rem;
+                padding-top: .35rem;
             }
             .type_item{
                 padding-left: 1.146rem;
@@ -2095,7 +2099,7 @@
                     border: 1px solid #151515;
                     color: #151515;
                     line-height: 1em;
-                    margin-bottom: 0.32rem;
+                    margin-bottom: 0.5rem;
                     border-radius: .16rem;
                     &.active{
                         border-color: #151515;
@@ -2107,16 +2111,17 @@
                         position: relative;
                         
                         &::after{
-                            content: '缺货';
+                            content: '';
                             display: block;
                             .font-dpr(10px);
-                            width: .7rem;
-                            height: .35rem;
-                            background: #979797;
-                            border-radius: 10px 0px 10px 0px;
+                            width: .85rem;
+                            height: .42rem;
+                            background: url(//img8.ontheroadstore.com/H5_Icon/style_quehuo.png) no-repeat center center;
+                            background-size: 100% 100%;
+                            
                             position: absolute;
-                            top: -.14rem;
-                            right: -.28rem;
+                            top: -.3rem;
+                            right: -.38rem;
                             color: #fff;
                             text-align: center;
                         }
@@ -2219,11 +2224,11 @@
         color: @BaseFontColor;
         background: @NextButtonColor;
         box-sizing: border-box;
-        box-shadow: #dbdbdb 0px 0px 10px;
+        box-shadow: rgba(0,0,0,0.05) 0px 0px 10px;
         // border: 1px solid @BaseButtonColor;
         left: .3rem;
         bottom: .433333rem;
-        box-shadow: 0px 4px 3px rgba(0,0,0,0.15), -4px 0 3px rgba(0,0,0,0.15),0px -3px 3px rgba(0,0,0,0.15);
+        box-shadow: 0px 8px 6px rgba(0,0,0,0.05), -8px 0 6px rgba(0,0,0,0.05),0px -6px 6px rgba(0,0,0,0.05);
         border-radius:.16rem 0 0 .16rem;
     }
     .only_chart{ 
@@ -2233,7 +2238,7 @@
         left: .3rem;
         border-radius: .16rem;
         box-sizing: border-box;
-        box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2);
+        box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.05);
     } 
     .buy_btn{
         //background: url(//img8.ontheroadstore.com/H5_Icon/good_buy_btn_1.png?1);
@@ -2245,7 +2250,7 @@
         border-radius: 0 .16rem .16rem 0;
         bottom: .433333rem;
         box-sizing: border-box;
-        box-shadow: 4px 0px 3px rgba(0,0,0,0.15),0px 4px 3px rgba(0,0,0,0.15),0px -4px 3px rgba(0,0,0,0.15);
+        box-shadow: 8px 0px 6px rgba(0,0,0,0.05),0px 8px 6px rgba(0,0,0,0.05),0px -8px 6px rgba(0,0,0,0.05);
         &.disable{
             background: #8E8E8E;
         }
@@ -2265,7 +2270,7 @@
         line-height: 1.306rem;
         z-index: 99;
         box-sizing: border-box;
-        box-shadow: #dbdbdb 0px 0px 10px;
+        box-shadow: rgba(0,0,0,0.05) 0px 0px 10px;
     }
     .deblocking,
     .download_app{
@@ -2773,10 +2778,11 @@
                 .txt_top{
                     height: 1.44rem;
                     overflow: hidden;
-                    .txt_end{
-                        .font-dpr(15px);   
-                        font-weight: 500;  
-                    }
+                    
+                }
+                .txt_end{
+                    .font-dpr(15px);   
+                    font-weight: 500;  
                 }
                 .tit{
                     height: .48rem;
@@ -3044,13 +3050,16 @@
             .name_time{
                 margin-left: .3rem;
                 p{
-                    line-height: .52rem;
+                    line-height: .67rem;
                     .font-dpr(13px);
                     color: #151515;
+                    margin-bottom: -.13rem;
                 }
                 .time{
+                    line-height: .54rem;
                     .font-dpr(11px);
                     color: #979797;
+                    margin-top: -.1rem;
                 }
             }
             .float_right{
