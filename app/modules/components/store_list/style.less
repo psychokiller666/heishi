@@ -1077,7 +1077,7 @@
     .go_to_search_new{
         width: 9.36rem;
         height: 1.067rem;
-        border-radius: .32rem;
+        border-radius: .16rem;
         background: #FFFFFF;
         color: #888888;
         margin: 0 auto;
@@ -1100,8 +1100,8 @@
         .font-dpr(17px);
         text-align: center;
         font-weight: 600;
-        line-height: 2rem;
-        margin-top: .5rem;
+        line-height: 1.5rem;
+        margin-top: 1rem;
     }
     .swiper-container-home{
         height: 15.306rem;
@@ -1178,14 +1178,14 @@
                     -o-filter: grayscale(100%);
                     filter: grayscale(100%);
                     // filter: gray;
-                    // &.active{
-                    //     border: 1px solid #ACD120;
-                    //     -webkit-filter: grayscale(0);
-                    //     -moz-filter: grayscale(0);
-                    //     -ms-filter: grayscale(0);
-                    //     -o-filter: grayscale(0);
-                    //     filter: grayscale(0);
-                    // }
+                    &.active{
+                        // border: 1px solid #ACD120;
+                        -webkit-filter: grayscale(0);
+                        -moz-filter: grayscale(0);
+                        -ms-filter: grayscale(0);
+                        -o-filter: grayscale(0);
+                        filter: grayscale(0);
+                    }
                 }
                 p{
                     text-align: center;
@@ -1214,14 +1214,14 @@
             }
         }
         .into_shop{
-            width: 1.067rem;
+            width: 1.087rem;
             height: 5.97rem;
             float: left;
             background: url(https://img8.ontheroadstore.com/H5_Icon/newgood_look_more.png) no-repeat center center;
-            background-size: 100% 100%;
+            background-size: cover;
         }
         .seller_goods_list{
-            width: 8.433rem;
+            width: 8.403rem;
             height: 5.97rem;
             background: #FFFFFF;
             white-space: nowrap;
@@ -1271,7 +1271,7 @@
       
         .new_goods_list{
             width: 10rem;
-            height: 5.56rem;
+            height: 5.76rem;
             white-space: nowrap;
             overflow-x: scroll;
             // padding: .3rem 0;
@@ -1287,7 +1287,7 @@
             }
             .new_good{
                 width: 3.84rem;
-                height: 4.98rem;
+                height: 5.18rem;
                 display: inline-block;
                 margin-left: .32rem;
                 margin-top: .3rem;
@@ -1308,7 +1308,7 @@
                     white-space: pre-line;
                     overflow: hidden;
                     height: .78rem;
-                    padding: .1rem .26rem;
+                    padding: .16rem .26rem;
                     line-height: .47rem;
                 }
             }
@@ -1417,9 +1417,10 @@
         margin: 0 auto;
         margin-top: 1rem;
         height: 1.25rem;
-        overflow-y: scroll;
+        overflow-x: scroll;
         background: #F6F6F6;
         white-space: nowrap;
+        overflow-y: hidden;
         span{
             // color: #979797;
             color: #151515;
