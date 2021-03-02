@@ -14,20 +14,37 @@
     .user_name{
       .font-dpr(14px);
       line-height: 1.17rem;
-      padding-left: 0.4rem;
+      padding-left: 0.32rem;
     }
     .user_store{
       .font-dpr(13px);
       color: #F9F9F9;
       width: 1.147rem;
       height: 0.507rem;
-      border-radius: 0.507rem;
-      background: #AE2121;
+      // border-radius: 0.507rem;
+      // background: #AE2121;
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      right: 0.4rem;
-      line-height: 0.507rem;
+      right: 0.32rem;
+      // line-height: 0.507rem;
+      width: .6rem;
+      height: .6rem;
+      background: url(http://img8.ontheroadstore.com/H5_Icon/shop_210129.png) no-repeat center center;
+      background-size: cover;
+      // text-align: center;
+    }
+  }
+  .warming_tips{
+    transition-duration: 1s;
+    .font-dpr(12px);
+    color: #fff;
+    background: #0302FC;
+    position: relative;
+    z-index: 100;
+    top: 1rem;
+    padding: .3rem 0;
+    p{
       text-align: center;
     }
   }
@@ -195,7 +212,7 @@
         width: 10rem;
       }
       ul {
-        padding: 0.6rem 0.4rem 0;
+        padding: 0.6rem 0.32rem 0;
         li {
           padding-top: 0.293333rem;
           width: 100%;
@@ -204,40 +221,46 @@
             padding-bottom: 0.293333rem;
           }
           .avatar{
-            width: 1.07rem;
-            height: 1.07rem;
+            width: .933rem;
+            height: .933rem;
           }
           .content_bd{
             .font-dpr(13px);
             max-width: 5.98rem;
-            padding: 0.3rem;
-            border-radius: 0.08rem;
+            padding: 0.21rem .27rem;
+            // border-radius: 0.08rem;
             margin-top: 0;
             position: relative;
             word-wrap: break-word;
-            .image {
-              width: 2rem;
-              height: 2rem;
-              border-radius: 0.08rem;
-              background-position: 50% 50%;
-              background-repeat: no-repeat;
-              -webkit-background-size: cover;
-            }
-            &:after {
-              content: '';
-              position: absolute;
-            }
+            color: #151515;
+            // &:after {
+            //   content: '';
+            //   position: absolute;
+            // }
           }
           .date{
             .font-dpr(12px);
             transform: scale(0.8);
             color: #8E8E8E;
             display: block;
-            width: 7.5rem;
+            width: 8.8rem;
             clear: both;
             margin: 0 auto;
           }
           &.me{
+            .content_bd_1{
+              padding: 0;
+              float: right;
+              margin-right: .21rem;
+             .image {
+               width: 6.2rem;
+               height: 6.2rem;
+               border-radius: 0.16rem 0 .16rem .16rem;
+               background-position: 50% 50%;
+               background-repeat: no-repeat;
+               -webkit-background-size: cover;
+             }
+            }
             .avatar{
               background-image: url(//dev.ontheroadstore.com/tpl/simplebootx_mobile/Public/images/headicon_128.png);
               float:right;
@@ -245,8 +268,9 @@
             .content_bd{
               background-color: #E8E8E8;
               float:right;
-              margin-right: 0.6rem;
-              color: #000;
+              margin-right: 0.21rem;
+              color: #151515;
+              border-radius: 0.16rem 0 .16rem .16rem;
               &:after{
                 right: -0.3rem;
                 top: 0.26rem;
@@ -260,6 +284,19 @@
             }
           }
           &.user{
+            .content_bd_1{
+              padding: 0;
+              float: left;
+              margin-left: .21rem;
+             .image {
+               width: 6.2rem;
+               height: 6.2rem;
+               border-radius:  0 .16rem .16rem 0.16rem;
+               background-position: 50% 50%;
+               background-repeat: no-repeat;
+               -webkit-background-size: cover;
+             }
+            }
             .avatar{
               background-image: url(//dev.ontheroadstore.com/tpl/simplebootx_mobile/Public/images/headicon_128.png);
               float:left;
@@ -267,8 +304,9 @@
             .content_bd{
               background-color: #FFF;
               float:left;
-              margin-left: 0.6rem;
-              color: #000;
+              margin-left: 0.21rem;
+              color: #151515;
+              border-radius: 0 .16rem .16rem 0.16rem;
               &:after{
                 left: -0.3rem;
                 top: 0.26rem;
