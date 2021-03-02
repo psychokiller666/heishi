@@ -12,6 +12,11 @@ $(document).on('pageInit','.detail', function (e, id, page) {
   }
   var init = new common(page);
   // 初始底部
+  setTimeout(()=>{
+    $('.warming_tips').css({
+      opacity: 0
+    })
+  },3000)
   $('.hs-main').css('bottom', $('.reply_content').height() + 'px');
   $("input").blur(function(){
     document.body.scrollTop = 0;
@@ -331,14 +336,14 @@ $(document).on('pageInit','.detail', function (e, id, page) {
           if(data[i]['type'] == 'text'){
             var str = '<li class="me"><span class="avatar" style="background-image: url('+myAvatar+')"></span><div class="content_bd">'+data[i]['text']+'</div><span class="date">'+messageTime(data[i]['time'])+'</span></li>';
           }else if(data[i]['type'] == 'image'){
-            var str = '<li class="me"><span class="avatar" style="background-image: url('+myAvatar+')"></span><div class="content_bd">'
+            var str = '<li class="me"><span class="avatar" style="background-image: url('+myAvatar+')"></span><div class="content_bd_1">'
             +'<div class="image" data-layzr="'+data[i]['file']['url']+'" data-preview="'+data[i]['file']['url']+'"></div></div><span class="date">'+messageTime(data[i]['time'])+'</span></li>';
           }
         }else{
           if(data[i]['type'] == 'text'){
             var str = '<li class="user"><span class="avatar" style="background-image: url('+userAvatar+')"></span><div class="content_bd">'+data[i]['text']+'</div><span class="date">'+messageTime(data[i]['time'])+'</span></li>';
           }else if(data[i]['type'] == 'image'){
-            var str = '<li class="user"><span class="avatar" style="background-image: url('+userAvatar+')"></span><div class="content_bd">'
+            var str = '<li class="user"><span class="avatar" style="background-image: url('+userAvatar+')"></span><div class="content_bd_1">'
             +'<div class="image" data-layzr="'+data[i]['file']['url']+'" data-preview="'+data[i]['file']['url']+'"></div></div><span class="date">'+messageTime(data[i]['time'])+'</span></li>';
           }
         }

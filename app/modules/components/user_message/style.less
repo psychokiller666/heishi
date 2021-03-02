@@ -28,12 +28,13 @@
         color: #000;
         span{
           display: inline-block;
-          width: 0.35rem;
-          height: 0.35rem;
+          width: 0.5rem;
+          height: 0.5rem;
           background-size: 100%;
           background-position: center;
           margin: 0 1em;
           margin-top: -0.1rem;
+          position: relative;
         }
         .my_comment_list:after{
           content: "\e65e";
@@ -42,23 +43,24 @@
           color: #000;
         }
         .message:after{
-          content: "";
+          content: " ";
           display: block;
-          width: .5rem;
-          height: .5rem;
-          background: url(//img8.ontheroadstore.com/H5_Icon/chat_huanxin.png) no-repeat center center;
+          margin-top: .05rem;
+          width: .6rem;
+          height: .6rem;
+          background: url(//img8.ontheroadstore.com/H5_Icon/chat_huanxin_1.png) no-repeat center center;
           background-size: cover;
           
-          color: #000;
         }
         .message1:after{
           content: " ";
           display: block;
-          width: .5rem;
-          height: .5rem;
-          background: url(//img8.ontheroadstore.com/H5_Icon/chat_yunxin.png) no-repeat center center;
+          width: .6rem;
+          height: .6rem;
+          background: url(//img8.ontheroadstore.com/H5_Icon/chat_yunxin_1.png) no-repeat center center;
           background-size: cover;
-          color: #000;
+          
+  
         }
         &:after {
           content: "\e512";
