@@ -68,12 +68,16 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
         "HomepageAppLottery": [1],
         "HomepageAdvertisement": [1],
         "HomepageAppLanmuList": [1],
+        "HomepageAppNotice":[1],
         "cid":7
       },
       success: function(data){
         initNewBanner(data.data.HomepageAppBanner.model_data)
         if(data.data.HomepageAdvertisement&&data.data.HomepageAdvertisement.model_data){
           initAdBanner(data.data.HomepageAdvertisement.model_data[0])
+        }
+        if(data.data.HomepageAppNotice){
+          initNotice(data.data.HomepageAppNotice)
         }
         initSellerRecommend(data.data.HomepageAppSellerRecommend.model_data)
         initNewGoodsList(data.data.HomepageAppNewGoodsList.model_data)
@@ -87,6 +91,16 @@ $(document).on('pageInit','.index_list', function (e, id, page) {
       }
     });
 
+  }
+  //通知
+  function initNotice(data){
+    if(!data.model_data){
+      return
+    }
+    let str = `<div style="background:${data.model_data.background_color};color:${data.model_data.text_color};padding:.4rem 1.3rem;font-size:0.32rem;">
+      ${data.model_data.content}
+    </div>`
+    $('.notice_new').html(str)
   }
   //banner轮播
   function initNewBanner(data){
